@@ -1,0 +1,3 @@
+systemctl start vmware-networks
+systemctl start vmware-usbarbitrator
+systemctl start vmware-hostd

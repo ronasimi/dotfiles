@@ -1,0 +1,29 @@
+#!/bin/bash
+
+getopen () {
+
+if [ -x /usr/bin/xdg-open ]
+then
+export opener="/usr/bin/xdg-open"
+elif [ -x /usr/bin/kde-open ]
+then
+export opener="/usr/bin/kde-open"
+elif [ -x /usr/bin/gnome-open ]
+then
+export opener="/usr/bin/gnome-open"
+else
+echo "Requires xdg-open, kde-open or gnome-open"
+exit 1
+fi
+}
+
+getemail () {
+
+export address=`echo $1 | sed 's/mailto://'`
+export targeturl="https://mail.google.com/mail/?view=cm&fs=1&tf=1&source=mailto&to=$address"
+}
+
+getopen
+getemail $1
+exec $opener $targeturl
+exit 0

@@ -1,0 +1,67 @@
+! Compile xft: Attempt to find a visual with the given bit depth;
+URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
+URxvt*intensityStyles:		false
+URxvt*urgentOnBell:		true
+URxvt*scrollBar:		false
+URxvt*scrollTtyOutput:		false
+URxvt*scrollWithBuffer:		true
+URxvt*scrollTtyKeypress:	true
+URxvt*internalBorder:		0
+URxvt*cursorBlink:		true
+URxvt*cursorUnderline:		false
+URxvt*pointerBlank:		true
+URxvt*secondaryScreen:		true
+URxvt*secondaryScroll:		false
+URxvt.internalBorder:		3
+URxvt.perl-ext-common:		default,clipboard,url-select,keyboard-select,vtwheel,fullscreen
+URxvt.url-select.launcher:	google-chrome-stable
+URxvt.url-select.underline:	true
+URxvt*keysym.C-A-c:		perl:clipboard:copy
+URxvt*keysym.C-A-v:		perl:clipboard:paste
+!URxvt*keysym.C-A-V:		perl:clipboard:paste_escaped
+URxvt.keysym.M-u:		perl:url-select:select_next
+URxvt.keysym.M-Escape:		perl:keyboard-select:activate
+URxvt.keysym.M-s:		perl:keyboard-select:search
+URxvt.keysym.Home:		\033[1~
+URxvt.keysym.End:		\033[4~
+URxvt.keysym.KP_Home:		\033[1~
+URxvt.keysym.KP_End:		\033[4~
+URxvt.keysym.F11:		perl:fullscreen:switch
+URxvt*iso14755:			false
+
+! Colours
+*.foreground:   #afafaf
+*.background:   #2f343f
+*.cursorColor:  #afafaf
+
+! black
+*.color0:       #505050
+*.color8:       #505050
+
+! red
+*.color1:       #ac4142
+*.color9:       #ac4142
+
+! green
+*.color2:       #90a959
+*.color10:      #90a959
+
+! yellow
+*.color3:       #f4bf75
+*.color11:      #f4bf75
+
+! blue
+*.color4:       #6a9fb5
+*.color12:      #6a9fb5
+
+! magenta
+*.color5:       #aa759f
+*.color13:      #aa759f
+
+! cyan
+*.color6:       #75b5aa
+*.color14:      #75b5aa
+
+! white
+*.color7:       #d0d0d0
+*.color15:      #f5f5f5

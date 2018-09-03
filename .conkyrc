@@ -1,0 +1,47 @@
+#avoid flicker
+#double_buffer yes
+
+#own window to run simultanious 2 or more conkys
+own_window yes
+own_window_transparent false
+own_window_argb_visual true
+own_window_argb_value 230
+own_window_type panel
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager
+draw_borders no
+border_margin 0
+
+#shades
+draw_shades no
+
+#position
+gap_x 15
+gap_y 10
+alignment bl
+
+#behaviour
+update_interval 1
+
+#colour
+default_color 93a1a1
+#default_shade_color 000000
+own_window_colour 353945
+
+#font
+use_xft yes
+xftfont consolas:size=7
+
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale yes
+
+#to prevent window from moving
+use_spacer left
+minimum_size 1335 8
+maximum_size 1335 8
+
+mpd
+mpd_host localhost
+mpd_port 6600
+
+TEXT
+${color fdf6e3}${kernel}${color} UPTIME:${color fdf6e3}${uptime_short}${color} UPDATES:${color fdf6e3}${execpi 1800 checkupdates | wc -l}${color} | CPU ${color fdf6e3}${cpu cpu1}% ${cpu cpu2}% ${cpu cpu3}% ${cpu cpu4}%${color} TEMP:${color fdf6e3}${execi 10 sensors | grep 'Core 0' | cut -c18-19;}°C${color} FAN:${color fdf6e3}${execi 5 sensors | grep 'RPM' | cut -c14-21;}${color} | RAM ${color fdf6e3}${memperc}%${color} SWAP ${color fdf6e3}${swapperc}%${color} | DISK / ${color fdf6e3}${fs_used_perc /}% ${color} /mnt/storage ${color fdf6e3}${fs_used_perc /mnt/storage}%${color}${alignr}${if_existing /proc/net/route wlp3s0}WLAN ${color fdf6e3}${wireless_essid wlp3s0}${wireless_link_qual_perc wlp3s0}% ${wireless_bitrate wlp3s0} ${addr wlp3s0}${color} ↑${color fdf6e3}${upspeed wlp3s0}/s${color} ↓${color fdf6e3}${downspeed wlp3s0}/s${color}${endif}${if_existing /proc/net/route enp0s25} LAN ${color fdf6e3}${addr enp0s25}${color} ↑${color fdf6e3}${upspeed enp0s25}/s${color} ↓${color fdf6e3}${downspeed enp0s25}/s${color}${endif}${if_existing /proc/net/route enp0s26u1u1} TETHER ${color fdf6e3}${addr enp0s26u1u1}${color} ↑${color fdf6e3}${upspeed enp0s26u1u1}/s${color} ↓${color fdf6e3}${downspeed enp0s26u1u1}/s${color})${endif} | BATT: ${color fdf6e3}${battery_percent}% ${battery_time}${color} | DESKTOP ${color fdf6e3}${desktop}${color}

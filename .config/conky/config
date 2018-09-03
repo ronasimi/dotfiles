@@ -1,0 +1,26 @@
+out_to_x no
+own_window no
+out_to_console yes
+background no
+max_text_width 0
+#shades
+draw_shades no
+
+#behaviour
+update_interval 1
+
+# This is the number of times Conky will update before quitting.
+# Set to zero to run forever.
+total_run_times 0
+
+# Shortens units to a single character (kiB->k, GiB->G, etc.). Default is off.
+short_units yes
+
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale yes
+
+#to prevent window from moving
+use_spacer left
+
+TEXT
+CPU ${cpu cpu1}% ${cpu cpu2}% ${cpu cpu3}% ${cpu cpu4}% TEMP: ${execi 10 sensors | grep 'Core 0' | cut -c18-19;}°C FAN:${execi 5 sensors | grep 'RPM' | cut -c14-21;} | RAM ${memperc}% SWAP ${swapperc}% | DISK / ${fs_used_perc /}% /mnt/storage ${fs_used_perc /mnt/storage}%${alignr}${if_existing /proc/net/route wlp3s0}WLAN ${wireless_essid wlp3s0}${wireless_link_qual_perc wlp3s0}% ${wireless_bitrate wlp3s0} ${addr wlp3s0}${color} ↑${upspeed wlp3s0}/s ↓${downspeed wlp3s0}/s${endif}${if_existing /proc/net/route enp0s25} LAN ${addr enp0s25} ↑${upspeed enp0s25}/s ↓${downspeed enp0s25}/s${endif}${if_existing /proc/net/route enp0s26u1u1} TETHER ${addr enp0s26u1u1} ↑${upspeed enp0s26u1u1}/s ↓${downspeed enp0s26u1u1}/s${endif} | BATT: ${battery_percent}% ${battery_time} 

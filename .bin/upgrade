@@ -1,0 +1,23 @@
+#!/bin/sh
+ 
+mount /mnt/btrfs_vol
+ 
+dest=/mnt/btrfs_vol
+
+day=$( date +'%m-%d-%Y-%H:%M:%S')
+ 
+echo "taking root filesystem snapshot..."
+ 
+# The command
+btrfs subvolume snapshot / $dest/_root-$day
+ 
+while true; do
+        read -p "Ready to do a yaourt -Syyua --devel ?"  yn
+        case $yn in
+         [Yy}]* ) reflector --verbose --country 'United States' -l 200 -p http --sort rate --save /etc/pacman.d/mirrorlist && sudo -u ron yaourt -Syyua --noconfirm --devel; break;;
+         [Nn]* ) exit;;
+         * ) echo "Please answer Y or N. ";;
+        esac
+done
+
+umount /mnt/btrfs_vol

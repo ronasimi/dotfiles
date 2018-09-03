@@ -1,0 +1,83 @@
+#!/bin/bash
+
+Help() {
+    echo -n "Usage: build [OPTIONS]
+    -h, --help      show this screen
+    -s, --sync      run repo sync before building
+    -c, --clean     make clean
+    -x, --clobber   make clobber"
+    echo
+}
+
+box () {
+    tput setaf 6
+    echo
+    str="$@"
+    len=$((${#1}+4))
+    for ((i = 1; i <= $len; i++)); do
+        echo -n '*'
+    done
+    echo
+    echo "* $str *"
+    for ((i = 1; i <= $len; i++)); do
+        echo -n '*'
+    done
+    echo
+    tput sgr0
+}
+
+path="/home/ron/android/stable_cm-11.0"
+sync=0
+clean=0
+while :; do
+    case $1 in
+        -h | --help)
+            Help
+            exit 0
+            ;;
+        -s | --sync)
+            sync=1
+            shift
+            ;;
+        -c | --clean)
+            clean=1
+            shift
+            ;;
+        -x | --clobber)
+            clean=2
+            shift
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -*)
+            echo "Unknown option $1, ignoring" >&2
+            shift
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+clear
+box "Setting up \$PATH..."
+export PATH="/opt/android-build:/opt/java/bin:$PATH"
+echo -n $(python -V)
+echo -n $(java -version)
+echo -n &(make -v)
+cd "$path"
+
+(( "$sync"==1 )) && box "Syncing..." && repo sync -f -c -j 4
+
+box "Starting build..."
+. build/envsetup.sh
+lunch cm_geeb-userdebug
+(( "$clean"==1 )) && box "Clean build!" && echo && make clean
+(( "$clean"==2 )) && box "Clean build!" && echo && make clobber
+time mka bacon
+
+box "Done!"
+
+echo "geeb-cm_stable done" | mailx 2264567889@msg.telus.com

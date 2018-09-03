@@ -1,0 +1,1 @@
+/usr/bin/tmux new-session -s cm -n cm-12 -d '~/.bin/geeb-12.1 -c'

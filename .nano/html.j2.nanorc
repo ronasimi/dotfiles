@@ -1,6 +1,6 @@
 ## Here is a short improved example for HTML.
 ##
-syntax "HTML" "\.htm[l]?$"
+syntax "HTML" "\.htm[l]?.j2$"
 color brightblue start="<" end=">"
 color red "&[^;[[:space:]]]*;"
 color yellow ""[^"]*"|qq\|.*\|"
@@ -9,3 +9,9 @@ color magenta start="<!--" end="-->"
 
 ## Trailing spaces
 color ,green "[[:space:]]+$"
+
+## Jinja templating
+color green "\{{2}.*\}{2}"
+color green "\{\%.*\%\}"
+color brightcyan "(if|endif|for)"
+

@@ -4,6 +4,7 @@ syntax "Markdown" "\.(md|mkd|mkdn|markdown)$"
 color cyan ".*[ :]\|[ :].*"
 
 # quotes
+color brightblack  start="^>" end="^$"
 color brightblack  "^>.*"
 
 # Emphasis
@@ -45,3 +46,6 @@ color yellow   "`[^`]*`|^ {4}[^-+*].*"
 # code blocks
 color yellow start="^```[^$]" end="^```$"
 color yellow "^```$"
+
+## Trailing spaces
+color ,green "[[:space:]]+$"

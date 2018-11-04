@@ -19,7 +19,7 @@ shadow-exclude = [
 ];
 
 # Opacity
-inactive-opacity = 0.75;
+inactive-opacity = 0.80;
 #frame-opacity = 0.7;
 inactive-opacity-override = false;
 alpha-step = 0.05;
@@ -37,26 +37,27 @@ blur-background-exclude = [
 	"class_g = 'Bspwm' && class_i = 'presel_feedback'"
 ];
 opacity-rule = [
+	"class_g = 'slop'",
 	"40:class_g = 'Bspwm' && class_i = 'presel_feedback'"
 ];
 
 # Fading
 fading = true;
 fade-delta = 10;
-fade-in-step = 0.05;
-fade-out-step = 0.05;
+fade-in-step = 0.1;
+fade-out-step = 1;
 #no-fading-openclose = true;
 #no-fading-destroyed-argb = true;
 #fade-exclude = [];
 
 # Dim
-inactive-dim = 0.25;
+inactive-dim = 0.2;
 inactive-dim-fixed = false;
 
 # Other
 backend = "glx"
 mark-wmwin-focused = true;
-mark-ovredir-focused = true;
+mark-ovredir-focused = false;
 focus-exclude = [
 	"name *?= 'i3lock'"
 ];
@@ -71,6 +72,7 @@ paint-on-overlay = true;
 #detect-transient = true;
 #detect-client-leader = true;
 invert-color-include = [ ];
+#inactive-dim = 0.5;
 unredir-if-possible = true;
 
 # GLX backend
@@ -86,6 +88,6 @@ glx-no-rebind-pixmap = true;
 # Window type settings
 wintypes:
 {
-  tooltip = { fade = true; shadow = true; opacity = 0.75; focus = true; };
+  tooltip = { fade = true; shadow = true; opacity = 0.80; focus = true; };
 	menu = { fade= false; shadow = false; };
 };

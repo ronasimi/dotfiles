@@ -35,7 +35,6 @@ conky -c $(dirname $0)/i3_lemonbar_conky > "${panel_fifo}" &
 ### UPDATE INTERVAL METERS
 cnt_vol=${upd_vol}
 cnt_mail=${upd_mail}
-cnt_mpd=${upd_mpd}
 
 while :; do
 
@@ -49,6 +48,7 @@ while :; do
 
 done &
 
+
 while :; do
 
   # GMAIL, "GMA"
@@ -57,8 +57,8 @@ while :; do
     cnt_mail=0
   fi
 
-  # Finally, wait 10 seconds
-  sleep 1s;
+  # Finally, wait 60 seconds
+  sleep 60s;
 
 done &
 
@@ -71,7 +71,7 @@ cat "${panel_fifo}" | $(dirname $0)/i3_lemonbar_parser.sh \
 
 tries_left=20
 while [ -z "$wid" -a "$tries_left" -gt 0 ] ; do
-  sleep 0.05
+  usleep 5
   xdo above -t $(xwininfo -root -children | egrep -o "0x[[:xdigit:]]+" | tail -1) $(xdo id -a bar)
   tries_left=$((tries_left - 1))
 done

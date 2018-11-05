@@ -1,67 +1,76 @@
-! Compile xft: Attempt to find a visual with the given bit depth;
-URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
-URxvt*intensityStyles:		false
+URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-*
+URxvt*boldFont:			-xos4-terminesspowerline-bold-r-normal--12-120-72-72-c-60-*-*
+URxvt*intensityStyles:		true
 URxvt*urgentOnBell:		true
 URxvt*scrollBar:		false
 URxvt*scrollTtyOutput:		false
 URxvt*scrollWithBuffer:		true
 URxvt*scrollTtyKeypress:	true
-URxvt*internalBorder:		0
+URxvt*internalBorder:		5
 URxvt*cursorBlink:		true
 URxvt*cursorUnderline:		false
 URxvt*pointerBlank:		true
 URxvt*secondaryScreen:		true
 URxvt*secondaryScroll:		false
-URxvt.internalBorder:		3
-URxvt.perl-ext-common:		default,clipboard,url-select,keyboard-select,vtwheel,fullscreen
-URxvt.url-select.launcher:	google-chrome-stable
-URxvt.url-select.underline:	true
+URxvt*depth:			32
+URxvt*perl-ext-common:		default,clipboard,url-select,keyboard-select,vtwheel,fullscreen
+URxvt*url-select.launcher:	google-chrome-stable
+URxvt*url-select.underline:	true
 URxvt*keysym.C-A-c:		perl:clipboard:copy
 URxvt*keysym.C-A-v:		perl:clipboard:paste
-!URxvt*keysym.C-A-V:		perl:clipboard:paste_escaped
-URxvt.keysym.M-u:		perl:url-select:select_next
-URxvt.keysym.M-Escape:		perl:keyboard-select:activate
-URxvt.keysym.M-s:		perl:keyboard-select:search
-URxvt.keysym.Home:		\033[1~
-URxvt.keysym.End:		\033[4~
-URxvt.keysym.KP_Home:		\033[1~
-URxvt.keysym.KP_End:		\033[4~
-URxvt.keysym.F11:		perl:fullscreen:switch
+URxvt*keysym.M-u:		perl:url-select:select_next
+URxvt*keysym.M-Escape:		perl:keyboard-select:activate
+URxvt*keysym.M-s:		perl:keyboard-select:search
+URxvt*keysym.Home:		\033[1~
+URxvt*keysym.End:		\033[4~
+URxvt*keysym.KP_Home:		\033[1~
+URxvt*keysym.KP_End:		\033[4~
+URxvt*keysym.F11:		perl:fullscreen:switch
 URxvt*iso14755:			false
+URxvt*termName:			xterm-256color
+
+! XFT settings
+Xft.dpi:			96
+Xft.antialias:			true
+Xft.rgba:			rgb
+Xft.hinting:			true
+Xft.hintstyle:			hintfull
+Xft.autohint:			1
+Xft.lcdfilter:			lcddefault
 
 ! Colours
-*.foreground:   #afafaf
+*.foreground:   #eaeaeb
 *.background:   #2f343f
-*.cursorColor:  #afafaf
+*.cursorColor:  #eaeaeb
 
 ! black
-*.color0:       #505050
-*.color8:       #505050
+*.color0:       #585c65
+*.color8:       #797c83
 
 ! red
 *.color1:       #ac4142
-*.color9:       #ac4142
+*.color9:       #bc6667
 
 ! green
 *.color2:       #90a959
-*.color10:      #90a959
+*.color10:      #a6ba7a
 
 ! yellow
 *.color3:       #f4bf75
-*.color11:      #f4bf75
+*.color11:      #f6cb90
 
 ! blue
 *.color4:       #6a9fb5
-*.color12:      #6a9fb5
+*.color12:      #87b2c3
 
 ! magenta
 *.color5:       #aa759f
-*.color13:      #aa759f
+*.color13:      #bb90b2
 
 ! cyan
 *.color6:       #75b5aa
-*.color14:      #75b5aa
+*.color14:      #90c3bb
 
 ! white
-*.color7:       #d0d0d0
-*.color15:      #f5f5f5
+*.color7:       #eaeaeb
+*.color15:      #eeeeef

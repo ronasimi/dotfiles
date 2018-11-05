@@ -45,32 +45,32 @@ Xft.lcdfilter:			lcddefault
 
 ! black
 *.color0:       #585c65
-*.color8:       #797c83
+*.color8:       #686c74
 
 ! red
 *.color1:       #ac4142
-*.color9:       #bc6667
+*.color9:       #b45454
 
 ! green
 *.color2:       #90a959
-*.color10:      #a6ba7a
+*.color10:      #9bb169
 
 ! yellow
 *.color3:       #f4bf75
-*.color11:      #f6cb90
+*.color11:      #f5c582
 
 ! blue
 *.color4:       #6a9fb5
-*.color12:      #87b2c3
+*.color12:      #78a8bc
 
 ! magenta
 *.color5:       #aa759f
-*.color13:      #bb90b2
+*.color13:      #b282a8
 
 ! cyan
 *.color6:       #75b5aa
-*.color14:      #90c3bb
+*.color14:      #82bcb2
 
 ! white
 *.color7:       #eaeaeb
-*.color15:      #eeeeef
+*.color15:      #ececed

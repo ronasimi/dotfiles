@@ -1,8 +1,13 @@
+#           _
+#   _______| |__  _ __ ___
+#  |_  / __| '_ \| '__/ __|
+# _ / /\__ \ | | | | | (__
+#(_)___|___/_| |_|_|  \___|
+#
+#
+
 # vi mode
 bindkey -v
-
-# TERMINAL TYPE
-export TERM='xterm-256color'
 
 # WINDOW TITLE
 case $TERM in
@@ -23,9 +28,20 @@ case $TERM in
 esac
 
 HISTFILE=~/.histfile
-HISTSIZE=1024
-SAVEHIST=1024
+HISTSIZE=10000
+SAVEHIST=10000
 setopt appendhistory
+setopt extended_history
+setopt inc_append_history
+setopt share_history
+setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
+setopt hist_find_no_dups
+setopt hist_ignore_space
+setopt hist_save_no_dups
+setopt hist_reduce_blanks
+setopt hist_verify
+setopt hist_beep
 setopt autocd
 setopt extendedglob
 setopt nomatch
@@ -196,6 +212,9 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
 # AIRCRACK-NG
 export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
+
+# POWERLINE SUDO
+export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 7) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
 
 # POWERLINE
 powerline-daemon -q

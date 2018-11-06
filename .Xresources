@@ -1,6 +1,6 @@
 URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-*
 URxvt*boldFont:			-xos4-terminesspowerline-bold-r-normal--12-120-72-72-c-60-*-*
-URxvt*intensityStyles:		true
+URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true
 URxvt*scrollBar:		false
 URxvt*scrollTtyOutput:		false
@@ -27,18 +27,9 @@ URxvt*keysym.KP_Home:		\033[1~
 URxvt*keysym.KP_End:		\033[4~
 URxvt*keysym.F11:		perl:fullscreen:switch
 URxvt*iso14755:			false
-URxvt*termName:			xterm-256color
+! URxvt*termName:			xterm-256color
 
-! XFT settings
-Xft.dpi:			96
-Xft.antialias:			true
-Xft.rgba:			rgb
-Xft.hinting:			true
-Xft.hintstyle:			hintfull
-Xft.autohint:			1
-Xft.lcdfilter:			lcddefault
-
-! Colours
+! Colors
 *.foreground:   #eaeaeb
 *.background:   #2f343f
 *.cursorColor:  #eaeaeb

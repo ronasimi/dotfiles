@@ -69,8 +69,8 @@ bindkey "\ee[D" backward-word
 bindkey "^H" backward-delete-word
 bindkey "^R" history-incremental-search-backward
 # for rxvt
-bindkey "e[8~" end-of-line
-bindkey "e[7~" beginning-of-line
+bindkey "${terminfo[khome]}" beginning-of-line
+bindkey "${terminfo[kend]}" end-of-line
 # for non RH/Debian xterm, can't hurt for RH/DEbian xterm
 bindkey "eOH" beginning-of-line
 bindkey "eOF" end-of-line

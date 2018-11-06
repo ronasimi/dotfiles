@@ -9,6 +9,7 @@ set fill 72
 set multibuffer
 set suspend
 set nowrap
+set rebindkeypad
 
 include "~/.nano/apacheconf.nanorc"
 include "~/.nano/arduino.nanorc"

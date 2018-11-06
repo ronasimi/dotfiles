@@ -59,7 +59,7 @@ while read -r line ; do
       # ethernet
       eth_cback=${color_sec_b1}; eth_cfore=${color_fore};
       if [ "${sys_arr[8]}" == "down" ]; then
-        ethup=${icon_ethdown}; eth_cicon=${color_fore};
+        ethup=${icon_ethdown}; eth_cicon=${color_netdown};
       else
         ethup=${icon_ethup}; eth_cicon=${color_icon};
       fi
@@ -68,7 +68,7 @@ while read -r line ; do
       # wlan
       wlan_cback=${color_sec_b1}; wlan_cfore=${color_fore};
       if [ "${sys_arr[9]}" == "down" ]; then
-        wlanup=${icon_wifi_down}; wlan_cicon=${color_fore};
+        wlanup=${icon_wifi_down}; wlan_cicon=${color_netdown};
       else
         wlanup=${icon_wifi_up}; wlan_cicon=${color_icon};
       fi
@@ -77,7 +77,7 @@ while read -r line ; do
       # tether
       teth_cback=${color_sec_b1}; teth_cicon=${color_icon}; teth_cfore=${color_fore}
       if [ "${sys_arr[10]}" == "down" ]; then
-        tethup=${icon_tether_down}; teth_cicon=${color_fore};
+        tethup=${icon_tether_down}; teth_cicon=${color_netdown};
       else
         tethup=${icon_tether_up}; teth_cicon=${color_icon};
       fi;

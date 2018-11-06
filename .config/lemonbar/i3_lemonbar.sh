@@ -32,22 +32,15 @@ $(dirname $0)/i3_workspaces.pl > "${panel_fifo}" &
 # Conky, "SYS"
 conky -c $(dirname $0)/i3_lemonbar_conky > "${panel_fifo}" &
 
-### UPDATE INTERVAL METERS
-cnt_vol=${upd_vol}
+# Volume, "VOL"
+while read -r; do
+
+amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "VOL×\n"} else {printf "VOL%d%%\n",$2}}' > "${panel_fifo}" &
+
+done < <(echo && stdbuf -oL alsactl monitor pulse) &
+
+### Mail update interval
 cnt_mail=${upd_mail}
-
-while :; do
-
-  # Volume, "VOL"
-  if [ $((cnt_vol++)) -ge ${upd_vol} ]; then
-    amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "VOL×\n"} else {printf "VOL%d%%\n",$2}}' > "${panel_fifo}" &
-    cnt_vol=0
-  fi
-
-  sleep 0.5s;
-
-done &
-
 
 while :; do
 
@@ -56,9 +49,6 @@ while :; do
     printf "%s%s\n" "GMA" "$(~/.bin/gmail.sh)" > "${panel_fifo}"
     cnt_mail=0
   fi
-
-  # Finally, wait 60 seconds
-  sleep 60s;
 
 done &
 
@@ -71,7 +61,7 @@ cat "${panel_fifo}" | $(dirname $0)/i3_lemonbar_parser.sh \
 
 tries_left=20
 while [ -z "$wid" -a "$tries_left" -gt 0 ] ; do
-  usleep 5
+  sleep 0.05
   xdo above -t $(xwininfo -root -children | egrep -o "0x[[:xdigit:]]+" | tail -1) $(xdo id -a bar)
   tries_left=$((tries_left - 1))
 done

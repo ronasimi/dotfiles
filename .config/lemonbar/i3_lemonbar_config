@@ -15,17 +15,17 @@ bat_alert=5		            # low battery %
 temp_alert=90                       # high temp
 
 # update setting, in seconds (conky update in i3_lemonbar_conky)
-upd_vol=1                           # Volume update
-upd_mail=60                         # Mail check update
+upd_mail=300                        # Mail check update
 
 # color definitions
 color_back="#C02F343F"              # Default background
-color_fore="#FFEAEAEB"              # Default foreground
+color_fore="#C0EAEAEB"              # Default foreground
 color_head="#C06A9FB5"              # Background for first element
 color_sec_b1="#C0171A1F"            # Background for section 1
 color_sec_b2="#C02F343F"            # Background for section 2
 color_sec_b3="#C060676E"            # Background for section 3
-color_icon="#FFEAEAEB"              # For icons
+color_icon="#C0EAEAEB"              # For icons
+color_netdown="#C08C8C8D"           # For inactive network interface icons
 color_mail="#C0F4BF75"              # Background color for mail alert
 color_chat="#C0CC6666"              # Background color for chat alert
 color_cpu="#C0AC4142"               # Background color for cpu alert

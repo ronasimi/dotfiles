@@ -34,7 +34,7 @@ bindsym $mod+x kill
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i -o 0.8 -h 14 -w 1544 -x 28 -y 7 -nb '#2f343f' -nf '#eaeaeb' -sb '#6a9fb5' -sf '#2f343f' -fn '-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i -o 0.8 -h 14 -w 1572 -x 14 -y 7 -nb '#2f343f' -nf '#eaeaeb' -sb '#6a9fb5' -sf '#2f343f' -fn '-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1'"
 
 # change focus
 bindsym $mod+j focus left
@@ -67,7 +67,7 @@ bindsym $mod+h split h
 bindsym $mod+v split v
 
 # split toggle for URxvt
-for_window [class="URxvt"] split toggle; split toggle
+#for_window [class="URxvt"] split toggle; split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -141,11 +141,11 @@ bindsym $mod+XF86Back move container to workspace prev
 bindsym $mod+Shift+c reload
 
 # lock - suspend - reboot - shutdown
-bindsym Mod1+Ctrl+l exec --no-startup-id xset s activate
-bindsym Mod1+Ctrl+e exec --no-startup-id ~/.config/i3/i3_exit.sh
-bindsym Mod1+Ctrl+s exec --no-startup-id systemctl suspend
-bindsym Mod1+Ctrl+r exec --no-startup-id systemctl reboot
-bindsym Mod1+Ctrl+p exec --no-startup-id systemctl poweroff
+bindsym $mod+Ctrl+l exec --no-startup-id xset s activate
+bindsym $mod+Ctrl+e exec --no-startup-id ~/.config/i3/i3_exit.sh
+bindsym $mod+Ctrl+s exec --no-startup-id systemctl suspend
+bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
+bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart; pkill lemonbar
@@ -226,7 +226,7 @@ client.background       #eaeaeb
 # window borders
 default_border pixel 5
 default_floating_border pixel 5
-hide_edge_borders smart
+for_window [class="^.*"] border pixel 5
 
 # Set variables for floating and un-floating commands
 set $FLOAT-border floating enable, border normal 0
@@ -241,9 +241,19 @@ for_window [title="Hangouts"] $FLOAT-border
 for_window [class="URxvt" instance="floating"] floating enable
 bindsym --release $mod+t exec --no-startup-id "bash ~/.bin/drawterm.sh"
 
-#useless gaps
+# useless gaps
 gaps inner 14
-gaps outer 14
+gaps outer 0
+#gaps horizontal <px>
+#gaps vertical <px>
+gaps top 14
+#gaps right <px>
+gaps bottom 14
+#gaps left <px>
+
+hide_edge_borders smart
+#smart_gaps on
+#smart_borders on
 
 # autostart
 exec --no-startup-id exec thunar --daemon

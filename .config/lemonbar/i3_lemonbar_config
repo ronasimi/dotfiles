@@ -2,7 +2,7 @@
 # i3 panel config. Powerline style.
 
 panel_fifo="/tmp/i3_lemonbar_${USER}"
-geometry="1544x14+28+7"
+geometry="1572x14+14+7"
 font="-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1"
 iconfont="Material Design Icons:size=9"
 res_w=$(xrandr | grep "current" | awk '{print $8a}')

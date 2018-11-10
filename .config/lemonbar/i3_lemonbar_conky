@@ -3,7 +3,7 @@ conky.config = {
   -- out simple text to console
 
   background = false,
-  update_interval = 1,
+  update_interval = 2,
   cpu_avg_samples = 1,
   total_run_times = 0,
   override_utf8_locale = true,
@@ -28,6 +28,4 @@ ${if_up wlp3s0}up ${else}down${endif} \
 ${if_existing /proc/net/route enp0s29u1u2}up ${else}down${endif} \
 ${exec acpi -a | grep Adapter | cut -c12-14} \
 ${battery_percent} \
-
-
 ]];

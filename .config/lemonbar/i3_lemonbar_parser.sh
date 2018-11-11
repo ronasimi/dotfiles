@@ -23,19 +23,20 @@ while read -r line ; do
       # conky= 0 = cpu, 1 = memory percent, 2= disk used /, 3 = eth up/down, 4 = wifi up/down, 5 = tether up/down, 6 = battery percent
       sys_arr=(${line#???})
 
-      # date
+      # date/time
+      currenttime=$(date +"%a %b %d %R")
+      clock=$(echo "$currenttime" | cut -c12-16)
       if [ ${res_w} -gt 1024 ]; then
-       	date=$(date +"%a %b %d")
+       	date=$(echo "$currenttime" | cut -c1-10)
       else
-       	date=$(date +"%b %d")
+       	date=$(echo "$currenttime" | cut -c5-10)
       fi
 
-	date="%{F${color_wsp}}${sep_left}%{F${color_back} B${color_wsp}} %{T2}${icon_cal}%{F- T1}%{F${color_back}} ${date}"
+      # date
+      date="%{F${color_wsp}}${sep_left}%{F${color_back} B${color_wsp}} %{T2}${icon_cal}%{F- T1}%{F${color_back}} ${date}"
 
       # time
-      time=$(date +%R)
-
-      time="%{F${color_head}}${sep_left}%{F${color_back} B${color_head}} %{T2}${icon_clock}%{F- T1}%{F${color_back}} ${time} %{F- B-}"
+      time="%{F${color_head}}${sep_left}%{F${color_back} B${color_head}} %{T2}${icon_clock}%{F- T1}%{F${color_back}} ${clock} %{F- B-}"
 
       # cpu
       if [ ${sys_arr[0]} -gt ${cpu_alert} ]; then

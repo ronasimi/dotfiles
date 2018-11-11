@@ -1,0 +1,342 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;==========================================================
+
+[colors]
+background = #cc2f343f
+background-alt = #CC121419
+foreground = #eaeaeb
+foreground-alt = #eaeaeb
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+black = #585c65
+red = #ac4142
+green = #90a959
+yellow = #f4bf75
+blue = #6a9fb5
+magenta = #aa759f
+cyan = #75b5aa
+white = #eaeaeb
+
+[bar/mybar]
+monitor = ${env:MONITOR:LVDS-1}
+width = 1572
+height = 14
+offset-x = 14
+offset-y = 7
+radius = 0.0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 0
+line-color = #f00
+
+border-size = 0
+border-color = #cc2f343f
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = xos4 terminess powerline:pixelsize=12;antialias=false;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = material design icons:pixelsize=10;1
+
+modules-left = bspwm
+modules-center = xwindow
+modules-right = gmail cpu memory wlan eth backlight pulseaudio battery date powermenu
+
+tray-position = right
+tray-padding = 2
+tray-background = ${colors.background}
+
+wm-restack = bspwm
+
+override-redirect = true
+
+scroll-up = bspwm-desknext
+scroll-down = bspwm-deskprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %icon%
+label-focused-background = ${colors.green}
+label-focused-padding = 2
+
+label-occupied = %icon%
+label-occupied-background = ${colors.blue}
+label-occupied-padding = 2
+
+label-urgent = %icon%!
+label-urgent-background = ${colors.red}
+label-urgent-padding = 2
+
+label-empty =
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 2
+
+strip-wsnumbers = true
+
+; Separator in between workspaces
+;label-separator = 
+;label-separator-foreground = ${colors.blue}
+;label-separator-background = ${colors.background}
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-default = 
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:75:...%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume-padding = 1
+format-volume-background = ${colors.background-alt}
+format-volume-foreground = ${colors.foreground}
+
+format-volume = <label-volume>
+format-volume-prefix = " "
+label-volume = "%percentage:3%% "
+
+format-muted-padding = 1
+label-muted = " mute "
+label-muted-foreground = #888
+format-muted-background = ${colors.background-alt}
+format-muted-foreground = ${colors.foreground}
+
+[module/cpu]
+type = internal/cpu
+
+interval = 2
+
+format-padding = 1
+format-background = ${colors.background-alt}
+format-prefix = "  "
+label = %percentage:3%%
+
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+format-warn-underline = ${self.format-underline}
+
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.secondary}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = ${colors.foreground-alt}
+
+[module/memory]
+type = internal/memory
+interval = 2
+
+format-padding = 1
+format-background = ${colors.background-alt}
+format-prefix = " "
+label = "%gb_used% "
+
+[module/wlan]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
+
+format-connected-padding = 1
+format-connected-background = ${colors.background}
+format-connected-foreground = ${colors.foreground}
+format-connected = <ramp-signal> <label-connected>
+format-connected-prefix = "  "
+label-connected = %essid%
+
+format-disconnected-padding = 1
+format-disconnected-background = ${colors.background}
+format-disconnected-foreground = ${colors.foreground}
+format-disconnected = <label-disconnected>
+label-disconnected = " "
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+
+[module/eth]
+type = internal/network
+interface = enp0s25
+interval = 3.0
+
+format-connected-padding = 1
+format-connected-background = ${colors.background}
+format-connected-foreground = ${colors.foreground}
+format-connected-prefix = " "
+label-connected = "%local_ip% "
+
+format-disconnected-padding = 2
+format-disconnected-background = ${colors.background}
+format-disconnected-foreground = ${colors.foreground}
+format-disconnected = <label-disconnected>
+label-disconnected = " "
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+time-format = %H:%M
+
+format-charging-padding = 2
+format-charging-background = ${colors.yellow}
+format-charging = <animation-charging> <label-charging>
+
+label-discharging = %time%
+format-discharging-padding = 2
+format-discharging-background = ${colors.yellow}
+format-discharging = <animation-discharging> <label-discharging>
+
+
+format-full-padding = 2
+format-full-background = ${colors.green}
+format-full-prefix = " "
+format-full-prefix-foreground = ${colors.foreground-alt}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-foreground = ${colors.foreground-alt}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-framerate = 750
+
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-foreground = ${colors.foreground-alt}
+animation-discharging-framerate = 750
+
+[module/date]
+type = internal/date
+
+interval = 5
+
+format-padding = 2
+format-background = ${colors.blue}
+format-foreground = ${colors.foreground}
+
+date = %m-%d-%Y
+
+time = %H:%M
+
+format-prefix = " "
+
+label = %time% %date%
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = true
+
+format-padding = 2
+format-background = ${colors.red}
+;format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.foreground}
+label-close =  cancel
+label-close-foreground = ${colors.foreground}
+label-separator = |
+label-separator-foreground = ${colors.background}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = reboot
+
+menu-2-0 = power off
+menu-2-0-exec = poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+# custom modules
+
+[module/backlight]
+type = custom/script
+interval = 0.5
+exec = ~/.config/polybar/backlight.sh
+
+format-padding = 1
+format-background = ${colors.background-alt}
+format-foreground = ${colors.foreground}
+
+format-prefix = "  "
+label = "%output:3%%"
+
+[module/gmail]
+type = custom/script
+interval = 60
+exec = ~/.bin/gmail.sh
+
+format-padding = 2
+format-background = ${colors.yellow}
+format-foreground = ${colors.background}
+
+format-prefix = " "
+label = %output%
+click-left = xdg-open https://mail.google.com &
+
+; vim:ft=dosini

@@ -18,14 +18,11 @@ conky.config = {
 
 conky.text = [[
 SYS\
-${time %a %b %d %H:%M} \
 ${cpu} \
-${exec sensors | grep Package | cut -c17-19 | sed 's/\.[^\.]*$//'} \
 ${mem} \
 ${fs_used_perc /} \
-${if_existing /proc/net/route enp0s25}up ${else}down${endif} \
-${if_up wlp3s0}up ${else}down${endif} \
-${if_existing /proc/net/route enp0s29u1u2}up ${else}down${endif} \
-${exec acpi -a | grep Adapter | cut -c12-14} \
+${if_existing /proc/net/route enp0s25}up${else}down${endif} \
+${if_up wlp3s0}up${else}down${endif} \
+${if_existing /proc/net/route enp0s29u1u2}up${else}down${endif} \
 ${battery_percent} \
 ]];

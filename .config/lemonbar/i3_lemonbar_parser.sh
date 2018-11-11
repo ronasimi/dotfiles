@@ -109,7 +109,7 @@ while read -r line ; do
       if [ "${oncharger}" != "off" ]; then
         icon_bat=${icon_charge};
       else
-        if [ "${sys}" -ge 95 ]; then
+        if [ "${sys_arr[6]}" -ge 95 ]; then
           icon_bat=${icon_full};
         elif [ "${sys_arr[6]}" -ge 85 ]; then
           icon_bat=${icon_90};

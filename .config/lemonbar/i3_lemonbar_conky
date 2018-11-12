@@ -3,7 +3,7 @@ conky.config = {
   -- out simple text to console
 
   background = false,
-  update_interval = 2,
+  update_interval = 1,
   cpu_avg_samples = 1,
   total_run_times = 0,
   override_utf8_locale = true,

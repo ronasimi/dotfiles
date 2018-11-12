@@ -27,13 +27,13 @@ while read -r line ; do
       currenttime=$(date +"%a %b %d %R")
       clock=$(echo "$currenttime" | cut -c12-16)
       if [ ${res_w} -gt 1024 ]; then
-       	date=$(echo "$currenttime" | cut -c1-10)
+       	day=$(echo "$currenttime" | cut -c1-10)
       else
-       	date=$(echo "$currenttime" | cut -c5-10)
+       	day=$(echo "$currenttime" | cut -c5-10)
       fi
 
       # date
-      date="%{F${color_wsp}}${sep_left}%{F${color_back} B${color_wsp}} %{T2}${icon_cal}%{F- T1}%{F${color_back}} ${date}"
+      date="%{F${color_wsp}}${sep_left}%{F${color_back} B${color_wsp}} %{T2}${icon_cal}%{F- T1}%{F${color_back}} ${day}"
 
       # time
       time="%{F${color_head}}${sep_left}%{F${color_back} B${color_head}} %{T2}${icon_clock}%{F- T1}%{F${color_back}} ${clock} %{F- B-}"
@@ -66,9 +66,10 @@ while read -r line ; do
 
       # brightness
       blDir='/sys/class/backlight/intel_backlight'
-      bright_cur=$(cat $blDir/actual_brightness) # current brightness
       bright_max=$(cat $blDir/max_brightness)    # maximum brightness
+      bright_cur=$(cat $blDir/actual_brightness) # current brightness
       bright_pct=$(echo "scale=3; ($bright_cur/$bright_max)*100" | bc | awk '{print int($1+0.5)}')
+
       bright="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_bright} %{F- T1}${bright_pct}%"
 
       # ethernet

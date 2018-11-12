@@ -22,13 +22,12 @@ mkfifo "${panel_fifo}"
 
 ### EVENTS METERS
 
-
 # Window title, "WIN"
 while read -r; do
 
 xprop -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}" &
 
-done < <(i3-msg -t subscribe -m '[ "window" ]') &
+done < <(echo && i3-msg -t subscribe -m '[ "window" ]') &
 
 # i3 Workspaces, "WSP"
 # TODO : Restarting I3 breaks the IPC socket con. :(
@@ -54,6 +53,8 @@ while :; do
     printf "%s%s\n" "GMA" "$(~/.bin/gmail.sh)" > "${panel_fifo}"
     cnt_mail=0
   fi
+
+  sleep 1;
 
 done &
 

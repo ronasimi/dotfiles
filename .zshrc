@@ -146,9 +146,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# DOTFILES REPO
-alias dots='/usr/bin/git --git-dir=/home/ron/.dotfiles/ --work-tree=/home/ron'
-
 # THE FUCK
 eval "$(thefuck --alias)"
 

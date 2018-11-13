@@ -106,9 +106,9 @@ while read -r line ; do
       tether="%{F${teth_cback}}${sep_left}%{F${teth_cicon} B${teth_cback}} %{T2}%{F${teth_cicon} T1}${tethup}"
 
       # bat
-      oncharger=$(exec acpi -a | grep Adapter | cut -c12-14)
+      oncharger=$(acpi --battery | awk '{print $3}' | cut -d "," -f 1)
 
-      if [ "${oncharger}" != "off" ]; then
+      if [ "${oncharger}" != "Discharging" ]; then
         icon_bat=${icon_charge};
       else
         if [ "${sys_arr[6]}" -ge 95 ]; then

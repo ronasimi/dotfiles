@@ -1,0 +1,3 @@
+#SSID=$(nmcli -t -f active,ssid dev wifi | egrep '^yes' | cut -d\: -f2)
+SSID=$(iwconfig wlp3s0)
+notify-send "$SSID"

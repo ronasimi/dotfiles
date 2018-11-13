@@ -3,5 +3,4 @@ pkill lemonbar
 pkill conky
 pkill feh
 i3-msg exit
-sleep 1
 

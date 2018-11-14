@@ -43,14 +43,14 @@ amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {printf "VOL%d%%\n",$
 
 done < <(echo && stdbuf -oL alsactl monitor pulse) &
 
+  # GMAIL, "GMA"
+
 ### Mail update interval
 cnt_mail=${upd_mail}
 
 while :; do
-
-  # GMAIL, "GMA"
   if [ $((cnt_mail++)) -ge ${upd_mail} ]; then
-    printf "%s%s\n" "GMA" "$(~/.bin/gmail.sh)" > "${panel_fifo}"
+    printf "%s%s\n" "GMA" "$($(dirname $0)/gmail.sh)" > "${panel_fifo}"
     cnt_mail=0
   fi
 

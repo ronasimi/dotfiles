@@ -20,7 +20,7 @@ title="%{F${color_head} B${color_sec_b1}}${sep_right}%{F${color_icon} B${color_s
 while read -r line ; do
   case $line in
     SYS*)
-      # conky= 0 = cpu, 1 = memory percent, 2= disk used /, 3 = eth up/down, 4 = wifi up/down, 5 = tether up/down, 6 = battery percent
+      # conky= 0 = cpu, 1 = memory percent, 2 = eth up/down, 3 = wifi up/down, 4 = tether up/down, 5 = battery percent
       sys_arr=(${line#???})
 
       # date/time
@@ -42,7 +42,7 @@ while read -r line ; do
       if [ ${sys_arr[0]} -gt ${cpu_alert} ]; then
         cpu_cback=${color_cpu}; cpu_cicon=${color_icon}; cpu_cfore=${color_fore};
       else
-        cpu_cback=${color_sec_b2}; cpu_cicon=${color_icon}; cpu_cfore=${color_fore};
+        cpu_cback=${color_sec_b1}; cpu_cicon=${color_icon}; cpu_cfore=${color_fore};
       fi
 
       cpu="%{F${cpu_cback}}${sep_left}%{F${cpu_cicon} B${cpu_cback}} %{T2}${icon_cpu}%{F${cpu_cfore} T1} ${sys_arr[0]}%"
@@ -53,16 +53,13 @@ while read -r line ; do
       if [ ${temp} -ge ${temp_alert} ]; then
         temp_cback=${color_cpu}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
       else
-        temp_cback=${color_sec_b1}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
+        temp_cback=${color_sec_b2}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
       fi
 
       heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${temp}°C"
 
       # mem
-      mem="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[1]}"
-
-      # disk /
-      diskr="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_hd} %{F- T1}${sys_arr[2]}%"
+      mem="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[1]}"
 
       # brightness
       blDir='/sys/class/backlight/intel_backlight'
@@ -75,7 +72,7 @@ while read -r line ; do
       # ethernet
       eth_cback=${color_sec_b1}; eth_cfore=${color_fore};
 
-      if [ "${sys_arr[3]}" == "down" ]; then
+      if [ "${sys_arr[2]}" == "down" ]; then
         ethup=${icon_ethdown}; eth_cicon=${color_netdown};
       else
         ethup=${icon_ethup}; eth_cicon=${color_icon};
@@ -86,7 +83,7 @@ while read -r line ; do
       # wlan
       wlan_cback=${color_sec_b1}; wlan_cfore=${color_fore};
 
-      if [ "${sys_arr[4]}" == "down" ]; then
+      if [ "${sys_arr[3]}" == "down" ]; then
         wlanup=${icon_wifi_down}; wlan_cicon=${color_netdown};
       else
         wlanup=${icon_wifi_up}; wlan_cicon=${color_icon};
@@ -97,7 +94,7 @@ while read -r line ; do
       # tether
       teth_cback=${color_sec_b1}; teth_cicon=${color_icon}; teth_cfore=${color_fore}
 
-      if [ "${sys_arr[5]}" == "down" ]; then
+      if [ "${sys_arr[4]}" == "down" ]; then
         tethup=${icon_tether_down}; teth_cicon=${color_netdown};
       else
         tethup=${icon_tether_up}; teth_cicon=${color_icon};
@@ -111,36 +108,36 @@ while read -r line ; do
       if [ "${oncharger}" != "Discharging" ]; then
         icon_bat=${icon_charge};
       else
-        if [ "${sys_arr[6]}" -ge 95 ]; then
+        if [ "${sys_arr[5]}" -ge 95 ]; then
           icon_bat=${icon_full};
-        elif [ "${sys_arr[6]}" -ge 85 ]; then
+        elif [ "${sys_arr[5]}" -ge 85 ]; then
           icon_bat=${icon_90};
-        elif [ "${sys_arr[6]}" -ge 75 ]; then
+        elif [ "${sys_arr[5]}" -ge 75 ]; then
           icon_bat=${icon_80};
-        elif [ "${sys_arr[6]}" -ge 65 ]; then
+        elif [ "${sys_arr[5]}" -ge 65 ]; then
           icon_bat=${icon_70};
-        elif [ "${sys_arr[6]}" -ge 55 ]; then
+        elif [ "${sys_arr[5]}" -ge 55 ]; then
           icon_bat=${icon_60};
-        elif [ "${sys_arr[6]}" -ge 45 ]; then
+        elif [ "${sys_arr[5]}" -ge 45 ]; then
           icon_bat=${icon_50};
-        elif [ "${sys_arr[6]}" -ge 35 ]; then
+        elif [ "${sys_arr[5]}" -ge 35 ]; then
           icon_bat=${icon_40};
-        elif [ "${sys_arr[6]}" -ge 25 ]; then
+        elif [ "${sys_arr[5]}" -ge 25 ]; then
           icon_bat=${icon_30};
-        elif [ "${sys_arr[6]}" -ge 15 ]; then
+        elif [ "${sys_arr[5]}" -ge 15 ]; then
           icon_bat=${icon_20};
-        elif [ "${sys_arr[6]}" -gt ${bat_alert} ]; then
+        elif [ "${sys_arr[5]}" -gt ${bat_alert} ]; then
           icon_bat=${icon_10};
         fi
       fi
 
-      if [ ${sys_arr[6]} -le ${bat_alert} ]; then
+      if [ ${sys_arr[5]} -le ${bat_alert} ]; then
         bat_cback=${color_cpu}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat=${icon_low};
       else
         bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
       fi
 
-      bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${sys_arr[6]}%"
+      bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${sys_arr[5]}%"
       ;;
 
     VOL*)
@@ -167,6 +164,19 @@ while read -r line ; do
       fi
 
       gmail="%{F${mail_cback}}${sep_left}%{F${mail_cicon} B${mail_cback}} %{T2}${icon_mail}%{F${mail_cfore} T1} ${gmail}"
+      ;;
+
+    UPD*)
+      # Updates
+      updates="${line#???}"
+
+      if [ "${updates}" != "0" ]; then
+        upd_cback=${color_upd}; upd_cicon=${color_back}; upd_cfore=${color_back};
+      else
+        upd_cback=${color_sec_b2}; upd_cicon=${color_icon}; upd_cfore=${color_fore};
+      fi
+
+      updates="%{F${upd_cback}}${sep_left}%{F${upd_cicon} B${upd_cback}} %{T2}${icon_arch}%{F${upd_cfore} T1} ${updates}"
       ;;
 
     WSP*)
@@ -196,5 +206,5 @@ while read -r line ; do
   esac
 
   # And finally, output
-  printf "%s\n" "%{l}${wsp}${title}%{r}${gmail}${stab}${cpu}${stab}${heat}${stab}${mem}${stab}${diskr}${stab}${bright}${stab}${vol}${stab}${bat}${stab}${ethernet}${wifi}${tether}${stab}${date}${stab}${time}"
+  printf "%s\n" "%{l}${wsp}${title}%{r}${cpu}${stab}${heat}${stab}${mem}${stab}${bright}${stab}${vol}${stab}${bat}${stab}${ethernet}${wifi}${tether}${stab}${updates}${stab}${gmail}${stab}${date}${stab}${time}"
 done

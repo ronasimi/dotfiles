@@ -31,7 +31,7 @@ done < <(echo && i3-msg -t subscribe -m '[ "window" ]' & i3-msg -t subscribe -m 
 
 # i3 Workspaces, "WSP"
 # TODO : Restarting I3 breaks the IPC socket con. :(
-$(dirname $0)/i3_workspaces.pl > "${panel_fifo}" &
+$(dirname $0)/scripts/workspaces.pl > "${panel_fifo}" &
 
 # Conky, "SYS"
 conky -c $(dirname $0)/i3_lemonbar_conky > "${panel_fifo}" &
@@ -46,15 +46,30 @@ done < <(echo && stdbuf -oL alsactl monitor pulse) &
   # GMAIL, "GMA"
 
 ### Mail update interval
-cnt_mail=${upd_mail}
+cnt_mail=${mail_timer}
 
 while :; do
-  if [ $((cnt_mail++)) -ge ${upd_mail} ]; then
-    printf "%s%s\n" "GMA" "$($(dirname $0)/gmail.sh)" > "${panel_fifo}"
+  if [ $((cnt_mail++)) -ge ${mail_timer} ]; then
+    printf "%s%s\n" "GMA" "$($(dirname $0)/scripts/gmail.sh)" > "${panel_fifo}"
     cnt_mail=0
   fi
 
   sleep 1;
+
+done &
+
+# Updates, "UPD"
+
+### Mail update interval
+cnt_update=${upd_timer}
+
+while :; do
+if [ $((cnt_update++)) -ge ${upd_timer} ]; then
+  printf "%s%s\n" "UPD" "$($(dirname $0)/scripts/updates.sh)" > "${panel_fifo}"
+  cnt_update=0
+fi
+
+sleep 1;
 
 done &
 

@@ -158,7 +158,7 @@ while read -r line ; do
       gmail="${line#???}"
 
       if [ "${gmail}" != "0" ]; then
-        mail_cback=${color_mail}; mail_cicon=${color_back}; mail_cfore=${color_back};
+        mail_cback=${color_mail}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
       else
         mail_cback=${color_sec_b1}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
       fi

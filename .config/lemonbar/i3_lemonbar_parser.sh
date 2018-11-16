@@ -160,7 +160,7 @@ while read -r line ; do
       if [ "${gmail}" != "0" ]; then
         mail_cback=${color_mail}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
       else
-        mail_cback=${color_sec_b1}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
+        mail_cback=${color_sec_b2}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
       fi
 
       gmail="%{F${mail_cback}}${sep_left}%{F${mail_cicon} B${mail_cback}} %{T2}${icon_mail}%{F${mail_cfore} T1} ${gmail}"
@@ -173,7 +173,7 @@ while read -r line ; do
       if [ "${updates}" != "0" ]; then
         upd_cback=${color_upd}; upd_cicon=${color_icon_dark}; upd_cfore=${color_back};
       else
-        upd_cback=${color_sec_b2}; upd_cicon=${color_icon}; upd_cfore=${color_fore};
+        upd_cback=${color_sec_b1}; upd_cicon=${color_icon}; upd_cfore=${color_fore};
       fi
 
       updates="%{F${upd_cback}}${sep_left}%{F${upd_cicon} B${upd_cback}} %{T2}${icon_arch}%{F${upd_cfore} T1} ${updates}"
@@ -206,5 +206,5 @@ while read -r line ; do
   esac
 
   # And finally, output
-  printf "%s\n" "%{l}${wsp}${title}%{r}${cpu}${stab}${heat}${stab}${mem}${stab}${bright}${stab}${vol}${stab}${bat}${stab}${gmail}${stab}${updates}${stab}${ethernet}${wifi}${tether}${stab}${date}${stab}${time}"
+  printf "%s\n" "%{l}${wsp}${title}%{r}${cpu}${stab}${heat}${stab}${mem}${stab}${bright}${stab}${vol}${stab}${bat}${stab}${updates}${stab}${gmail}${stab}${ethernet}${wifi}${tether}${stab}${date}${stab}${time}"
 done

@@ -33,10 +33,10 @@ while read -r line ; do
       fi
 
       # date
-      date="%{F${color_wsp}}${sep_left}%{F${color_back} B${color_wsp}} %{T2}${icon_cal}%{F- T1}%{F${color_back}} ${day}"
+      date="%{F${color_wsp}}${sep_left}%{F${color_icon_dark} B${color_wsp}} %{T2}${icon_cal}%{F- T1}%{F${color_back}} ${day}"
 
       # time
-      time="%{F${color_head}}${sep_left}%{F${color_back} B${color_head}} %{T2}${icon_clock}%{F- T1}%{F${color_back}} ${clock} %{F- B-}"
+      time="%{F${color_head}}${sep_left}%{F${color_icon_dark} B${color_head}} %{T2}${icon_clock}%{F- T1}%{F${color_back}} ${clock} %{F- B-}"
 
       # cpu
       if [ ${sys_arr[0]} -gt ${cpu_alert} ]; then
@@ -171,7 +171,7 @@ while read -r line ; do
       updates="${line#???}"
 
       if [ "${updates}" != "0" ]; then
-        upd_cback=${color_upd}; upd_cicon=${color_back}; upd_cfore=${color_back};
+        upd_cback=${color_upd}; upd_cicon=${color_icon_dark}; upd_cfore=${color_back};
       else
         upd_cback=${color_sec_b2}; upd_cicon=${color_icon}; upd_cfore=${color_fore};
       fi
@@ -181,13 +181,13 @@ while read -r line ; do
 
     WSP*)
       # I3 Workspaces
-      wsp="%{F${color_back} B${color_head}} %{T2}${icon_wsp}%{T1}"
+      wsp="%{F${color_icon_dark} B${color_head}} %{T2}${icon_wsp}%{T1}"
       set -- ${line#???}
 
       while [ $# -gt 0 ] ; do
         case $1 in
           FOC*)
-            wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_back} B${color_wsp} T1} ${1#???} %{F${color_wsp} B${color_head}}${sep_right}"
+            wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_icon_dark} B${color_wsp} T1} ${1#???} %{F${color_wsp} B${color_head}}${sep_right}"
             ;;
           INA*|URG*|ACT*)
             wsp="${wsp}%{F${color_disable} T1} ${1#???} "
@@ -201,10 +201,10 @@ while read -r line ; do
       # window title
       title=$(xprop -id ${line#???} | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
 
-      title="%{F${color_head} B${color_sec_b1}}${sep_right}%{F${color_icon} B${color_sec_b1} T2} ${icon_prog} %{F${color_sec_b1} B-}%{F- B- T1}%{F${color_sec_b1}}${sep_right}%{F${color_icon}} ${title}"
+      title="%{F${color_head} B${color_sec_b1}}${sep_right}%{F${color_icon} B${color_sec_b1} T2} ${icon_prog} %{F${color_sec_b1} B-}%{F- B- T1}%{F${color_sec_b1}}${sep_right}%{F${color_fore}} ${title}"
       ;;
   esac
 
   # And finally, output
-  printf "%s\n" "%{l}${wsp}${title}%{r}${cpu}${stab}${heat}${stab}${mem}${stab}${bright}${stab}${vol}${stab}${bat}${stab}${ethernet}${wifi}${tether}${stab}${updates}${stab}${gmail}${stab}${date}${stab}${time}"
+  printf "%s\n" "%{l}${wsp}${title}%{r}${cpu}${stab}${heat}${stab}${mem}${stab}${bright}${stab}${vol}${stab}${bat}${stab}${gmail}${stab}${updates}${stab}${ethernet}${wifi}${tether}${stab}${date}${stab}${time}"
 done

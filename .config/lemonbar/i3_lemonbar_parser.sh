@@ -145,7 +145,7 @@ while read -r line ; do
       isMuted=$(pacmd list-sinks | grep "muted" | cut -c 9-10)
 
       if [ "${isMuted}" == "ye" ]; then
-        icon_vol="";
+        icon_vol="";
       else
         icon_vol="";
       fi

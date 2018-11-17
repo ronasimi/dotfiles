@@ -1,5 +1,4 @@
 URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-*
-URxvt*boldFont:			-xos4-terminesspowerline-bold-r-normal--12-120-72-72-c-60-*-*
 URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true
 URxvt*scrollBar:		false
@@ -13,7 +12,7 @@ URxvt*pointerBlank:		true
 URxvt*secondaryScreen:		true
 URxvt*secondaryScroll:		false
 URxvt*depth:			32
-URxvt*perl-ext-common:		default,clipboard,url-select,keyboard-select,vtwheel,fullscreen
+URxvt*perl-ext-common:		default,matcher,clipboard,url-select,keyboard-select,vtwheel,fullscreen
 URxvt*url-select.launcher:	google-chrome-stable
 URxvt*url-select.underline:	true
 URxvt*keysym.C-A-c:		perl:clipboard:copy
@@ -27,7 +26,14 @@ URxvt*keysym.KP_Home:		\033[1~
 URxvt*keysym.KP_End:		\033[4~
 URxvt*keysym.F11:		perl:fullscreen:switch
 URxvt*iso14755:			false
-! URxvt*termName:			xterm-256color
+
+Xft.dpi:			96
+Xft.antialias:			true
+Xft.hinting:			true
+Xft.rgba:			rgb
+Xft.autohint:			false
+Xft.hintstyle:			hintslight
+Xft.lcdfilter:			lcddefault
 
 ! Colors
 *.foreground:   #eaeaeb

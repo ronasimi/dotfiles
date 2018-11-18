@@ -14,9 +14,9 @@ net_alert=5                         # K net use
 bat_alert=5		            # low battery %
 temp_alert=90                       # high temp
 
-# update setting, in seconds (conky update in i3_lemonbar_conky)
-mail_timer=300                      # Mail check timer
-upd_timer=3600                      # Update check timer
+# update timers, in minutes (conky update in i3_lemonbar_conky)
+mail_timer=5                        # Mail check timer (min)
+upd_timer=30                        # Update check (min)
 
 # color definitions
 color_back="#C02F343F"              # Default background

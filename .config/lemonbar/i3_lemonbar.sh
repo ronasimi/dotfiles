@@ -53,7 +53,7 @@ while :; do
     cnt_mail=0
   fi
 
-  sleep 1;
+  sleep 60;
 
 done &
 
@@ -68,7 +68,7 @@ if [ $((cnt_update++)) -ge ${upd_timer} ]; then
   cnt_update=0
 fi
 
-sleep 1;
+sleep 60;
 
 done &
 

@@ -19,7 +19,7 @@ set $ws2 "2:"
 set $ws3 "3:"
 set $ws4 "4:"
 set $ws5 "5:"
-set $ws6 "6:"
+set $ws6 "6:"
 set $ws7 "7:"
 set $ws8 "8:"
 set $ws9 "9:"
@@ -33,7 +33,7 @@ client.focused_inactive		#2f343f		#2f343f		#eaeaeb		#2f343f		#2f343f
 client.unfocused		#2f343f		#171a1f		#757575		#2f343f		#2f343f
 client.urgent			#eaeaeb		#900000		#eaeaeb		#6a9fb5		#eaeaeb
 client.placeholder		#000000		#0c0c0c		#eaeaeb		#6a9fb5		#0c0c0c
-client.background		#eaeaeb
+client.background		#2f343f
 
 # window borders
 default_border pixel 3
@@ -55,17 +55,16 @@ hide_edge_borders smart
 #smart_borders on
 
 # Set variables for floating and un-floating commands
-set $FLOAT-border floating enable, border normal 0
+set $FLOAT-border floating enable, border pixel 3
 set $FLOAT-noborder floating enable, border none
 
 ## Client rules
 # client placement
-#assign [class="google-chrome"] $ws1
+assign [class="Google-chrome"] $ws1
 #assign [class="URxvt"] $ws2
 #assign [class="Thunar"] $ws3
-#assign [class="Atom"] $ws4
-#assign [class="Meld"] $ws4
-#assign [class="mpv"] $ws6
+assign [class="Atom"] $ws4
+assign [class="Meld"] $ws4
 
 # split toggle for URxvt
 #for_window [class="URxvt"] split toggle; split toggle
@@ -209,14 +208,14 @@ bindsym $mod+XF86Back move container to workspace prev
 bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart; pkill lemonbar
+bindsym $mod+Shift+r restart, pkill lemonbar
 
 # exit i3 (logs you out of your X session)
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # lock - suspend - reboot - shutdown
 bindsym $mod+Ctrl+l exec --no-startup-id xset s activate
-bindsym $mod+Ctrl+e exec --no-startup-id ~/.config/i3/i3_exit.sh
+bindsym $mod+Ctrl+e exec --no-startup-id ~/.config/i3/scripts/i3_exit.sh
 bindsym $mod+Ctrl+s exec --no-startup-id systemctl suspend
 bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
 bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
@@ -226,23 +225,23 @@ bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i -o 0.75 -h 14 -w 1572 -x 14 -y 7 -nb '#2f343f' -nf '#eaeaeb' -sb '#6a9fb5' -sf '#2f343f' -fn '-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1'"
 
 # chrome
-bindsym $mod+F1 workspace $ws1; exec --no-startup-id google-chrome-stable
+bindsym $mod+F1 workspace $ws1; exec google-chrome-stable
 
 # urxvt
 bindsym $mod+F2 workspace $ws2; exec --no-startup-id urxvtc
 
 # thunar
-bindsym $mod+F3 workspace $ws3; exec --no-startup-id thunar
+bindsym $mod+F3 workspace $ws3; exec thunar
 
 # atom
-bindsym $mod+F4 workspace $ws4; exec --no-startup-id atom
+bindsym $mod+F4 workspace $ws4; exec atom
 
 # vmware player
-bindsym $mod+F5 workspace $ws5; exec --no-startup-id vmplayer
+bindsym $mod+F5 workspace $ws5; exec vmplayer
 
 # draw terminals
-for_window [class="URxvt" instance="floating"] floating enable
-bindsym --release $mod+t exec --no-startup-id ~/.bin/drawterm
+for_window [class="URxvt" instance="floating"] $FLOAT-border
+bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
 
 # Status bar
 # lemonbar
@@ -254,5 +253,5 @@ bar {
 exec --no-startup-id exec thunar --daemon
 exec --no-startup-id exec urxvtd -q -o -f
 exec --no-startup-id xss-lock lockscreen
-exec_always --no-startup-id ~/.config/i3/fehbg
+exec_always --no-startup-id ~/.config/i3/scripts/fehbg
 exec --no-startup-id sleep 0.5; exec xset s activate

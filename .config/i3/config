@@ -65,13 +65,14 @@ set $FLOAT-noborder floating enable, border none
 #assign [class="Thunar"] $ws3
 #assign [class="Atom"] $ws4
 #assign [class="Meld"] $ws4
-assign [class="mpv"] $ws6
+#assign [class="mpv"] $ws6
 
 # split toggle for URxvt
 #for_window [class="URxvt"] split toggle; split toggle
 
 # application exceptions
 for_window [class="mpv"] $FLOAT-noborder
+for_window [class="mpv"] sticky enable
 for_window [class="feh"] $FLOAT-noborder
 for_window [title="Hangouts"] $FLOAT-border
 
@@ -142,10 +143,13 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym $mod+shift+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+shift+d focus child
+
+# sticky toggle
+bindsym $mod+shift+s sticky toggle
 
 # workspace navigation
 bindsym $mod+1 workspace $ws1

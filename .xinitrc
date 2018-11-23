@@ -48,17 +48,12 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-#twm &
-#xclock -geometry 50x50-1+1 &
-#xterm -geometry 80x50+494+51 &
-#xterm -geometry 80x20+494-0 &
-#exec xterm -geometry 80x66+0+0 -name login
-
 eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)
 export SSH_AUTH_SOCK
 xset s 300 600 &
 syndaemon -i 2 -t -k -d &
-allow_rgb10_configs=false compton --config ~/.config/compton/config -b &
-parcellite -d -n &
+xcalib -d :0 ~/.config/icc/T4201600x900.icc &
+compton --config ~/.config/compton/config -b &
+parcellite -n &
 xset m 3 &
 exec i3

@@ -1,11 +1,12 @@
 URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-*
 URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true
+URxvt*saveLines:		9999
 URxvt*scrollBar:		false
 URxvt*scrollTtyOutput:		false
 URxvt*scrollWithBuffer:		true
 URxvt*scrollTtyKeypress:	true
-URxvt*internalBorder:		5
+URxvt*internalBorder:		11
 URxvt*cursorBlink:		true
 URxvt*cursorUnderline:		false
 URxvt*pointerBlank:		true

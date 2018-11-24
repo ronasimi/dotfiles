@@ -214,5 +214,4 @@ export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
 export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 7) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
 
 # POWERLINE
-powerline-daemon -q
-. /usr/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh
+. /usr/share/zsh/site-contrib/powerline.zsh

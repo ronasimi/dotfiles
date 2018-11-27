@@ -40,7 +40,7 @@ while read -r line ; do
 
       # cpu
       if [ ${sys_arr[0]} -gt ${cpu_alert} ]; then
-        cpu_cback=${color_cpu}; cpu_cicon=${color_icon}; cpu_cfore=${color_fore};
+        cpu_cback=${color_alert}; cpu_cicon=${color_icon}; cpu_cfore=${color_fore};
       else
         cpu_cback=${color_sec_b1}; cpu_cicon=${color_icon}; cpu_cfore=${color_fore};
       fi
@@ -51,7 +51,7 @@ while read -r line ; do
       temp=$(exec sensors | grep Package | cut -c17-19 | sed 's/\.[^\.]*$//')
 
       if [ ${temp} -ge ${temp_alert} ]; then
-        temp_cback=${color_cpu}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
+        temp_cback=${color_alert}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
       else
         temp_cback=${color_sec_b2}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
       fi
@@ -132,7 +132,7 @@ while read -r line ; do
       fi
 
       if [ ${sys_arr[5]} -le ${bat_alert} ]; then
-        bat_cback=${color_cpu}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat=${icon_low};
+        bat_cback=${color_alert}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat=${icon_low};
       else
         bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
       fi

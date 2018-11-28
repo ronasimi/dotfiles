@@ -1,5 +1,5 @@
 [global]
-    font = "Terminess Powerline 8"
+    font = "Inter UI 9"
 
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -68,7 +68,7 @@
 
     # Frame
     frame_width = 0
-    frame_color = "#aaaaaa"
+    frame_color = "#2f343f"
     
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
@@ -102,7 +102,7 @@
 
     # Should a notification popped up from history be sticky or timeout
     # as if it would normally do.
-    sticky_history = yes
+    sticky_history = no
 
     # Maximum amount of notifications kept in history
     history_length = 20
@@ -175,19 +175,19 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#2f343f"
+    background = "#90a959"
     foreground = "#eaeaeb"
-    timeout = 10
+    timeout = 3
 
 [urgency_normal]
-    background = "#2f343f"
-    foreground = "#eaeaeb"
-    timeout = 10
+    background = "#eaeaeb"
+    foreground = "#2f343f"
+    timeout = 3
 
 [urgency_critical]
-    background = "#2f343f"
-    foreground = "#ac4142"
-    timeout = 0
+    background = "#ac4142"
+    foreground = "#eaeaeb"
+    timeout = 5
 
 
 # Every section that isn't one of the above is interpreted as a rules to

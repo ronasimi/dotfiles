@@ -15,6 +15,9 @@
 		"branch": {
 			"before": "BR "
 		},
+		"stash": {
+			"before": "ST "
+		},
 		"cwd": {
 			"args": {
 				"ellipsis": "..."
@@ -51,7 +54,9 @@
 		"powerline.segments.common.bat.battery": {
 			"args": {
 				"full_heart": "O",
-				"empty_heart": "O"
+				"empty_heart": "O",
+				"online": "C",
+				"offline": " "
 			}
 		},
 		"powerline.segments.common.sys.uptime": {
@@ -100,15 +105,20 @@
 					"S":  "S-LINE",
 					"^S": "S-BLCK",
 					"i":  "INSERT",
+					"ic": "I-COMP",
+					"ix": "I-C_X ",
 					"R":  "RPLACE",
 					"Rv": "V-RPLC",
+					"Rc": "R-COMP",
+					"Rx": "R-C_X ",
 					"c":  "COMMND",
 					"cv": "VIM-EX",
 					"ce": "NRM-EX",
 					"r":  "PROMPT",
 					"rm": "-MORE-",
 					"r?": "CNFIRM",
-					"!":  "!SHELL"
+					"!":  "!SHELL",
+					"t":  "TERM  "
 				}
 			}
 		},
@@ -128,6 +138,15 @@
 		"powerline.segments.vim.modified_indicator": {
 			"args": {
 				"text": "+"
+			}
+		},
+
+		"powerline.segments.i3wm.scratchpad": {
+			"args": {
+				"icons": {
+					"fresh": "O",
+					"changed": "X"
+				}
 			}
 		}
 	}

@@ -1,0 +1,13 @@
+[Unit]
+Description=rtorrent
+After=network.target
+
+[Service]
+Type=forking
+ExecStartPre=/usr/bin/bash -c "if test -e ~/.session/rtorrent.lock && test -z `pidof rtorrent`; then rm -f ~/.session/rtorrent.lock; fi"
+ExecStart=/usr/bin/tmux -L rt new-session -s rt -n rtorrent -d rtorrent 
+ExecStop=/usr/bin/bash -c "/usr/bin/tmux -L rt send-keys -t rt:rtorrent.0 C-q; while pidof rtorrent > /dev/null; do echo stopping rtorrent...; sleep 1; done"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

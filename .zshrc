@@ -107,6 +107,7 @@ setopt complete_in_word         # allow completion from within a word/phrase
 setopt correct_all              # spelling correction for commands
 setopt list_ambiguous           # complete as much of a completion until it gets ambiguous.
 setopt interactivecomments	# bash style interactive comments
+CORRECT_IGNORE_FILE='.*'
 
 zstyle ':completion::complete:*' use-cache on               # completion caching, use rehash to clear
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # ignore case

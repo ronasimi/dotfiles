@@ -1,4 +1,4 @@
-URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-*,xft:Material\ Design\ Icons:size=5,xft:Symbola
+URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-*,xft:Material\ Design\ Icons:size=5,xft:Symbola:size=8
 URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true
 URxvt*saveLines:		9999

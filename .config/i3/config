@@ -38,7 +38,6 @@ client.background		#2f343f
 # window borders
 default_border pixel 3
 default_floating_border pixel 3
-#for_window [class="URxvt"] border pixel 3
 
 # useless gaps
 gaps inner 14

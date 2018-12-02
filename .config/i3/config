@@ -38,7 +38,7 @@ client.background		#2f343f
 # window borders
 default_border pixel 3
 default_floating_border pixel 3
-#for_window [class="^.*"] border pixel 3
+#for_window [class="URxvt"] border pixel 3
 
 # useless gaps
 gaps inner 14
@@ -50,9 +50,9 @@ gaps top 14
 gaps bottom 14
 #gaps left <px>
 
-hide_edge_borders smart
+#hide_edge_borders smart
 #smart_gaps on
-#smart_borders on
+smart_borders on
 
 # Set variables for floating and un-floating commands
 set $FLOAT-border floating enable, border pixel 3
@@ -61,10 +61,10 @@ set $FLOAT-noborder floating enable, border none
 ## Client rules
 # client placement
 assign [class="Google-chrome"] $ws1
-#assign [class="URxvt"] $ws2
-#assign [class="Thunar"] $ws3
 assign [class="Atom"] $ws4
 assign [class="Meld"] $ws4
+assign [class="Vmware"] $ws5
+assign [class="Vmplayer"] $ws5
 
 # split toggle for URxvt
 #for_window [class="URxvt"] split toggle; split toggle
@@ -174,8 +174,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pulseaudio-ctl mute-input
 bindsym ctrl+XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ 150%
 
 # print screen
-bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/screenshot-%m%d%Y-%H:%M:%S.png & notify-send -u low $'Screenshot saved to\n~/Pictures/Screenshots'
-bindsym Shift+Print exec --no-startup-id scrot -u ~/Pictures/Screenshots/window-%m%d%Y-%H:%M:%S.png & notify-send -u low $'Window screeshot saved to\n~/Pictures/Screenshots'
+bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/screenshot-%Y%m%d-%H:%M:%S.png & notify-send -u low $'Screenshot' 'saved to ~/Pictures/Screenshots'
+bindsym Shift+Print exec --no-startup-id scrot -u ~/Pictures/Screenshots/window-%Y%m%d-%H:%M:%S.png & notify-send -u low $'Window screeshot' 'saved to ~/Pictures/Screenshots'
 
 # move focused window
 bindsym $mod+Shift+j move left

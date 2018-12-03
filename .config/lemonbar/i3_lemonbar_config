@@ -31,8 +31,10 @@ color_netdown="#C08C8C8D"		# For inactive network interface icons
 color_mail="#C0DD4B39"			# Background color for mail alert
 color_upd="#C01793D0"			# Background color for update alert
 color_alert="#C0AC4142"			# Background color for cpu/temp/memory alert
-color_disable="#C01D1F21"		# Foreground for disable elements
 color_wsp="#C090A959"			# Background for selected workspace
+color_ina="#FF434852"		        # Foreground for inactive workspace
+color_urg="#FFAC4142"                   # Foreground for urgent workspace
+color_cal="#C090A959"			# Background for calendar
 color_bat="#C0AC4142"			# Background for battery
 
 #default space between sections

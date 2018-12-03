@@ -33,10 +33,10 @@ while read -r line ; do
       fi
 
       # date
-      date="%{F${color_wsp}}${sep_left}%{F${color_icon_dark} B${color_wsp}} %{T2}${icon_cal}%{F- T1}%{F${color_back}} ${day}"
+      date="%{F${color_cal}}${sep_left}%{F${color_icon_dark} B${color_cal}} %{T2}${icon_cal}%{F- T1}%{F${color_icon_dark}} ${day}"
 
       # time
-      time="%{F${color_head}}${sep_left}%{F${color_icon_dark} B${color_head}} %{T2}${icon_clock}%{F- T1}%{F${color_back}} ${clock} %{F- B-}"
+      time="%{F${color_head}}${sep_left}%{F${color_icon_dark} B${color_head}} %{T2}${icon_clock}%{F- T1}%{F${color_icon_dark}} ${clock} %{F- B-}"
 
       # cpu
       if [ ${sys_arr[0]} -gt ${cpu_alert} ]; then
@@ -189,8 +189,11 @@ while read -r line ; do
           FOC*)
             wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_icon_dark} B${color_wsp} T1} ${1#???} %{F${color_wsp} B${color_head}}${sep_right}"
             ;;
-          INA*|URG*|ACT*)
-            wsp="${wsp}%{F${color_disable} T1} ${1#???} "
+          INA*|ACT*)
+            wsp="${wsp}%{F${color_ina} T1} ${1#???} "
+            ;;
+          URG*)
+            wsp="${wsp}%{F${color_urg} T1} ${1#???} "
             ;;
         esac
         shift

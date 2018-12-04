@@ -54,6 +54,6 @@ xset s 300 600 &
 syndaemon -i 2 -t -k -d &
 xcalib -d :0 ~/.config/icc/T4201600x900.icc &
 compton --config ~/.config/compton/config -b &
-parcellite -n &
+clipit -d -n &
 xset m 3 &
 exec i3

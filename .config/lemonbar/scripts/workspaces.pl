@@ -20,6 +20,7 @@ use warnings;
 use AnyEvent::I3;
 use AnyEvent;
 use v5.10;
+use open ':std', ':encoding(UTF-8)';
 
 my $socket_path = undef;
 my ( $workspaces, $outputs ) = ( [], {} );

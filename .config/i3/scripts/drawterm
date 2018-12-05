@@ -1,7 +1,3 @@
-#REC=$(slop -t 0 -b $M -c 1,1,1,1 -f "%w %h %x %y" --nokeyboard) || exit 1
-#REC=$(xrectsel) || exit 1
-
-#IFS=' ' read -r W H X Y <<< "$REC"
 #!/bin/bash
 #
 #   Author:         Twily                                           2015

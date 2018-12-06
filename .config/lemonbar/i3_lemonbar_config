@@ -41,9 +41,9 @@ color_bat="#C0AC4142"			# Background for battery
 
 #default space between sections
 if [ ${res_w} -gt 1024 ]; then
-  stab='  '
+        stab='  '
 else
-  stab=' '
+        stab=' '
 fi
 
 # Char glyps for powerline fonts

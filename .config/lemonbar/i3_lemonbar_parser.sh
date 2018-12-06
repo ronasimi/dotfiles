@@ -25,11 +25,11 @@ while read -r line ; do
 
       # date/time
       currenttime=$(date +"%a %b %d %R")
-      clock=$(echo "$currenttime" | cut -c12-16)
+      clock=$(echo "$currenttime" | cut -d " " -f 4)
       if [ ${res_w} -gt 1024 ]; then
-       	day=$(echo "$currenttime" | cut -c1-10)
+       	day=$(echo "$currenttime" | cut -d " " -f 1-3)
       else
-       	day=$(echo "$currenttime" | cut -c5-10)
+       	day=$(echo "$currenttime" | cut -d " " -f 2-3)
       fi
 
       # date
@@ -62,10 +62,7 @@ while read -r line ; do
       mem="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[1]}"
 
       # brightness
-      blDir='/sys/class/backlight/intel_backlight'
-      bright_max=$(cat $blDir/max_brightness)    # maximum brightness
-      bright_cur=$(cat $blDir/actual_brightness) # current brightness
-      bright_pct=$(echo "scale=3; ($bright_cur/$bright_max)*100" | bc | awk '{print int($1+0.5)}')
+      bright_pct=$(xbacklight -get)
 
       bright="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_bright} %{F- T1}${bright_pct}%"
 

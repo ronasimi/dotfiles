@@ -28,6 +28,8 @@ URxvt*keysym.KP_End:		\033[4~
 URxvt*keysym.F11:		perl:fullscreen:switch
 URxvt*iso14755:			false
 
+Xft.dpi: 96
+
 ! Colors
 *.foreground:   #eaeaeb
 *.background:   #2f343f

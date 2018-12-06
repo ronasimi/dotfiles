@@ -25,7 +25,7 @@ mkfifo "${panel_fifo}"
 # Window title, "WIN"
 while read -r; do
 
-        xprop -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}" &
+        (xprop -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}") &
 
 done < <(echo && i3-msg -t subscribe -m '[ "window" ]' & i3-msg -t subscribe -m '["workspace"]') &
 
@@ -38,7 +38,7 @@ conky -c $(dirname $0)/i3_lemonbar_conky > "${panel_fifo}" &
 # Volume, "VOL"
 while read -r; do
 
-        amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {printf "VOL%d%%\n",$2}' > "${panel_fifo}" &
+        (amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {printf "VOL%d%%\n",$2}' > "${panel_fifo}") &
 
 done < <(echo && stdbuf -oL alsactl monitor pulse) &
 

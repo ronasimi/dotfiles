@@ -59,7 +59,7 @@ set $FLOAT-noborder floating enable, border none
 
 ## Client rules
 # client placement
-assign [class="Google-chrome"] $ws1
+assign [class="Chromium"] $ws1
 assign [class="Atom"] $ws4
 assign [class="Meld"] $ws4
 assign [class="Vmware"] $ws5
@@ -232,8 +232,8 @@ bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i -o 0.75 -h 14 -w 1572 -x 14 -y 7 -nb '#2f343f' -nf '#eaeaeb' -sb '#6a9fb5' -sf '#2f343f' -fn '-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1'"
 
-# chrome
-bindsym $mod+F1 workspace $ws1; exec google-chrome-stable
+# chromium
+bindsym $mod+F1 workspace $ws1; exec chromium
 
 # urxvt
 bindsym $mod+F2 workspace $ws2; exec --no-startup-id urxvtc
@@ -250,6 +250,15 @@ bindsym $mod+F5 workspace $ws5; exec vmplayer
 # draw terminals
 for_window [class="URxvt" instance="floating"] $FLOAT-border
 bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
+
+# Clickable nmtui
+for_window [class="URxvt" instance="nmtui"] $FLOAT-border
+
+# Clickable htop
+for_window [class="URxvt" instance="htop"] $FLOAT-border
+
+# Clickable htop
+for_window [class="Zenity" instance="Calendar"] move position 1362 px 28 px
 
 # Status bar
 # lemonbar

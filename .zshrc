@@ -15,7 +15,7 @@ case $TERM in
     precmd () { print -Pn "\e]0;%n@%m: %~\a" }
     preexec () { print -Pn "\e]0;$1\a" }
   ;;
-  screen|screen-256color)
+  screen|screen-256color|tmux|tmux-256color)
     precmd () {
       print -Pn "\e]83;title \"$1\"\a"
       print -Pn "\e]0;$TERM\a"
@@ -195,6 +195,7 @@ export EDITOR="nano"
 # CCACHE
 export USE_CCACHE=1
 export CCACHE_DIR=/mnt/storage/ccache
+export CCACHE_SLOPPINESS=include_file_mtime
 
 #PKGFILE HOOK
 source /usr/share/doc/pkgfile/command-not-found.zsh

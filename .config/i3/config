@@ -141,10 +141,10 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+shift+a focus parent
+bindsym $mod+a focus parent
 
 # focus the child container
-bindsym $mod+shift+d focus child
+bindsym $mod+z focus child
 
 # sticky toggle
 bindsym $mod+shift+s sticky toggle

@@ -1,8 +1,0 @@
-#!/bin/bash
-# set persistent wallpaper using feh
-
-if [ -s "$HOME/.fehbg" ]; then
-  source "$HOME/.fehbg" 2>/dev/null
-elif [ -e "$HOME/Pictures/background.png" ]; then
-  feh --bg-scale --image-bg -B black "$HOME/Pictures/background.png"
-fi

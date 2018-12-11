@@ -27,7 +27,7 @@ while read -r; do
 
         (xprop -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}") &
 
-done < <(echo && i3-msg -t subscribe -m '[ "window" ]' & i3-msg -t subscribe -m '["workspace"]') &
+done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace" ]') &
 
 # i3 Workspaces, "WSP"
 $(dirname $0)/scripts/workspaces.pl > "${panel_fifo}" &

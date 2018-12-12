@@ -146,6 +146,12 @@ zstyle ':completion:*' users $users
 compdef _gnu_generic gcc
 compdef _gnu_generic gdb
 
+# pushd
+setopt auto_pushd               # make cd push old dir in dir stack
+setopt pushd_ignore_dups        # no duplicates in dir stack
+setopt pushd_silent             # no dir stack after pushd or popd
+setopt pushd_to_home            # `pushd` = `pushd $HOME`
+
 # AUTOCOLOR
 #alias ls='ls --color=auto'
 alias ls='exa'

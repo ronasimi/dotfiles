@@ -68,12 +68,12 @@ bindkey "\e[6~" end-of-history
 bindkey "\e[3~" delete-char
 bindkey "\e[2~" quoted-insert
 bindkey "\e[5C" forward-word
-bindkey "\eOc" emacs-forward-word
+bindkey "\eOc"  emacs-forward-word
 bindkey "\e[5D" backward-word
-bindkey "\eOd" emacs-backward-word
+bindkey "\eOd"  emacs-backward-word
 bindkey "\ee[C" forward-word
 bindkey "\ee[D" backward-word
-bindkey "^H" backward-delete-word
+bindkey "^H"    backward-delete-word
 bindkey "^R" history-incremental-search-backward
 # for rxvt
 bindkey "${terminfo[khome]}" beginning-of-line

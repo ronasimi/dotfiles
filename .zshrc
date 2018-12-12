@@ -50,6 +50,13 @@ autoload -U colors zsh-mime-setup select-word-style
 colors          # colors
 zsh-mime-setup  # run everything as if it's an executable
 select-word-style bash # ctrl+w on words
+# History search
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-beginning-search
+[[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
 
 zstyle :compinstall filename '/home/ron/.zshrc'
 
@@ -97,11 +104,12 @@ fi
 #promptinit
 
 # AUTOCOMPLETION
-autoload -U compinit
+autoload -Uz compinit
 compinit
 zmodload -i zsh/complist
 setopt hash_list_all            # hash everything before completion
 setopt completealiases          # complete alisases
+setopt COMPLETE_ALIASES		# complete command line switches
 setopt always_to_end            # when completing from the middle of a word, move the cursor to the end of the word
 setopt complete_in_word         # allow completion from within a word/phrase
 setopt correct_all              # spelling correction for commands
@@ -123,7 +131,7 @@ zstyle ':completion:*:descriptions' format $'\e[00;34m%d'
 zstyle ':completion:*:messages' format $'\e[00;31m%d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:manuals' separate-sections true
-
+zstyle ':completion::complete:*' gain-privileges 1
 zstyle ':completion:*:processes' command 'ps -au$USER'
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*' force-list always
@@ -134,7 +142,7 @@ zstyle ':completion:*:*:killall:*:processes' list-colors "=(#b) #([0-9]#)*=29=34
 users=(ron root)           # because I don't care about others
 zstyle ':completion:*' users $users
 
-#generic completion with --help
+# generic completion with --help
 compdef _gnu_generic gcc
 compdef _gnu_generic gdb
 

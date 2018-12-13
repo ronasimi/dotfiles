@@ -35,8 +35,8 @@ export SSH_AUTH_SOCK
 xset s 300 600 &
 syndaemon -i 2 -t -k -d &
 xcalib -d :0 ~/.config/icc/T4201600x900.icc &
-compton --config ~/.config/compton/config -b &
-parcellite -n &
+compton -b &
+clipster -d &
 xset m 3 &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 exec i3

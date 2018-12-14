@@ -19,8 +19,8 @@ set $ws2 "2:"
 set $ws3 "3:"
 set $ws4 "4:"
 set $ws5 "5:"
-set $ws6 "6:"
-set $ws7 "7:"
+set $ws6 "6:"
+set $ws7 "7:"
 set $ws8 "8:"
 set $ws9 "9:"
 set $ws10 "10:"
@@ -64,6 +64,9 @@ assign [class="Atom"] $ws4
 assign [class="Meld"] $ws4
 assign [class="Vmware"] $ws5
 assign [class="Vmplayer"] $ws5
+assign [class="Gimp|Gimp-2.10"] $ws6
+assign [class="libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice"] $ws7
+
 
 # split toggle for URxvt
 #for_window [class="URxvt"] split toggle; split toggle
@@ -247,6 +250,12 @@ bindsym $mod+F4 workspace $ws4; exec atom
 # vmware player
 bindsym $mod+F5 workspace $ws5; exec vmplayer
 
+# gimp
+bindsym $mod+F6 workspace $ws6; exec gimp
+
+# libreoffice writer
+bindsym $mod+F7 workspace $ws7, exec libreoffice --writer
+
 # draw terminals
 for_window [class="URxvt" instance="floating"] $FLOAT-border
 bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
@@ -256,9 +265,6 @@ for_window [class="URxvt" instance="nmtui"] $FLOAT-border
 
 # Clickable htop
 for_window [class="URxvt" instance="htop"] $FLOAT-border
-
-# Clickable htop
-for_window [class="Zenity" instance="Calendar"] move position 1362 px 28 px
 
 # Status bar
 # lemonbar

@@ -8,6 +8,7 @@ font="-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-1"
 iconfont="Material Design Icons:size=9"
 clickables=15
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
+snd_cha=$(amixer get Master | grep "Playback channels:" | awk '{if ($4 == "") {printf "%s: Playback", $3} else {printf "%s %s: Playback", $3, $4}}')
 
 # Alarm settings
 cpu_alert=75				# % cpu use
@@ -80,4 +81,5 @@ icon_40=""				# 40% battery icon
 icon_30=""				# 30% battery icon
 icon_20=""				# 20% battery icon
 icon_10=""				# 10% battery icon
+icon_0=""				# 0% battery icon
 icon_low=""				# Low battery icon

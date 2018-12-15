@@ -20,7 +20,7 @@ title="%{F${color_head} B${color_sec_b1}}${sep_right}%{F${color_icon} B${color_s
 while read -r line ; do
         case $line in
                 SYS*)
-                        # conky= 0 = cpu, 1 = memory percent, 2 = eth up/down, 3 = wifi up/down, 4 = tether up/down
+                        # conky= 0 = cpu, 1 = memory percent, 2 = eth up/down, 3 = wifi up/down, 4 = tether up/down, 5 = battery percent
                         sys_arr=(${line#???})
 
                         # date/time
@@ -48,7 +48,7 @@ while read -r line ; do
                         cpu="%{F${cpu_cback}}${sep_left}%{F${cpu_cicon} B${cpu_cback}} %{T2}${icon_cpu}%{F${cpu_cfore} T1} ${sys_arr[0]}%"
 
                         # temperature
-                        temp=$(sensors | grep Package | awk '{print substr ($4,2); }' | sed 's/\.[^\.]*$//') 
+                        temp=$(exec sensors | grep Package | cut -c17-19 | sed 's/\.[^\.]*$//')
 
                         if [ ${temp} -ge ${temp_alert} ]; then
                                 temp_cback=${color_alert}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
@@ -100,44 +100,41 @@ while read -r line ; do
                         tether="%{F${teth_cback}}${sep_left}%{F${teth_cicon} B${teth_cback}} %{T2}%{F${teth_cicon} T1}${tethup}"
 
                         # bat
-                        batinfo=$(acpi -b)
-                        oncharger=$(echo $batinfo | awk '{print $3}' | tr -d '%,')
-                        batlevel=$(echo $batinfo | awk '{print $4}' | tr -d '%,')
+                        oncharger=$(acpi --battery | awk '{print $3}' | cut -d "," -f 1)
 
-                        if [ "${oncharger}" == "Charging" ]; then
+                        if [ "${oncharger}" != "Discharging" ]; then
                                 icon_bat=${icon_charge};
-                        elif [ ${batlevel} -ge 95 ]; then
-                                icon_bat=${icon_full};
-                        elif [ ${batlevel} -ge 90 ]; then
-                                icon_bat=${icon_90};
-                        elif [ ${batlevel} -ge 80 ]; then
-                                icon_bat=${icon_80};
-                        elif [ ${batlevel} -ge 70 ]; then
-                                icon_bat=${icon_80};
-                        elif [ ${batlevel} -ge 60 ]; then
-                                icon_bat=${icon_60};
-                        elif [ ${batlevel} -ge 50 ]; then
-                                icon_bat=${icon_50};
-                        elif [ ${batlevel} -ge 40 ]; then
-                                icon_bat=${icon_40};
-                        elif [ ${batlevel} -ge 30 ]; then
-                                icon_bat=${icon_30};
-                        elif [ ${batlevel} -ge 20 ]; then
-                                icon_bat=${icon_20};
-                        elif [ ${batlevel} -gt ${bat_alert} ]; then
-                                icon_bat=${icon_10};
-                        elif [ ${batlevel} -le ${bat_alert} ]; then
-                                icon_bat=${icon_low};
+                        else
+                                if [ "${sys_arr[5]}" -ge 95 ]; then
+                                        icon_bat=${icon_full};
+                                elif [ "${sys_arr[5]}" -ge 85 ]; then
+                                        icon_bat=${icon_90};
+                                elif [ "${sys_arr[5]}" -ge 75 ]; then
+                                        icon_bat=${icon_80};
+                                elif [ "${sys_arr[5]}" -ge 65 ]; then
+                                        icon_bat=${icon_70};
+                                elif [ "${sys_arr[5]}" -ge 55 ]; then
+                                        icon_bat=${icon_60};
+                                elif [ "${sys_arr[5]}" -ge 45 ]; then
+                                        icon_bat=${icon_50};
+                                elif [ "${sys_arr[5]}" -ge 35 ]; then
+                                        icon_bat=${icon_40};
+                                elif [ "${sys_arr[5]}" -ge 25 ]; then
+                                        icon_bat=${icon_30};
+                                elif [ "${sys_arr[5]}" -ge 15 ]; then
+                                        icon_bat=${icon_20};
+                                elif [ "${sys_arr[5]}" -gt ${bat_alert} ]; then
+                                        icon_bat=${icon_10};
+                                fi
                         fi
 
-
-                        if [ ${batlevel} -le ${bat_alert} ]; then
+                        if [ ${sys_arr[5]} -le ${bat_alert} ]; then
                                 bat_cback=${color_alert}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat=${icon_low};
                         else
                                 bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
                         fi
 
-                        bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${batlevel}%"
+                        bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${sys_arr[5]}%"
                         ;;
 
                 VOL*)

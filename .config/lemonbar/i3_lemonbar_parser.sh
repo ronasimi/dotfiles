@@ -48,7 +48,7 @@ while read -r line ; do
                         cpu="%{F${cpu_cback}}${sep_left}%{F${cpu_cicon} B${cpu_cback}} %{T2}${icon_cpu}%{F${cpu_cfore} T1} ${sys_arr[0]}%"
 
                         # temperature
-                        temp=$(sensors | grep Package | awk '{print substr ($4,2); }' | sed 's/\.[^\.]*$//')
+                        temp=$(sensors | grep Package | cut -c17-19 | sed 's/\.[^\.]*$//')
 
                         if [ ${temp} -ge ${temp_alert} ]; then
                                 temp_cback=${color_alert}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
@@ -139,9 +139,9 @@ while read -r line ; do
 
                 VOL*)
                         # Volume
-                        isMuted=$(pacmd list-sinks | grep "muted" | awk '{print $2}')
+                        isMuted=$(pacmd list-sinks | grep "muted" | cut -c 9)
 
-                        if [ "${isMuted}" == "yes" ]; then
+                        if [ "${isMuted}" == "y" ]; then
                                 icon_vol="";
                         else
                                 icon_vol="";

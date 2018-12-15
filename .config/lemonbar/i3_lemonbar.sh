@@ -38,7 +38,7 @@ conky -c $(dirname $0)/i3_lemonbar_conky > "${panel_fifo}" &
 # Volume, "VOL"
 while read -r; do
 
-        (amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {printf "VOL%d%%\n",$2}' > "${panel_fifo}") &
+        (amixer get Master | grep "%" | awk -F'[]%[]' '/%/ {printf "VOL%d%%\n",$2}' > "${panel_fifo}") &
 
 done < <(echo && stdbuf -oL alsactl monitor pulse) &
 

@@ -1,4 +1,4 @@
-URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-*,xft:Material Design Icons:size=6:antialias=false,xft:Symbola:antialias=false
+URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-*,xft:Material Design Icons:size=5:antialias=false,xft:Symbola:antialias=false
 URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true
 URxvt*saveLines:		9999
@@ -29,6 +29,13 @@ URxvt*keysym.F11:		perl:fullscreen:switch
 URxvt*iso14755:			false
 
 Xft.dpi: 96
+
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
 
 ! Colors
 *.foreground:   #eaeaeb

@@ -48,7 +48,7 @@ while read -r line ; do
                         cpu="%{F${cpu_cback}}${sep_left}%{F${cpu_cicon} B${cpu_cback}} %{T2}${icon_cpu}%{F${cpu_cfore} T1} ${sys_arr[0]}%"
 
                         # temperature
-                        temp=$(exec sensors | grep Package | cut -c17-19 | sed 's/\.[^\.]*$//')
+                        temp=$(sensors | grep Package | awk '{print substr ($4,2); }' | sed 's/\.[^\.]*$//')
 
                         if [ ${temp} -ge ${temp_alert} ]; then
                                 temp_cback=${color_alert}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
@@ -100,9 +100,9 @@ while read -r line ; do
                         tether="%{F${teth_cback}}${sep_left}%{F${teth_cicon} B${teth_cback}} %{T2}%{F${teth_cicon} T1}${tethup}"
 
                         # bat
-                        oncharger=$(acpi --battery | awk '{print $3}' | cut -d "," -f 1)
+                        oncharger=$(acpi -a | awk '{print $3}')
 
-                        if [ "${oncharger}" != "Discharging" ]; then
+                        if [ "${oncharger}" != "off-line" ]; then
                                 icon_bat=${icon_charge};
                         else
                                 if [ "${sys_arr[5]}" -ge 95 ]; then
@@ -139,9 +139,9 @@ while read -r line ; do
 
                 VOL*)
                         # Volume
-                        isMuted=$(pacmd list-sinks | grep "muted" | cut -c 9-10)
+                        isMuted=$(pacmd list-sinks | grep "muted" | awk '{print $2}')
 
-                        if [ "${isMuted}" == "ye" ]; then
+                        if [ "${isMuted}" == "yes" ]; then
                                 icon_vol="";
                         else
                                 icon_vol="";

@@ -72,7 +72,7 @@ while read -r line ; do
                 ETH*)
                         # ethernet
                         eth_cback=${color_sec_b1}; eth_cfore=${color_fore};
-                        
+
                         if [ "${line#???}" == "connected" ]; then
                                 ethup=${icon_ethup}; eth_cicon=${color_icon};
                         else
@@ -107,53 +107,48 @@ while read -r line ; do
 
                         vol="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_vol}%{F${color_fore} T1} ${line#???}"
                         ;;
-
                 BAT*)
-                        # bat
+                        # charger
                         oncharger=$(acpi -a | awk '{print $3}')
-                        batperc=${line#???}
 
                         if [ "${oncharger}" != "off-line" ]; then
                                 icon_bat=${icon_charge};
-                        else
-                                if [ "${batperc}" -ge 95 ]; then
-                                        icon_bat=${icon_full};
-                                elif [ "${batperc}" -ge 85 ]; then
-                                        icon_bat=${icon_90};
-                                elif [ "${batperc}" -ge 75 ]; then
-                                        icon_bat=${icon_80};
-                                elif [ "${batperc}" -ge 65 ]; then
-                                        icon_bat=${icon_70};
-                                elif [ "${batperc}" -ge 55 ]; then
-                                        icon_bat=${icon_60};
-                                elif [ "${batperc}" -ge 45 ]; then
-                                        icon_bat=${icon_50};
-                                elif [ "${batperc}" -ge 35 ]; then
-                                        icon_bat=${icon_40};
-                                elif [ "${batperc}" -ge 25 ]; then
-                                        icon_bat=${icon_30};
-                                elif [ "${batperc}" -ge 15 ]; then
-                                        icon_bat=${icon_20};
-                                elif [ "${batperc}" -gt ${bat_alert} ]; then
-                                        icon_bat=${icon_10};
-                                fi
+                        # battery level
+                        elif [ "${line#???}" -ge 95 ]; then
+                                icon_bat=${icon_full};
+                        elif [ "${line#???}" -ge 85 ]; then
+                                icon_bat=${icon_90};
+                        elif [ "${line#???}" -ge 75 ]; then
+                                icon_bat=${icon_80};
+                        elif [ "${line#???}" -ge 65 ]; then
+                                icon_bat=${icon_70};
+                        elif [ "${line#???}" -ge 55 ]; then
+                                icon_bat=${icon_60};
+                        elif [ "${line#???}" -ge 45 ]; then
+                                icon_bat=${icon_50};
+                        elif [ "${line#???}" -ge 35 ]; then
+                                icon_bat=${icon_40};
+                        elif [ "${line#???}" -ge 25 ]; then
+                                icon_bat=${icon_30};
+                        elif [ "${line#???}" -ge 15 ]; then
+                                icon_bat=${icon_20};
+                        elif [ "${line#???}" -gt ${bat_alert} ]; then
+                                icon_bat=${icon_10};
                         fi
 
-                        if [ ${batperc} -le ${bat_alert} ]; then
+                        if [ ${line#???} -le ${bat_alert} ]; then
                                 bat_cback=${color_alert}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat=${icon_low}
                                 (notify-send -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work");
                         else
                                 bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
                         fi
 
-                        bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${batperc}%"
+                        bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${line#???}%"
                         ;;
 
                 GMA*)
                         # Gmail
-                        gmail="${line#???}"
-
-                        if [ "${gmail}" != "0" ]; then
+                        if [ "${line#???}" != "0" ]; then
                                 mail_cback=${color_mail}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
                         else
                                 mail_cback=${color_sec_b1}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
@@ -164,7 +159,7 @@ while read -r line ; do
 
                 UPD*)
                         # Updates
-                        if [ "${updates}" != "0" ]; then
+                        if [ "${line#???}" != "0" ]; then
                                 upd_cback=${color_upd}; upd_cicon=${color_icon_dark}; upd_cfore=${color_back};
                         else
                                 upd_cback=${color_sec_b2}; upd_cicon=${color_icon}; upd_cfore=${color_fore};

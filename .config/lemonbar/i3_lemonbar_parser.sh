@@ -83,7 +83,7 @@ while read -r line ; do
                         ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback}} %{T2}%{F${eth_cicon} T1}${ethup}"
                         ;;
 
-                WIFI*)
+                WFI*)
                         # wlan
                         wlan_cback=${color_sec_b1}; wlan_cfore=${color_fore};
                         wifistat=${line#???}

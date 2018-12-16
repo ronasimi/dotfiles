@@ -42,11 +42,11 @@ while read -r; do
 
 done < <(echo && stdbuf -oL alsactl monitor pulse) &
 
-# Network, "ETH", "WIFI"
+# Network, "ETH", "WFI"
 while read -r; do
 
         (nmcli -t | grep enp0s25: | awk '{print "ETH" $2}' > "${panel_fifo}") &
-        (nmcli -t | grep wlp3s0: | awk '{print "WIFI" $2}' > "${panel_fifo}") &
+        (nmcli -t | grep wlp3s0: | awk '{print "WFI" $2}' > "${panel_fifo}") &
 
 done < <(echo && nmcli m) &
 

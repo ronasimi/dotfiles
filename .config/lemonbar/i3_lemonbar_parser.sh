@@ -18,25 +18,43 @@ title="%{F${color_head} B${color_sec_b1}}${sep_right}%{F${color_icon} B${color_s
 # parser
 
 while read -r line ; do
+
+        # date/time
+        currenttime=$(date +"%a %b %d %R")
+        clock=$(echo "$currenttime" | cut -d " " -f 4)
+        if [ ${res_w} -gt 1024 ]; then
+                day=$(echo "$currenttime" | cut -d " " -f 1-3)
+        else
+                day=$(echo "$currenttime" | cut -d " " -f 2-3)
+        fi
+
+        # date
+        date="%{F${color_cal}}${sep_left}%{F${color_icon_dark} B${color_cal}} %{T2}${icon_cal}%{F- T1}%{F${color_icon_dark}} ${day}"
+
+        # time
+        time="%{F${color_head}}${sep_left}%{F${color_icon_dark} B${color_head}} %{T2}${icon_clock}%{F- T1}%{F${color_icon_dark}} ${clock} %{F- B-}"
+
+        # temperature
+        temp=$(sensors | grep Package | cut -c17-19 | sed 's/\.[^\.]*$//')
+
+        if [ ${temp} -ge ${temp_alert} ]; then
+                temp_cback=${color_alert}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
+        else
+                temp_cback=${color_sec_b2}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
+        fi
+
+        heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${temp}°C"
+
+        # brightness
+        bright_pct=$(xbacklight -get)
+
+        bright="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_bright} %{F- T1}${bright_pct}%"
+
         case $line in
                 SYS*)
-                        # conky= 0 = cpu, 1 = memory percent, 2 = eth up/down, 3 = wifi up/down, 4 = tether up/down, 5 = battery percent
+                        # conky= 0 = cpu, 1 = memory percent
                         sys_arr=(${line#???})
 
-                        # date/time
-                        currenttime=$(date +"%a %b %d %R")
-                        clock=$(echo "$currenttime" | cut -d " " -f 4)
-                        if [ ${res_w} -gt 1024 ]; then
-                                day=$(echo "$currenttime" | cut -d " " -f 1-3)
-                        else
-                                day=$(echo "$currenttime" | cut -d " " -f 2-3)
-                        fi
-
-                        # date
-                        date="%{F${color_cal}}${sep_left}%{F${color_icon_dark} B${color_cal}} %{T2}${icon_cal}%{F- T1}%{F${color_icon_dark}} ${day}"
-
-                        # time
-                        time="%{F${color_head}}${sep_left}%{F${color_icon_dark} B${color_head}} %{T2}${icon_clock}%{F- T1}%{F${color_icon_dark}} ${clock} %{F- B-}"
 
                         # cpu
                         if [ ${sys_arr[0]} -gt ${cpu_alert} ]; then
@@ -47,95 +65,36 @@ while read -r line ; do
 
                         cpu="%{F${cpu_cback}}${sep_left}%{F${cpu_cicon} B${cpu_cback}} %{T2}${icon_cpu}%{F${cpu_cfore} T1} ${sys_arr[0]}%"
 
-                        # temperature
-                        temp=$(sensors | grep Package | cut -c17-19 | sed 's/\.[^\.]*$//')
-
-                        if [ ${temp} -ge ${temp_alert} ]; then
-                                temp_cback=${color_alert}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
-                        else
-                                temp_cback=${color_sec_b2}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
-                        fi
-
-                        heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${temp}°C"
-
                         # mem
                         mem="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[1]}"
+                        ;;
 
-                        # brightness
-                        bright_pct=$(xbacklight -get)
-
-                        bright="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_bright} %{F- T1}${bright_pct}%"
-
+                ETH*)
                         # ethernet
                         eth_cback=${color_sec_b1}; eth_cfore=${color_fore};
+                        ethstat=${line#???}
 
-                        if [ "${sys_arr[2]}" == "down" ]; then
-                                ethup=${icon_ethdown}; eth_cicon=${color_netdown};
-                        else
+                        if [ "${ethstat}" == "connected" ]; then
                                 ethup=${icon_ethup}; eth_cicon=${color_icon};
+                        else
+                                ethup=${icon_ethdown}; eth_cicon=${color_netdown};
                         fi
 
                         ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback}} %{T2}%{F${eth_cicon} T1}${ethup}"
+                        ;;
 
+                WIFI*)
                         # wlan
                         wlan_cback=${color_sec_b1}; wlan_cfore=${color_fore};
+                        wifistat=${line#???}
 
-                        if [ "${sys_arr[3]}" == "down" ]; then
-                                wlanup=${icon_wifi_down}; wlan_cicon=${color_netdown};
-                        else
+                        if [ "${wifistat}" == "connected" ]; then
                                 wlanup=${icon_wifi_up}; wlan_cicon=${color_icon};
+                        else
+                                wlanup=${icon_wifi_down}; wlan_cicon=${color_netdown};
                         fi
 
                         wifi="%{F${wlan_cback}}${sep_left}%{F${wlan_cicon} B${wlan_cback}} %{T2}%{F${wlan_cicon} T1}${wlanup}"
-
-                        # tether
-                        teth_cback=${color_sec_b1}; teth_cicon=${color_icon}; teth_cfore=${color_fore}
-
-                        if [ "${sys_arr[4]}" == "down" ]; then
-                                tethup=${icon_tether_down}; teth_cicon=${color_netdown};
-                        else
-                                tethup=${icon_tether_up}; teth_cicon=${color_icon};
-                        fi;
-
-                        tether="%{F${teth_cback}}${sep_left}%{F${teth_cicon} B${teth_cback}} %{T2}%{F${teth_cicon} T1}${tethup}"
-
-                        # bat
-                        oncharger=$(acpi -a | awk '{print $3}')
-
-                        if [ "${oncharger}" != "off-line" ]; then
-                                icon_bat=${icon_charge};
-                        else
-                                if [ "${sys_arr[5]}" -ge 95 ]; then
-                                        icon_bat=${icon_full};
-                                elif [ "${sys_arr[5]}" -ge 85 ]; then
-                                        icon_bat=${icon_90};
-                                elif [ "${sys_arr[5]}" -ge 75 ]; then
-                                        icon_bat=${icon_80};
-                                elif [ "${sys_arr[5]}" -ge 65 ]; then
-                                        icon_bat=${icon_70};
-                                elif [ "${sys_arr[5]}" -ge 55 ]; then
-                                        icon_bat=${icon_60};
-                                elif [ "${sys_arr[5]}" -ge 45 ]; then
-                                        icon_bat=${icon_50};
-                                elif [ "${sys_arr[5]}" -ge 35 ]; then
-                                        icon_bat=${icon_40};
-                                elif [ "${sys_arr[5]}" -ge 25 ]; then
-                                        icon_bat=${icon_30};
-                                elif [ "${sys_arr[5]}" -ge 15 ]; then
-                                        icon_bat=${icon_20};
-                                elif [ "${sys_arr[5]}" -gt ${bat_alert} ]; then
-                                        icon_bat=${icon_10};
-                                fi
-                        fi
-
-                        if [ ${sys_arr[5]} -le ${bat_alert} ]; then
-                                bat_cback=${color_alert}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat=${icon_low}
-                                (notify-send -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work");
-                        else
-                                bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
-                        fi
-
-                        bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${sys_arr[5]}%"
                         ;;
 
                 VOL*)
@@ -149,6 +108,47 @@ while read -r line ; do
                         fi
 
                         vol="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_vol}%{F${color_fore} T1} ${line#???}"
+                        ;;
+
+                BAT*)
+                        # bat
+                        oncharger=$(acpi -a | awk '{print $3}')
+                        batperc=${line#???}
+
+                        if [ "${oncharger}" != "off-line" ]; then
+                                icon_bat=${icon_charge};
+                        else
+                                if [ "${batperc}" -ge 95 ]; then
+                                        icon_bat=${icon_full};
+                                elif [ "${batperc}" -ge 85 ]; then
+                                        icon_bat=${icon_90};
+                                elif [ "${batperc}" -ge 75 ]; then
+                                        icon_bat=${icon_80};
+                                elif [ "${batperc}" -ge 65 ]; then
+                                        icon_bat=${icon_70};
+                                elif [ "${batperc}" -ge 55 ]; then
+                                        icon_bat=${icon_60};
+                                elif [ "${batperc}" -ge 45 ]; then
+                                        icon_bat=${icon_50};
+                                elif [ "${batperc}" -ge 35 ]; then
+                                        icon_bat=${icon_40};
+                                elif [ "${batperc}" -ge 25 ]; then
+                                        icon_bat=${icon_30};
+                                elif [ "${batperc}" -ge 15 ]; then
+                                        icon_bat=${icon_20};
+                                elif [ "${batperc}" -gt ${bat_alert} ]; then
+                                        icon_bat=${icon_10};
+                                fi
+                        fi
+
+                        if [ ${batperc} -le ${bat_alert} ]; then
+                                bat_cback=${color_alert}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat=${icon_low}
+                                (notify-send -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work");
+                        else
+                                bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
+                        fi
+
+                        bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${batperc}%"
                         ;;
 
                 GMA*)
@@ -207,5 +207,5 @@ while read -r line ; do
         esac
 
         # And finally, output
-        printf "%s\n" "%{l}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:urxvtc -g 60x7+860+28 -name "htop" -e htop:}${cpu}${stab}${heat}${stab}${mem}${stab}%{A}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A1:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/battime.sh &:}${bat}${stab}%{A}%{A1:urxvtc -g 80x24-14+28 -name "nmtui" -e nmtui-connect:}${ethernet}${wifi}${tether}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
+        printf "%s\n" "%{l}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:urxvtc -g 60x7+860+28 -name "htop" -e htop:}${cpu}${stab}${heat}${stab}${mem}${stab}%{A}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A1:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/battime.sh &:}${bat}${stab}%{A}%{A1:urxvtc -g 80x24-14+28 -name "nmtui" -e nmtui-connect:}${ethernet}${wifi}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
 done

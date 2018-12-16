@@ -20,8 +20,4 @@ conky.text = [[
 SYS\
 ${cpu} \
 ${mem} \
-${if_existing /proc/net/route enp0s25}up${else}down${endif} \
-${if_up wlp3s0}up${else}down${endif} \
-${if_existing /proc/net/route enp0s29u1u2}up${else}down${endif} \
-${battery_percent} \
 ]];

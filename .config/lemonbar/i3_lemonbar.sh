@@ -22,6 +22,9 @@ mkfifo "${panel_fifo}"
 
 ### EVENTS METERS
 
+# Conky, "SYS"
+conky -c $(dirname $0)/i3_lemonbar_conky > "${panel_fifo}" &
+
 # Window title, "WIN"
 while read -r; do
 
@@ -32,9 +35,6 @@ done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace" ]') &
 # i3 Workspaces, "WSP"
 $(dirname $0)/scripts/workspaces.pl > "${panel_fifo}" &
 
-# Conky, "SYS"
-conky -c $(dirname $0)/i3_lemonbar_conky > "${panel_fifo}" &
-
 # Volume, "VOL"
 while read -r; do
 
@@ -42,9 +42,23 @@ while read -r; do
 
 done < <(echo && stdbuf -oL alsactl monitor pulse) &
 
-# GMAIL, "GMA"
+# Network, "ETH", "WIFI"
+while read -r; do
 
-### Mail update interval
+        (nmcli -t | grep enp0s25: | awk '{print "ETH" $2}' > "${panel_fifo}") &
+        (nmcli -t | grep wlp3s0: | awk '{print "WIFI" $2}' > "${panel_fifo}") &
+
+done < <(echo && nmcli m) &
+
+# Battery, "BAT"
+while read -r; do
+
+        (acpi -b | awk '{print "BAT" $4}' | tr -d '%,' > "${panel_fifo}") &
+
+done < <(echo && upower --monitor) &
+
+# GMAIL, "GMA"
+### Mail check interval
 cnt_mail=${mail_timer}
 
 while :; do
@@ -58,8 +72,7 @@ while :; do
 done &
 
 # Updates, "UPD"
-
-### Mail update interval
+### Update check interval
 cnt_update=${upd_timer}
 
 while :; do

@@ -13,7 +13,7 @@
 . $(dirname $0)/i3_lemonbar_config
 
 # min init
-title="%{F${color_head} B${color_sec_b1}}${sep_right}%{F${color_icon} B${color_sec_b1} T2} ${icon_prog} %{F${color_sec_b1} B-}%{F- B- T1}%{F${color_sec_b1}}${sep_right}%{F${color_icon}} ${title}"
+title="%{F${color_head} B${color_sec_b1}}${sep_right}%{F${color_icon} B${color_sec_b1} T2} ${icon_prog} %{F${color_sec_b1}}%{B- T1}${sep_right}%{F${color_title}} ${title}"
 
 # parser
 
@@ -72,9 +72,8 @@ while read -r line ; do
                 ETH*)
                         # ethernet
                         eth_cback=${color_sec_b1}; eth_cfore=${color_fore};
-                        ethstat=${line#???}
-
-                        if [ "${ethstat}" == "connected" ]; then
+                        
+                        if [ "${line#???}" == "connected" ]; then
                                 ethup=${icon_ethup}; eth_cicon=${color_icon};
                         else
                                 ethup=${icon_ethdown}; eth_cicon=${color_netdown};
@@ -86,9 +85,8 @@ while read -r line ; do
                 WFI*)
                         # wlan
                         wlan_cback=${color_sec_b1}; wlan_cfore=${color_fore};
-                        wifistat=${line#???}
 
-                        if [ "${wifistat}" == "connected" ]; then
+                        if [ "${line#???}" == "connected" ]; then
                                 wlanup=${icon_wifi_up}; wlan_cicon=${color_icon};
                         else
                                 wlanup=${icon_wifi_down}; wlan_cicon=${color_netdown};
@@ -161,20 +159,18 @@ while read -r line ; do
                                 mail_cback=${color_sec_b1}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
                         fi
 
-                        gmail="%{F${mail_cback}}${sep_left}%{F${mail_cicon} B${mail_cback}} %{T2}${icon_mail}%{F${mail_cfore} T1} ${gmail}"
+                        gmail="%{F${mail_cback}}${sep_left}%{F${mail_cicon} B${mail_cback}} %{T2}${icon_mail}%{F${mail_cfore} T1} ${line#???}"
                         ;;
 
                 UPD*)
                         # Updates
-                        updates="${line#???}"
-
                         if [ "${updates}" != "0" ]; then
                                 upd_cback=${color_upd}; upd_cicon=${color_icon_dark}; upd_cfore=${color_back};
                         else
                                 upd_cback=${color_sec_b2}; upd_cicon=${color_icon}; upd_cfore=${color_fore};
                         fi
 
-                        updates="%{F${upd_cback}}${sep_left}%{F${upd_cicon} B${upd_cback}} %{T2}${icon_arch}%{F${upd_cfore} T1} ${updates}"
+                        updates="%{F${upd_cback}}${sep_left}%{F${upd_cicon} B${upd_cback}} %{T2}${icon_arch}%{F${upd_cfore} T1} ${line#???}"
                         ;;
 
                 WSP*)
@@ -202,7 +198,7 @@ while read -r line ; do
                         # window title
                         title=$(xprop -id ${line#???} | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
 
-                        title="%{F${color_head} B${color_sec_b1}}${sep_right}%{F${color_icon} B${color_sec_b1} T2} ${icon_prog} %{F${color_sec_b1} B-}%{F- B- T1}%{F${color_sec_b1}}${sep_right}%{F${color_title}} ${title}"
+                        title="%{F${color_head} B${color_sec_b1}}${sep_right}%{F${color_icon} B${color_sec_b1} T2} ${icon_prog} %{F${color_sec_b1}}%{B- T1}${sep_right}%{F${color_title}} ${title}"
                         ;;
         esac
 

@@ -30,7 +30,7 @@ while read -r; do
 
         (xprop -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}") &
 
-done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace" ]') &
+done < <(echo && stdbuf -oL i3-msg -t subscribe -m '[ "window", "workspace" ]') &
 
 # i3 Workspaces, "WSP"
 $(dirname $0)/scripts/workspaces.pl > "${panel_fifo}" &
@@ -40,7 +40,7 @@ while read -r; do
 
         (xbacklight -get | awk '{print "BRI" $1}' > "${panel_fifo}") &
 
-done < <(echo && inotifywait -r -m -e modify /sys/class/backlight/acpi_video0/actual_brightness) &
+done < <(echo && stdbuf -oL inotifywait -r -m -e modify /sys/class/backlight/acpi_video0/actual_brightness) &
 
 # Volume, "VOL"
 while read -r; do
@@ -55,14 +55,14 @@ while read -r; do
         (nmcli -t | grep enp0s25: | awk '{print "ETH" $2}' > "${panel_fifo}") &
         (nmcli -t | grep wlp3s0: | awk '{print "WFI" $2}' > "${panel_fifo}") &
 
-done < <(echo && nmcli m) &
+done < <(echo && stdbuf -oL nmcli m) &
 
 # Battery, "BAT"
 while read -r; do
 
         (acpi -b | awk '{print "BAT" $4}' | tr -d '%,' > "${panel_fifo}") &
 
-done < <(echo && upower --monitor) &
+done < <(echo && stdbuf -oL upower --monitor) &
 
 # GMAIL, "GMA"
 ### Mail check interval

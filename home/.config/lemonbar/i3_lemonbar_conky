@@ -20,4 +20,5 @@ conky.text = [[
 SYS\
 ${cpu} \
 ${mem} \
+${hwmon 1 temp 1}\
 ]];

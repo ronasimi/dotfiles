@@ -34,27 +34,10 @@ while read -r line ; do
         # time
         time="%{F${color_head}}${sep_left}%{F${color_icon_dark} B${color_head}} %{T2}${icon_clock}%{F- T1}%{F${color_icon_dark}} ${clock} %{F- B-}"
 
-        # temperature
-        temp=$(sensors | grep Package | cut -c17-19 | sed 's/\.[^\.]*$//')
-
-        if [ ${temp} -ge ${temp_alert} ]; then
-                temp_cback=${color_alert}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
-        else
-                temp_cback=${color_sec_b2}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
-        fi
-
-        heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${temp}°C"
-
-        # brightness
-        bright_pct=$(xbacklight -get)
-
-        bright="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_bright} %{F- T1}${bright_pct}%"
-
         case $line in
                 SYS*)
                         # conky= 0 = cpu, 1 = memory percent
                         sys_arr=(${line#???})
-
 
                         # cpu
                         if [ ${sys_arr[0]} -gt ${cpu_alert} ]; then
@@ -67,6 +50,15 @@ while read -r line ; do
 
                         # mem
                         mem="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[1]}"
+                        
+                        # temperature
+                        if [ ${sys_arr[2]} -gt ${temp_alert} ]; then
+                                temp_cback=${color_alert}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
+                        else
+                                temp_cback=${color_sec_b2}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
+                        fi
+
+                        heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${sys_arr[2]}°C"
                         ;;
 
                 ETH*)
@@ -107,13 +99,19 @@ while read -r line ; do
 
                         vol="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_vol}%{F${color_fore} T1} ${line#???}"
                         ;;
+
+                BRI*)
+                        # brightness
+                        bright="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_bright} %{F- T1}${line#???}%"
+                        ;;
+
                 BAT*)
                         # charger
                         oncharger=$(acpi -a | awk '{print $3}')
 
                         if [ "${oncharger}" != "off-line" ]; then
                                 icon_bat=${icon_charge};
-                        # battery level
+                                # battery level
                         elif [ "${line#???}" -ge 95 ]; then
                                 icon_bat=${icon_full};
                         elif [ "${line#???}" -ge 85 ]; then

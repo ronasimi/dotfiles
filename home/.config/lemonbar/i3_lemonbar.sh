@@ -35,6 +35,13 @@ done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace" ]') &
 # i3 Workspaces, "WSP"
 $(dirname $0)/scripts/workspaces.pl > "${panel_fifo}" &
 
+# Backlight, "BRI"
+while read -r; do
+
+        (xbacklight -get | awk '{print "BRI" $1}' > "${panel_fifo}") &
+
+done < <(echo && inotifywait -r -m -e modify /sys/class/backlight/acpi_video0/actual_brightness) &
+
 # Volume, "VOL"
 while read -r; do
 

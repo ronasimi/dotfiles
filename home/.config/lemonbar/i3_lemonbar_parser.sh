@@ -50,7 +50,7 @@ while read -r line ; do
 
                         # mem
                         mem="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[1]}"
-                        
+
                         # temperature
                         if [ ${sys_arr[2]} -gt ${temp_alert} ]; then
                                 temp_cback=${color_alert}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
@@ -180,7 +180,7 @@ while read -r line ; do
                                                 wsp="${wsp}%{F${color_ina} T1} ${1#???} "
                                                 ;;
                                         URG*)
-                                                wsp="${wsp}%{F${color_urg} T1} ${1#???} "
+                                                wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_fore} B${color_alert} T1} ${1#???} %{F${color_alert} B${color_head}}${sep_right}"
                                                 ;;
                                 esac
                                 shift

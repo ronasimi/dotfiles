@@ -29,7 +29,7 @@ while read -r line ; do
         fi
 
         # date
-        date="%{F${color_cal}}${sep_left}%{F${color_icon_dark} B${color_cal}} %{T2}${icon_cal}%{F- T1}%{F${color_icon_dark}} ${day}"
+        date="%{F${color_wsp}}${sep_left}%{F${color_icon_dark} B${color_wsp}} %{T2}${icon_cal}%{F- T1}%{F${color_icon_dark}} ${day}"
 
         # time
         time="%{F${color_head}}${sep_left}%{F${color_icon_dark} B${color_head}} %{T2}${icon_clock}%{F- T1}%{F${color_icon_dark}} ${clock} %{F- B-}"

@@ -26,7 +26,6 @@ color_title="#FFFFFFFF"			# Window title foreground
 color_head="#C06A9FB5"			# Background for first element
 color_sec_b1="#C0171A1F"		# Background for section 1
 color_sec_b2="#C02F343F"		# Background for section 2
-color_sec_b3="#C060676E"		# Background for section 3
 color_icon="#FFEAEAEB"			# For icons
 color_icon_dark="#FF2F343F"		# For icons (dark)
 color_netdown="#C08C8C8D"		# For inactive network interface icons
@@ -35,8 +34,6 @@ color_upd="#C01793D0"			# Background color for update alert
 color_alert="#C0AC4142"			# Background color for cpu/temp/memory alert
 color_wsp="#C090A959"			# Background for selected workspace
 color_ina="#FF434852"		        # Foreground for inactive workspace
-color_urg="#FFAC4142"                   # Foreground for urgent workspace
-color_cal="#C090A959"			# Background for calendar
 color_bat="#C0AC4142"			# Background for battery
 
 #default space between sections

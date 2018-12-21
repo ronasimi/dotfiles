@@ -40,7 +40,7 @@ while read -r; do
 
         (xbacklight -get | awk '{print "BRI" $1}' > "${panel_fifo}") &
 
-done < <(echo && stdbuf -oL inotifywait -r -m -e modify /sys/class/backlight/acpi_video0/actual_brightness) &
+done < <(echo && stdbuf -oL inotifywait -r -m -e modify /sys/class/backlight/acpi_video0/actual_brightness & stdbuf -oL upower --monitor) &
 
 # Volume, "VOL"
 while read -r; do

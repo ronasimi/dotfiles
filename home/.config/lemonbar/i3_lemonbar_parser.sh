@@ -107,9 +107,9 @@ while read -r line ; do
 
                 BAT*)
                         # charger
-                        oncharger=$(acpi -a | awk '{print $3}')
+                        oncharger=$(cat /sys/class/power_supply/AC/online)
 
-                        if [ "${oncharger}" != "off-line" ]; then
+                        if [ "${oncharger}" == "1" ]; then
                                 icon_bat=${icon_charge};
                                 # battery level
                         elif [ "${line#???}" -ge 95 ]; then

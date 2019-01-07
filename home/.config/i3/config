@@ -237,6 +237,7 @@ bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i -o 0.7
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium
+bindsym $mod+Shift+F1 workspace $ws1; exec chromium --incognito
 
 # urxvt
 bindsym $mod+F2 workspace $ws2; exec --no-startup-id urxvtc
@@ -269,7 +270,7 @@ for_window [class="URxvt" instance="htop"] $FLOAT-border
 # Status bar
 # lemonbar
 bar {
-	i3bar_command "~/.config/lemonbar/i3_lemonbar.sh &2> /dev/null > /dev/null"
+	i3bar_command "~/.config/lemonbar/i3_lemonbar.sh &2> /dev/null"
 }
 
 # autostart

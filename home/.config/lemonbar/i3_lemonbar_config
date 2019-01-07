@@ -21,7 +21,7 @@ upd_timer=30				# Update check (min)
 
 # color definitions
 color_back="#C02F343F"			# Default background
-color_fore="#C0EAEAEB"			# Default foreground
+color_fore="#FFEAEAEB"			# Default foreground
 color_title="#FFFFFFFF"			# Window title foreground
 color_head="#C06A9FB5"			# Background for first element
 color_sec_b1="#C0171A1F"		# Background for section 1

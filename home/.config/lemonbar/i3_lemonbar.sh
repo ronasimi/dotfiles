@@ -47,7 +47,7 @@ while read -r; do
 
         (amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {printf "VOL%d%%\n",$2}' > "${panel_fifo}") &
 
-done < <(echo && inotifywait -m /dev/snd/by-path/pci-0000:00:1b.0) &
+done < <(echo && inotifywait -m /dev/snd/controlC0) &
 
 # Network, "ETH", "WFI"
 while read -r; do

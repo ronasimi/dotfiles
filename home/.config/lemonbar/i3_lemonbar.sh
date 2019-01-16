@@ -47,7 +47,7 @@ while read -r; do
 
         (amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {printf "VOL%d%%\n",$2}' > "${panel_fifo}") &
 
-done < <(echo && stdbuf -oL alsactl monitor pulse) &
+done < <(echo && stdbuf -oL alsactl monitor) &
 
 # Network, "ETH", "WFI"
 while read -r; do

@@ -1,4 +1,12 @@
-URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-*,xft:Material Design Icons:size=5:antialias=false,xft:Symbola:antialias=false
+!URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-*,\
+!				xft:Material Design Icons:size=5:antialias=false,\
+!				xft:Symbola
+URxvt*font:			-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*,\
+				xft:Material Design Icons,\
+				xft:Symbola
+URxvt*boldFont:			-*-tamzenforpowerline-bold-r-*-*-13-*-*-*-*-*-*-*
+URxvt*italicFont:		-*-tamzenforpowerline-medium-i-*-*-13-*-*-*-*-*-*-*
+URxvt*boldItalicFont:		-*-tamzenforpowerline-bold-i-*-*-13-*-*-*-*-*-*-*
 URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true
 URxvt*saveLines:		9999
@@ -14,8 +22,10 @@ URxvt*secondaryScreen:		true
 URxvt*secondaryScroll:		false
 URxvt*depth:			32
 URxvt*perl-ext-common:		default,matcher,clipboard,url-select,keyboard-select,vtwheel,fullscreen
-URxvt*url-select.launcher:	google-chrome-stable
+URxvt*url-select.launcher:	/usr/bin/xdg-open
 URxvt*url-select.underline:	true
+URxvt*url-launcher:		/usr/bin/xdg-open
+URxvt*matcher.button:		1
 URxvt*keysym.C-A-c:		perl:clipboard:copy
 URxvt*keysym.C-A-v:		perl:clipboard:paste
 URxvt*keysym.M-u:		perl:url-select:select_next
@@ -28,14 +38,14 @@ URxvt*keysym.KP_End:		\033[4~
 URxvt*keysym.F11:		perl:fullscreen:switch
 URxvt*iso14755:			false
 
-Xft.dpi: 96
+Xft.dpi:			96
 
-Xft.autohint: 0
-Xft.lcdfilter: lcddefault
-Xft.hintstyle: hintslight
-Xft.hinting: 1
-Xft.antialias: 1
-Xft.rgba: rgb
+Xft.autohint:			0
+Xft.lcdfilter:			lcddefault
+Xft.hintstyle:			hintfull
+Xft.hinting:			1
+Xft.antialias:			1
+Xft.rgba:			rgb
 
 ! Colors
 *.foreground:   #eaeaeb

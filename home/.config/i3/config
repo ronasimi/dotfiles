@@ -6,11 +6,9 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Inter UI, Material Design Icons 9
-
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Segoe UI 9
+font pango:Inter UI, Material Design Icons 9
 
 ## Workspace names
 # workspace name variables
@@ -233,7 +231,8 @@ bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 
 ## Program Keybinds
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i -o 0.75 -h 14 -w 1572 -x 14 -y 7 -nb '#2f343f' -nf '#eaeaeb' -sb '#6a9fb5' -sf '#2f343f' -fn '-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1'"
+#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i -o 1.0 -h 14 -w 1572 -x 14 -y 7 -nb '#2f343f' -nf '#eaeaeb' -sb '#6a9fb5' -sf '#2f343f' -fn '-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-1'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i -o 1.0 -h 14 -w 1572 -x 14 -y 7 -nb '#2f343f' -nf '#eaeaeb' -sb '#6a9fb5' -sf '#2f343f' -fn '-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*'"
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium

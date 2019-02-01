@@ -21,21 +21,21 @@ mail_timer=5				# Mail check timer (min)
 upd_timer=30				# Update check (min)
 
 # color definitions
-color_back="#FF2F343F"			# Default background
+color_back="#C02F343F"			# Default background
 color_fore="#FFEAEAEB"			# Default foreground
 color_title="#FFFFFFFF"			# Window title foreground
-color_head="#FF6A9FB5"			# Background for first element
-color_sec_b1="#FF171A1F"		# Background for section 1
-color_sec_b2="#FF2F343F"		# Background for section 2
+color_head="#C06A9FB5"			# Background for first element
+color_sec_b1="#C0171A1F"		# Background for section 1
+color_sec_b2="#C02F343F"		# Background for section 2
 color_icon="#FFEAEAEB"  		# For icons
 color_icon_dark="#FF2F343F"		# For icons (dark)
 color_netdown="#FF8C8C8D"		# For inactive network interface icons
-color_mail="#FFDD4B39"			# Background color for mail alert
-color_upd="#FF1793D0"			# Background color for update alert
-color_alert="#FFAC4142"			# Background color for cpu/temp/memory alert
-color_wsp="#FF90A959"			# Background for selected workspace
+color_mail="#C0DD4B39"			# Background color for mail alert
+color_upd="#C01793D0"			# Background color for update alert
+color_alert="#C0AC4142"			# Background color for cpu/temp/memory alert
+color_wsp="#C090A959"			# Background for selected workspace
 color_ina="#FF434852"		        # Foreground for inactive workspace
-color_bat="#FFAC4142"			# Background for battery
+color_bat="#C0AC4142"			# Background for battery
 
 #default space between sections
 if [ ${res_w} -gt 1024 ]; then

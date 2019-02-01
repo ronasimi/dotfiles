@@ -232,7 +232,7 @@ bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 ## Program Keybinds
 # start dmenu (a program launcher)
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i -o 1.0 -h 14 -w 1572 -x 14 -y 7 -nb '#2f343f' -nf '#eaeaeb' -sb '#6a9fb5' -sf '#2f343f' -fn '-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-1'"
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i -o 1.0 -h 14 -w 1572 -x 14 -y 7 -nb '#2f343f' -nf '#eaeaeb' -sb '#6a9fb5' -sf '#2f343f' -fn '-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i -o 0.75 -h 14 -w 1572 -x 14 -y 7 -nb '#2f343f' -nf '#eaeaeb' -sb '#6a9fb5' -sf '#2f343f' -fn '-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*'"
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium

@@ -36,7 +36,7 @@ while read -r line ; do
 
         case $line in
                 SYS*)
-                        # conky= 0 = cpu, 1 = memory percent, 2 = cpu temperature
+                        # conky= 0 = cpu percent, 1 = memory used, 2 = cpu temperature
                         sys_arr=(${line#???})
 
                         # cpu

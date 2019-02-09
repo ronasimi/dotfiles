@@ -95,7 +95,7 @@ done &
 #### LOOP FIFO
 
 (cat "${panel_fifo}" | $(dirname $0)/i3_lemonbar_parser.sh \
-        | lemonbar -p -d -f "${font}" -f "${iconfont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
+| lemonbar -p -d -f "${font}" -f "${iconfont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
 
 #### Keep lemonbar below fullscreen windows
 

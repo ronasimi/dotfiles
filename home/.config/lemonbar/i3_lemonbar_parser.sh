@@ -61,7 +61,7 @@ while read -r line ; do
                         heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${sys_arr[2]}°C"
                         ;;
 
-                              WSP*)
+                WSP*)
                         # I3 Workspaces
                         wsp="%{F${color_icon_dark} B${color_head}} %{T2}${icon_wsp}%{T1}"
                         set -- ${line#???}

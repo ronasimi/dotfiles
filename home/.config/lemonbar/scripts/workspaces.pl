@@ -129,7 +129,7 @@ sub update_output {
             my $name = $ws->{name};
             $out .= qq|$state$name |;
         }
-
+	$out =~ s/\d://g;
         $out .= "\n";
 
         print $out;

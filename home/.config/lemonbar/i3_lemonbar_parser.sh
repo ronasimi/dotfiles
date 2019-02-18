@@ -29,38 +29,12 @@ while read -r line ; do
         fi
 
         # date
-        date="%{F${color_sec_b2}}${sep_left}%{F${color_fore} B${color_sec_b2}} %{T2}${icon_cal}%{F- T1}%{F${color_fore}} ${day}"
+        date="%{F${color_sec_b1}}${sep_left}%{F${color_fore} B${color_sec_b1}} %{T2}${icon_cal}%{F- T1}%{F${color_fore}} ${day}"
 
         # time
-        time="%{F${color_sec_b1}}${sep_left}%{F${color_fore} B${color_sec_b1}} %{T2}${icon_clock}%{F- T1}%{F${color_fore}} ${clock} %{F- B-}"
+        time="%{F${color_sec_b2}}${sep_left}%{F${color_fore} B${color_sec_b2}} %{T2}${icon_clock}%{F- T1}%{F${color_fore}} ${clock} %{F- B-}"
 
         case $line in
-                SYS*)
-                        # conky= 0 = cpu percent, 1 = memory used, 2 = cpu temperature
-                        sys_arr=(${line#???})
-
-                        # cpu
-                        if [ ${sys_arr[0]} -gt ${cpu_alert} ]; then
-                                cpu_cback=${color_alert}; cpu_cicon=${color_icon}; cpu_cfore=${color_fore};
-                        else
-                                cpu_cback=${color_sec_b1}; cpu_cicon=${color_icon}; cpu_cfore=${color_fore};
-                        fi
-
-                        cpu="%{F${cpu_cback}}${sep_left}%{F${cpu_cicon} B${cpu_cback}} %{T2}${icon_cpu}%{F${cpu_cfore} T1} ${sys_arr[0]}%"
-
-                        # mem
-                        mem="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[1]}"
-
-                        # temperature
-                        if [ ${sys_arr[2]} -gt ${temp_alert} ]; then
-                                temp_cback=${color_alert}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
-                        else
-                                temp_cback=${color_sec_b2}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
-                        fi
-
-                        heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${sys_arr[2]}°C"
-                        ;;
-
                 WSP*)
                         # I3 Workspaces
                         wsp="%{F${color_icon_dark} B${color_head}} %{T2}${icon_wsp}%{T1} "
@@ -92,7 +66,7 @@ while read -r line ; do
                         if [ "${line#???}" != "0" ]; then
                                 upd_cback=${color_upd}; upd_cicon=${color_icon_dark}; upd_cfore=${color_back};
                         else
-                                upd_cback=${color_sec_b2}; upd_cicon=${color_icon}; upd_cfore=${color_fore};
+                                upd_cback=${color_sec_b1}; upd_cicon=${color_icon}; upd_cfore=${color_fore};
                         fi
                         updates="%{F${upd_cback}}${sep_left}%{F${upd_cicon} B${upd_cback}} %{T2}${icon_arch}%{F${upd_cfore} T1} ${line#???}"
                         ;;
@@ -102,14 +76,14 @@ while read -r line ; do
                         if [ "${line#???}" != "0" ]; then
                                 mail_cback=${color_mail}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
                         else
-                                mail_cback=${color_sec_b1}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
+                                mail_cback=${color_sec_b2}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
                         fi
                         gmail="%{F${mail_cback}}${sep_left}%{F${mail_cicon} B${mail_cback}} %{T2}${icon_mail}%{F${mail_cfore} T1} ${line#???}"
                         ;;
 
                 BRI*)
                         # brightness
-                        bright="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_bright} %{F- T1}${line#???}%"
+                        bright="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_bright} %{F- T1}${line#???}%"
                         ;;
 
                 VOL*)
@@ -120,7 +94,7 @@ while read -r line ; do
                         else
                                 icon_vol="";
                         fi
-                        vol="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_vol}%{F${color_fore} T1} ${line#???}"
+                        vol="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_vol}%{F${color_fore} T1} ${line#???}"
                         ;;
 
                 ETH*)
@@ -190,5 +164,5 @@ while read -r line ; do
         esac
 
         # And finally, output
-        printf "%s\n" "%{l}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:urxvtc -g 60x7+860+28 -name "htop" -e htop:}${cpu}${stab}${heat}${stab}${mem}${stab}%{A}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A1:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A1:exec $(dirname $0)/scripts/battime.sh &:}${bat}${stab}%{A}%{A}%{A1:urxvtc -g 80x24-14+28 -name "nmtui" -e nmtui-connect:}${ethernet}${wifi}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
+        printf "%s\n" "%{l}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A1:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A1:urxvtc -g 80x24-14+28 -name "nmtui" -e nmtui-connect:}${ethernet}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/battime.sh &:}${bat}${stab}%{A}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
 done

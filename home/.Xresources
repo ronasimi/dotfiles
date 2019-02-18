@@ -1,9 +1,6 @@
-!URxvt*font:			-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-*-*,\
-!				xft:Material Design Icons:size=5:antialias=false,\
-!				xft:Symbola
 URxvt*font:			-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*,\
-				xft:Material Design Icons,\
-				xft:Symbola
+				xft:Material Design Icons:size=6:antialiasing=false,\
+				xft:Symbola:size=6:antialiasing=false
 URxvt*boldFont:			-*-tamzenforpowerline-bold-r-*-*-13-*-*-*-*-*-*-*
 URxvt*italicFont:		-*-tamzenforpowerline-medium-i-*-*-13-*-*-*-*-*-*-*
 URxvt*boldItalicFont:		-*-tamzenforpowerline-bold-i-*-*-13-*-*-*-*-*-*-*
@@ -48,38 +45,38 @@ Xft.antialias:			1
 Xft.rgba:			rgb
 
 ! Colors
-*.foreground:   #eaeaeb
-*.background:   #2f343f
-*.cursorColor:  #eaeaeb
+URxvt*foreground:   #eaeaeb
+URxvt*background:   #2f343f
+URxvt*cursorColor:  #eaeaeb
 
 ! black
-*.color0:       #585c65
-*.color8:       #585c65
+URxvt*color0:       #585c65
+URxvt*color8:       #585c65
 
 ! red
-*.color1:       #ac4142
-*.color9:       #ac4142
+URxvt*color1:       #ac4142
+URxvt*color9:       #ac4142
 
 ! green
-*.color2:       #90a959
-*.color10:      #90a959
+URxvt*color2:       #90a959
+URxvt*color10:      #90a959
 
 ! yellow
-*.color3:       #f4bf75
-*.color11:      #f4bf75
+URxvt*color3:       #f4bf75
+URxvt*color11:      #f4bf75
 
 ! blue
-*.color4:       #6a9fb5
-*.color12:      #6a9fb5
+URxvt*color4:       #6a9fb5
+URxvt*color12:      #6a9fb5
 
 ! magenta
-*.color5:       #aa759f
-*.color13:      #aa759f
+URxvt*color5:       #aa759f
+URxvt*color13:      #aa759f
 
 ! cyan
-*.color6:       #75b5aa
-*.color14:      #75b5aa
+URxvt*color6:       #75b5aa
+URxvt*color14:      #75b5aa
 
 ! white
-*.color7:       #eaeaeb
-*.color15:      #eaeaeb
+URxvt*color7:       #eaeaeb
+URxvt*color15:      #eaeaeb

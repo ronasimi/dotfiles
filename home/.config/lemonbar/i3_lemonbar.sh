@@ -22,9 +22,6 @@ mkfifo "${panel_fifo}"
 
 ### EVENTS METERS
 
-# Conky, "SYS"
-conky -c $(dirname $0)/i3_lemonbar_conky > "${panel_fifo}" &
-
 # Window title, "WIN"
 while read -r; do
 

@@ -8,7 +8,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Inter UI, Material Design Icons 9
+font pango:Inter UI 8, Material Design Icons 8
 
 ## Workspace names
 # workspace name variables
@@ -28,7 +28,7 @@ set $ws10 "10:"
 # class				border		backgr.		text		indicator	child_border
 client.focused			#2f343f		#2f343f		#eaeaeb		#6a9fb5		#2f343f
 client.focused_inactive		#2f343f		#2f343f		#eaeaeb		#2f343f		#2f343f
-client.unfocused		#2f343f		#171a1f		#757575		#2f343f		#2f343f
+client.unfocused		#2f343f		#1c1f25		#757575		#2f343f		#2f343f
 client.urgent			#eaeaeb		#900000		#eaeaeb		#6a9fb5		#eaeaeb
 client.placeholder		#000000		#0c0c0c		#eaeaeb		#6a9fb5		#0c0c0c
 client.background		#2f343f
@@ -133,7 +133,7 @@ bindsym $mod+v split v
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking; exec notify-send -u critical "STACKING LAYOUT"
 bindsym $mod+w layout tabbed; exec notify-send -u critical "TABBED LAYOUT"
-bindsym $mod+e layout toggle split
+bindsym $mod+e layout toggle split; exec notify-send -u critical "TILING LAYOUT"
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -272,8 +272,8 @@ bar {
 }
 
 # autostart
+exec_always --no-startup-id ~/.config/i3/scripts/fehbg
 exec --no-startup-id exec thunar --daemon
 exec --no-startup-id exec urxvtd -q -o -f
 exec --no-startup-id xss-lock lockscreen
-exec_always --no-startup-id ~/.config/i3/scripts/fehbg
 exec --no-startup-id sleep 0.5; exec xset s activate

@@ -1,8 +1,11 @@
 #!/bin/bash
+
+# lockscreen script using ffmpeg and i3lock-color
+
 TMPBG=/tmp/screen.png
 LOCK=$HOME/.config/lockscreen/lock.png
 RES=$(xrandr | grep "current" | awk '{print $8a"x"$10a}' | sed 's/,$//')
 
-ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY -i $LOCK -filter_complex "smartblur=5:1,hue=s=0.75,overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2" -vframes 1 $TMPBG
-i3lock -n -u -i $TMPBG
+ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY -i $LOCK -filter_complex "smartblur=5:1,hue=s=0.75,overlay=35:(main_h-115)" -vframes 1 $TMPBG
+i3lock -n -u -t -i $TMPBG --timepos='x+110:h-70' --datepos='x+43:h-45' --clock --date-align 1 --datestr "Type password to unlock..." --timecolor=ffeaeaeb --datecolor=ffeaeaeb
 rm $TMPBG

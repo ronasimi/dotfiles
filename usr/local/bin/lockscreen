@@ -5,7 +5,9 @@
 TMPBG=/tmp/screen.png
 LOCK=$HOME/.config/lockscreen/lock.png
 RES=$(xrandr | grep "current" | awk '{print $8a"x"$10a}' | sed 's/,$//')
+RESW=$(xrandr | grep "current" | awk '{print $8a}' | sed 's/,$//')
+RESV=$(xrandr | grep "current" | awk '{print $10a}' | sed 's/,$//')
 
-ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY -i $LOCK -filter_complex "smartblur=5:1,hue=s=0.75,overlay=35:(main_h-115)" -vframes 1 $TMPBG
-i3lock -n -u -t -i $TMPBG --timepos='x+110:h-70' --datepos='x+43:h-45' --clock --date-align 1 --datestr "Type password to unlock..." --timecolor=ffeaeaeb --datecolor=ffeaeaeb
+ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY -filter_complex "smartblur=5:1,hue=s=0.75" -vframes 1 $TMPBG
+i3lock -n -u -i $TMPBG --timepos='x+42:h-90' --datepos='tx:h-45' --clock --timestr="%H:%M:%S" --date-align 1 --datestr "Type password to unlock..." --time-align=1 --date-align=1 --time-font="Inter Extra Bold" --timesize=72 --date-font="Inter Bold" --datesize=36 --timecolor=ac4142ff --datecolor=ac4142ff
 rm $TMPBG

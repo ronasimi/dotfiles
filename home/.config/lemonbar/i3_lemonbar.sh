@@ -38,7 +38,7 @@ cnt_mail=${mail_timer}
 
 while :; do
         if [ $((cnt_mail++)) -ge ${mail_timer} ]; then
-                printf "%s%s\n" "GMA" "$($(dirname $0)/scripts/gmail.sh)" > "${panel_fifo}"
+                printf "%s%s\n" "GMA" "$($(dirname $0)/scripts/gmail.sh)" > "${panel_fifo}" &
                 cnt_mail=0
         fi
 
@@ -52,7 +52,7 @@ cnt_update=${upd_timer}
 
 while :; do
         if [ $((cnt_update++)) -ge ${upd_timer} ]; then
-                printf "%s%s\n" "UPD" "$($(dirname $0)/scripts/updates.sh)" > "${panel_fifo}"
+                printf "%s%s\n" "UPD" "$($(dirname $0)/scripts/updates.sh)" > "${panel_fifo}" &
                 cnt_update=0
         fi
 

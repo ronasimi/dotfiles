@@ -11,4 +11,3 @@ while true ; do
 stdbuf -oL date +"%R"
    sleep 3 || break
 done > >(uniq_linebuffered) &
-

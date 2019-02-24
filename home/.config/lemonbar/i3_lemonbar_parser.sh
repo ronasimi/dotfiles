@@ -32,7 +32,7 @@ while read -r line ; do
                                                 ;;
                                         INA*|ACT*)
                                                 wsp="${wsp}%{F${color_head} B${color_head}}${sep_right}%{F${color_ina} B${color_head} T1} ${1#???} %{F${color_head} B${color_head}}${sep_right}"
-						;;
+                                                ;;
                                         URG*)
                                                 wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_fore} B${color_alert} T1} ${1#???} %{F${color_alert} B${color_head}}${sep_right}"
                                                 ;;
@@ -44,7 +44,7 @@ while read -r line ; do
                 WIN*)
                         # window title
                         win=$(xprop -id ${line#???} | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
-			title="%{F${color_head} B${color_sec_b2}}${sep_right}%{F${color_icon} B${color_sec_b2} T2} ${icon_prog}%{B- T1}%{F${color_title} T1} ${win}"
+                        title="%{F${color_head} B${color_sec_b2}}${sep_right}%{F${color_icon} B${color_sec_b2} T2} ${icon_prog}%{B- T1}%{F${color_title} T1} ${win}"
                         ;;
                 UPD*)
                         # Updates
@@ -67,19 +67,22 @@ while read -r line ; do
                         ;;
 
                 BRI*)
-                        # brightness
+                        # Brightness
                         bright="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_bright} %{F- T1}${line#???}%"
                         ;;
-
-                VOL*)
-                        # Volume
-                        isMuted=$(pacmd list-sinks | grep "muted" | cut -c 9)
-                        if [ "${isMuted}" == "y" ]; then
+                MUT*)
+                        # Speakers on/off
+                        if [ "${line#???}" == "yes" ]; then
                                 icon_vol="";
                         else
                                 icon_vol="";
                         fi
-                        vol="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_vol}%{F${color_fore} T1} ${line#???}"
+                        mut="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_vol}"
+                        ;;
+
+                VOL*)
+                        # Volume
+                        vol="%{F${color_fore} T1} ${line#???}"
                         ;;
 
                 ETH*)
@@ -147,18 +150,18 @@ while read -r line ; do
                         bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${line#???}%"
                         ;;
 
-		DAY*)
-			# date
-			date="%{F${color_sec_b1}}${sep_left}%{F${color_fore} B${color_sec_b1}} %{T2}${icon_cal}%{F- T1}%{F${color_fore}} ${line#???}"
-			;;
+                DAY*)
+                        # date
+                        date="%{F${color_sec_b1}}${sep_left}%{F${color_fore} B${color_sec_b1}} %{T2}${icon_cal}%{F- T1}%{F${color_fore}} ${line#???}"
+                        ;;
 
-		CLK*)
-			# time
-			time="%{F${color_sec_b2}}${sep_left}%{F${color_fore} B${color_sec_b2}} %{T2}${icon_clock}%{F- T1}%{F${color_fore}} ${line#???} %{F- B-}"
-			;;
+                CLK*)
+                        # time
+                        time="%{F${color_sec_b2}}${sep_left}%{F${color_fore} B${color_sec_b2}} %{T2}${icon_clock}%{F- T1}%{F${color_fore}} ${line#???} %{F- B-}"
+                        ;;
 
         esac
 
         # And finally, output
-        printf "%s\n" "%{l}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A1:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A1:urxvtc -g 80x24-14+28 -name "nmtui" -e nmtui-connect:}${ethernet}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/battime.sh &:}${bat}${stab}%{A}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
+        printf "%s\n" "%{l}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A1:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${mut}${vol}${stab}%{A}%{A}%{A1:urxvtc -g 80x24-14+28 -name "nmtui" -e nmtui-connect:}${ethernet}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/battime.sh &:}${bat}${stab}%{A}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
 done

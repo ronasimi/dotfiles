@@ -22,6 +22,9 @@ mkfifo "${panel_fifo}"
 
 ### EVENTS METERS
 
+# i3 Workspaces, "WSP"
+$(dirname $0)/scripts/workspaces.pl > "${panel_fifo}" &
+
 # Window title, "WIN"
 while read -r; do
 
@@ -29,8 +32,33 @@ while read -r; do
 
 done < <(echo && stdbuf -oL i3-msg -t subscribe -m '[ "window", "workspace" ]') &
 
-# i3 Workspaces, "WSP"
-$(dirname $0)/scripts/workspaces.pl > "${panel_fifo}" &
+# GMAIL, "GMA"
+### Mail check interval
+cnt_mail=${mail_timer}
+
+while :; do
+        if [ $((cnt_mail++)) -ge ${mail_timer} ]; then
+                printf "%s%s\n" "GMA" "$($(dirname $0)/scripts/gmail.sh)" > "${panel_fifo}"
+                cnt_mail=0
+        fi
+
+        sleep 60
+
+done &
+
+# Updates, "UPD"
+### Update check interval
+cnt_update=${upd_timer}
+
+while :; do
+        if [ $((cnt_update++)) -ge ${upd_timer} ]; then
+                printf "%s%s\n" "UPD" "$($(dirname $0)/scripts/updates.sh)" > "${panel_fifo}"
+                cnt_update=0
+        fi
+
+        sleep 60
+
+done &
 
 # Backlight, "BRI"
 while read -r; do
@@ -42,7 +70,7 @@ done < <(echo && stdbuf -oL inotifywait -m -e modify /sys/class/backlight/acpi_v
 # Volume, "VOL"
 while read -r; do
 
-        (amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {printf "VOL%d%%\n",$2}' > "${panel_fifo}") &
+        (pamixer --get-volume | awk '{print "VOL" $1"%"}' > "${panel_fifo}") &
 
 done < <(echo && inotifywait -m /dev/snd/controlC0) &
 
@@ -57,35 +85,22 @@ done < <(echo && stdbuf -oL nmcli m) &
 # Battery, "BAT"
 while read -r; do
 
-        (acpi -b | awk '{print "BAT" $4}' | tr -d '%,' > "${panel_fifo}") &
+        (acpi -b | awk '{print "BAT" $4}' > "${panel_fifo}") &
 
 done < <(echo && stdbuf -oL upower --monitor) &
 
-# GMAIL, "GMA"
-### Mail check interval
-cnt_mail=${mail_timer}
+# date/time
+while sleep 1; do
 
-while :; do
-        if [ $((cnt_mail++)) -ge ${mail_timer} ]; then
-                printf "%s%s\n" "GMA" "$($(dirname $0)/scripts/gmail.sh)" > "${panel_fifo}"
-                cnt_mail=0
+        currenttime=$(date +"%a %b %d %R")
+
+        if [ ${res_w} -gt 1024 ]; then
+                (echo "$currenttime" | awk '{print "DAY" $1,$2,$3}' > "${panel_fifo}") &
+        else
+                (echo "$currenttime" | awk '{print "DAY" $2,$3}' > "${panel_fifo}") &
         fi
 
-        sleep 60;
-
-done &
-
-# Updates, "UPD"
-### Update check interval
-cnt_update=${upd_timer}
-
-while :; do
-        if [ $((cnt_update++)) -ge ${upd_timer} ]; then
-                printf "%s%s\n" "UPD" "$($(dirname $0)/scripts/updates.sh)" > "${panel_fifo}"
-                cnt_update=0
-        fi
-
-        sleep 60;
+        (echo "$currenttime" | awk '{print "CLK" $4}' > "${panel_fifo}") &
 
 done &
 
@@ -102,6 +117,5 @@ while [ -z "$wid" -a "$tries_left" -gt 0 ] ; do
         xdo above -t $(xwininfo -root -children | egrep -o "0x[[:xdigit:]]+" | tail -1) $(xdo id -a bar)
         tries_left=$((tries_left - 1))
 done
-
 
 wait

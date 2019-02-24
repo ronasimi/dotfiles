@@ -8,7 +8,6 @@ font="-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:size=9"
 clickables=15
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
-snd_cha=$(amixer get Master | grep "Playback channels:" | awk '{if ($4 == "") {printf "%s: Playback", $3} else {printf "%s %s: Playback", $3, $4}}')
 
 # Alarm settings
 cpu_alert=75				# % cpu use

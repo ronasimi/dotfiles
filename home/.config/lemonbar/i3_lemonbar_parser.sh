@@ -19,21 +19,6 @@ title="%{F${color_head} B${color_sec_b2}}${sep_right}%{F${color_icon} B${color_s
 
 while read -r line ; do
 
-        # date/time
-        currenttime=$(date +"%a %b %d %R")
-        clock=$(echo "$currenttime" | cut -d " " -f 4)
-        if [ ${res_w} -gt 1024 ]; then
-                day=$(echo "$currenttime" | cut -d " " -f 1-3)
-        else
-                day=$(echo "$currenttime" | cut -d " " -f 2-3)
-        fi
-
-        # date
-        date="%{F${color_sec_b1}}${sep_left}%{F${color_fore} B${color_sec_b1}} %{T2}${icon_cal}%{F- T1}%{F${color_fore}} ${day}"
-
-        # time
-        time="%{F${color_sec_b2}}${sep_left}%{F${color_fore} B${color_sec_b2}} %{T2}${icon_clock}%{F- T1}%{F${color_fore}} ${clock} %{F- B-}"
-
         case $line in
                 WSP*)
                         # I3 Workspaces
@@ -161,6 +146,17 @@ while read -r line ; do
 
                         bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${line#???}%"
                         ;;
+
+		DAY*)
+			# date
+			date="%{F${color_sec_b1}}${sep_left}%{F${color_fore} B${color_sec_b1}} %{T2}${icon_cal}%{F- T1}%{F${color_fore}} ${line#???}"
+			;;
+
+		CLK*)
+			# time
+			time="%{F${color_sec_b2}}${sep_left}%{F${color_fore} B${color_sec_b2}} %{T2}${icon_clock}%{F- T1}%{F${color_fore}} ${line#???} %{F- B-}"
+			;;
+
         esac
 
         # And finally, output

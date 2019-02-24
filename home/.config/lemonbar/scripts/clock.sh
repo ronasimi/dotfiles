@@ -8,7 +8,7 @@ uniq_linebuffered() {
 while true ; do
    # "date" output is checked once a second, but an event is only
    # generated if the output changed compared to the previous run.
-date +"%R"
-   sleep 1 || break
+stdbuf -oL date +"%R"
+   sleep 3 || break
 done > >(uniq_linebuffered) &
 

@@ -6,7 +6,7 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 geometry="1572x14+14+7"
 font="-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:size=9"
-clickables=15
+clickables=12
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
 # Alarm settings

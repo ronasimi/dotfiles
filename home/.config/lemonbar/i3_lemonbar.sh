@@ -30,7 +30,7 @@ while read -r; do
 
         (xprop -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}") &
 
-done < <(echo && stdbuf -oL i3-msg -t subscribe -m '[ "window", "workspace" ]') &
+done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace" ]') &
 
 # GMAIL, "GMA"
 ### Mail check interval
@@ -65,7 +65,7 @@ while read -r; do
 
         (xbacklight -get | awk '{print "BRI" $1}' > "${panel_fifo}") &
 
-done < <(echo && stdbuf -oL inotifywait -m -e modify /sys/class/backlight/acpi_video0/actual_brightness /sys/class/backlight/intel_backlight/actual_brightness -e open /sys/class/power_supply/AC/uevent) &
+done < <(echo && inotifywait -m -e modify /sys/class/backlight/acpi_video0/actual_brightness /sys/class/backlight/intel_backlight/actual_brightness -e open /sys/class/power_supply/AC/uevent) &
 
 # Volume, "MUT", "VOL"
 while read -r; do
@@ -81,17 +81,18 @@ while read -r; do
         (nmcli -t | grep enp0s25: | awk '{print "ETH" $2}' > "${panel_fifo}") &
         (nmcli -t | grep wlp3s0: | awk '{print "WFI" $2}' > "${panel_fifo}") &
 
-done < <(echo && stdbuf -oL nmcli m) &
+done < <(echo && nmcli m) &
 
 # Battery, "BAT"
 while read -r; do
 
         (acpi -b | awk '{print "BAT" $4}' | tr -d '%,' > "${panel_fifo}") &
 
-done < <(echo && stdbuf -oL upower --monitor) &
+done < <(echo && upower --monitor) &
 
 # date/time
-while sleep 1; do
+
+while read -r; do
 
         currenttime=$(date +"%a %b %d %R")
 
@@ -103,7 +104,7 @@ while sleep 1; do
 
         (echo "$currenttime" | awk '{print "CLK" $4}' > "${panel_fifo}") &
 
-done &
+done < <(echo 1 && $(dirname $0)/scripts/clock.sh) &
 
 #### LOOP FIFO
 

@@ -85,7 +85,7 @@ done < <(echo && stdbuf -oL nmcli m) &
 # Battery, "BAT"
 while read -r; do
 
-        (acpi -b | awk '{print "BAT" $4}' > "${panel_fifo}") &
+        (acpi -b | awk '{print "BAT" $4}' | tr -d '%,' > "${panel_fifo}") &
 
 done < <(echo && stdbuf -oL upower --monitor) &
 

@@ -32,8 +32,7 @@ fi
 
 eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)
 export SSH_AUTH_SOCK
-#/usr/lib/xfce-polkit/xfce-polkit &
-/usr/lib/mate-polkit/polkit-mate-authentication-agent-1 &
+/usr/bin/lxpolkit &
 xcalib -d :0 ~/.config/icc/T4201600x900.icc &
 compton --config ~/.config/compton/compton.conf -b &
 syndaemon -i 2 -t -k -d &

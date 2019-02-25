@@ -1,6 +1,6 @@
 #!/bin/bash
 # This loop will fill a buffer with our infos, and output it to stdout.
-# "date" output is checked every 3 seconds, but an event is only
+# "date" output is checked every 2 seconds, but an event is only
 # generated if the output changed compared to the previous run."
 
 uniq_linebuffered() {
@@ -8,5 +8,5 @@ uniq_linebuffered() {
   }
 
 tm() {
-  date +%M; sleep 1; tm;
+  date +%M; sleep 2; tm;
   };tm | (uniq_linebuffered)

@@ -19,7 +19,7 @@ mail_timer=5				# Mail check timer (min)
 upd_timer=30				# Update check (min)
 
 # color definitions
-color_back="#C02F343F"			# Default background
+color_back="#002F343F"			# Default background
 color_fore="#FFEAEAEB"			# Default foreground
 color_title="#FFFFFFFF"			# Window title foreground
 color_head="#C06A9FB5"			# Background for first element
@@ -59,7 +59,6 @@ icon_wifi_up=""			# Wifi up icon
 icon_wifi_down=""			# Wifi down icon
 icon_mail=""				# Mail icon
 icon_arch=""				# Arch icon
-icon_prog=""				# Window icon
 icon_wsp=""				# Workspace icon
 icon_temp=""				# Temp icon
 icon_bright=""				# Brightness icon

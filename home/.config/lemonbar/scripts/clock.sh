@@ -11,6 +11,6 @@ uniq_linebuffered() {
 while true ; do
 
     echo "CLK$(date +%R)"
-    sleep 3 || break
+    sleep 4 || break
 
 done > >(uniq_linebuffered) &

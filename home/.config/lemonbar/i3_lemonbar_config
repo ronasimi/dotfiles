@@ -6,7 +6,7 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 geometry="1572x14+14+7"
 font="-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:size=9"
-clickables=12
+clickables=16
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
 # Alarm settings
@@ -33,7 +33,6 @@ color_upd="#C01793D0"			# Background color for update alert
 color_alert="#C0AC4142"			# Background color for cpu/temp/memory alert
 color_wsp="#C090A959"			# Background for selected workspace
 color_ina="#FF434852"		        # Foreground for inactive workspace
-color_bat="#C0AC4142"			# Background for battery
 
 #default space between sections
 if [ ${res_w} -gt 1024 ]; then
@@ -45,8 +44,6 @@ fi
 # Char glyps for powerline fonts
 sep_left=""				# Powerline separator left
 sep_right=""				# Powerline separator right
-sep_l_left=""				# Powerline light separator left
-sep_l_right=""				# Powerline light separator right
 
 # Icon glyphs from Material Icons
 icon_clock=""				# Clock icon
@@ -61,18 +58,31 @@ icon_mail=""				# Mail icon
 icon_arch=""				# Arch icon
 icon_wsp=""				# Workspace icon
 icon_temp=""				# Temp icon
-icon_bright=""				# Brightness icon
 
-icon_charge=""				# On charger icon
-icon_full=""				# Full battery icon
-icon_90=""				# 90% battery icon
-icon_80=""				# 80% battery icon
-icon_70=""				# 70% battery icon
-icon_60=""				# 60% battery icon
-icon_50=""				# 50% battery icon
-icon_40=""				# 40% battery icon
-icon_30=""				# 30% battery icon
-icon_20=""				# 20% battery icon
-icon_10=""				# 10% battery icon
-icon_0=""				# 0% battery icon
-icon_low=""				# Low battery icon
+icon_bright_100=""			# Full brightness icon
+icon_bright_80=""			# 80% brightness icon
+icon_bright_51=""			# 51% brightness icon
+icon_bright_31=""			# 31% brightness icon
+icon_bright_19=""			# 19% brightness icon
+icon_bright_11=""			# 11% brightness icon
+icon_bright_6=""			# <6% brightness icon
+
+icon_vol_hi=""			# Full brightness icon
+icon_vol_med=""         		# 80% brightness icon
+icon_vol_lo=""		               	# 51% brightness icon
+icon_vol_off=""			        # 31% brightness icon
+icon_vol_mute=""         		# 19% brightness icon
+
+icon_bat_charge=""			# On charger icon
+icon_bat_full=""			# Full battery icon
+icon_bat_90=""				# 90% battery icon
+icon_bat_80=""				# 80% battery icon
+icon_bat_70=""				# 70% battery icon
+icon_bat_60=""				# 60% battery icon
+icon_bat_50=""				# 50% battery icon
+icon_bat_40=""				# 40% battery icon
+icon_bat_30=""				# 30% battery icon
+icon_bat_20=""				# 20% battery icon
+icon_bat_10=""				# 10% battery icon
+icon_bat_0=""				# 0% battery icon
+icon_bat_low=""				# Low battery icon

@@ -20,6 +20,7 @@ title="%{F${color_head} B${color_back}}${sep_right}%{B${color_back} T2}%{B- T1}%
 while read -r line ; do
 
         case $line in
+
                 WSP*)
                         # I3 Workspaces
                         wsp="%{F${color_icon_dark} B${color_head}} %{T2}${icon_wsp}%{T1} "
@@ -46,6 +47,7 @@ while read -r line ; do
                         win=$(xprop -id ${line#???} | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
                         title="%{F${color_head} B${color_back}}${sep_right}%{B${color_back} T2}%{B- T1}%{F${color_title} T1} ${win}"
                         ;;
+
                 UPD*)
                         # Updates
                         if [ "${line#???}" != "0" ]; then
@@ -68,21 +70,43 @@ while read -r line ; do
 
                 BRI*)
                         # Brightness
-                        bright="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_bright} %{F- T1}${line#???}%"
-                        ;;
-                MUT*)
-                        # Speakers on/off
-                        if [ "${line#???}" == "yes" ]; then
-                                icon_vol="";
-                        else
-                                icon_vol="";
+                        if [ "${line#???}" == 100 ]; then
+                                icon_bright=${icon_bright_100};
+                        elif [ "${line#???}" -ge 80 ]; then
+                                icon_bright=${icon_bright_80};
+                        elif [ "${line#???}" -ge 51 ]; then
+                                icon_bright=${icon_bright_51};
+                        elif [ "${line#???}" -ge 31 ]; then
+                                icon_bright=${icon_bright_31};
+                        elif [ "${line#???}" -ge 19 ]; then
+                                icon_bright=${icon_bright_19};
+                        elif [ "${line#???}" -ge 11 ]; then
+                                icon_bright=${icon_bright_11};
+                        elif [ "${line#???}" -ge 6 ]; then
+                                icon_bright=${icon_bright_6};
                         fi
-                        mut="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_vol}"
+
+                        bright="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_bright} %{F- T1}${line#???}%"
                         ;;
 
                 VOL*)
-                        # Volume
-                        vol="%{F${color_fore} T1} ${line#???}"
+                        # Speakers on/off
+                        muted=$(pacmd list-sinks | grep "muted" | awk '{print $2}')
+
+                        if [ "${muted}" == "yes" ]; then
+                                icon_vol=${icon_vol_mute};
+                        elif [ "${line#???}" -ge 66 ]; then
+                                icon_vol=${icon_vol_hi};
+                        elif [ "${line#???}" -ge 33 ]; then
+                                icon_vol=${icon_vol_med};
+                        elif [ "${line#???}" -ge 1 ]; then
+                                icon_vol=${icon_vol_lo};
+                        elif [ "${line#???}" -eq 0 ]; then
+                                icon_vol=${icon_vol_off};
+                        fi
+
+                        vol="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_vol}%{F${color_fore} T1} ${line#???}%"
+
                         ;;
 
                 ETH*)
@@ -116,32 +140,32 @@ while read -r line ; do
                         oncharger=$(cat /sys/class/power_supply/AC/online)
 
                         if [ "${oncharger}" == "1" ]; then
-                                icon_bat=${icon_charge};
+                                icon_bat=${icon_bat_charge};
                                 # battery level
                         elif [ "${line#???}" -ge 95 ]; then
-                                icon_bat=${icon_full};
+                                icon_bat=${icon_bat_full};
                         elif [ "${line#???}" -ge 85 ]; then
-                                icon_bat=${icon_90};
+                                icon_bat=${icon_bat_90};
                         elif [ "${line#???}" -ge 75 ]; then
-                                icon_bat=${icon_80};
+                                icon_bat=${icon_bat_80};
                         elif [ "${line#???}" -ge 65 ]; then
-                                icon_bat=${icon_70};
+                                icon_bat=${icon_bat_70};
                         elif [ "${line#???}" -ge 55 ]; then
-                                icon_bat=${icon_60};
+                                icon_bat=${icon_bat_60};
                         elif [ "${line#???}" -ge 45 ]; then
-                                icon_bat=${icon_50};
+                                icon_bat=${icon_bat_50};
                         elif [ "${line#???}" -ge 35 ]; then
-                                icon_bat=${icon_40};
+                                icon_bat=${icon_bat_40};
                         elif [ "${line#???}" -ge 25 ]; then
-                                icon_bat=${icon_30};
+                                icon_bat=${icon_bat_30};
                         elif [ "${line#???}" -ge 15 ]; then
-                                icon_bat=${icon_20};
+                                icon_bat=${icon_bat_20};
                         elif [ "${line#???}" -gt ${bat_alert} ]; then
-                                icon_bat=${icon_10};
+                                icon_bat=${icon_bat_10};
                         fi
 
                         if [ ${line#???} -le ${bat_alert} ]; then
-                                bat_cback=${color_alert}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat=${icon_low}
+                                bat_cback=${color_alert}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat=${icon_bat_low}
                                 (notify-send -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work");
                         else
                                 bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
@@ -163,5 +187,5 @@ while read -r line ; do
         esac
 
         # And finally, output
-        printf "%s\n" "%{l}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A1:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${mut}${vol}${stab}%{A}%{A}%{A1:urxvtc -g 80x24-14+28 -name "nmtui" -e nmtui-connect:}${ethernet}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/battime.sh &:}${bat}${stab}%{A}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
+        printf "%s\n" "%{l}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_bri.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_vol.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
 done

@@ -1,6 +1,6 @@
 #!/bin/bash
 # This loop will fill a buffer with our infos, and output it to stdout.
-# "time" output is checked every 3 seconds, but an event is only
+# "time" output is checked every 4 seconds, but an event is only
 # generated if the output changed compared to the previous run.
 
 uniq_linebuffered() {

@@ -32,20 +32,6 @@ while read -r; do
 
 done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace" ]') &
 
-# GMAIL, "GMA"
-### Mail check interval
-cnt_mail=${mail_timer}
-
-while :; do
-        if [ $((cnt_mail++)) -ge ${mail_timer} ]; then
-                printf "%s%s\n" "GMA" "$($(dirname $0)/scripts/gmail.sh)" > "${panel_fifo}"
-                cnt_mail=0
-        fi
-
-        sleep 60
-
-done &
-
 # Updates, "UPD"
 ### Update check interval
 cnt_update=${upd_timer}
@@ -54,6 +40,20 @@ while :; do
         if [ $((cnt_update++)) -ge ${upd_timer} ]; then
                 printf "%s%s\n" "UPD" "$($(dirname $0)/scripts/updates.sh)" > "${panel_fifo}"
                 cnt_update=0
+        fi
+
+        sleep 60
+
+done &
+
+# GMAIL, "GMA"
+### Mail check interval
+cnt_mail=${mail_timer}
+
+while :; do
+        if [ $((cnt_mail++)) -ge ${mail_timer} ]; then
+                printf "%s%s\n" "GMA" "$($(dirname $0)/scripts/gmail.sh)" > "${panel_fifo}"
+                cnt_mail=0
         fi
 
         sleep 60
@@ -70,8 +70,7 @@ done < <(echo && inotifywait -m -e modify /sys/class/backlight/acpi_video0/actua
 # Volume, "MUT", "VOL"
 while read -r; do
 
-        (pacmd list-sinks | grep "muted" | awk '{print "MUT" $2}' > "${panel_fifo}") &
-        (pamixer --get-volume | awk '{print "VOL" $1"%"}' > "${panel_fifo}") &
+        (pamixer --get-volume | awk '{print "VOL" $1}' > "${panel_fifo}") &
 
 done < <(echo && inotifywait -m /dev/snd/controlC0) &
 

@@ -48,16 +48,12 @@ sep_right=""				# Powerline separator right
 # Icon glyphs from Material Icons
 icon_clock=""				# Clock icon
 icon_cal=""				# Calendar icon
-icon_cpu=""				# CPU icon
-icon_mem=""				# MEM icon
 icon_ethup=""				# Ethernet up icon
 icon_ethdown=""			# Ethernet down icon
 icon_wifi_up=""			# Wifi up icon
 icon_wifi_down=""			# Wifi down icon
 icon_mail=""				# Mail icon
 icon_arch=""				# Arch icon
-icon_wsp=""				# Workspace icon
-icon_temp=""				# Temp icon
 
 icon_bright_100=""			# Full brightness icon
 icon_bright_80=""			# 80% brightness icon

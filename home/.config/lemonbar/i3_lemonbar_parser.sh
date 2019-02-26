@@ -23,7 +23,7 @@ while read -r line ; do
 
                 WSP*)
                         # I3 Workspaces
-                        wsp="%{F${color_icon_dark} B${color_head}} %{T2}${icon_wsp}%{T1} "
+                        wsp="%{F${color_icon_dark} B${color_head}}"
                         set -- ${line#???}
 
                         while [ $# -gt 0 ] ; do

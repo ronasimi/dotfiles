@@ -92,19 +92,18 @@ done < <(echo && upower --monitor) &
 
 # date/time
 
-while read -r; do
-
-        currenttime=$(date +"%a %b %d %R")
+while :; do
 
         if [ ${res_w} -gt 1024 ]; then
-                (echo "$currenttime" | awk '{print "DAY" $1,$2,$3}' > "${panel_fifo}") &
+                (echo "DAY$(date +"%a %b %d")" > "${panel_fifo}") &
         else
-                (echo "$currenttime" | awk '{print "DAY" $2,$3}' > "${panel_fifo}") &
+                (echo "DAY$(date +"%b %d")" > "${panel_fifo}") &
         fi
 
-        (echo "$currenttime" | awk '{print "CLK" $4}' > "${panel_fifo}") &
+        (echo "CLK$(date +"%R")" > "${panel_fifo}") &
 
-done < <(echo 1 && $(dirname $0)/scripts/clock.sh) &
+	sleep 3
+done  &
 
 #### LOOP FIFO
 

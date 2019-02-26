@@ -92,18 +92,8 @@ done < <(echo && upower --monitor) &
 
 # date/time
 
-while :; do
-
-        if [ ${res_w} -gt 1024 ]; then
-                (echo "DAY$(date +"%a %b %d")" > "${panel_fifo}") &
-        else
-                (echo "DAY$(date +"%b %d")" > "${panel_fifo}") &
-        fi
-
-        (echo "CLK$(date +"%R")" > "${panel_fifo}") &
-
-	sleep 3
-done  &
+$(dirname $0)/scripts/clock.sh > "${panel_fifo}" &
+$(dirname $0)/scripts/date.sh > "${panel_fifo}" &
 
 #### LOOP FIFO
 

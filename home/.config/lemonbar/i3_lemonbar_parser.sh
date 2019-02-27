@@ -35,7 +35,7 @@ while read -r line ; do
                                                 wsp="${wsp}%{F${color_head} B${color_head}}${sep_right}%{F${color_ina} B${color_head} T1} ${1#???} %{F${color_head} B${color_head}}${sep_right}"
                                                 ;;
                                         URG*)
-                                                wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_fore} B${color_alert} T1} ${1#???} %{F${color_alert} B${color_head}}${sep_right}"
+                                                wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_sec_b1} B${color_alert} T1} ${1#???} %{F${color_alert} B${color_head}}${sep_right}"
                                                 ;;
                                 esac
                                 shift

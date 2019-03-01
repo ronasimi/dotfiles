@@ -105,7 +105,7 @@ while read -r line ; do
                                 icon_vol=${icon_vol_off};
                         fi
 
-                        vol="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_vol}%{F${color_fore} T1} ${line#???}%"
+                        vol="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_vol} %{F- T1}${line#???}%"
 
                         ;;
 

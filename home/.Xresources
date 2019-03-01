@@ -1,4 +1,4 @@
-URxvt*font:			-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*,\URxvt*font:			-*-dinapowerline-medium-r-*-*-13-*-*-*-*-*-*-*,\
+URxvt*font:			-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*,\
 				xft:Material Design Icons:size=6:antialiasing=false,\
 				xft:Symbola:size=14:antialiasing=false
 URxvt*boldFont:			-*-tamzenforpowerline-bold-r-*-*-13-*-*-*-*-*-*-*

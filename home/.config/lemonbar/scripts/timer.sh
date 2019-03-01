@@ -7,10 +7,6 @@ uniq_linebuffered() {
     awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
     }
 
-
-while true ; do
-
-    echo "CLK$(date +%R)"
-    sleep 3 || break
-
-done > >(uniq_linebuffered) &
+tm() {
+  date +%M; sleep 3; tm;
+    };tm | (uniq_linebuffered)

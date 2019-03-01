@@ -20,12 +20,12 @@ upd_timer=30				# Update check (min)
 
 # color definitions
 color_back="#C02F343F"			# Default background
-color_fore="#FFEAEAEB"			# Default foreground
+color_fore="#FFD3DAE3"			# Default foreground
 color_title="#FFFFFFFF"			# Window title foreground
 color_head="#C06A9FB5"			# Background for first element
 color_sec_b1="#C01C1F25"		# Background for section 1
 color_sec_b2="#C02F343F"		# Background for section 2
-color_icon="#FFEAEAEB"  		# For icons
+color_icon="#FFD3DAE3"  		# For icons
 color_icon_dark="#FF2F343F"		# For icons (dark)
 color_netdown="#FF8C8C8D"		# For inactive network interface icons
 color_mail="#C0DD4B39"			# Background color for mail alert

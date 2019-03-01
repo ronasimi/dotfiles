@@ -4,7 +4,7 @@
 # generated if the output changed compared to the previous run.
 
 uniq_linebuffered() {
-    awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
+  awk -W interactive '$0 != l { print ; l=$0 ; fflush(); }' "$@"
     }
 
 tm() {

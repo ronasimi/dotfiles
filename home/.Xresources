@@ -1,4 +1,4 @@
-URxvt*font:			-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*,\
+URxvt*font:			-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*,\URxvt*font:			-*-dinapowerline-medium-r-*-*-13-*-*-*-*-*-*-*,\
 				xft:Material Design Icons:size=6:antialiasing=false,\
 				xft:Symbola:size=14:antialiasing=false
 URxvt*boldFont:			-*-tamzenforpowerline-bold-r-*-*-13-*-*-*-*-*-*-*
@@ -45,9 +45,9 @@ Xft.antialias:			1
 Xft.rgba:			rgb
 
 ! Colors
-*foreground:   #eaeaeb
+*foreground:   #d3dae3
 *background:   #2f343f
-*cursorColor:  #eaeaeb
+*cursorColor:  #d3dae3
 
 ! black
 *color0:       #585c65
@@ -78,5 +78,5 @@ Xft.rgba:			rgb
 *color14:      #75b5aa
 
 ! white
-*color7:       #eaeaeb
-*color15:      #eaeaeb
+*color7:       #d3dae3
+*color15:      #d3dae3

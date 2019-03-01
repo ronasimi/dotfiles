@@ -79,5 +79,5 @@ Xft.rgba:			rgb
 *.color14:      #8abeb7
 
 ! white
-*.color7:       #93989e
-*.color15:      #d3dae3
+*.color7:       #d3dae3
+*.color15:      #dbe1e8

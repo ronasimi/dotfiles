@@ -13,7 +13,7 @@
 . $(dirname $0)/i3_lemonbar_config
 
 # min init
-title="%{F${color_head} B${color_back}}${sep_right}%{B${color_back} T2}%{B- T1}%{F${color_title} T1} ${win}"
+title="%{F${color_head} B-}${sep_right}%{T2}%{F${color_title} T1} ${win}"
 
 # parser
 
@@ -45,7 +45,7 @@ while read -r line ; do
                 WIN*)
                         # window title
                         win=$(xprop -id ${line#???} | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
-                        title="%{F${color_head} B${color_back}}${sep_right}%{B${color_back} T2}%{B- T1}%{F${color_title} T1} ${win}"
+                        title="%{F${color_head} B-}${sep_right}%{T2}%{F${color_title} T1} ${win}"
                         ;;
 
                 UPD*)

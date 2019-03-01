@@ -52,7 +52,7 @@ Xft.rgba:			rgb
 
 ! black
 *.color0:       #585c65
-*.color8:       #434852
+*.color8:       #686c74
 
 ! red
 *.color1:       #a54242
@@ -80,4 +80,4 @@ Xft.rgba:			rgb
 
 ! white
 *.color7:       #d3dae3
-*.color15:      #dbe1e8
+*.color15:      #d7dde5

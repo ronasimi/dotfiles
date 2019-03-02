@@ -7,6 +7,7 @@ uniq_linebuffered() {
   awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
     }
 
-tm() {
-  date +%M; sleep 3; tm;
-    };tm | (uniq_linebuffered)
+while :; do
+  date +%M
+  sleep 3 || break
+done > >(uniq_linebuffered)

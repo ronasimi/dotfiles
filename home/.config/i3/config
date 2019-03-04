@@ -26,11 +26,11 @@ set $ws10 "10:"
 ## I3 appearance
 # colors
 # class				border		backgr.		text		indicator	child_border
-client.focused			#383838		#383838		#c1c1c1		#72819a		#383838
+client.focused			#383838		#383838		#c1c1c1		#458588		#383838
 client.focused_inactive		#383838		#383838		#c1c1c1		#383838		#383838
 client.unfocused		#383838		#1c1f25		#757575		#383838		#383838
-client.urgent			#c1c1c1		#900000		#c1c1c1		#72819a		#c1c1c1
-client.placeholder		#000000		#0c0c0c		#c1c1c1		#72919a		#0c0c0c
+client.urgent			#c1c1c1		#900000		#c1c1c1		#458588		#c1c1c1
+client.placeholder		#000000		#0c0c0c		#c1c1c1		#458588		#0c0c0c
 client.background		#383838
 
 # window borders
@@ -230,8 +230,8 @@ bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
 bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 
 ## Program Keybinds
-# start rofi (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -o 1.0 -h 14 -w 1572 -x 14 -y 7 -nb '#383838' -nf '#f8f8f8' -sb '#7cafc2' -sf '#383838' -fn '-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*'"
+# start dmenu (a program launcher)
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -o 1.0 -h 14 -w 1572 -x 14 -y 7 -nb '#383838' -nf '#f8f8f8' -sb '#458588' -sf '#383838' -fn '-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*'"
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium

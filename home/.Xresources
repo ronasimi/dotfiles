@@ -46,38 +46,38 @@ Xft.rgba:			rgb
 
 ! Colors
 ! special
-*.foreground:   #d3dae3
-*.background:   #2f343f
-*.cursorColor:  #d3dae3
+*.foreground:   #f8f8f8
+*.background:   #383838
+*.cursorColor:  #f8f8f8
 
 ! black
-*.color0:       #585c65
-*.color8:       #686c74
+*.color0:       #5f5f5f
+*.color8:       #7c7c7c
 
 ! red
-*.color1:       #a54242
-*.color9:       #cc6666
+*.color1:       #ab4642
+*.color9:       #b35854
 
 ! green
-*.color2:       #8c9440
-*.color10:      #b5bd68
+*.color2:       #a1b56c
+*.color10:      #aabc7a
 
 ! yellow
-*.color3:       #de935f
-*.color11:      #f0c674
+*.color3:       #f7ca88
+*.color11:      #f7cf93
 
 ! blue
-*.color4:       #5f819d
-*.color12:      #81a2be
+*.color4:       #7cafc2
+*.color12:      #89b7c8
 
 ! magenta
-*.color5:       #85678f
-*.color13:      #b294bb
+*.color5:       #aa759f
+*.color13:      #b282a8
 
 ! cyan
-*.color6:       #5e8d87
-*.color14:      #8abeb7
+*.color6:       #86c1b9
+*.color14:      #92c7c0
 
 ! white
-*.color7:       #d3dae3
-*.color15:      #d7dde5
+*.color7:       #f8f8f8
+*.color15:      #f9f9f9

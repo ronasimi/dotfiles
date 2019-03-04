@@ -26,12 +26,12 @@ set $ws10 "10:"
 ## I3 appearance
 # colors
 # class				border		backgr.		text		indicator	child_border
-client.focused			#383838		#383838		#c1c1c1		#7cafc2		#383838
-client.focused_inactive		#383838		#383838		#c1c1c1		#383838		#383838
-client.unfocused		#383838		#1c1f25		#757575		#383838		#383838
-client.urgent			#c1c1c1		#900000		#c1c1c1		#7cafc2		#c1c1c1
-client.placeholder		#000000		#0c0c0c		#c1c1c1		#7cafc2		#0c0c0c
-client.background		#383838
+client.focused			#2f343f		#2f343f		#d3dae3		#5f819d		#2f343f
+client.focused_inactive		#2f343f		#2f343f		#d3dae3		#2f343f		#2f343f
+client.unfocused		#2f343f		#1c1f25		#757575		#2f343f		#2f343f
+client.urgent			#d3dae3		#900000		#d3dae3		#5f819d		#d3dae3
+client.placeholder		#000000		#0c0c0c		#d3dae3		#5f819d		#0c0c0c
+client.background		#2f343f
 
 # window borders
 default_border pixel 3
@@ -231,7 +231,7 @@ bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 
 ## Program Keybinds
 # start rofi (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -o 1.0 -h 14 -w 1572 -x 14 -y 7 -nb '#383838' -nf '#f8f8f8' -sb '#7cafc2' -sf '#383838' -fn '-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -o 1.0 -h 14 -w 1572 -x 14 -y 7 -nb '#2f343f' -nf '#d3dae3' -sb '#5f819d' -sf '#2f343f' -fn '-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*'"
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium

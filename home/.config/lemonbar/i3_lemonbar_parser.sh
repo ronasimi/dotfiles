@@ -176,12 +176,12 @@ while read -r line ; do
 
                 DAY*)
                         # date
-                        date="%{F${color_sec_b1}}${sep_left}%{F${color_fore} B${color_sec_b1}} %{T2}${icon_cal}%{F- T1}%{F${color_fore}} ${line#???}"
+                        date="%{F${color_sec_b1}}${sep_left}%{F${color_fore} B${color_sec_b1}} %{T2}${icon_cal}%{T1} ${line#???}"
                         ;;
 
                 CLK*)
                         # time
-                        time="%{F${color_sec_b2}}${sep_left}%{F${color_fore} B${color_sec_b2}} %{T2}${icon_clock}%{F- T1}%{F${color_fore}} ${line#???} %{F- B-}"
+                        time="%{F${color_sec_b2}}${sep_left}%{F${color_fore} B${color_sec_b2}} %{T2}${icon_clock}%{T1} ${line#???} %{F- B-}"
                         ;;
 
         esac

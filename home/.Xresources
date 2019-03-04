@@ -79,4 +79,4 @@ Xft.rgba:			rgb
 
 ! white
 *.color7:       #e8e8e8
-*.color15:      #ffffff
+*.color15:      #eaeaea

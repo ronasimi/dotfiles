@@ -26,11 +26,11 @@ set $ws10 "10:"
 ## I3 appearance
 # colors
 # class				border		backgr.		text		indicator	child_border
-client.focused			#383838		#383838		#c7c7c7		#81a2be		#383838
-client.focused_inactive		#383838		#383838		#c7c7c7		#383838		#383838
+client.focused			#383838		#383838		#e8e8e8		#81a2be		#383838
+client.focused_inactive		#383838		#383838		#e8e8e8		#383838		#383838
 client.unfocused		#383838		#1c1f25		#757575		#383838		#383838
-client.urgent			#c7c7c7		#cc6666		#c7c7c7		#81a2be		#c7c7c7
-client.placeholder		#000000		#0c0c0c		#c7c7c7		#81a2be		#0c0c0c
+client.urgent			#e8e8e8		#cc6666		#e8e8e8		#81a2be		#e8e8e8
+client.placeholder		#000000		#0c0c0c		#e8e8e8		#81a2be		#0c0c0c
 client.background		#383838
 
 # window borders

@@ -7,4 +7,4 @@ uniq_linebuffered() {
   awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
     }
 
-$(dirname $0)/timer | (uniq_linebuffered)
+$(dirname $0)/clock | (uniq_linebuffered)

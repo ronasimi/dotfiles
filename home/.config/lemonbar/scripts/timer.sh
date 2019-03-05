@@ -7,7 +7,4 @@ uniq_linebuffered() {
   awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
     }
 
-while :; do
-  date +%M
-  sleep 3 || break
-done > >(uniq_linebuffered)
+$(dirname $0)/timer | (uniq_linebuffered)

@@ -22,16 +22,16 @@ upd_timer=30				# Update check (min)
 color_back="#C0383838"			# Default background
 color_fore="#FFe8e8e8"			# Default foreground
 color_title="#FFffffff"			# Window title foreground
-color_head="#C081a2be"			# Background for first element
-color_sec_b1="#C0272727"		# Background for section 1
+color_head="#C05f819d"			# Background for first element
+color_sec_b1="#C0212121"		# Background for section 1
 color_sec_b2="#C0383838"		# Background for section 2
 color_icon="#FFe8e8e8"  		# For icons
 color_icon_dark="#FF383838"		# For icons (dark)
 color_netdown="#FF5f5f5f"		# For inactive network interface icons
 color_mail="#C0DD4B39"			# Background color for mail alert
 color_upd="#C01793D0"			# Background color for update alert
-color_alert="#C0cc6666"			# Background color for cpu/temp/memory alert
-color_wsp="#C0b5bd68"			# Background for selected workspace
+color_alert="#C0a54242"			# Background color for cpu/temp/memory alert
+color_wsp="#C08c9440"			# Background for selected workspace
 color_ina="#FF4a4a4a"		        # Foreground for inactive workspace
 
 #default space between sections
@@ -46,8 +46,8 @@ sep_left=""				# Powerline separator left
 sep_right=""				# Powerline separator right
 
 # Icon glyphs from Material Icons
-icon_clock=""				# Clock icon
-icon_cal=""				# Calendar icon
+icon_clock="肋"				# Clock icon
+icon_cal=""				# Calendar icon
 icon_ethup=""				# Ethernet up icon
 icon_ethdown=""			# Ethernet down icon
 icon_wifi_up=""			# Wifi up icon

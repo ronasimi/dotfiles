@@ -172,7 +172,7 @@ while read -r line ; do
                         fi
 
                         bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${line#???}%"
-                       ;;
+                        ;;
 
                 DAY*)
                         # date

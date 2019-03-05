@@ -1,6 +1,6 @@
 #!/bin/bash
 # This loop will fill a buffer with our infos, and output it to stdout.
-# "date" output is checked every 2\3 seconds, but an event is only
+# "timer" executable outputs the current minute every seconds but an event is only
 # generated if the output changed compared to the previous run.
 
 uniq_linebuffered() {

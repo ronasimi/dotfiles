@@ -94,12 +94,10 @@ done < <(echo && upower --monitor) &
 while read -r; do
 
         if [ ${res_w} -gt 1024 ]; then
-                (echo "DAY$(date +"%a %b %d")" > "${panel_fifo}")
+        	(date +'%a %b %d %R' | tee >(awk ' { print "DAY"$1,$2,$3 } ') >(awk ' {print "CLK"$4 } ') >/dev/null) > "${panel_fifo}"
         else
-                (echo "DAY$(date +"%b %d")" > "${panel_fifo}")
+        	(date +'%a %b %d %R' | tee >(awk ' { print "DAY"$2,$3 } ') >(awk ' {print "CLK"$4 } ') >/dev/null) > "${panel_fifo}"
         fi
-
-        (echo "CLK$(date +"%R")" > "${panel_fifo}")
 
 done < <(echo && $(dirname $0)/scripts/timer.sh) &
 

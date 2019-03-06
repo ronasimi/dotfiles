@@ -67,8 +67,8 @@ Xft.rgba:			rgb
 *.color11:      #f0c674
 
 ! blue
-*.color4:       #72819a
-*.color12:      #8693a8
+*.color4:       #5e6e8b
+*.color12:      #72819a
 
 ! magenta
 *.color5:       #85678f

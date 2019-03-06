@@ -22,16 +22,16 @@ upd_timer=30				# Update check (min)
 color_back="#C0383838"			# Default background
 color_fore="#FFe8e8e8"			# Default foreground
 color_title="#FFffffff"			# Window title foreground
-color_head="#C072819a"			# Background for first element
-color_sec_b1="#C0212121"		# Background for section 1
-color_sec_b2="#C0383838"		# Background for section 2
+color_head="#FF72819a"			# Background for first element
+color_sec_b1="#FF212121"		# Background for section 1
+color_sec_b2="#FF383838"		# Background for section 2
 color_icon="#FFe8e8e8"  		# For icons
 color_icon_dark="#FF383838"		# For icons (dark)
 color_netdown="#FF5f5f5f"		# For inactive network interface icons
-color_mail="#C0DD4B39"			# Background color for mail alert
-color_upd="#C01793D0"			# Background color for update alert
-color_alert="#C0a54242"			# Background color for cpu/temp/memory alert
-color_wsp="#C08c9440"			# Background for selected workspace
+color_mail="#FFDD4B39"			# Background color for mail alert
+color_upd="#FF1793D0"			# Background color for update alert
+color_alert="#FFa54242"			# Background color for cpu/temp/memory alert
+color_wsp="#FF8c9440"			# Background for selected workspace
 color_ina="#FF4a4a4a"		        # Foreground for inactive workspace
 
 #default space between sections

@@ -170,8 +170,6 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
 bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up
 bindsym XF86AudioMute exec --no-startup-id pulseaudio-ctl mute
 bindsym XF86AudioMicMute exec --no-startup-id pulseaudio-ctl mute-input
-# super secret pump up the volume
-bindsym ctrl+XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ 150%
 
 # print screen
 bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/screenshot-%Y%m%d-%H:%M:%S.png & notify-send -u low $'Screenshot' 'saved to ~/Pictures/Screenshots'

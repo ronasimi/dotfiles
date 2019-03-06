@@ -1,9 +1,9 @@
-URxvt*font:			-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*,\
+URxvt*font:			-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*,\
 				xft:Material Design Icons:size=6:antialiasing=false,\
 				xft:Symbola:size=14:antialiasing=false
-URxvt*boldFont:			-*-tamzenforpowerline-bold-r-*-*-13-*-*-*-*-*-*-*
-URxvt*italicFont:		-*-tamzenforpowerline-medium-i-*-*-13-*-*-*-*-*-*-*
-URxvt*boldItalicFont:		-*-tamzenforpowerline-bold-i-*-*-13-*-*-*-*-*-*-*
+URxvt*boldFont:			-*-tamzenforpowerline-bold-r-*-*-14-*-*-*-*-*-*-*
+URxvt*italicFont:		-*-tamzenforpowerline-medium-i-*-*-14-*-*-*-*-*-*-*
+URxvt*boldItalicFont:		-*-tamzenforpowerline-bold-i-*-*-14-*-*-*-*-*-*-*
 URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true
 URxvt*saveLines:		9999
@@ -11,7 +11,7 @@ URxvt*scrollBar:		false
 URxvt*scrollTtyOutput:		false
 URxvt*scrollWithBuffer:		true
 URxvt*scrollTtyKeypress:	true
-URxvt*internalBorder:		11
+URxvt*internalBorder:		12
 URxvt*cursorBlink:		true
 URxvt*cursorUnderline:		false
 URxvt*pointerBlank:		true

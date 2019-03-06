@@ -3,9 +3,9 @@
 
 panel_fifo="/tmp/i3_lemonbar_${USER}"
 
-geometry="1572x14+14+7"
-font="-*-tamzenforpowerline-medium-r-*-*-13-*-*-*-*-*-*-*"
-iconfont="Material Design Icons:size=9"
+geometry="1568x16+16+8"
+font="-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*"
+iconfont="Material Design Icons:size=10"
 clickables=16
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 

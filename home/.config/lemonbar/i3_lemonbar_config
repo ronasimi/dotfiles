@@ -35,7 +35,7 @@ color_wsp="#C08c9440"			# Background for selected workspace
 color_ina="#FF4a4a4a"		        # Foreground for inactive workspace
 
 #default space between sections
-if [ ${res_w} -gt 1024 ]; then
+if [ "${res_w}" -gt 1024 ]; then
         stab='  '
 else
         stab=' '

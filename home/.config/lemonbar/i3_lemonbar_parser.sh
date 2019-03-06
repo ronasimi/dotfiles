@@ -10,7 +10,7 @@
 #
 
 # config
-. $(dirname $0)/i3_lemonbar_config
+. "$(dirname $0)"/i3_lemonbar_config
 
 # min init
 title="%{F${color_head} B-}${sep_right}%{T2}%{F${color_title} T1} ${win}"
@@ -24,7 +24,7 @@ while read -r line ; do
                 WSP*)
                         # I3 Workspaces
                         wsp="%{F${color_icon_dark} B${color_head}} "
-                        set -- ${line#???}
+                        set -- "${line#???}"
 
                         while [ $# -gt 0 ] ; do
                                 case $1 in
@@ -44,7 +44,7 @@ while read -r line ; do
 
                 WIN*)
                         # window title
-                        win=$(xprop -id ${line#???} | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
+                        win=$(xprop -id "${line#???}" | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
                         title="%{F${color_head} B-}${sep_right}%{T2}%{F${color_title} T1} ${win}"
                         ;;
 
@@ -160,11 +160,11 @@ while read -r line ; do
                                 icon_bat=${icon_bat_30};
                         elif [ "${line#???}" -ge 15 ]; then
                                 icon_bat=${icon_bat_20};
-                        elif [ "${line#???}" -gt ${bat_alert} ]; then
+                        elif [ "${line#???}" -gt "${bat_alert}" ]; then
                                 icon_bat=${icon_bat_10};
                         fi
 
-                        if [ ${line#???} -le ${bat_alert} ]; then
+                        if [ "${line#???}" -le "${bat_alert}" ]; then
                                 bat_cback=${color_alert}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat=${icon_bat_low}
                                 (notify-send -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work");
                         else

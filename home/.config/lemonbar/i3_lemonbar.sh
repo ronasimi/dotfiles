@@ -8,9 +8,9 @@
 #|_|\___|_| |_| |_|\___/|_| |_|_.__/ \__,_|_|  (_)
 #
 
-. $(dirname $0)/i3_lemonbar_config
+. "$(dirname $0)"/i3_lemonbar_config
 
-if [ $(pgrep -cx $(basename $0)) -gt 1 ] ; then
+if [ "$(pgrep -cx "$(basename $0)")" -gt 1 ] ; then
         printf "%s\n" "The status bar is already running." >&2
         exit 1
 fi
@@ -23,7 +23,7 @@ mkfifo "${panel_fifo}"
 ### EVENTS METERS
 
 # i3 Workspaces, "WSP"
-$(dirname $0)/scripts/workspaces.pl > "${panel_fifo}" &
+"$(dirname $0)"/scripts/workspaces.pl > "${panel_fifo}" &
 
 # Window title, "WIN"
 while read -r; do
@@ -34,11 +34,11 @@ done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace" ]') &
 
 # Updates, "UPD"
 ### Update check interval
-cnt_update=${upd_timer}
+cnt_update="${upd_timer}"
 
 while :; do
-        if [ $((cnt_update++)) -ge ${upd_timer} ]; then
-                printf "%s%s\n" "UPD" "$($(dirname $0)/scripts/updates.sh)" > "${panel_fifo}" &
+        if [ $((cnt_update++)) -ge "${upd_timer}" ]; then
+                printf "%s%s\n" "UPD" "$("$(dirname $0)"/scripts/updates.sh)" > "${panel_fifo}" &
                 cnt_update=0
         fi
 
@@ -48,11 +48,11 @@ done &
 
 # GMAIL, "GMA"
 ### Mail check interval
-cnt_mail=${mail_timer}
+cnt_mail="${mail_timer}"
 
 while :; do
-        if [ $((cnt_mail++)) -ge ${mail_timer} ]; then
-                printf "%s%s\n" "GMA" "$($(dirname $0)/scripts/gmail.sh)" > "${panel_fifo}" &
+        if [ $((cnt_mail++)) -ge "${mail_timer}" ]; then
+                printf "%s%s\n" "GMA" "$("$(dirname $0)"/scripts/gmail.sh)" > "${panel_fifo}" &
                 cnt_mail=0
         fi
 
@@ -93,18 +93,18 @@ done < <(echo && upower --monitor) &
 
 while read -r; do
 
-        if [ ${res_w} -gt 1024 ]; then
+        if [ "${res_w}" -gt 1024 ]; then
         	(date +'%a %b %d %R' | tee >(awk ' { print "DAY"$1,$2,$3 } ') >(awk ' {print "CLK"$4 } ') >/dev/null) > "${panel_fifo}" &
         else
         	(date +'%a %b %d %R' | tee >(awk ' { print "DAY"$2,$3 } ') >(awk ' {print "CLK"$4 } ') >/dev/null) > "${panel_fifo}" &
         fi
 
-done < <(echo && $(dirname $0)/scripts/timer.sh) &
+done < <(echo && "$(dirname $0)"/scripts/timer.sh) &
 
 
 #### LOOP FIFO
 
-(cat "${panel_fifo}" | $(dirname $0)/i3_lemonbar_parser.sh \
+(cat "${panel_fifo}" | "$(dirname $0)"/i3_lemonbar_parser.sh \
 | lemonbar -p -d -f "${font}" -f "${iconfont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
 
 #### Keep lemonbar below fullscreen windows
@@ -112,7 +112,7 @@ done < <(echo && $(dirname $0)/scripts/timer.sh) &
 tries_left=20
 while [ -z "$wid" -a "$tries_left" -gt 0 ] ; do
         sleep 0.05
-        xdo above -t $(xwininfo -root -children | egrep -o "0x[[:xdigit:]]+" | tail -1) $(xdo id -a bar)
+        xdo above -t $(xwininfo -root -children | grep -E -o "0x[[:xdigit:]]+" | tail -1) $(xdo id -a bar)
         tries_left=$((tries_left - 1))
 done
 

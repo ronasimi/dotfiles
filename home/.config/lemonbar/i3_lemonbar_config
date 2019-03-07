@@ -19,20 +19,20 @@ mail_timer=5				# Mail check timer (min)
 upd_timer=30				# Update check (min)
 
 # color definitions
-color_back="#C0383838"			# Default background
-color_fore="#FFe8e8e8"			# Default foreground
+color_back="#C04b4b4b"			# Default background
+color_fore="#FFbebebe"			# Default foreground
 color_title="#FFffffff"			# Window title foreground
-color_head="#FF5e6e8b"			# Background for first element
-color_sec_b1="#FF282828"		# Background for section 1
-color_sec_b2="#FF383838"		# Background for section 2
-color_icon="#FFe8e8e8"  		# For icons
+color_head="#FF5f819d"			# Background for first element
+color_sec_b1="#C0323232"		# Background for section 1
+color_sec_b2="#C04b4b4b"		# Background for section 2
+color_icon="#FFbebebe"  		# For icons
 color_icon_dark="#FF383838"		# For icons (dark)
-color_netdown="#FF5f5f5f"		# For inactive network interface icons
-color_mail="#FFDD4B39"			# Background color for mail alert
-color_upd="#FF1793D0"			# Background color for update alert
-color_alert="#FFa54242"			# Background color for cpu/temp/memory alert
+color_netdown="#FF5a5a5a"		# For inactive network interface icons
+color_mail="#C0DD4B39"			# Background color for mail alert
+color_upd="#C01793D0"			# Background color for update alert
+color_alert="#C0a54242"			# Background color for cpu/temp/memory alert
 color_wsp="#FF8c9440"			# Background for selected workspace
-color_ina="#FF4a4a4a"		        # Foreground for inactive workspace
+color_ina="#FF4b4b4b"		        # Foreground for inactive workspace
 
 #default space between sections
 if [ "${res_w}" -gt 1024 ]; then

@@ -26,12 +26,12 @@ set $ws10 "10:"
 ## I3 appearance
 # colors
 # class				border		backgr.		text		indicator	child_border
-client.focused			#323232		#323232		#bebebe		#5f819d		#323232
-client.focused_inactive		#323232		#323232		#bebebe		#323232		#323232
-client.unfocused		#323232		#1c1f25		#4b4b4b		#323232		#323232
-client.urgent			#bebebe		#a54242		#bebebe		#5f819d		#bebebe
-client.placeholder		#000000		#0c0c0c		#bebebe		#5f819d		#0c0c0c
-client.background		#323232
+client.focused			#383838		#383838		#bfbfbf		#5f819d		#383838
+client.focused_inactive		#383838		#383838		#bfbfbf		#383838		#383838
+client.unfocused		#383838		#1c1f25		#4b4b4b		#383838		#383838
+client.urgent			#bfbfbf		#a54242		#bfbfbf		#5f819d		#bfbfbf
+client.placeholder		#000000		#0c0c0c		#bfbfbf		#5f819d		#0c0c0c
+client.background		#383838
 
 # window borders
 default_border pixel 4
@@ -229,7 +229,7 @@ bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 
 ## Program Keybinds
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -o 1.0 -h 16 -w 1568 -x 16 -y 8 -nb '#4b4b4b' -nf '#bebebe' -sb '#5f819d' -sf '#4b4b4b' -fn '-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -o 1.0 -h 16 -w 1568 -x 16 -y 8 -nb '#383838' -nf '#bfbfbf' -sb '#5f819d' -sf '#383838' -fn '-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*'"
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium

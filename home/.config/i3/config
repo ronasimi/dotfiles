@@ -26,11 +26,11 @@ set $ws10 "10:"
 ## I3 appearance
 # colors
 # class				border		backgr.		text		indicator	child_border
-client.focused			#383838		#383838		#e8e8e8		#5e6e8b		#383838
-client.focused_inactive		#383838		#383838		#e8e8e8		#383838		#383838
+client.focused			#383838		#383838		#e5e5e5		#6a9fb5		#383838
+client.focused_inactive		#383838		#383838		#e5e5e5		#383838		#383838
 client.unfocused		#383838		#1c1f25		#4b4b4b		#383838		#383838
-client.urgent			#e8e8e8		#a54242		#e8e8e8		#5e6e8b		#e8e8e8
-client.placeholder		#000000		#0c0c0c		#e8e8e8		#5e6e8b		#0c0c0c
+client.urgent			#e5e5e5		#ac4142		#e5e5e5		#6a9fb5		#e5e5e5
+client.placeholder		#000000		#0c0c0c		#e5e5e5		#6a9fb5		#0c0c0c
 client.background		#383838
 
 # window borders
@@ -229,7 +229,7 @@ bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 
 ## Program Keybinds
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -o 1.0 -h 16 -w 1568 -x 16 -y 8 -nb '#383838' -nf '#e8e8e8' -sb '#5e6e8b' -sf '#282828' -fn '-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -o 1.0 -h 16 -w 1568 -x 16 -y 8 -nb '#383838' -nf '#e5e5e5' -sb '#6a9fb5' -sf '#282828' -fn '-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*'"
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium

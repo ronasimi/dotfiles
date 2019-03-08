@@ -20,10 +20,10 @@ upd_timer=30				# Update check (min)
 
 # color definitions
 color_back="#C0383838"			# Default background
-color_fore="#FFe8e8e8"			# Default foreground
+color_fore="#FFe5e5e5"			# Default foreground
 color_title="#FFffffff"			# Window title foreground
-color_head="#C05e6e8b"			# Background for first element
-color_wsp="#FF8c9440"			# Background for selected workspace
+color_head="#C06a9fb5"			# Background for first element
+color_wsp="#FF90a959"			# Background for selected workspace
 color_act="#FF282828"		        # Foreground for active workspace
 color_ina="#FF383838"		        # Foreground for inactive workspace
 color_sec_b1="#C0282828"		# Background for section 1
@@ -33,7 +33,7 @@ color_icon_dark="#FF282828"		# For icons (dark)
 color_netdown="#FF5a5a5a"		# For inactive network interface icons
 color_mail="#C0DD4B39"			# Background color for mail alert
 color_upd="#C01793D0"			# Background color for update alert
-color_alert="#C0a54242"			# Background color for cpu/temp/memory alert
+color_alert="#C0ac4142"			# Background color for cpu/temp/memory alert
 
 #default space between sections
 if [ "${res_w}" -gt 1024 ]; then

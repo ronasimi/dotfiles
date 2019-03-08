@@ -22,9 +22,6 @@ int main(int argc, char **argv)
             fflush(stdout);
             strftime(c, 24, "CLK""%R", &tm);
         }
-        else {
-            strftime(s, 24, "CLK""%R", &tm);
-        }
     sleep(d);
     } while(1);
 }

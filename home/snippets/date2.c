@@ -22,9 +22,6 @@ int main(int argc, char **argv)
             fflush(stdout);
             strftime(c, 24, "DAY""%a %b %d", &tm);
         }
-        else {
-            strftime(s, 24, "DAY""%a %b %d", &tm);
-        }
     sleep(d);
     } while(1);
 }

@@ -29,13 +29,13 @@ while read -r line ; do
                         while [ $# -gt 0 ] ; do
                                 case $1 in
                                         FOC*)
-                                                wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_icon_dark} B${color_wsp} T1} ${1#???} %{F${color_wsp} B${color_head}}${sep_right}"
+                                                wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_act} B${color_wsp} T1} ${1#???} %{F${color_wsp} B${color_head}}${sep_right}"
                                                 ;;
                                         INA*|ACT*)
                                                 wsp="${wsp}%{F${color_head} B${color_head}}${sep_right}%{F${color_ina} B${color_head} T1} ${1#???} %{F${color_head} B${color_head}}${sep_right}"
                                                 ;;
                                         URG*)
-                                                wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_icon_dark} B${color_alert} T1} ${1#???} %{F${color_alert} B${color_head}}${sep_right}"
+                                                wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_act} B${color_alert} T1} ${1#???} %{F${color_alert} B${color_head}}${sep_right}"
                                                 ;;
                                 esac
                                 shift

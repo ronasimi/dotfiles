@@ -91,16 +91,8 @@ done < <(echo && upower --monitor) &
 
 # date/time
 
-while read -r; do
-
-        if [ "${res_w}" -gt 1024 ]; then
-        	(date +'%a %b %d %R' | tee >(awk ' { print "DAY"$1,$2,$3 } ') >(awk ' {print "CLK"$4 } ') >/dev/null) > "${panel_fifo}"
-        else
-        	(date +'%a %b %d %R' | tee >(awk ' { print "DAY"$2,$3 } ') >(awk ' {print "CLK"$4 } ') >/dev/null) > "${panel_fifo}"
-        fi
-
-done < <(echo && "$(dirname $0)"/scripts/timer.sh) &
-
+"$(dirname $0)"/scripts/clk > "${panel_fifo}" &
+"$(dirname $0)"/scripts/day > "${panel_fifo}" &
 
 #### LOOP FIFO
 

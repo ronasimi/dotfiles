@@ -14,8 +14,8 @@ int main(int argc, char **argv)
         if(!d) d = 1;
     }
     do {
-        time_t t = time(NULL);
-        struct tm tm = *localtime(&t);
+	time_t t = time(NULL);
+	struct tm tm = *localtime(&t);
         strftime(s, 24, "DAY""%a %b %d", &tm);
         if (strcmp(s,c)!=0) {
             puts(s);

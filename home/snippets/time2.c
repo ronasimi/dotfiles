@@ -6,8 +6,8 @@
 
 int main(int argc, char **argv)
 {
-    char s[24];
-    char c[24] = "0";
+    char s[9];
+    char c[9] = "0";
     int d = 1;
     if(argc > 1) {
         d = atoi(argv[1]);

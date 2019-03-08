@@ -37,9 +37,9 @@ color_alert="#C0a54242"			# Background color for cpu/temp/memory alert
 
 #default space between sections
 if [ "${res_w}" -gt 1024 ]; then
-        stab='  '
+    stab='  '
 else
-        stab=' '
+    stab=' '
 fi
 
 # Char glyps for powerline fonts

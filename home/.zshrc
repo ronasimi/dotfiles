@@ -9,6 +9,25 @@
 # vi mode
 bindkey -v
 
+# SET TTY COLORS AND LOAD PROMPTS DEPENDING ON WHERE WE ARE
+if [ "$TERM" = "linux" ]; then
+    _SEDCMD='s/.*\*color\([0-9]\{1,\}\).*#\([0-9a-fA-F]\{6\}\).*/\1 \2/p'
+    for i in $(sed -n "$_SEDCMD" $HOME/.Xresources | awk '$1 < 16 {printf "\\e]P%X%s", $1, $2}'); do
+      echo -en "$i"
+    done
+    clear
+  autoload -Uz promptinit
+  promptinit
+  prompt walters
+else
+  # POWERLEVEL10K
+  source ~/.config/powerlevel10k/gitstatus/gitstatus.plugin.zsh
+  source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
+  # POWERLINE STYLE SUDO
+  export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 0) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
+fi
+
+
 # WINDOW TITLE
 case $TERM in
   termite|*xterm*|rxvt|rxvt-unicode|rxvt-256color|rxvt-unicode-256color|(dt|k|E)term)
@@ -99,19 +118,6 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     }
     zle -N zle-line-init
     zle -N zle-line-finish
-fi
-
-
-if [[ $(tput colors) != 256 ]] 2>/dev/null; then
-  autoload -Uz promptinit
-  promptinit
-  prompt walters
-else
-  # POWERLEVEL10K
-  source ~/.config/powerlevel10k/gitstatus/gitstatus.plugin.zsh
-  source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
-  # POWERLINE STYLE SUDO
-  export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 0) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
 fi
 
 # AUTOCOMPLETION

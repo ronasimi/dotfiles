@@ -101,8 +101,18 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-finish
 fi
 
-#autoload -U promptinit
-#promptinit
+
+if [[ $(tput colors) != 256 ]] 2>/dev/null; then
+  autoload -Uz promptinit
+  promptinit
+  prompt walters
+else
+  # POWERLEVEL10K
+  source ~/.config/powerlevel10k/gitstatus/gitstatus.plugin.zsh
+  source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
+  # POWERLINE STYLE SUDO
+  export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 0) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
+fi
 
 # AUTOCOMPLETION
 autoload -Uz compinit
@@ -224,17 +234,10 @@ export LESS_TERMCAP_so=$'\E[38;33;246m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
-# gitstatus
-source ~/.config/powerlevel10k/gitstatus/gitstatus.plugin.zsh
 # AIRCRACK-NG
 export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
 
-# POWERLINE STYLE SUDO
-export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 7) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
-
-# POWERLEVEL10K
-source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
-
+# POWERLEVEL10K OPTIONS
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir_writable context dir)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs vcs)
 DEFAULT_USER="ron"

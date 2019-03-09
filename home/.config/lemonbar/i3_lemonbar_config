@@ -18,22 +18,34 @@ temp_alert=90				# high temp
 mail_timer=5				# Mail check timer (min)
 upd_timer=30				# Update check (min)
 
-# color definitions
-color_back="#C0383838"			# Default background
-color_fore="#FFe5e5e5"			# Default foreground
-color_title="#FFffffff"			# Window title foreground
-color_head="#C06a9fb5"			# Background for first element
-color_wsp="#FF5f5f5f"			# Background for selected workspace
-color_act="#FFe5e5e5"		        # Foreground for active workspace
-color_ina="#FF5f5f5f"		        # Foreground for inactive workspace
+# get colors from .Xresources
+fg=$(xrdb -query | grep 'foreground'| cut -f2 | sed -e "s/#//")
+bg=$(xrdb -query | grep 'background'| cut -f2 | sed -e "s/#//")
+black=$(xrdb -query | grep 'color0'| cut -f2 | sed -e "s/#//")
+red=$(xrdb -query | grep 'color1'| cut -f2 | sed -e "s/#//")
+green=$(xrdb -query | grep 'color2'| cut -f2 | sed -e "s/#//")
+yellow=$(xrdb -query | grep 'color3'| cut -f2 | sed -e "s/#//")
+blue=$(xrdb -query | grep 'color4'| cut -f2 | sed -e "s/#//")
+magenta=$(xrdb -query | grep 'color5'| cut -f2 | sed -e "s/#//")
+cyan=$(xrdb -query | grep 'color6'| cut -f2 | sed -e "s/#//")
+white=$(xrdb -query | grep 'color7'| cut -f2 | sed -e "s/#//")
+
+# bar color definitions
+color_back="#C0${bg}"			# Default background
+color_fore="#${fg}"			# Default foreground
+color_title="#FFFFFFFF"			# Window title foreground
+color_head="#C0${blue}"			# Background for first element
+color_wsp="#${black}"			# Background for selected workspace
+color_act="#${fg}"		        # Foreground for active workspace
+color_ina="#${black}"		        # Foreground for inactive workspace
 color_sec_b1="#C0282828"		# Background for section 1
-color_sec_b2="#C0383838"		# Background for section 2
-color_icon="#FFbdbdbe"  		# For icons
+color_sec_b2="#C0${bg}"			# Background for section 2
+color_icon="#${fg}"  			# For icons
 color_icon_dark="#FF282828"		# For icons (dark)
-color_netdown="#FF5a5a5a"		# For inactive network interface icons
+color_netdown="#C0${black}"		# For inactive network interface icons
 color_mail="#C0DD4B39"			# Background color for mail alert
 color_upd="#C01793D0"			# Background color for update alert
-color_alert="#C0ac4142"			# Background color for  alert
+color_alert="#C0${red}"			# Background color for  alert
 
 #default space between sections
 if [ "${res_w}" -gt 1024 ]; then

@@ -224,6 +224,8 @@ export LESS_TERMCAP_so=$'\E[38;33;246m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
+# gitstatus
+source ~/.config/powerlevel10k/gitstatus/gitstatus.plugin.zsh
 # AIRCRACK-NG
 export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
 
@@ -233,8 +235,15 @@ export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput se
 # POWERLEVEL10K
 source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir dir_writable)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir_writable context dir)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs vcs)
 DEFAULT_USER="ron"
 POWERLEVEL9K_CONTEXT_TEMPLATE="%n@`hostname -f`"
 POWERLEVEL9K_ALWAYS_SHOW_USER=true
+POWERLEVEL9K_VCS_GIT_HOOKS=(vcs-detect-changes)
+POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="white"
+POWERLEVEL9K_CONTEXT_SUDO_FOREGROUND="black"
+POWERLEVEL9K_CONTEXT_SUDO_BACKROUND="orange"
+POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND="white"
+POWERLEVEL9K_CONTEXT_ROOT_BACKROUND="red"
+POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_FOREGROUND="white"

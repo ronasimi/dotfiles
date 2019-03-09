@@ -214,12 +214,14 @@ bindsym $mod+Shift+Delete move scratchpad
 # Show the first scratchpad window
 bindsym $mod+Delete scratchpad show
 
-
 # reload the configuration file
 bindsym $mod+Shift+c reload; exec notify-send -u low "i3 config reloaded"
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r exec pkill lemonbar, restart
+
+# restart bar
+bindsym $mod+Shift+b exec "~/.config/i3/scripts/barcycle.sh"
 
 # exit i3 (logs you out of your X session)
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"

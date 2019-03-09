@@ -23,7 +23,7 @@ color_back="#C0383838"			# Default background
 color_fore="#FFe8e8e8"			# Default foreground
 color_title="#FFffffff"			# Window title foreground
 color_head="#C05e6e8b"			# Background for first element
-color_wsp="#FF8c9440"			# Background for selected workspace
+color_wsp="#FF6e8b5e"			# Background for selected workspace
 color_act="#FF282828"		        # Foreground for active workspace
 color_ina="#FF383838"		        # Foreground for inactive workspace
 color_sec_b1="#C0282828"		# Background for section 1
@@ -37,9 +37,9 @@ color_alert="#C0a54242"			# Background color for cpu/temp/memory alert
 
 #default space between sections
 if [ "${res_w}" -gt 1024 ]; then
-    stab='  '
+        stab='  '
 else
-    stab=' '
+        stab=' '
 fi
 
 # Char glyps for powerline fonts

@@ -1,17 +1,53 @@
-# i3 config file (v4) # # Please see http://i3wm.org/docs/userguide.html for a complete reference! set $mod Mod4 # Font for window titles. Will also be used by the bar unless a different font # is used in the bar {} block below. # This font is widely
-installed, provides lots of unicode glyphs, right-to-left # text rendering and scalability on retina/hidpi displays (thanks to pango). font pango:Inter 8, Material Design Icons 8 ## Workspace names # workspace name variables set $ws1 "1:" set $ws2
-"2:" set $ws3 "3:" set $ws4 "4:" set $ws5 "5:" set $ws6 "6:" set $ws7 "7:" set $ws8 "8:" set $ws9 "9:" set $ws10 "10:" ## I3 appearance # colors # class border backgr. text indicator child_border client.focused #383838 #383838 #e8e8e8
-#5e6e8b #383838 client.focused_inactive #383838 #383838 #e8e8e8 #383838 #383838 client.unfocused #383838 #1c1f25 #4b4b4b #383838 #383838 client.urgent #e8e8e8 #ac4142 #e8e8e8 #5e6e8b #e8e8e8 client.placeholder #000000 #0c0c0c #e8e8e8 #5e6e8b #0c0c0c
-client.background #383838 # window borders default_border pixel 2 default_floating_border pixel 2 # useless gaps gaps inner 16 gaps outer 0 #gaps horizontal
-<px>
-	#gaps vertical
-	<px>
-		gaps top 16 #gaps right
-		<px>
-			#gaps bottom 16 #gaps left
-			<px>
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-				#hide_edge_borders smart
+set $mod Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:Inter 8, Material Design Icons 8
+
+## Workspace names
+# workspace name variables
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:"
+set $ws5 "5:"
+set $ws6 "6:"
+set $ws7 "7:"
+set $ws8 "8:"
+set $ws9 "9:"
+set $ws10 "10:"
+
+## I3 appearance
+# colors
+# class				border		backgr.		text		indicator	child_border
+client.focused			#383838		#383838		#e8e8e8		#5e6e8b		#383838
+client.focused_inactive		#383838		#383838		#e8e8e8		#383838		#383838
+client.unfocused		#383838		#1c1f25		#4b4b4b		#383838		#383838
+client.urgent			#e8e8e8		#ac4142		#e8e8e8		#5e6e8b		#e8e8e8
+client.placeholder		#000000		#0c0c0c		#e8e8e8		#5e6e8b		#0c0c0c
+client.background		#383838
+
+# window borders
+default_border pixel 2
+default_floating_border pixel 2
+
+# useless gaps
+gaps inner 16
+gaps outer 0
+#gaps horizontal <px>
+#gaps vertical <px>
+gaps top 16
+#gaps right <px>
+#gaps bottom 16
+#gaps left <px>
+
+#hide_edge_borders smart
 #smart_gaps on
 smart_borders on
 

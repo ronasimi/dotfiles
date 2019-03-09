@@ -58,8 +58,8 @@ Xft.rgba:			rgb
 *.color9:       #b76767
 
 ! green
-*.color2:       #6e8b5e
-*.color10:      #8ba27e
+*.color2:       #769c59
+*.color10:      #91af7a
 
 ! yellow
 *.color3:       #de935f

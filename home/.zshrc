@@ -227,8 +227,14 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 # AIRCRACK-NG
 export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
 
-# POWERLINE SUDO
+# POWERLINE STYLE SUDO
 export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 7) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
 
-# POWERLINE
-. /usr/share/zsh/site-contrib/powerline.zsh
+# POWERLEVEL10K
+source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir dir_writable)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs vcs)
+DEFAULT_USER="ron"
+POWERLEVEL9K_CONTEXT_TEMPLATE="%n@`hostname -f`"
+POWERLEVEL9K_ALWAYS_SHOW_USER=true

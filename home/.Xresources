@@ -45,38 +45,38 @@ Xft.antialias:			1
 Xft.rgba:			rgb
 
 ! special
-*.foreground:   #e8e8e8
+*.foreground:   #e5e5e5
 *.background:   #383838
-*.cursorColor:  #e8e8e8
+*.cursorColor:  #e5e5e5
 
 ! black
 *.color0:       #5f5f5f
 *.color8:       #7e7e7e
 
 ! red
-*.color1:       #a54242
-*.color9:       #b76767
+*.color1:       #ac4142
+*.color9:       #bc6667
 
 ! green
-*.color2:       #8c9440
-*.color10:      #a3a966
+*.color2:       #90a959
+*.color10:      #a6ba7a
 
 ! yellow
-*.color3:       #de935f
-*.color11:      #e4a87e
+*.color3:       #f4bf75
+*.color11:      #f6cb90
 
 ! blue
-*.color4:       #5e6e8b
-*.color12:      #7e8ba2
+*.color4:       #6a9fb5
+*.color12:      #87b2c3
 
 ! magenta
-*.color5:       #85678f
-*.color13:      #9d85a5
+*.color5:       #aa759f
+*.color13:      #bb90b2
 
 ! cyan
-*.color6:       #5e8d87
-*.color14:      #7ea39f
+*.color6:       #75b5aa
+*.color14:      #90c3bb
 
 ! white
-*.color7:       #e8e8e8
-*.color15:      #ececec
+*.color7:       #e5e5e5
+*.color15:      #eaeaea

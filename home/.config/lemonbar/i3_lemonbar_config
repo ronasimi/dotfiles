@@ -19,30 +19,38 @@ mail_timer=5				# Mail check timer (min)
 upd_timer=30				# Update check (min)
 
 # get colors from .Xresources
-fg=$(xrdb -query | grep 'foreground'| cut -f2 | sed -e "s/#//")
-bg=$(xrdb -query | grep 'background'| cut -f2 | sed -e "s/#//")
-black=$(xrdb -query | grep 'color0'| cut -f2 | sed -e "s/#//")
+fgd=$(xrdb -query | grep 'foreground'| cut -f2 | sed -e "s/#//")
+bgd=$(xrdb -query | grep 'background'| cut -f2 | sed -e "s/#//")
+blc=$(xrdb -query | grep 'color0'| cut -f2 | sed -e "s/#//")
+bblc=$(xrdb -query | grep 'color8'| cut -f2 | sed -e "s/#//")
 red=$(xrdb -query | grep 'color1'| cut -f2 | sed -e "s/#//")
-green=$(xrdb -query | grep 'color2'| cut -f2 | sed -e "s/#//")
-yellow=$(xrdb -query | grep 'color3'| cut -f2 | sed -e "s/#//")
-blue=$(xrdb -query | grep 'color4'| cut -f2 | sed -e "s/#//")
-magenta=$(xrdb -query | grep 'color5'| cut -f2 | sed -e "s/#//")
-cyan=$(xrdb -query | grep 'color6'| cut -f2 | sed -e "s/#//")
-white=$(xrdb -query | grep 'color7'| cut -f2 | sed -e "s/#//")
+bred=$(xrdb -query | grep 'color9'| cut -f2 | sed -e "s/#//")
+grn=$(xrdb -query | grep 'color2'| cut -f2 | sed -e "s/#//")
+bgrn=$(xrdb -query | grep 'color10'| cut -f2 | sed -e "s/#//")
+ylw=$(xrdb -query | grep 'color3'| cut -f2 | sed -e "s/#//")
+bylw=$(xrdb -query | grep 'color11'| cut -f2 | sed -e "s/#//")
+blu=$(xrdb -query | grep 'color4'| cut -f2 | sed -e "s/#//")
+bblu=$(xrdb -query | grep 'color12'| cut -f2 | sed -e "s/#//")
+mgn=$(xrdb -query | grep 'color5'| cut -f2 | sed -e "s/#//")
+bmgn=$(xrdb -query | grep 'color13'| cut -f2 | sed -e "s/#//")
+cya=$(xrdb -query | grep 'color6'| cut -f2 | sed -e "s/#//")
+bcya=$(xrdb -query | grep 'color14'| cut -f2 | sed -e "s/#//")
+wht=$(xrdb -query | grep 'color7'| cut -f2 | sed -e "s/#//")
+bwht=$(xrdb -query | grep 'color15'| cut -f2 | sed -e "s/#//")
 
 # bar color definitions
-color_back="#C0${bg}"			# Default background
-color_fore="#${fg}"			# Default foreground
-color_title="#FFFFFFFF"			# Window title foreground
-color_head="#C0${blue}"			# Background for first element
-color_wsp="#${black}"			# Background for selected workspace
-color_act="#${fg}"		        # Foreground for active workspace
-color_ina="#${black}"		        # Foreground for inactive workspace
+color_back="#C0${bgd}"			# Default background
+color_fore="#${fgd}"			# Default foreground
+color_title="#${bwht}"			# Window title foreground
+color_head="#C0${blu}"			# Background for first element
+color_wsp="#${blc}"			# Background for selected workspace
+color_act="#${fgd}"		        # Foreground for active workspace
+color_ina="#${blc}"		        # Foreground for inactive workspace
 color_sec_b1="#C0282828"		# Background for section 1
-color_sec_b2="#C0${bg}"			# Background for section 2
-color_icon="#${fg}"  			# For icons
+color_sec_b2="#C0${bgd}"		# Background for section 2
+color_icon="#${fgd}"  			# For icons
 color_icon_dark="#FF282828"		# For icons (dark)
-color_netdown="#C0${black}"		# For inactive network interface icons
+color_netdown="#C0${bblc}"		# For inactive network interface icons
 color_mail="#C0DD4B39"			# Background color for mail alert
 color_upd="#C01793D0"			# Background color for update alert
 color_alert="#C0${red}"			# Background color for  alert
@@ -59,7 +67,7 @@ sep_left=""				# Powerline separator left
 sep_right=""				# Powerline separator right
 
 # Icon glyphs from Material Icons
-icon_clock="肋"				# Clock icon
+icon_clock=""				# Clock icon
 icon_cal=""				# Calendar icon
 icon_ethup=""				# Ethernet up icon
 icon_ethdown=""			# Ethernet down icon

@@ -21,8 +21,8 @@ if [ "$TERM" = "linux" ]; then
   prompt walters
 else
   # POWERLEVEL10K
-  source ~/.config/powerlevel10k/gitstatus/gitstatus.plugin.zsh
-  source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
+  source /usr/share/zsh-theme-powerlevel10k/gitstatus/gitstatus.plugin.zsh
+  source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
   # POWERLINE STYLE SUDO
   export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 0) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
 fi

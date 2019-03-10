@@ -9,9 +9,10 @@ rofi.color-window:	argb:002f343f, 	argb:002f343f,	argb:002f343f
 rofi.color-normal: 	argb:002f343f,	#eaeaeb,	argb:002f343f,	argb:405c5c5c,	#ffffff
 rofi.color-urgent: 	argb:00171717,	#cc6666,	argb:004b5160,	argb:00171717,	#535c5c
 rofi.color-active: 	argb:00171717,	#5294e2,	argb:004b5160,	argb:00171717,	#535c5c
-rofi.lines: 40
+rofi.lines: 20
+rofi.columns: 3
 rofi.fullscreen: true
-rofi.font: Inter 9
+rofi.font: Inter 14
 rofi.bw: 0
 rofi.padding: 150
 rofi.line-margin: 5

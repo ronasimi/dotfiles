@@ -24,17 +24,17 @@ set $ws9 "9:"
 set $ws10 "10:"
 
 ## I3 appearance
-set_from_resource $fg i3wm.foreground #$e5e5e5
+set_from_resource $fg i3wm.foreground #e5e5e5
 set_from_resource $bg i3wm.background #383838
 set_from_resource $ind i3wm.color4 #6a9fb5
 
 # colors
 # class				border		backgr.		text		indicator	child_border
-client.focused			$bg		$bg		#$fg		#$ind		$bg
-client.focused_inactive		$bg		$bg		#$fg		$bg		$bg
+client.focused			$bg		$bg		$fg		$ind		$bg
+client.focused_inactive		$bg		$bg		$fg		$bg		$bg
 client.unfocused		$bg		#1c1f25		#4b4b4b		$bg		$bg
-client.urgent			#$fg		#ac4142		#$fg		#$ind		#$fg
-client.placeholder		#000000		#0c0c0c		#$fg		#$ind		#0c0c0c
+client.urgent			$fg		#ac4142		$fg		$ind		$fg
+client.placeholder		#000000		#0c0c0c		$fg		$ind		#0c0c0c
 client.background		$bg
 
 # window borders

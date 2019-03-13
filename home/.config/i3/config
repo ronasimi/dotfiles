@@ -38,8 +38,8 @@ client.placeholder		#000000		#0c0c0c		$fg		$ind		#0c0c0c
 client.background		$bg
 
 # window borders
-default_border pixel 4
-default_floating_border pixel 4
+default_border pixel 2
+default_floating_border pixel 2
 
 # useless gaps
 gaps inner 16
@@ -56,7 +56,7 @@ gaps top 16
 smart_borders on
 
 # Set variables for floating and un-floating commands
-set $FLOAT-border floating enable, border pixel 4
+set $FLOAT-border floating enable, border pixel 2
 set $FLOAT-noborder floating enable, border none
 
 ## Client rules

@@ -157,7 +157,7 @@ ctrl + alt + l
 
 # custom program launchers
 super + F1
-	bspc desktop -f 1;google-chrome-stable &
+	bspc desktop -f 1;chromium &
 
 super + F2
 	bspc desktop -f 2;urxvtc &

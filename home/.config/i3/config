@@ -272,7 +272,7 @@ for_window [class="URxvt" instance="htop"] $FLOAT-border
 # Status bar
 # lemonbar
 bar {
-	i3bar_command "~/.config/lemonbar/i3_lemonbar.sh &2> /dev/null"
+	i3bar_command "~/.config/i3_lemonbar/i3_lemonbar.sh &2> /dev/null"
 }
 
 # autostart

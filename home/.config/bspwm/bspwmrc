@@ -58,8 +58,8 @@ fi
 
 # startup
 sxhkd &
-#$HOME/.config/polybar/launch.sh &
-$HOME/.config/bsp_lemonbar/bsp_lemonbar.sh &
+$HOME/.config/polybar/launch.sh &
+#$HOME/.config/bsp_lemonbar/bsp_lemonbar.sh &
 thunar --daemon &
 urxvtd -q -o -f &
 dunst -c ~/.config/dunst/dunstrc &

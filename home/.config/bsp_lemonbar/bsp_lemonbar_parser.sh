@@ -14,6 +14,7 @@
 
 # min init
 title="%{F${color_head} B-}${sep_right}%{T2}%{F${color_title} T1} ${win}"
+num_mon=$(bspc query -M | wc -l)
 
 # parser
 
@@ -21,27 +22,61 @@ while read -r line ; do
 
         case $line in
 
-                WSP*)
-                        # bspwm Workspaces
-                        wsp="%{B${color_head}} "
-                        set -- ${line#???}
+#                WM*)
+#                        # bspwm Workspaces
+#                        wsp="%{B${color_head}} "
+#                        set -- ${line#??}
+#
+#                        while [ $# -gt 0 ] ; do
+#                                case $1 in
+#                                        O*|F*)
+#                                                wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_act} B${color_wsp} T1} ${1##?} %{F${color_wsp} B${color_head}}${sep_right}"
+#                                                ;;
+#                                        o*)
+#                                                wsp="${wsp}%{F${color_head} B${color_head}}${sep_right}%{F${color_ina} B${color_head} T1} ${1##?} %{F${color_head} B${color_head}}${sep_right}"
+#                                                ;;
+#                                        u*|U*)
+#                                                wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_act} B${color_alert} T1} ${1##?} %{F${color_alert} B${color_head}}${sep_right}"
+#                                                ;;
+#                                esac
+#                                shift
+#                        done
+#                        ;;
+		W*)
+    		# bspwm's state
+    		IFS=':'
+		    set -- ${line#?}
+		    while [ $# -gt 0 ] ; do
+		        case $1 in
 
-                        while [ $# -gt 0 ] ; do
-                                case $1 in
-                                        FOC*)
-                                                wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_act} B${color_wsp} T1} ${1#???} %{F${color_wsp} B${color_head}}${sep_right}"
-                                                ;;
-                                        INA*|ACT*)
-                                                wsp="${wsp}%{F${color_head} B${color_head}}${sep_right}%{F${color_ina} B${color_head} T1} ${1#???} %{F${color_head} B${color_head}}${sep_right}"
-                                                ;;
-                                        URG*)
-                                                wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_act} B${color_alert} T1} ${1#???} %{F${color_alert} B${color_head}}${sep_right}"
-                                                ;;
-                                esac
-                                shift
-                        done
-                        ;;
-
+		            [fFoOuU]*)
+		                case $1 in
+		                    f*)
+		                        # free desktop
+		                        wsp="${wsp}%{F${color_head} B${color_head}}${sep_right}%{F${color_ina} B${color_head} T1} ${1#???} %{F${color_head} B${color_head}}${sep_right}"
+		                        ;;
+		                    F*)
+		                        # focused free desktop
+		                        wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_act} B${color_wsp} T1} ${1#???} %{F${color_wsp} B${color_head}}${sep_right}"
+		                        ;;
+		                    o*)
+		                        # occupied desktop
+		                        wsp="${wsp}%{F${color_head} B${color_head}}${sep_right}%{F${color_ina} B${color_head} T1} ${1#???} %{F${color_head} B${color_head}}${sep_right}"
+		                        ;;
+		                    O*)
+		                        # focused occupied desktop
+		                        wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_act} B${color_wsp} T1} ${1#???} %{F${color_wsp} B${color_head}}${sep_right}"
+		                        ;;
+		                    u*)
+		                        # urgent desktop
+		                        wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_act} B${color_alert} T1} ${1#???} %{F${color_alert} B${color_head}}${sep_right}"
+		                        ;;
+		                    U*)
+		                        # focused urgent desktop
+		                        wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_act} B${color_alert} T1} ${1#???} %{F${color_alert} B${color_head}}${sep_right}"
+		                        ;;
+		                esac
+		                ;;
                 WIN*)
                         # window title
                         win=$(xprop -id "${line#???}" | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)

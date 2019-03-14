@@ -23,7 +23,7 @@ mkfifo "${panel_fifo}"
 ### EVENTS METERS
 
 # bspwm Workspaces, "WSP"
-"$(dirname $0)"/scripts/workspaces.pl > "${panel_fifo}" &
+(bspc subscribe report) > "${panel_fifo}" &
 
 # Window title, "WIN"
 while read -r; do

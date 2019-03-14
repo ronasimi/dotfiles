@@ -317,7 +317,7 @@ margin-bottom = 5
 [module/backlight]
 type = custom/script
 interval = 0.5
-exec = ~/.config/polybar/backlight.sh
+exec = ~/.config/polybar/scripts/backlight.sh
 
 format-padding = 1
 format-background = ${colors.background-alt}
@@ -329,7 +329,7 @@ label = "%output:3%%"
 [module/gmail]
 type = custom/script
 interval = 60
-exec = ~/.bin/gmail.sh
+exec = ~/.config/polybar/scripts/gmail.sh
 
 format-padding = 2
 format-background = ${colors.yellow}

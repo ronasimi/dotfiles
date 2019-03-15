@@ -42,18 +42,18 @@ bwhi=$(xrdb -query | grep -m 1 '*.color15' | cut -f 2 | tr -d "#")
 color_back="#C0${bgd}"			# Default background
 color_fore="#${fgd}"			# Default foreground
 color_title="#${bwhi}"			# Window title foreground
-color_head="#C0${blu}"			# Background for first element
+color_head="#${blu}"			# Background for first element
 color_wsp="#${bla}"			# Background for selected workspace
 color_act="#${fgd}"		        # Foreground for active workspace
 color_ina="#${bla}"		        # Foreground for inactive workspace
-color_sec_b1="#C0282828"		# Background for section 1
-color_sec_b2="#C0${bgd}"		# Background for section 2
+color_sec_b1="#282828"			# Background for section 1
+color_sec_b2="#${bgd}"			# Background for section 2
 color_icon="#${whi}"  			# For icons
-color_icon_dark="#FF282828"		# For icons (dark)
-color_netdown="#C0${bla}"		# For inactive network interface icons
-color_mail="#C0DD4B39"			# Background color for mail alert
-color_upd="#C01793D0"			# Background color for update alert
-color_alert="#C0${red}"			# Background color for  alert
+color_icon_dark="#282828"		# For icons (dark)
+color_netdown="#${bla}"			# For inactive network interface icons
+color_mail="#DD4B39"			# Background color for mail alert
+color_upd="#1793D0"			# Background color for update alert
+color_alert="#${red}"			# Background color for  alert
 
 #default space between sections
 if [ "${res_w}" -gt 1024 ]; then

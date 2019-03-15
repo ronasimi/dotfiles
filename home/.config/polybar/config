@@ -31,22 +31,22 @@ black = #000000
 ;   variables
 ;=====================================================
 [variables]
-bar-height = 20
-bar-border-size = 1
+bar-height = 16
+bar-border-size = 0
 
 label-padding = 1
 label-maxlen = 50
 
-eth=eth0
-wlan=wlan0
+eth=enp0s25
+wlan=wlp3s0
 
 ;=====================================================
 ;   fonts
 ;=====================================================
 [fonts]
-font-0 = "FuraCode Nerd Font:size=12:antialias=true;2"
-font-1 = "FuraCode Nerd Font:size=14:antialias=true;3"
-font-2 = "Material Design Icons:size=14:antialias=true;3"
+font-0 = "tamzenforpowerline:pixelsize=14:antialias=true;0"
+font-1 = "Material Design Icons:size=10:antialias=true;1"
+font-2 = "Material Design Icons:size=10:antialias=true;2"
 
 ;=====================================================
 ;   settings
@@ -373,8 +373,8 @@ type = internal/alsa
 inherit = section/base
 interval = 1
 
-label-volume = %{T1}墳%{T-} %percentage:%%
-label-muted = %{T1}婢%{T-}
+label-volume = %{T1}%{T-} %percentage:%%
+label-muted = %{T1}%{T-}
 
 ;=====================================================
 ;   module/backlight
@@ -387,7 +387,7 @@ inherit = section/base
 enable-scroll = false
 
 format = <label>
-label = %{T1}%{T-} %percentage:%%
+label = %{T1}%{T-} %percentage:%%
 
 ;=====================================================
 ;   module/battery
@@ -400,13 +400,13 @@ adapter = AC
 full-at = 95
 
 format-charging = <label-charging>
-label-charging = %{T1}%{T-} %percentage:%%
+label-charging = %{T1}%{T-} %percentage:%%
 
 format-discharging = <label-discharging>
-label-discharging = %{T1}%{T-} %percentage:%%
+label-discharging = %{T1}%{T-} %percentage:%%
 
 format-full = <label-full>
-label-full = %{T1}%{T-} %percentage:%%
+label-full = %{T1}%{T-} %percentage:%%
 
 ;=====================================================
 ;   module/temperature

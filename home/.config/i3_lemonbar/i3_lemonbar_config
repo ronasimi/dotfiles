@@ -39,7 +39,7 @@ whi=$(xrdb -query | grep -m 1 '*.color7' | cut -f 2 | tr -d "#")
 bwhi=$(xrdb -query | grep -m 1 '*.color15' | cut -f 2 | tr -d "#")
 
 # bar color definitions
-color_back="#C0${bgd}"			# Default background
+color_back="#40${bgd}"			# Default background
 color_fore="#${fgd}"			# Default foreground
 color_title="#${bwhi}"			# Window title foreground
 color_head="#${blu}"			# Background for first element

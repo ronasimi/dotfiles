@@ -9,334 +9,434 @@
 ;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
 ;
 ;
-;   To learn more about how to configure Polybar
-;   go to https://github.com/jaagr/polybar
-;
-;   The README contains alot of information
+; 07 nov. 2018 - Electro7
 ;
 ;==========================================================
 
+;=====================================================
+;   colors
+;=====================================================
 [colors]
-background = #cc2f343f
-background-alt = #CC121419
-foreground = #eaeaeb
-foreground-alt = #eaeaeb
-primary = #ffb52a
-secondary = #e60053
-alert = #bd2c40
-black = #585c65
-red = #ac4142
-green = #90a959
-yellow = #f4bf75
-blue = #6a9fb5
-magenta = #aa759f
-cyan = #75b5aa
-white = #eaeaeb
+foreground = ${xrdb:foreground}
+background = ${xrdb:background}
+highlight = ${xrdb:color10}
+highback = ${xrdb:color2}
+warn = ${xrdb:color1}
+alert = ${xrdb:color3}
+section = ${xrdb:color8}
+section_off = ${xrdb:color0}
+black = #000000
 
-[bar/mybar]
-monitor = ${env:MONITOR:LVDS-1}
-width = 1572
-height = 14
-offset-x = 14
-offset-y = 7
-radius = 0.0
+;=====================================================
+;   variables
+;=====================================================
+[variables]
+bar-height = 20
+bar-border-size = 1
+
+label-padding = 1
+label-maxlen = 50
+
+eth=eth0
+wlan=wlan0
+
+;=====================================================
+;   fonts
+;=====================================================
+[fonts]
+font-0 = "FuraCode Nerd Font:size=12:antialias=true;2"
+font-1 = "FuraCode Nerd Font:size=14:antialias=true;3"
+font-2 = "Material Design Icons:size=14:antialias=true;3"
+
+;=====================================================
+;   settings
+;=====================================================
+[settings]
+screenchange-reload = true
+
+;=====================================================
+;   global/wm
+;=====================================================
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+;=====================================================
+;   bar/top
+;=====================================================
+[bar/top]
+monitor = ${env:MONITOR}
+height = ${variables.bar-height}
+bottom = false
 fixed-center = false
+
+border-bottom-size = ${variables.bar-border-size}
+border-color = ${colors.black}
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 0
-line-color = #f00
+font-0 = ${fonts.font-0}
+font-1 = ${fonts.font-1}
+font-2 = ${fonts.font-2}
 
-border-size = 0
-border-color = #cc2f343f
+modules-left = ws_icon bspwm lhb lbs ti_icon lsb title
+modules-center =
+modules-right = updates cpu temperature memory wifi eth volume backlight battery date time
 
-padding-left = 0
-padding-right = 0
+;tray-position = right
+;tray-detached = false
+;tray-maxsize = 15
+;tray-transparent = false
+;tray-background = ${colors.highlight}
+;tray-offset-x = 0
+;tray-offset-y = 0
+;tray-padding = 1
+;tray-scale = 1.0
 
-module-margin-left = 0
-module-margin-right = 0
+;=====================================================
+;   section/base
+;=====================================================
+[section/base]
+format-prefix = %{T2}%{T-}
+format-prefix-foreground = ${colors.section}
+format-prefix-background = ${colors.background}
+format-warn-prefix = %{T2}%{T-}
+format-warn-prefix-foreground = ${colors.warn}
+format-warn-prefix-background = ${colors.background}
+format-connected-prefix = %{T2}%{T-}
+format-connected-prefix-foreground = ${colors.section}
+format-connected-prefix-background = ${colors.background}
+format-disconnected-prefix = %{T2}%{T-}
+format-disconnected-prefix-foreground = ${colors.section_off}
+format-disconnected-prefix-background = ${colors.background}
+format-volume-prefix = %{T2}%{T-}
+format-volume-prefix-foreground = ${colors.section}
+format-volume-prefix-background = ${colors.background}
+format-muted-prefix = %{T2}%{T-}
+format-muted-prefix-foreground = ${colors.alert}
+format-muted-prefix-background = ${colors.background}
+format-charging-prefix = %{T2}%{T-}
+format-charging-prefix-foreground = ${colors.section}
+format-charging-prefix-background = ${colors.background}
+format-discharging-prefix = %{T2}%{T-}
+format-discharging-prefix-foreground = ${colors.section}
+format-discharging-prefix-background = ${colors.background}
+format-full-prefix = %{T2}%{T-}
+format-full-prefix-foreground = ${colors.section}
+format-full-prefix-background = ${colors.background}
 
-font-0 = xos4 terminess powerline:pixelsize=12;antialias=false;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = material design icons:pixelsize=10;1
+format-foreground = ${colors.foreground}
+format-background = ${colors.section}
+format-warn-foreground = ${colors.foreground}
+format-warn-background = ${colors.warn}
+format-connected-foreground = ${colors.foreground}
+format-connected-background = ${colors.section}
+format-disconnected-foreground = ${colors.foreground}
+format-disconnected-background = ${colors.section_off}
+format-volume-foreground = ${colors.foreground}
+format-volume-background = ${colors.section}
+format-muted-foreground = ${colors.black}
+format-muted-background = ${colors.alert}
+format-charging-foreground = ${colors.foreground}
+format-charging-background = ${colors.section}
+format-discharging-foreground = ${colors.foreground}
+format-discharging-background = ${colors.section}
+format-full-foreground = ${colors.foreground}
+format-full-background = ${colors.section}
 
-modules-left = bspwm
-modules-center = xwindow
-modules-right = gmail cpu memory wlan eth backlight pulseaudio battery date powermenu
+format-suffix = %{T2}%{T-}
+format-suffix-foreground = ${colors.background}
+format-suffix-background = ${colors.section}
+format-warn-suffix = %{T2}%{T-}
+format-warn-suffix-foreground = ${colors.background}
+format-warn-suffix-background = ${colors.warn}
+format-connected-suffix = %{T2}%{T-}
+format-connected-suffix-foreground = ${colors.background}
+format-connected-suffix-background = ${colors.section}
+format-disconnected-suffix = %{T2}%{T-}
+format-disconnected-suffix-foreground = ${colors.background}
+format-disconnected-suffix-background = ${colors.section_off}
+format-volume-suffix = %{T2}%{T-}
+format-volume-suffix-foreground = ${colors.background}
+format-volume-suffix-background = ${colors.section}
+format-muted-suffix = %{T2}%{T-}
+format-muted-suffix-foreground = ${colors.background}
+format-muted-suffix-background = ${colors.alert}
+format-charging-suffix = %{T2}%{T-}
+format-charging-suffix-foreground = ${colors.background}
+format-charging-suffix-background = ${colors.section}
+format-discharging-suffix = %{T2}%{T-}
+format-discharging-suffix-foreground = ${colors.background}
+format-discharging-suffix-background = ${colors.section}
+format-full-suffix = %{T2}%{T-}
+format-full-suffix-foreground = ${colors.background}
+format-full-suffix-background = ${colors.section}
 
-tray-position = right
-tray-padding = 2
-tray-background = ${colors.background}
+label-padding = ${variables.label-padding}
+label-warn-padding = ${variables.label-padding}
+label-connected-padding = ${variables.label-padding}
+label-disconnected-padding = ${variables.label-padding}
+label-volume-padding = ${variables.label-padding}
+label-muted-padding = ${variables.label-padding}
+label-charging-padding = ${variables.label-padding}
+label-discharging-padding = ${variables.label-padding}
+label-full-padding = ${variables.label-padding}
 
-wm-restack = bspwm
+;=====================================================
+;   module/lhb
+;=====================================================
+[module/lhb]
+type = custom/text
 
-override-redirect = true
+content = %{T2}%{T-}
+content-foreground = ${colors.highlight}
+content-background = ${colors.background}
 
-scroll-up = bspwm-desknext
-scroll-down = bspwm-deskprev
+;=====================================================
+;   module/lbs
+;=====================================================
+[module/lbs]
+type = custom/text
 
-cursor-click = pointer
-cursor-scroll = ns-resize
+content = %{T2}%{T-}
+content-foreground = ${colors.background}
+content-background = ${colors.section}
 
+;=====================================================
+;   module/lsb
+;=====================================================
+[module/lsb]
+type = custom/text
+
+content = %{T2}%{T-}
+content-foreground = ${colors.section}
+content-background = ${colors.background}
+
+;=====================================================
+;   module/lbh
+;=====================================================
+[module/lbh]
+type = custom/text
+
+content = %{T2}%{T-}
+content-foreground = ${colors.background}
+content-background = ${colors.highlight}
+
+;=====================================================
+;   module/ws_icon
+;=====================================================
+[module/ws_icon]
+type = custom/text
+
+content = %{T3} 拓  %{T-}
+content-foreground = ${colors.background}
+content-background = ${colors.highlight}
+
+;=====================================================
+;   module/ti_icon
+;=====================================================
+[module/ti_icon]
+type = custom/text
+
+content = %{T3} 类 %{T-}
+content-foreground = ${colors.highlight}
+content-background = ${colors.section}
+
+;=====================================================
+;   module/bspwm
+;=====================================================
 [module/bspwm]
 type = internal/bspwm
 
-label-focused = %icon%
-label-focused-background = ${colors.green}
-label-focused-padding = 2
+; Only show workspaces defined on the same output as the bar
+; NOTE: The bspwm and XRandR monitor names must match, which they do by default.
+; Default: true
+pin-workspaces = true
 
-label-occupied = %icon%
-label-occupied-background = ${colors.blue}
-label-occupied-padding = 2
+; Output mode flags after focused state label
+; Default: false
+inline-mode = false
 
-label-urgent = %icon%!
-label-urgent-background = ${colors.red}
-label-urgent-padding = 2
+; Create click handler used to focus workspace
+; Default: true
+enable-click = false
 
-label-empty =
-label-empty-foreground = ${colors.foreground-alt}
-label-empty-padding = 2
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = false
 
-strip-wsnumbers = true
+; Set the scroll cycle direction
+; Default: true
+reverse-scroll = false
 
-; Separator in between workspaces
-;label-separator = 
-;label-separator-foreground = ${colors.blue}
-;label-separator-background = ${colors.background}
+; Use fuzzy (partial) matching on labels when assigning
+; icons to workspaces
+; Example: code;♚ will apply the icon to all workspaces
+; containing 'code' in the label
+; Default: false
+fuzzy-match = true
 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-default = 
-
-[module/xwindow]
+;=====================================================
+;   module/title
+;=====================================================
+[module/title]
 type = internal/xwindow
-label = %title:0:75:...%
 
-[module/pulseaudio]
-type = internal/pulseaudio
+format = <label>
+format-background = ${colors.background}
+format-foreground = ${colors.foreground}
+format-padding = 1
 
-format-volume-padding = 1
-format-volume-background = ${colors.background-alt}
-format-volume-foreground = ${colors.foreground}
+label = %title%
+label-maxlen = 60
+label-empty =
 
-format-volume = <label-volume>
-format-volume-prefix = " "
-label-volume = "%percentage:3%% "
-
-format-muted-padding = 1
-label-muted = " mute "
-label-muted-foreground = #888
-format-muted-background = ${colors.background-alt}
-format-muted-foreground = ${colors.foreground}
-
+;=====================================================
+;   module/cpu
+;=====================================================
 [module/cpu]
 type = internal/cpu
+inherit = section/base
+interval = 1
 
-interval = 2
+label = %{T1}龍%{T-} %percentage%%
 
-format-padding = 1
-format-background = ${colors.background-alt}
-format-prefix = "  "
-label = %percentage:3%%
-
-
-[module/temperature]
-type = internal/temperature
-thermal-zone = 0
-warn-temperature = 60
-
-format = <ramp> <label>
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
-
-label = %temperature-c%
-label-warn = %temperature-c%
-label-warn-foreground = ${colors.secondary}
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
-
+;=====================================================
+;   module/memory
+;=====================================================
 [module/memory]
 type = internal/memory
-interval = 2
+inherit = section/base
+interval = 3
 
-format-padding = 1
-format-background = ${colors.background-alt}
-format-prefix = " "
-label = "%gb_used% "
+label = %{T1}%{T-} %gb_used:2%
 
-[module/wlan]
+;=====================================================
+;   module/wifi
+;=====================================================
+[module/wifi]
 type = internal/network
-interface = wlp3s0
-interval = 3.0
+inherit = section/base
+interface = ${variables.wlan}
+interval = 1
+accumulate-stats = false
 
-format-connected-padding = 1
-format-connected-background = ${colors.background}
-format-connected-foreground = ${colors.foreground}
-format-connected = <ramp-signal> <label-connected>
-format-connected-prefix = "  "
-label-connected = %essid%
+label-connected = "%{T1}直%{T-} %{T3}%{T-} %downspeed:% %{T3}%{T-} %upspeed:%"
+label-disconnected = "%{T1}%{F#1D1F21}直%{F- T-}"
 
-format-disconnected-padding = 1
-format-disconnected-background = ${colors.background}
-format-disconnected-foreground = ${colors.foreground}
-format-disconnected = <label-disconnected>
-label-disconnected = " "
-
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-
+;=====================================================
+;   module/eth
+;=====================================================
 [module/eth]
 type = internal/network
-interface = enp0s25
-interval = 3.0
+inherit = section/base
+interface = ${variables.eth}
+interval = 1
+accumulate-stats = false
 
-format-connected-padding = 1
-format-connected-background = ${colors.background}
-format-connected-foreground = ${colors.foreground}
-format-connected-prefix = " "
-label-connected = "%local_ip% "
+label-connected = "%{T1}﴿%{T-}  %{T3}%{T-} %downspeed:% %{T3}%{T-} %upspeed:%"
+label-disconnected = "%{T1}%{F#1D1F21}﴿%{F- T-}"
 
-format-disconnected-padding = 2
-format-disconnected-background = ${colors.background}
-format-disconnected-foreground = ${colors.foreground}
-format-disconnected = <label-disconnected>
-label-disconnected = " "
-
-[module/battery]
-type = internal/battery
-battery = BAT0
-adapter = AC
-full-at = 98
-time-format = %H:%M
-
-format-charging-padding = 2
-format-charging-background = ${colors.yellow}
-format-charging = <animation-charging> <label-charging>
-
-label-discharging = %time%
-format-discharging-padding = 2
-format-discharging-background = ${colors.yellow}
-format-discharging = <animation-discharging> <label-discharging>
-
-
-format-full-padding = 2
-format-full-background = ${colors.green}
-format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground-alt}
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
-
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
-animation-discharging-foreground = ${colors.foreground-alt}
-animation-discharging-framerate = 750
-
+;=====================================================
+;   module/date
+;=====================================================
 [module/date]
 type = internal/date
+inherit = section/base
+interval = 1
+date = %a %d %b
 
-interval = 5
+label = %{T1}%{T-} %date%
 
-format-padding = 2
-format-background = ${colors.blue}
-format-foreground = ${colors.foreground}
-
-date = %m-%d-%Y
-
+;=====================================================
+;   module/time
+;=====================================================
+[module/time]
+type = internal/date
+interval = 1
 time = %H:%M
 
-format-prefix = " "
+format-prefix = %{T2}%{T-}
+format-prefix-foreground = ${colors.highlight}
+format-prefix-background = ${colors.background}
+format-foreground = ${colors.black}
+format-background = ${colors.highlight}
 
-label = %time% %date%
+label = " %time% "
 
-[module/powermenu]
-type = custom/menu
+;=====================================================
+;   module/volume
+;=====================================================
+[module/volume]
+type = internal/alsa
+inherit = section/base
+interval = 1
 
-expand-right = true
+label-volume = %{T1}墳%{T-} %percentage:%%
+label-muted = %{T1}婢%{T-}
 
-format-padding = 2
-format-background = ${colors.red}
-;format-spacing = 1
-
-label-open = 
-label-open-foreground = ${colors.foreground}
-label-close =  cancel
-label-close-foreground = ${colors.foreground}
-label-separator = |
-label-separator-foreground = ${colors.background}
-
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = reboot
-
-menu-2-0 = power off
-menu-2-0-exec = poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
-
-[settings]
-screenchange-reload = true
-;compositing-background = xor
-;compositing-background = screen
-;compositing-foreground = source
-;compositing-border = over
-;pseudo-transparency = false
-
-[global/wm]
-margin-top = 5
-margin-bottom = 5
-
-# custom modules
-
+;=====================================================
+;   module/backlight
+;=====================================================
 [module/backlight]
-type = custom/script
-interval = 0.5
-exec = ~/.config/polybar/scripts/backlight.sh
+type = internal/xbacklight
+inherit = section/base
 
-format-padding = 1
-format-background = ${colors.background-alt}
+;output = eDP1
+enable-scroll = false
+
+format = <label>
+label = %{T1}%{T-} %percentage:%%
+
+;=====================================================
+;   module/battery
+;=====================================================
+[module/battery]
+type = internal/battery
+inherit = section/base
+battery = BAT0
+adapter = AC
+full-at = 95
+
+format-charging = <label-charging>
+label-charging = %{T1}%{T-} %percentage:%%
+
+format-discharging = <label-discharging>
+label-discharging = %{T1}%{T-} %percentage:%%
+
+format-full = <label-full>
+label-full = %{T1}%{T-} %percentage:%%
+
+;=====================================================
+;   module/temperature
+;=====================================================
+[module/temperature]
+type = internal/temperature
+inherit = section/base
+thermal-zone = 0
+warn-temperature = 70
+
+label = %{T1}%{T-} %temperature-c%
+label-warn = %{T1}%{T-} %temperature-c%
+
+;=====================================================
+;   module/updates
+;=====================================================
+[module/updates]
+type = custom/script
+inherit = section/base
+
+format-prefix = %{T2}%{T-}
+format-prefix-foreground = ${colors.warn}
+format-prefix-background = ${colors.background}
 format-foreground = ${colors.foreground}
+format-background = ${colors.warn}
+format-suffix = %{T2}%{T-}
+format-suffix-foreground = ${colors.background}
+format-suffix-background = ${colors.warn}
+label-padding = ${variables.label-padding}
 
-format-prefix = "  "
-label = "%output:3%%"
-
-[module/gmail]
-type = custom/script
-interval = 60
-exec = ~/.config/polybar/scripts/gmail.sh
-
-format-padding = 2
-format-background = ${colors.yellow}
-format-foreground = ${colors.background}
-
-format-prefix = " "
-label = %output%
-click-left = xdg-open https://mail.google.com &
-
-; vim:ft=dosini
+exec = ~/.config/polybar/scripts/updates.sh
+interval = 600
+label = %{T1}%{T-} %output%

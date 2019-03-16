@@ -61,7 +61,7 @@ while read -r line ; do
                 GMA*)
                         # Gmail
                         if [ "${line#???}" != "0" ]; then
-                                mail_cback=${color_mail}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
+                                mail_cback=${color_mail}; mail_cicon=${color_icon}; mail_cfore=${color_title};
                         else
                                 mail_cback=${color_sec_b2}; mail_cicon=${color_icon}; mail_cfore=${color_fore};
                         fi

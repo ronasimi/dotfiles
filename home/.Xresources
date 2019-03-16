@@ -45,9 +45,9 @@ Xft.antialias:			1
 Xft.rgba:			rgb
 
 ! special
-*.foreground:   #bdbdbe
+*.foreground:   #bdbdbd
 *.background:   #383838
-*.cursorColor:  #bdbdbe
+*.cursorColor:  #bdbdbd
 
 ! black
 *.color0:       #5f5f5f
@@ -78,5 +78,5 @@ Xft.rgba:			rgb
 *.color14:      #90c3bb
 
 ! white
-*.color7:       #bdbdbe
-*.color15:      #cacacb
+*.color7:       #bdbdbd
+*.color15:      #e0e0e0

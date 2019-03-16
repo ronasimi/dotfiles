@@ -95,9 +95,9 @@ while read -r line ; do
 
                         if [ "${muted}" == "yes" ]; then
                                 icon_vol=${icon_vol_mute};
-                        elif [ "${line#???}" -ge 66 ]; then
+                        elif [ "${line#???}" -ge 75 ]; then
                                 icon_vol=${icon_vol_hi};
-                        elif [ "${line#???}" -ge 33 ]; then
+                        elif [ "${line#???}" -ge 50 ]; then
                                 icon_vol=${icon_vol_med};
                         elif [ "${line#???}" -ge 1 ]; then
                                 icon_vol=${icon_vol_lo};

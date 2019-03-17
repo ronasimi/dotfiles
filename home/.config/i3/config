@@ -1,5 +1,5 @@
-# _ _____                    __ _       
-# (_)___ /    ___ ___  _ __  / _(_) __ _ 
+# _ _____                    __ _
+# (_)___ /    ___ ___  _ __  / _(_) __ _
 # | | |_ \   / __/ _ \| '_ \| |_| |/ _` |
 # | |___) | | (_| (_) | | | |  _| | (_| |
 # |_|____/   \___\___/|_| |_|_| |_|\__, |
@@ -37,7 +37,7 @@ client.focused			$bg		$bg		$fg		$ind		$bg
 client.focused_inactive		$bg		$bg		$fg		$bg		$bg
 client.unfocused		$bg		#282828		#5f5f5f		$bg		$bg
 client.urgent			$fg		#ac4142		$fg		$ind		$fg
-client.placeholder		#000000		#0c0c0c		$fg		$ind		#0c0c0c
+client.placeholder		$ind		$ind		$bg		$ind		$ind
 client.background		$bg
 
 # window borders
@@ -91,17 +91,17 @@ mode "resize" {
 
 # Pressing left will shrink the window’s width.
 # Pressing right will grow the window’s width.
-# Pressing up will shrink the window’s height.
-# Pressing down will grow the window’s height.
+# Pressing up will grow the window’s height.
+# Pressing down will shrink the window’s height.
 bindsym j resize shrink width 10 px or 10 ppt
-bindsym k resize grow height 10 px or 10 ppt
-bindsym l resize shrink height 10 px or 10 ppt
+bindsym k resize shrink height 10 px or 10 ppt
+bindsym l resize grow height 10 px or 10 ppt
 bindsym semicolon resize grow width 10 px or 10 ppt
 
 # same bindings, but for the arrow keys
 bindsym Left resize shrink width 10 px or 10 ppt
-bindsym Down resize grow height 10 px or 10 ppt
-bindsym Up resize shrink height 10 px or 10 ppt
+bindsym Down resize shrink height 10 px or 10 ppt
+bindsym Up resize grow height 10 px or 10 ppt
 bindsym Right resize grow width 10 px or 10 ppt
 
 # back to normal: Enter or Escape
@@ -172,6 +172,13 @@ bindsym $mod+0 workspace $ws10
 bindsym XF86Forward workspace next
 bindsym XF86Back workspace prev
 
+# move workspace to display
+bindsym $mod+Ctrl+XF86Forward move workspace to output right
+bindsym $mod+Ctrl+XF86Back move workspace to output left
+
+# load layouts
+bindsym $mod+Shift+m append_layout ~/.config/i3/layouts/master-stack.json
+
 # multimedia keys
 # pulse audio volume control
 bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
@@ -184,10 +191,10 @@ bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/screenshot-%Y%m%
 bindsym Shift+Print exec --no-startup-id scrot -u ~/Pictures/Screenshots/window-%Y%m%d-%H:%M:%S.png & notify-send -u low $'Window screenshot' 'saved to ~/Pictures/Screenshots'
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -209,8 +216,8 @@ bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
-bindsym $mod+XF86Forward move container to workspace next
-bindsym $mod+XF86Back move container to workspace prev
+bindsym $mod+Shift+XF86Forward move container to workspace next
+bindsym $mod+Shift+XF86Back move container to workspace prev
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+Delete move scratchpad
@@ -227,13 +234,10 @@ bindsym $mod+Shift+r exec pkill lemonbar, restart
 # restart bar
 bindsym $mod+Shift+b exec "~/.config/i3/scripts/barcycle.sh"
 
-# exit i3 (logs you out of your X session)
-#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
-# lock - suspend - reboot - shutdown
-bindsym $mod+Ctrl+l exec --no-startup-id xset s activate
-bindsym $mod+Ctrl+e exec --no-startup-id ~/.config/i3/scripts/i3_exit.sh
-bindsym $mod+Ctrl+s exec --no-startup-id systemctl suspend
+# bind some fn keys, power off, exit, restart
+bindsym XF86ScreenSaver exec --no-startup-id xset s activate
+bindsym XF86TouchpadToggle exec --no-startup-id ~/.config/i3/scripts/touchpad-toggle.sh
+bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/i3_exit.sh
 bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
 bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 

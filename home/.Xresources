@@ -1,9 +1,7 @@
-URxvt*font:			-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*,\
-				xft:Material Design Icons:pixelsize=8:antialiasing=false,\
-				xft:Symbola:pixelsize=8:antialiasing=false
-URxvt*boldFont:			-*-tamzenforpowerline-bold-r-*-*-14-*-*-*-*-*-*-*
-URxvt*italicFont:		-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*
-URxvt*boldItalicFont:		-*-tamzenforpowerline-bold-r-*-*-14-*-*-*-*-*-*-*
+URxvt*font:			xft:TamzenForPowerline:style=Regular:pixelsize=14,\
+				xft:Material Design Icons:pixelsize=8,\
+				xft:Symbola:pixelsize=8
+URxvt*boldFont:			xft:TamzenForPowerline:style=Bold:pixelsize=14
 URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true
 URxvt*saveLines:		9999

@@ -1,7 +1,7 @@
-URxvt*font:			xft:TamzenForPowerline:style=Regular:pixelsize=14,\
-				xft:Material Design Icons:pixelsize=8,\
-				xft:Symbola:pixelsize=8
-URxvt*boldFont:			xft:TamzenForPowerline:style=Bold:pixelsize=14
+URxvt*font:			xft:TamzenForPowerline:style=Regular:pixelsize=14:antialiasing=false,\
+				xft:Material Design Icons:pixelsize=8:antialiasing=false,\
+				xft:Symbola:pixelsize=8:antialiasing=false
+URxvt*boldFont:			xft:TamzenForPowerline:style=Bold:pixelsize=14:antialiasing=false
 URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true
 URxvt*saveLines:		9999

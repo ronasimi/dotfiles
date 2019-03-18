@@ -48,8 +48,8 @@ Xft.rgba:			rgb
 *.cursorColor:  #bdbdbd
 
 ! black
-*.color0:       #5f5f5f
-*.color8:       #7e7e7e
+*.color0:       #4b4b4b
+*.color8:       #6e6e6e
 
 ! red
 *.color1:       #ac4142

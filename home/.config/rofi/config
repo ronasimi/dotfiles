@@ -6,15 +6,15 @@
 rofi.color-window:	argb:002f343f, 	argb:002f343f,	argb:002f343f
 
 ! State:		'bg',		'fg',     	'bgalt',  	'hlbg',   	'hlfg'
-rofi.color-normal: 	argb:002f343f,	#eaeaeb,	argb:002f343f,	argb:405c5c5c,	#ffffff
+rofi.color-normal: 	argb:002f343f,	#eaeaea,	argb:002f343f,	argb:FF6a9fb5,	#ffffff
 rofi.color-urgent: 	argb:00171717,	#cc6666,	argb:004b5160,	argb:00171717,	#535c5c
 rofi.color-active: 	argb:00171717,	#5294e2,	argb:004b5160,	argb:00171717,	#535c5c
-rofi.lines: 20
-rofi.columns: 3
+rofi.lines: 5
+rofi.columns: 2
 rofi.fullscreen: true
-rofi.font: Inter 14
+rofi.font: Inter 24
 rofi.bw: 0
-rofi.padding: 150
+rofi.padding: 250
 rofi.line-margin: 5
 rofi.eh: 1
 rofi.sidebar-mode: true

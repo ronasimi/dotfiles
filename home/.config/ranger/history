@@ -2,5 +2,10 @@ rename 6pnYQUv.jpg
 c
 copy
 paster
-open_with 
 paste
+rename
+rename stallman.jpg
+open_with 
+.config
+cd .config
+set preview_images_method kitty

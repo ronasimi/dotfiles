@@ -2,6 +2,7 @@ URxvt*font:			xft:TamzenForPowerline:style=Regular:pixelsize=14:antialiasing=fal
 				xft:Material Design Icons:pixelsize=8:antialiasing=false,\
 				xft:Symbola:pixelsize=8:antialiasing=false
 URxvt*boldFont:			xft:TamzenForPowerline:style=Bold:pixelsize=14:antialiasing=false
+URxvt*depth:			24
 URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true
 URxvt*saveLines:		9999
@@ -15,7 +16,6 @@ URxvt*cursorUnderline:		false
 URxvt*pointerBlank:		true
 URxvt*secondaryScreen:		true
 URxvt*secondaryScroll:		false
-URxvt*depth:			32
 URxvt*perl-ext-common:		default,matcher,clipboard,url-select,keyboard-select,vtwheel,fullscreen
 URxvt*url-select.launcher:	/usr/bin/xdg-open
 URxvt*url-select.underline:	true

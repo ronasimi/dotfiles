@@ -43,7 +43,7 @@ while read -r line ; do
                             icon_layout=${icon_stacked};
                     fi
 
-                    layout="%{F${color_fore} B${color_sec_b2}} %{T2}${icon_layout} %{F${color_sec_b2} B${color_head}}%{T2}${sep_right}"
+                    layout="%{F${color_norm} B${color_sec_b2}} %{T2}${icon_layout} %{F${color_sec_b2} B${color_head}}%{T2}${sep_right}"
                     ;;
 
                 WSP*)

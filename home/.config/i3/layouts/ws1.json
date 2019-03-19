@@ -1,0 +1,56 @@
+// vim:ts=4:sw=4:et
+{
+    // tabbed split container with 2 children
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "tabbed",
+    "percent": null,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 860,
+               "width": 1584,
+               "x": 8,
+               "y": 32
+            },
+            "name": "linuxmulti subreddits curated by u/ronasimi - Chromium",
+            "percent": 0.5,
+            "swallows": [
+               {
+               "class": "^Chromium$"
+               // "instance": "^chromium$",
+               // "title": "^linuxmulti\\ subreddits\\ curated\\ by\\ u\\/ronasimi\\ \\-\\ Chromium$",
+               // "window_role": "^browser$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 860,
+               "width": 1584,
+               "x": 18,
+               "y": 42
+            },
+            "name": "How do I open Chromium in incognito mode by default? - Ask Ubuntu - Chromium",
+            "percent": 0.5,
+            "swallows": [
+               {
+               "class": "^Chromium$"
+               // "instance": "^chromium$",
+               // "title": "^How\\ do\\ I\\ open\\ Chromium\\ in\\ incognito\\ mode\\ by\\ default\\?\\ \\-\\ Ask\\ Ubuntu\\ \\-\\ Chromium$",
+               // "window_role": "^browser$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+

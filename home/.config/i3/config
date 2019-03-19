@@ -11,7 +11,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font: -*-tamzenforpowerline-medium-r-*-*-16-*-*-*-*-*-*-*
+font pango: Inter 9
 
 ## Workspace names
 # workspace name variables
@@ -247,7 +247,7 @@ bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -h 16 -w
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium
-bindsym $mod+Shift+F1 workspace $ws1; exec chromium --incognito
+bindsym $mod+Mod1 workspace $ws1; exec chromium --incognito
 
 # urxvt
 bindsym $mod+F2 workspace $ws2; exec --no-startup-id urxvtc
@@ -269,6 +269,7 @@ for_window [class="URxvt" instance="floating"] $FLOAT-border
 bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
 
 # saved workspace layouts
+bindsym $mod+Shift+F1 exec --no-startup-id ~/.config/i3/scripts/ws1.sh
 bindsym $mod+Shift+F2 exec --no-startup-id ~/.config/i3/scripts/ws2.sh
 bindsym $mod+Shift+F4 exec --no-startup-id ~/.config/i3/scripts/ws4.sh
 
@@ -283,4 +284,4 @@ exec_always --no-startup-id ~/.config/i3/scripts/fehbg
 exec --no-startup-id exec thunar --daemon
 exec --no-startup-id exec urxvtd -q -o -f
 exec --no-startup-id xss-lock lockscreen
-exec --no-startup-id sleep 0.5; exec xset s activate
+exec --no-startup-id sleep 0.25; exec xset s activate

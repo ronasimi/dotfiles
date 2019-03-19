@@ -268,6 +268,8 @@ bindsym $mod+F6 workspace $ws6; exec gimp
 for_window [class="URxvt" instance="floating"] $FLOAT-border
 bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
 
+# master-stack terminals on workspace 2
+bindsym $mod+Shift+F2 exec --no-startup-id ~/.config/i3/scripts/master-stack-term.sh
 # Status bar
 # lemonbar
 bar {

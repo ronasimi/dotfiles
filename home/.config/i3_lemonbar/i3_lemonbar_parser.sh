@@ -28,7 +28,7 @@ while read -r line ; do
                         icon_mode=${icon_default}; mode_cicon=${color_norm};
                     fi
 
-                    mode="%{F${mode_cicon} B${color_sec_b2}} %{T2}%{F${mode_cicon} T1}${icon_mode} "
+                    mode="%{F${mode_cicon} B${color_sec_b2}} %{T2}%{F${mode_cicon} T1}${icon_mode}"
                     ;;
 
                 LAY*)

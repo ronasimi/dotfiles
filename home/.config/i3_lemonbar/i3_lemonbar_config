@@ -59,7 +59,6 @@ color_icon_dark="#282828"		# For icons (dark)
 color_netdown="#${bbla}"		# For inactive network interface icons
 color_mail="#DD4B39"			# Background color for mail alert
 color_upd="#1793D0"			# Background color for update alert
-color_norm="#${grn}"               # Background color for normal status
 color_alert="#${red}"			# Background color for alert
 
 #default space between sections

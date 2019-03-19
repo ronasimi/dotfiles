@@ -188,7 +188,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pulseaudio-ctl mute-input
 
 # print screen
 bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/screenshot-%Y%m%d-%H:%M:%S.png & notify-send -u low $'Screenshot' 'saved to ~/Pictures/Screenshots'
-bindsym Shift+Print exec --no-startup-id scrot -u ~/Pictures/Screenshots/window-%Y%m%d-%H:%M:%S.png & notify-send -u low $'Window screenshot' 'saved to ~/Pictures/Screenshots'
+bindsym Mod1+Sys_Req exec --no-startup-id scrot -u ~/Pictures/Screenshots/window-%Y%m%d-%H:%M:%S.png & notify-send -u low $'Window screenshot' 'saved to ~/Pictures/Screenshots'
 
 # move focused window
 bindsym $mod+Shift+h move left

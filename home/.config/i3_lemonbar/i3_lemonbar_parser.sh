@@ -20,27 +20,37 @@ title="%{F${color_head} B-}${sep_right}%{T2}%{F${color_title} T1} ${win}"
 while read -r line ; do
 
         case $line in
+                MOD*)
+                    # binding mode
+                    if [ "${line#???}" == "resize" ]; then
+                        mode_icon=${icon_resize}; mode_cicon=${color_alert};
+                    else
+                        mode_icon=${icon_default}; mode_cicon=${color_norm};
+                    fi
+
+                mode="%{F${mode_cicon} B${color_sec_b2}} %{T2}%{F${mode_cicon} T1}${mode_icon} %{F${color_sec_b2} B${color_head}}%{T2}${sep_right}"
+                    ;;
 
                 WSP*)
                         # I3 Workspaces
-                        wsp="%{B${color_head}} "
+                        wsp="%{B${color_head}}"
                         set -- ${line#???}
 
                         while [ $# -gt 0 ] ; do
-                                case $1 in
-                                        FOC*)
-                                                wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_act} B${color_wsp} T1} ${1#???} %{F${color_wsp} B${color_head}}${sep_right}"
-                                                ;;
-                                        INA*|ACT*)
-                                                wsp="${wsp}%{F${color_head} B${color_head}}${sep_right}%{F${color_ina} B${color_head} T1} ${1#???} %{F${color_head} B${color_head}}${sep_right}"
-                                                ;;
-                                        URG*)
-                                                wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_act} B${color_alert} T1} ${1#???} %{F${color_alert} B${color_head}}${sep_right}"
-                                                ;;
-                                esac
-                                shift
-                        done
-                        ;;
+                            case $1 in
+                                FOC*)
+                                        wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_act} B${color_wsp} T1} ${1#???} %{F${color_wsp} B${color_head}}${sep_right}"
+                                        ;;
+                                INA*|ACT*)
+                                        wsp="${wsp}%{F${color_head} B${color_head}}${sep_right}%{F${color_ina} B${color_head} T1} ${1#???} %{F${color_head} B${color_head}}${sep_right}"
+                                        ;;
+                                URG*)
+                                        wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_act} B${color_alert} T1} ${1#???} %{F${color_alert} B${color_head}}${sep_right}"
+                                        ;;
+                        esac
+                        shift
+                done
+                ;;
 
                 WIN*)
                         # window title
@@ -187,5 +197,5 @@ while read -r line ; do
         esac
 
         # And finally, output
-        printf "%s\n" "%{l}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
+        printf "%s\n" "%{l}${mode}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
 done

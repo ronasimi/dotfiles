@@ -84,7 +84,7 @@ for_window [class="feh"] $FLOAT-noborder
 for_window [title="Hangouts"] $FLOAT-border
 
 ## Resize mode
-bindsym $mod+r mode "resize"; exec notify-send -u critical "RESIZE MODE"
+bindsym $mod+r mode "resize"
 
 mode "resize" {
 # These bindings trigger as soon as you enter the resize mode
@@ -105,8 +105,8 @@ bindsym Up resize grow height 10 px or 10 ppt
 bindsym Right resize grow width 10 px or 10 ppt
 
 # back to normal: Enter or Escape
-bindsym Return mode "default", exec notify-send -u critical "NORMAL MODE"
-bindsym Escape mode "default", exec notify-send -u critical "NORMAL MODE"
+bindsym Return mode "default"
+bindsym Escape mode "default"
 }
 
 

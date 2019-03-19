@@ -20,7 +20,7 @@ cpu_alert=75				# % cpu use
 bat_alert=5				# low battery %
 temp_alert=90				# high temp
 
-# update timers, in minutes (conky update in i3_lemonbar_conky)
+# update timers, in minutes
 mail_timer=5				# Mail check timer (min)
 upd_timer=30				# Update check (min)
 
@@ -59,7 +59,8 @@ color_icon_dark="#282828"		# For icons (dark)
 color_netdown="#${bbla}"		# For inactive network interface icons
 color_mail="#DD4B39"			# Background color for mail alert
 color_upd="#1793D0"			# Background color for update alert
-color_alert="#${red}"			# Background color for  alert
+color_norm="#${grn}"               # Background color for normal status
+color_alert="#${red}"			# Background color for alert
 
 #default space between sections
 if [ "${res_w}" -gt 1024 ]; then
@@ -81,6 +82,8 @@ icon_wifi_up=""			# Wifi up icon
 icon_wifi_down=""			# Wifi down icon
 icon_mail=""				# Mail icon
 icon_arch=""				# Arch icon
+icon_default=""            # default mode icon
+icon_resize="逸"             # resize mode icon
 
 icon_bright_100=""			# Full brightness icon
 icon_bright_80=""			# 80% brightness icon

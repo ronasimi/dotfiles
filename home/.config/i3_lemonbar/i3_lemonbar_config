@@ -82,8 +82,14 @@ icon_wifi_up=""			# Wifi up icon
 icon_wifi_down=""			# Wifi down icon
 icon_mail=""				# Mail icon
 icon_arch=""				# Arch icon
+
 icon_default=""            # default mode icon
-icon_resize="逸"             # resize mode icon
+icon_resize="﨣"             # resize mode icon
+
+icon_splith=""              # horizontal split layout icon
+icon_splitv=""              # vertical split icon
+icon_tabbed=""              # tabbed layout icon
+icon_stacked="ﮧ"              # stacked layout icon
 
 icon_bright_100=""			# Full brightness icon
 icon_bright_80=""			# 80% brightness icon

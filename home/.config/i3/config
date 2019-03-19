@@ -39,7 +39,7 @@ set_from_resource $ind i3wm.color4 #6a9fb5
 client.focused			$bg		$bg		$act		$ind		$bg
 client.focused_inactive		$bg		$bg		$fg		$bg		$bg
 client.unfocused		$bg		#282828		$ina		$bg		$bg
-client.urgent			$fg		#urg		$fg		$ind		$fg
+client.urgent			$fg		$urg		$fg		$ind		$fg
 client.placeholder		$ind		$ind		$bg		$ind		$ind
 client.background		$bg
 

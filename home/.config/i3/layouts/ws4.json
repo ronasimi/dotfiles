@@ -1,0 +1,55 @@
+// vim:ts=4:sw=4:et
+{
+    // splitv split container with 2 children
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "percent": null,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 434,
+               "width": 624,
+               "x": 966,
+               "y": 456
+            },
+            "name": "i3_lemonbar.sh — ~/.config/i3_lemonbar — Atom",
+            "percent": 0.8,
+            "swallows": [
+               {
+               "class": "^Atom$"
+               // "instance": "^atom$",
+               // "title": "^i3_lemonbar\\.sh\\ \\—\\ \\~\\/\\.config\\/i3_lemonbar\\ \\—\\ Atom$",
+               // "window_role": "^browser\\-window$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 364,
+               "width": 588,
+               "x": 0,
+               "y": 0
+            },
+            "name": "ron@archpad: ~/repos",
+            "percent": 0.2,
+            "swallows": [
+               {
+               "class": "^URxvt$"
+               // "instance": "^urxvt$",
+               // "title": "^ron\\@archpad\\:\\ \\~\\/repos$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+

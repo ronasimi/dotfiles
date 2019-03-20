@@ -69,7 +69,8 @@ while read -r line ; do
 
                 WIN*)
                         # window title
-                        title="%{F${color_head} B-}${sep_right}%{T2}%{F${color_title} T1} ${line#???}"
+                        win=$(xprop -id "${line#???}" | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
+                        title="%{F${color_head} B-}${sep_right}%{T2}%{F${color_title} T1} ${win}"
                         ;;
 
                 UPD*)

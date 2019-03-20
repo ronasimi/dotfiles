@@ -23,7 +23,7 @@ mkfifo "${panel_fifo}"
 ### EVENTS METERS
 
 # i3 binding mode "MOD"
-(echo "MODinit" > ${panel_fifo} && i3-msg -t subscribe -m '[ "mode" ]' | awk -F '"' '{print "MOD" $4; fflush(stdout)}' > "${panel_fifo}") &
+(echo "MODinit" > "${panel_fifo}" && i3-msg -t subscribe -m '[ "mode" ]' | awk -F '"' '{print "MOD" $4; fflush(stdout)}' > "${panel_fifo}") &
 
 # i3 Workspaces, "WSP"
 "$(dirname $0)"/scripts/workspaces.pl > "${panel_fifo}" &

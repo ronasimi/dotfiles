@@ -32,7 +32,7 @@ mkfifo "${panel_fifo}"
 # container layout, "LAY"
 while read -r; do
 
-        (xprop -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}")
+	(xdotool getactivewindow getwindowname | awk '{print "WIN" $0; fflush(stdout)}' > "${panel_fifo}")
         (echo "LAY$(i3-msg -t get_tree | jq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')" > "${panel_fifo}")
 
 done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace", "binding" ]') &

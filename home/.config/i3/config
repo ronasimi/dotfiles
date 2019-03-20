@@ -30,7 +30,7 @@ set $ws10 "10:"
 set_from_resource $fg i3wm.foreground #e5e5e5
 set_from_resource $bg i3wm.background #383838
 set_from_resource $act i3wm.color15 #e0e0e0
-set_from_resource $ina i3wm.color0 #4b4b4b
+set_from_resource $ina i3wm.color16 #4b4b4b
 set_from_resource $urg i3wm.color1 #ac4142
 set_from_resource $ind i3wm.color4 #6a9fb5
 

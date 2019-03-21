@@ -63,9 +63,9 @@ color_alert="#${red}"			# Background color for alert
 
 #default space between sections
 if [ "${res_w}" -gt 1024 ]; then
-        stab='  '
+	stab='  '
 else
-        stab=' '
+	stab=' '
 fi
 
 # Char glyps for powerline fonts

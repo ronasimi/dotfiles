@@ -82,13 +82,13 @@ icon_wifi_down=""			# Wifi down icon
 icon_mail=""				# Mail icon
 icon_arch=""				# Arch icon
 
-icon_default=""            # default mode icon
-icon_resize="﨣"             # resize mode icon
+icon_default=""			# default mode icon
+icon_resize="﨣"			# resize mode icon
 
-icon_splith=""              # horizontal split layout icon
-icon_splitv=""              # vertical split icon
-icon_tabbed=""              # tabbed layout icon
-icon_stacked="ﮧ"              # stacked layout icon
+icon_splith=""				# horizontal split layout icon
+icon_splitv=""				# vertical split icon
+icon_tabbed=""				# tabbed layout icon
+icon_stacked="ﮧ"			# stacked layout icon
 
 icon_bright_100=""			# Full brightness icon
 icon_bright_80=""			# 80% brightness icon
@@ -98,7 +98,7 @@ icon_bright_19=""			# 19% brightness icon
 icon_bright_11=""			# 11% brightness icon
 icon_bright_6=""			# <6% brightness icon
 
-icon_vol_hi=""			# Full brightness icon
+icon_vol_hi=""				# Full brightness icon
 icon_vol_med=""         		# 80% brightness icon
 icon_vol_lo=""		               	# 51% brightness icon
 icon_vol_off=""			        # 31% brightness icon
@@ -116,4 +116,4 @@ icon_bat_30=""				# 30% battery icon
 icon_bat_20=""				# 20% battery icon
 icon_bat_10=""				# 10% battery icon
 icon_bat_0=""				# 0% battery icon
-icon_bat_low=""				# Low battery icon
+icon_bat_low=""			# Low battery icon

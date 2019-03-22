@@ -9,7 +9,7 @@
 
 panel_fifo="/tmp/i3_lemonbar_${USER}"
 
-geometry="1584x16+8+8"
+geometry="1568x16+16+8"
 font1="TamzenForPowerline:pixelsize=14:antialiasing=false"
 font2="TamzenForPowerline:pixelsize=14:antialiasing=false"
 iconfont="Material Design Icons:pixelsize=12:antialiasing=true"

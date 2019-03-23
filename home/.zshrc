@@ -22,7 +22,6 @@ if [ "$TERM" = "linux" ]; then
   prompt walters
 else
   # POWERLEVEL10K
-  source /usr/share/zsh-theme-powerlevel10k/gitstatus/gitstatus.plugin.zsh
   source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
   # POWERLINE STYLE SUDO
   export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 0) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
@@ -273,9 +272,9 @@ POWERLEVEL9K_VCS_UNSTAGED_ICON=$'\uF028'
 POWERLEVEL9K_VCS_UNTRACKED_ICON=$'\uF86E'
 POWERLEVEL9K_OK_ICON=$'\uF12C'
 POWERLEVEL9K_FAIL_ICON=$'\uF026'
-POWERLEVEL9K_ROOT_ICON=$'\uF005 '
-POWERLEVEL9K_SUDO_ICON=$'\uF005 '
-POWERLEVEL9K_SSH_ICON=$'\uF011 '
+POWERLEVEL9K_ROOT_ICON=$'\uF005'
+POWERLEVEL9K_SUDO_ICON=$'\uF005'
+POWERLEVEL9K_SSH_ICON=$'\uF011'
 POWERLEVEL9K_HOME_ICON=$'\uF2DC'
 POWERLEVEL9K_HOME_SUB_ICON=$'\uF24b'
 POWERLEVEL9K_LOCK_ICON=$'\uF33E'

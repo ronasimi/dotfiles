@@ -78,7 +78,7 @@ while read -r; do
 
 	(pamixer --get-volume | awk '{print "VOL" $1}' > "${panel_fifo}")
 
-done < <(echo && inotifywait -m /dev/snd/controlC0) &
+done < <(echo && stdbuf -oL alsactl monitor pulse) &
 
 # Network, "ETH", "WFI"
 while read -r; do

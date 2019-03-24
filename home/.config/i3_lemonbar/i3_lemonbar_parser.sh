@@ -25,10 +25,10 @@ while read -r line ; do
 			if [ "${line#???}" == "resize" ]; then
 				icon_mode=${icon_resize}; mode_cicon=${color_alert};
 			else
-				icon_mode=${icon_default}; mode_cicon=${color_fore};
+				icon_mode=${icon_default}; mode_cicon=${color_wsp};
 			fi
 
-			mode="%{F${mode_cicon} B${color_wsp} T3} ${icon_mode} "
+			mode="%{F${mode_cicon} B${color_fore} T3} ${icon_mode} "
 			;;
 
 		LAY*)
@@ -43,7 +43,7 @@ while read -r line ; do
 				icon_layout=${icon_stacked};
 			fi
 
-			layout="%{F${color_fore} B${color_wsp} T3}${icon_layout} %{F${color_wsp} B${color_head}}%{T1}${sep_right}"
+			layout="%{F${color_wsp} B${color_fore} T3}${icon_layout} %{F${color_fore} B${color_head}}%{T1}${sep_right}"
 			;;
 
 		WSP*)

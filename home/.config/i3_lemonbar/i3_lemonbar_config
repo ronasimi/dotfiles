@@ -99,11 +99,12 @@ icon_bright_19=""			# 19% brightness icon
 icon_bright_11=""			# 11% brightness icon
 icon_bright_6=""			# <6% brightness icon
 
-icon_vol_hi=""				# Full brightness icon
-icon_vol_med=""         		# 80% brightness icon
-icon_vol_lo=""		               	# 51% brightness icon
-icon_vol_off=""			        # 31% brightness icon
-icon_vol_mute=""         		# 19% brightness icon
+icon_vol_hi=""				# High volume icon
+icon_vol_med=""         		# Medium volume icon
+icon_vol_lo=""		               	# Low volume icon
+icon_vol_off=""		        # Volume off icon
+icon_vol_mute=""         		# Mute icon
+icon_vol_over=""			# Boosted volume icon
 
 icon_bat_charge=""			# On charger icon
 icon_bat_full=""			# Full battery icon

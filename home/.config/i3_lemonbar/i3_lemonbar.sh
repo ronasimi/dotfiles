@@ -25,18 +25,18 @@ mkfifo "${panel_fifo}"
 # i3 binding mode "MOD"
 (echo "MODinit" > "${panel_fifo}" && i3-msg -t subscribe -m '[ "mode" ]' | awk -F '"' '{print "MOD" $4; fflush(stdout)}' > "${panel_fifo}") &
 
-# i3 Workspaces, "WSP"
-"$(dirname $0)"/scripts/workspaces.pl > "${panel_fifo}" &
-
-# Window title, "WIN"
-(xtitle -s | awk '{print "WIN" $0; fflush(stdout)}' > "${panel_fifo}") &
-
 # container layout, "LAY"
 while read -r; do
 
 	(echo "LAY$(i3-msg -t get_tree | jq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')" > "${panel_fifo}")
 
 done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace", "binding" ]') &
+
+# i3 Workspaces, "WSP"
+"$(dirname $0)"/scripts/workspaces.pl > "${panel_fifo}" &
+
+# Window title, "WIN"
+(xtitle -s | awk '{print "WIN" $0; fflush(stdout)}' > "${panel_fifo}") &
 
 # Updates, "UPD"
 ### Update check interval

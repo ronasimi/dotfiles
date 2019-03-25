@@ -28,7 +28,7 @@ while read -r line ; do
 				icon_mode=${icon_default}; mode_cicon=${color_icon};
 			fi
 
-			mode="%{F${mode_cicon} B${color_ina} T3} ${icon_mode} "
+			mode="%{F${mode_cicon} B${color_act} T3} ${icon_mode} "
 			;;
 
 		LAY*)
@@ -43,7 +43,7 @@ while read -r line ; do
 				icon_layout=${icon_stacked};
 			fi
 
-			layout="%{F${color_icon} B${color_ina} T3}${icon_layout} %{F${color_ina} B${color_head}}%{T1}${sep_right}"
+			layout="%{F${color_icon} B${color_act} T3}${icon_layout} %{F${color_act} B${color_head}}%{T1}${sep_right}"
 			;;
 
 		WSP*)

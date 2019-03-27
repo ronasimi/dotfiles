@@ -50,7 +50,7 @@ color_back="#C0${bgd}"			# Default background
 color_fore="#${fgd}"			# Default foreground
 color_title="#${bwhi}"			# Window title foreground
 color_head="#${blu}"			# Background for first element
-color_wsp="#${whi}"			# Background for selected workspace
+color_wsp="#${bblu}"			# Background for selected workspace
 color_act="#${bla}"		        # Foreground for active workspace
 color_ina="#${bbla}"		        # Foreground for inactive workspace
 color_sec_b1="#282828"			# Background for section 1
@@ -75,7 +75,7 @@ sep_right=""				# Powerline separator right
 
 # Icon glyphs from Material Icons
 icon_clock=""				# Clock icon
-icon_cal=""				# Calendar icon
+icon_cal=""				# Calendar icon
 icon_ethup=""				# Ethernet up icon
 icon_ethdown=""			# Ethernet down icon
 icon_wifi_up=""			# Wifi up icon
@@ -86,8 +86,8 @@ icon_arch=""				# Arch icon
 icon_default=""			# default mode icon
 icon_resize="﨣"			# resize mode icon
 
-icon_splith=""				# horizontal split layout icon
-icon_splitv=""				# vertical split icon
+icon_splith=""				# horizontal split layout icon
+icon_splitv=""				# vertical split icon
 icon_tabbed=""				# tabbed layout icon
 icon_stacked="ﮧ"			# stacked layout icon
 
@@ -103,7 +103,7 @@ icon_vol_hi=""				# High volume icon
 icon_vol_med=""         		# Medium volume icon
 icon_vol_lo=""		               	# Low volume icon
 icon_vol_off=""		        # Volume off icon
-icon_vol_mute=""         		# Mute icon
+icon_vol_mute="﷤"         		# Mute icon
 icon_vol_over=""			# Boosted volume icon
 
 icon_bat_charge=""			# On charger icon

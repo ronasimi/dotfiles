@@ -13,7 +13,7 @@
 . "$(dirname $0)"/i3_lemonbar_config
 
 # min init
-title="%{F${color_head} B-}${sep_right}%{F${color_title} T2} ${win}"
+title="%{F${color_ina} B-}${sep_right}%{F${color_title} T2} ${win}"
 
 # parser
 
@@ -28,7 +28,7 @@ while read -r line ; do
 				icon_mode=${icon_default}; mode_cicon=${color_icon};
 			fi
 
-			mode="%{F${mode_cicon} B${color_act} T3} ${icon_mode} "
+			mode="%{F${mode_cicon} B${color_stat} T3} ${icon_mode} "
 			;;
 
 		LAY*)
@@ -43,24 +43,24 @@ while read -r line ; do
 				icon_layout=${icon_stacked};
 			fi
 
-			layout="%{F${color_icon} B${color_act} T3}${icon_layout} %{F${color_act} B${color_head}}%{T1}${sep_right}"
+			layout="%{F${color_icon} B${color_stat} T3}${icon_layout} %{F${color_stat} B${color_ina}}%{T1}${sep_right}"
 			;;
 
 		WSP*)
 			# I3 Workspaces
-			wsp="%{B${color_head}}"
+			wsp="%{B${color_ina}}"
 			set -- ${line#???}
 
 			while [ $# -gt 0 ] ; do
 				case $1 in
 					FOC*)
-						wsp="${wsp}%{F${color_head} B${color_wsp}}${sep_right}%{F${color_icon_dark} B${color_wsp} T3} ${1#???} %{F${color_wsp} B${color_head}}${T1}${sep_right}"
+						wsp="${wsp}%{F${color_ina} B${color_wsp}}${sep_right}%{F${color_act_fore} B${color_wsp} T3} ${1#???} %{F${color_wsp} B${color_ina}}${T1}${sep_right}"
 						;;
 					INA*|ACT*)
-						wsp="${wsp}%{F${color_head} B${color_head}}${sep_right}%{F${color_ina} B${color_head} T3} ${1#???} %{F${color_head} B${color_head}}${T1}${sep_right}"
+						wsp="${wsp}%{F${color_ina} B${color_ina}}${sep_right}%{F${color_ina_fore} B${color_ina} T3} ${1#???} %{F${color_ina} B${color_ina}}${T1}${sep_right}"
 						;;
 					URG*)
-						wsp="${wsp}%{F${color_head} B${color_alert}}${sep_right}%{F${color_act} B${color_alert} T3} ${1#???} %{F${color_alert} B${color_head}}${T1}${sep_right}"
+						wsp="${wsp}%{F${color_ina} B${color_alert}}${sep_right}%{F${color_act_fore} B${color_alert} T3} ${1#???} %{F${color_alert} B${color_ina}}${T1}${sep_right}"
 						;;
 				esac
 				shift
@@ -69,7 +69,7 @@ while read -r line ; do
 
 		WIN*)
 			# window title
-			title="%{F${color_head} B-}${T1}${sep_right}%{F${color_title} T2} ${line#???}"
+			title="%{F${color_ina} B-}${T1}${sep_right}%{F${color_title} T2} ${line#???}"
 			;;
 
 		UPD*)

@@ -8,6 +8,7 @@ set fill 72
 set multibuffer
 set suspend
 set nowrap
+set rawsequences
 
 include "~/.nano/apacheconf.nanorc"
 include "~/.nano/arduino.nanorc"

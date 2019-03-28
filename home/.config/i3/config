@@ -236,11 +236,12 @@ bindsym $mod+Shift+c reload; exec notify-send -u low "i3 config reloaded"
 bindsym $mod+Shift+r exec pkill lemonbar, restart
 
 # restart bar
-bindsym $mod+Shift+b exec "~/.config/i3/scripts/barcycle.sh"
+bindsym $mod+Shift+b exec --no-startup-id "~/.config/i3/scripts/barcycle.sh"
 
 # bind some fn keys, power off, exit, restart
 bindsym XF86ScreenSaver exec --no-startup-id xset s activate
 bindsym XF86TouchpadToggle exec --no-startup-id ~/.config/i3/scripts/touchpad-toggle.sh
+bindsym XF86Display exec --no-startup-id ~/.config/i3/scripts/monitors.sh
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/i3_exit.sh
 bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
 bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff

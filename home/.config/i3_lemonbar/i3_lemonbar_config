@@ -86,8 +86,8 @@ icon_arch=""				# Arch icon
 icon_default=""			# default mode icon
 icon_resize="﨣"			# resize mode icon
 
-icon_splith=""				# horizontal split layout icon
-icon_splitv=""				# vertical split icon
+icon_splith=""				# horizontal split layout icon
+icon_splitv=""				# vertical split icon
 icon_tabbed=""				# tabbed layout icon
 icon_stacked="ﮧ"			# stacked layout icon
 

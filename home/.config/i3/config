@@ -286,8 +286,7 @@ bar {
 }
 
 # autostart
-exec_always --no-startup-id ~/.config/i3/scripts/fehbg
 exec --no-startup-id exec thunar --daemon
 exec --no-startup-id exec urxvtd -q -o -f
 exec --no-startup-id xss-lock lockscreen
-exec --no-startup-id sleep 0.25; exec xset s activate
+exec --no-startup-id exec xset s activate

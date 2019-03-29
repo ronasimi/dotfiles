@@ -32,11 +32,11 @@ fi
 
 eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)
 export SSH_AUTH_SOCK
-/usr/bin/lxpolkit &
-xcalib -d :0 ~/.config/icc/T4201600x900.icc &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 compton --config ~/.config/compton/compton.conf -b &
-syndaemon -i 2 -t -k -d &
+syndaemon -i 0.5 1 -K -R -d &
 xset s 300 600 &
 xset m 3 0 &
-parcellite -d -n &
+clipster -d &
+~/.fehbg &
 exec i3

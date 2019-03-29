@@ -38,5 +38,4 @@ syndaemon -i 0.5 1 -K -R -d &
 xset s 300 600 &
 xset m 3 0 &
 clipster -d &
-~/.fehbg &
 exec i3

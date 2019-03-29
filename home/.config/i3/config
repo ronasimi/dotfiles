@@ -289,4 +289,4 @@ bar {
 exec --no-startup-id exec thunar --daemon
 exec --no-startup-id exec urxvtd -q -o -f
 exec --no-startup-id xss-lock lockscreen
-exec --no-startup-id exec xset s activate
+exec --no-startup-id sleep 0.1; exec xset s activate

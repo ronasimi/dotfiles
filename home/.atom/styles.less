@@ -1,20 +1,37 @@
 atom-workspace {
   font-family: Inter;
 }
+// Chrome style tabs
 .tab-bar {
-  && {
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-  }
-
-  &&& .tab:not(.pinned) {
-    text-align: center;
-    max-width: none !important;
-    min-width: 1px;
-    flex: auto;
-    padding: 0;
-  }
+  overflow-x: hidden;
+  display: flex;
+  flex-wrap: wrap;
+}
+.tab-bar .tab {
+  min-width: 13px;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.tab-bar .tab .title {
+  flex: 1 1 16px;
+  text-overflow: clip;
+  text-align: center;
+}
+.tab-bar .tab .close-icon {
+  position: right;
+}
+.tab-bar .tab.active {
+  flex: 1;
+  width: initial;
+}
+.tab-bar .tab.active:hover .close-icon {
+  position: absolute;
+  background: inherit;
+  left: 0;
+  right: 0;
+  text-align: right;
 }
 //Fira Code for ligatures
 atom-text-editor.editor {

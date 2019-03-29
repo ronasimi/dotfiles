@@ -140,6 +140,11 @@ zstyle ':completion:*' menu select=2                        # menu if nb items >
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} =     # colorz !
 zstyle ':completion:*::::' completer _expand _complete _ignored _approximate # list of completers to use
 
+zstyle ':completion:*:history-words' stop yes
+zstyle ':completion:*:history-words' remove-all-dups yes
+zstyle ':completion:*:history-words' list false
+zstyle ':completion:*:history-words' menu yes
+
 # sections completion !
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' menu yes select
@@ -162,6 +167,24 @@ zstyle ':completion:*' users $users
 # generic completion with --help
 compdef _gnu_generic gcc
 compdef _gnu_generic gdb
+
+# Tab host completion for programs
+compctl -k ping telnet host nslookup rlogin ftp
+
+# Make completion (yeah im getting fucking lazy)
+compile=(install clean remove uninstall deinstall)
+compctl -k compile make
+
+# some (useful) completions
+compctl -j -P '%' fg jobs disown
+compctl -g '*.(mp3|MP3|ogg|OGG|temp|TEMP)' + -g '*(-/)'  mpg123
+compctl -g "*.html *.htm" + -g "*(-/) .*(-/)" + -H 0 '' w3m wget chromium
+compctl -g '*.(pdf|PDF)' + -g '*(-/)'  mupdf
+compctl -g '*(-/)' + -g '.*(/)' cd chdir dirs pushd rmdir dircmp cl tree 
+compctl -g '*.(jpg|JPG|jpeg|JPEG|gif|GIF|png|PNG|bmp)' + -g '*(-/)' gimp feh
+compctl -g '[^.]*(-/) *.(c|C|cc|c++|cxx|cpp)' + -f cc CC c++ gcc g++
+compctl -g '[^.]*(-/) *(*)' + -f strip ldd gdb
+compctl -s '$(<~/.vim/tags)' vimhelp
 
 # pushd
 setopt auto_pushd               # make cd push old dir in dir stack

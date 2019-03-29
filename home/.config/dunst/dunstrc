@@ -68,7 +68,7 @@
 
     # Frame
     frame_width = 0
-    frame_color = "#383838"
+    frame_color = "#bdbdbd"
 
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
@@ -98,7 +98,7 @@
     #
     # If this option is set to mouse or keyboard, the monitor option
     # will be ignored.
-    follow = mouse
+    follow = none
 
     # Should a notification popped up from history be sticky or timeout
     # as if it would normally do.
@@ -175,18 +175,18 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-        background = "#383838"
-        foreground = "#e0e0e0"
+        background = "#90a959"
+        foreground = "#282828"
     timeout = 3
 
 [urgency_normal]
-        background = "#383838"
-        foreground = "#f6cb90"
+        background = "#f4bf75"
+        foreground = "#282828"
     timeout = 3
 
 [urgency_critical]
-        background = "#FDFDFD"
-        foreground = "#bc6667"
+        background = "#ac4142"
+        foreground = "#282828"
     timeout = 5
 
 

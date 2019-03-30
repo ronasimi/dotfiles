@@ -9,6 +9,16 @@ set multibuffer
 set suspend
 set nowrap
 set rawsequences
+#set guidestripe 4
+
+set titlecolor brightwhite,blue
+set statuscolor brightwhite,green
+set errorcolor brightwhite,red
+set selectedcolor brightwhite,magenta
+set stripecolor ,yellow
+set numbercolor cyan
+set keycolor cyan
+set functioncolor green
 
 include "~/.nano/apacheconf.nanorc"
 include "~/.nano/arduino.nanorc"

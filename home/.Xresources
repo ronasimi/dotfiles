@@ -16,7 +16,7 @@ URxvt*cursorUnderline:		false
 URxvt*pointerBlank:		true
 URxvt*secondaryScreen:		true
 URxvt*secondaryScroll:		false
-URxvt*perl-ext-common:		default,matcher,clipboard,url-select,keyboard-select,vtwheel,fullscreen
+URxvt*perl-ext-common:		default,matcher,clipboard,url-select,keyboard-select,vtwheel
 URxvt*url-select.launcher:	/usr/bin/xdg-open
 URxvt*url-select.underline:	true
 URxvt*url-launcher:		/usr/bin/xdg-open
@@ -30,7 +30,6 @@ URxvt*keysym.Home:		\033[1~
 URxvt*keysym.End:		\033[4~
 URxvt*keysym.KP_Home:		\033[1~
 URxvt*keysym.KP_End:		\033[4~
-URxvt*keysym.F11:		perl:fullscreen:switch
 URxvt*iso14755:			false
 
 Xft.dpi:			96

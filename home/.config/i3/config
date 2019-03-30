@@ -59,7 +59,7 @@ gaps top 24
 
 #hide_edge_borders smart
 #smart_gaps on
-smart_borders on
+#smart_borders on
 
 # Set variables for floating and un-floating commands
 set $FLOAT-border floating enable, border pixel 2
@@ -74,8 +74,6 @@ assign [class="Vmware"] $ws5
 assign [class="Vmplayer"] $ws5
 assign [class="libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice"] $ws5
 assign [class="Gimp|Gimp-2.10"] $ws6
-
-
 
 # split toggle for URxvt
 #for_window [class="URxvt"] split toggle; split toggle
@@ -111,7 +109,6 @@ bindsym Right resize grow width 10 px or 10 ppt
 bindsym Return mode "default"
 bindsym Escape mode "default"
 }
-
 
 ## Keybinds
 # Use Mouse+$mod to drag floating windows to their wanted position

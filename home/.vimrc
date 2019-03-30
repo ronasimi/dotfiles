@@ -1,3 +1,4 @@
+set shell=zsh
 set t_Co=256
 syntax on
 set encoding=utf-8

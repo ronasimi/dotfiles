@@ -201,6 +201,12 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# run zshalias to export aliases to .zshenv
+function zshalias()
+{
+  grep "^alias" ~/.zshrc > ~/.zshenv
+}
+
 # THE FUCK
 eval "$(thefuck --alias)"
 

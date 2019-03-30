@@ -10,8 +10,7 @@
 panel_fifo="/tmp/i3_lemonbar_${USER}"
 
 geometry="1584x16+8+8"
-font1="TamzenForPowerline:pixelsize=14:antialiasing=false"
-font2="TamzenForPowerline:pixelsize=14:antialiasing=false"
+font="-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:pixelsize=12:antialiasing=true"
 clickables=12
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
@@ -46,22 +45,22 @@ whi=$(xrdb -query | grep '*.color7:' | cut -f 2 | tr -d "#")
 bwhi=$(xrdb -query | grep '*.color15:' | cut -f 2 | tr -d "#")
 
 # bar color definitions
-color_back="#${bgd}"			# Default background
+color_back="#C0${bgd}"			# Default background
 color_fore="#${fgd}"			# Default foreground
 color_title="#${bwhi}"			# Window title foreground
-color_stat="#${bla}"			# Background for i3 status section
-color_ina="#${blu}"			# Background for inactive workspace
-color_wsp="#${bblu}"			# Background for selected workspace
+color_stat="#C0${bla}"			# Background for i3 status section
+color_ina="#C0${blu}"			# Background for inactive workspace
+color_wsp="#C0${bblu}"			# Background for selected workspace
 color_act_fore="#282828"		# Foreground for active workspace
 color_ina_fore="#${bla}"		# Foreground for inactive workspace
-color_sec_b1="#282828"			# Background for section 1
-color_sec_b2="#${bgd}"			# Background for section 2
+color_sec_b1="#C0282828"			# Background for section 1
+color_sec_b2="#C0${bgd}"			# Background for section 2
 color_icon="#${whi}"  			# For icons
 color_icon_dark="#282828"		# For icons (dark)
 color_netdown="#${bla}"			# For inactive network interface icons
-color_mail="#DD4B39"			# Background color for mail alert
-color_upd="#1793D0"			# Background color for update alert
-color_alert="#${red}"			# Background color for alert
+color_mail="#C0DD4B39"			# Background color for mail alert
+color_upd="#C01793D0"			# Background color for update alert
+color_alert="#C0${red}"			# Background color for alert
 color_mode="#${bred}"			# Foreground color for binding mode
 
 #default space between sections

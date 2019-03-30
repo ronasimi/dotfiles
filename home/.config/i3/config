@@ -59,7 +59,7 @@ gaps top 24
 
 #hide_edge_borders smart
 #smart_gaps on
-#smart_borders on
+smart_borders on
 
 # Set variables for floating and un-floating commands
 set $FLOAT-border floating enable, border pixel 2

@@ -21,10 +21,10 @@ set $ws3 "3:"
 set $ws4 "4:"
 set $ws5 "5:ﶥ"
 set $ws6 "6:掠"
-set $ws7 "7:"
-set $ws8 "8:"
-set $ws9 "9:"
-set $ws10 "10:"
+set $ws7 "7:靖"
+set $ws8 "8:靖"
+set $ws9 "9:靖"
+set $ws10 "10:靖"
 
 ## I3 appearance
 set_from_resource $fg i3wm.foreground #e5e5e5

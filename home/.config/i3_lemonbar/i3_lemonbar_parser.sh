@@ -23,7 +23,7 @@ while read -r line ; do
 		MOD*)
 			# binding mode
 			if [ "${line#???}" == "resize" ]; then
-				icon_mode=${icon_resize}; mode_cicon=${color_alert};
+				icon_mode=${icon_resize}; mode_cicon=${color_mode};
 			else
 				icon_mode=${icon_default}; mode_cicon=${color_icon};
 			fi

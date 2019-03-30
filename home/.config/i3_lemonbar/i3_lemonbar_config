@@ -62,6 +62,7 @@ color_netdown="#${bla}"			# For inactive network interface icons
 color_mail="#DD4B39"			# Background color for mail alert
 color_upd="#1793D0"			# Background color for update alert
 color_alert="#${red}"			# Background color for alert
+color_mode="#${bred}"			# Foreground color for binding mode
 
 #default space between sections
 if [ "${res_w}" -gt 1024 ]; then

@@ -1,5 +1,5 @@
 URxvt*font:			-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*,\
-				xft:Material Design Icons:pixelsize=8.5:antialiasing=true:hinting=true,\
+				xft:Material Design Icons:pixelsize=8:antialiasing=true:hinting=true,\
 				xft:Segoe UI Symbol:pixelsize=14:antialiasing=true:hinting=true
 URxvt*boldFont:			-*-tamzenforpowerline-bold-r-*-*-14-*-*-*-*-*-*-*
 URxvt*depth:			24

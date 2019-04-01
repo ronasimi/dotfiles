@@ -1,3 +1,4 @@
+#set linenumbers
 set autoindent
 set boldtext
 set constantshow
@@ -11,12 +12,12 @@ set nowrap
 set rawsequences
 #set guidestripe 4
 
-set titlecolor black,blue
-set statuscolor black,yellow
+set titlecolor white,black
+set statuscolor white,black
 set errorcolor black,red
-set selectedcolor black,magenta
+set selectedcolor black,blue
 set stripecolor yellow
-set numbercolor cyan
+set numbercolor yellow
 set keycolor cyan
 set functioncolor green
 

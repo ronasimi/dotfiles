@@ -1,5 +1,6 @@
 set shell=zsh
-set t_Co=256
+filetype plugin on
+filetype indent on
 syntax on
 set encoding=utf-8
 set laststatus=2 " Always display the statusline in all windows
@@ -9,4 +10,4 @@ set mouse=a
 set ttymouse=xterm
 set number
 let g:airline_powerline_fonts=1
-let g:airline_theme='base16color'
+let g:airline_theme='minimalist'

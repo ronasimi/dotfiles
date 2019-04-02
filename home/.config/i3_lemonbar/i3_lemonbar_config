@@ -48,7 +48,7 @@ bwhi=$(xrdb -query | grep '*.color15:' | cut -f 2 | tr -d "#")
 color_back="#C0${bgd}"    # Default background
 color_fore="#${fgd}"      # Default foreground
 color_title="#${bwhi}"    # Window title foreground
-color_stat="#C0${bla}"    # Background for i3 status section
+color_stat="#C0${bgd}"    # Background for i3 status section
 color_ina="#C0${blu}"     # Background for inactive workspace
 color_wsp="#${bblu}"      # Background for selected workspace
 color_act_fore="#282828"  # Foreground for active workspace
@@ -57,7 +57,7 @@ color_sec_b1="#C0282828"  # Background for section 1
 color_sec_b2="#C0${bgd}"  # Background for section 2
 color_icon="#${whi}"      # For icons
 color_icon_dark="#282828" # For icons (dark)
-color_netdown="#${bla}"   # For inactive network interface icons
+color_netdown="#${bbla}"   # For inactive network interface icons
 color_mail="#C0DD4B39"    # Background color for mail alert
 color_upd="#C01793D0"     # Background color for update alert
 color_alert="#C0${red}"   # Background color for alert
@@ -75,8 +75,7 @@ sep_left=""        # Powerline separator left
 sep_right=""       # Powerline separator right
 
 # Icon glyphs from Material Icons
-icon_clock=""      # Clock icon
-icon_cal=""        # Calendar icon
+icon_clock=""      # Clock icon
 icon_ethup=""      # Ethernet up icon
 icon_ethdown=""    # Ethernet down icon
 icon_wifi_up=""    # Wifi up icon

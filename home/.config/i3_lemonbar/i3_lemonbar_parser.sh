@@ -147,9 +147,14 @@ while read -r line; do
 
     ;;
 
+  CLK*)
+    # time
+    time="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_clock}%{F${color_fore} T1} ${line#???}"
+    ;;
+
   ETH*)
     # ethernet
-    eth_cback=${color_sec_b1}
+    eth_cback=${color_stat}
     eth_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -165,7 +170,7 @@ while read -r line; do
 
   WFI*)
     # wlan
-    wlan_cback=${color_sec_b1}
+    wlan_cback=${color_stat}
     wlan_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -176,7 +181,7 @@ while read -r line; do
       wlan_cicon=${color_netdown}
     fi
 
-    wifi="%{F${wlan_cback}}${sep_left}%{F${wlan_cicon} B${wlan_cback}} %{T2}%{F${wlan_cicon} T1}${wlanup}"
+    wifi="%{F${wlan_cicon} B${wlan_cback}} %{T2}%{F${wlan_cicon} T1}${wlanup}"
     ;;
 
   BAT*)
@@ -215,26 +220,16 @@ while read -r line; do
       icon_bat=${icon_bat_low}
       (notify-send -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work")
     else
-      bat_cback=${color_sec_b2}
+      bat_cback=${color_stat}
       bat_cicon=${color_icon}
       bat_cfore=${color_fore}
     fi
 
-    bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${line#???}%"
-    ;;
-
-  DAY*)
-    # date
-    date="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_cal}%{F${color_fore} T1} ${line#???}"
-    ;;
-
-  CLK*)
-    # time
-    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock}%{F${color_fore} T1} ${line#???} %{F- B-}"
+    bat="%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1}"
     ;;
 
   esac
 
   # And finally, output
-  printf "%s\n" "%{l}%{A1:exec python2 $(dirname $0)/scripts/i3-exit &:}${powerbutton}%{A}${mode}${layout}%{A1:i3-msg workspace next:}${wsp}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
+  printf "%s\n" "%{l}${mode}${layout}%{A1:i3-msg workspace next:}${wsp}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}%{A1:exec python2 $(dirname $0)/scripts/i3-exit &:}${powerbutton}%{A}${stab}%{F- B-}"
 done

@@ -120,6 +120,15 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-finish
 fi
 
+# Help functions
+autoload -Uz run-help-git
+autoload -Uz run-help-ip
+autoload -Uz run-help-openssl
+autoload -Uz run-help-p4
+autoload -Uz run-help-sudo
+autoload -Uz run-help-svk
+autoload -Uz run-help-svn
+
 # AUTOCOMPLETION
 autoload -Uz compinit
 compinit
@@ -135,6 +144,7 @@ setopt interactivecomments	# bash style interactive comments
 CORRECT_IGNORE_FILE='.*'
 
 zstyle ':completion::complete:*' use-cache on               # completion caching, use rehash to clear
+zstyle ':completion:*' rehash true
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # ignore case
 zstyle ':completion:*' menu select=2                        # menu if nb items > 2
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} =     # colorz !

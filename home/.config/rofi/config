@@ -12,7 +12,7 @@ rofi.color-active: 	argb:00171717,	#5294e2,	argb:004b5160,	argb:00171717,	#535c5
 rofi.lines: 5
 rofi.columns: 2
 rofi.fullscreen: true
-rofi.font: Inter 24
+rofi.font: Inter 18
 rofi.bw: 0
 rofi.padding: 250
 rofi.line-margin: 5
@@ -24,4 +24,4 @@ rofi.show-icons: true
 rofi.icon-theme: Papirus-Dark
 rofi.location: 0
 rofi.terminal: urxvtc
-rofi.modi: drun,run,ssh
+rofi.modi: drun,run,window

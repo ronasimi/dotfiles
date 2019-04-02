@@ -14,12 +14,14 @@
 
 # min init
 title="%{F${color_ina} B-}${sep_right}%{F${color_title} T1} ${win}"
+# power button
+powerbutton="%{F${mode_cicon} B${color_stat} T2} ${icon_power}"
 
 # parser
-
 while read -r line ; do
 
 	case $line in
+
 		MOD*)
 			# binding mode
 			if [ "${line#???}" == "resize" ]; then
@@ -213,5 +215,5 @@ while read -r line ; do
 	esac
 
 	# And finally, output
-	printf "%s\n" "%{l}${mode}${layout}%{A1:i3-msg workspace next:}${wsp}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
+	printf "%s\n" "%{l}%{A1:exec python2 $(dirname $0)/scripts/i3-exit &:}${powerbutton}%{A}${mode}${layout}%{A1:i3-msg workspace next:}${wsp}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}"
 done

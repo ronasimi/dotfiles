@@ -12,7 +12,7 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 geometry="1584x16+8+8"
 font="-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:pixelsize=12:antialiasing=true"
-clickables=12
+clickables=14
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
 # Alarm settings
@@ -120,3 +120,5 @@ icon_bat_20=""				# 20% battery icon
 icon_bat_10=""				# 10% battery icon
 icon_bat_0=""				# 0% battery icon
 icon_bat_low=""			# Low battery icon
+
+icon_power=""				# Power icon

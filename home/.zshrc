@@ -180,7 +180,7 @@ compctl -j -P '%' fg jobs disown
 compctl -g '*.(mp3|MP3|ogg|OGG|temp|TEMP)' + -g '*(-/)'  mpg123
 compctl -g "*.html *.htm" + -g "*(-/) .*(-/)" + -H 0 '' w3m wget chromium
 compctl -g '*.(pdf|PDF)' + -g '*(-/)'  mupdf
-compctl -g '*(-/)' + -g '.*(/)' cd chdir dirs pushd rmdir dircmp cl tree 
+compctl -g '*(-/)' + -g '.*(/)' cd chdir dirs pushd rmdir dircmp cl tree
 compctl -g '*.(jpg|JPG|jpeg|JPEG|gif|GIF|png|PNG|bmp)' + -g '*(-/)' gimp feh
 compctl -g '[^.]*(-/) *.(c|C|cc|c++|cxx|cpp)' + -f cc CC c++ gcc g++
 compctl -g '[^.]*(-/) *(*)' + -f strip ldd gdb

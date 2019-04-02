@@ -1,7 +1,7 @@
 #!/bin/bash
 charging=$(acpi | awk '{print $3}' | sed 's/,//g')
 timeleft=$(acpi | awk '{print $5}')
-chg=$(acpi -b | awk '{print $4}')
+chg=$(acpi -b | awk '{print $4}' | tr -d ',')
 
 if [ "${charging}" == "Unknown" ]; then
         (notify-send -u low "On AC" "System is on AC power and not charging.\nCharge level: $chg")

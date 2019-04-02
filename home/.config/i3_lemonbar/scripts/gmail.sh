@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Script para ver la cantidad de correos de Gmail.
@@ -9,9 +8,9 @@
 # Ruta a los password
 . ~/.private/accounts
 
-MAIL=`curl -u $MAIL_USER:$MAIL_PASS --silent https://mail.google.com/mail/feed/atom`
-CON=`echo $MAIL | grep -c "<fullcount>"`
-NUM=`echo $MAIL | grep -o "<entry>" | wc -l`
+MAIL=$(curl -u $MAIL_USER:$MAIL_PASS --silent https://mail.google.com/mail/feed/atom)
+CON=$(echo $MAIL | grep -c "<fullcount>")
+NUM=$(echo $MAIL | grep -o "<entry>" | wc -l)
 RES="err"
 
 if [ $CON -ne 1 ]; then
@@ -21,7 +20,7 @@ else
 fi
 
 if [ "$1" = "-c" ]; then
-  echo "$RES" > ~/.gmail
+  echo "$RES" >~/.gmail
 else
   echo $RES
 fi

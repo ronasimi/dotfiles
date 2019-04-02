@@ -1,6 +1,7 @@
 #!/bin/bash
 # check for package and aur updates
-wget -q --spider http://google.com
+
+wget -q --spider http://www.archlinux.org
 
 if [ $? -eq 0 ]; then
   pkg=$(checkupdates 2>/dev/null | sed '/^\s*$/d' | wc -l)

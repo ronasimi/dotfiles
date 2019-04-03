@@ -68,7 +68,8 @@ done &
 
 # date/time
 
-"$(dirname $0)"/scripts/clk >"${panel_fifo}" &
+"$(dirname $0)"/scripts/clk > "${panel_fifo}" &
+"$(dirname $0)"/scripts/day > "${panel_fifo}" &
 
 # Backlight, "BRI"
 while read -r; do

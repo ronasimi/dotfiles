@@ -36,7 +36,7 @@ done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace", "binding" ]') 
 "$(dirname $0)"/scripts/workspaces.pl >"${panel_fifo}" &
 
 # Window title, "WIN"
-(xtitle -i -s | awk '{print "WIN" $0; fflush(stdout)}' >"${panel_fifo}") &
+(xtitle -sf 'WIN%s\n' >"${panel_fifo}") &
 
 # Updates, "UPD"
 ### Update check interval

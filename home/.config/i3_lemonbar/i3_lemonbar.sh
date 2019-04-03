@@ -67,8 +67,8 @@ while :; do
 done &
 
 # date/time
-
-"$(dirname $0)"/scripts/clk > "${panel_fifo}" &
+"$(dirname $0)"/scripts/day >"${panel_fifo}" &
+"$(dirname $0)"/scripts/clk >"${panel_fifo}" &
 
 # Backlight, "BRI"
 while read -r; do
@@ -100,17 +100,7 @@ while read -r; do
 done < <(echo && upower --monitor) &
 
 #### LOOP FIFO
-
 (cat "${panel_fifo}" | "$(dirname $0)"/i3_lemonbar_parser.sh |
-  lemonbar -p -d -f "${font}" -f "${iconfont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
-
-#### Keep lemonbar below fullscreen windows
-
-tries_left=20
-while [ -z "$wid" -a "$tries_left" -gt 0 ]; do
-  sleep 0.05
-  xdo above -t $(xwininfo -root -children | grep -E -o "0x[[:xdigit:]]+" | tail -1) $(xdo id -a bar)
-  tries_left=$((tries_left - 1))
-done
+  lemonbar -p -f "${font}" -f "${iconfont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
 
 wait

@@ -15,7 +15,7 @@
 # min init
 title="%{F${color_ina} B-}${sep_right}%{F${color_title} T1} ${win}"
 # power button
-powerbutton="%{F${mode_cicon} B${color_sec_b1} T2} ${icon_power}"
+powerbutton="%{F${mode_cicon} B${color_sec_b2} T2} ${icon_power}"
 
 # parser
 while read -r line; do
@@ -32,7 +32,7 @@ while read -r line; do
       mode_cicon=${color_icon}
     fi
 
-    mode="%{F${mode_cicon} B${color_stat} T2} ${icon_mode} "
+    mode="%{F${mode_cicon} B${color_stat} T2}${icon_mode} "
     ;;
 
   LAY*)
@@ -104,14 +104,9 @@ while read -r line; do
     gmail="%{F${mail_cback} T1}${sep_left}%{F${mail_cicon} B${mail_cback}} %{T2}${icon_mail}%{F${mail_cfore} T1} ${line#???}"
     ;;
 
-  DAY*)
-    # date
-    date="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_cal}%{F${color_fore} T1} ${line#???}"
-    ;;
-
   CLK*)
     # time
-    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock}%{F${color_fore} T1} ${line#???}"
+    time="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_clock}%{F${color_fore} T1} ${line#???}"
     ;;
 
   VOL*)
@@ -159,7 +154,7 @@ while read -r line; do
 
   ETH*)
     # ethernet
-    eth_cback=${color_sec_b1}
+    eth_cback=${color_sec_b2}
     eth_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -170,12 +165,12 @@ while read -r line; do
       eth_cicon=${color_netdown}
     fi
 
-    ethernet="%{F${eth_cicon} B${eth_cback}} %{T2}%{F${eth_cicon} T1}${ethup}"
+    ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback}} %{T2}%{F${eth_cicon} T1}${ethup}"
     ;;
 
   WFI*)
     # wlan
-    wlan_cback=${color_sec_b1}
+    wlan_cback=${color_sec_b2}
     wlan_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -219,22 +214,22 @@ while read -r line; do
     fi
 
     if [ "${line#???}" -le "${bat_alert}" ]; then
-      bat_cback=${color_sec_b1}
+      bat_cback=${color_sec_b2}
       bat_cicon=${color_alert}
       bat_cfore=${color_fore}
       icon_bat=${icon_bat_low}
       (notify-send -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work")
     else
-      bat_cback=${color_sec_b1}
+      bat_cback=${color_sec_b2}
       bat_cicon=${color_icon}
       bat_cfore=${color_fore}
     fi
 
-    bat="%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1}"
+    bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1}"
     ;;
 
   esac
 
   # And finally, output
-  printf "%s\n" "%{l}${mode}${layout}%{A1:i3-msg workspace next:}${wsp}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}%{A}${stab}%{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_vol.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_bright.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}%{A1:exec python2 $(dirname $0)/scripts/i3-exit &:}${powerbutton}%{A}${stab}%{F- B-}"
+  printf "%s\n" "%{l} ${mode}${layout}%{A1:i3-msg workspace next:}${wsp}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}%{A}${stab}%{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_vol.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_bright.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}%{A}%{A}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_clock.sh &:}${time}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}%{A1:exec python2 $(dirname $0)/scripts/i3-exit &:}${powerbutton}%{A} %{F- B-}"
 done

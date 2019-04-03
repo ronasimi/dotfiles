@@ -76,7 +76,6 @@ sep_right=""       # Powerline separator right
 
 # Icon glyphs from Material Icons
 icon_clock=""      # Clock icon
-icon_cal=""        # Calendar icon
 icon_ethup=""      # Ethernet up icon
 icon_ethdown=""    # Ethernet down icon
 icon_wifi_up=""    # Wifi up icon

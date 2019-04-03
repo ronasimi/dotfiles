@@ -7,9 +7,8 @@ super + Return
 	urxvtc
 
 # program launcher
-super + d
-	j4-dmenu-desktop --dmenu="dmenu -b -i -o 0.8 -h 14 -w 1572 -x 14 -y 7 -nb '#2f343f' -nf '#eaeaeb' -sb '#6a9fb5' -sf '#2f343f' -fn '-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1'"
- # dmenu_run
+super + @space
+	dmenu_run
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -19,17 +18,21 @@ super + Escape
 # bspwm hotkeys
 #
 
-# quit bspwm normally
-super + alt + Escape
-	bspc quit
+# quit/restart bspwm
+super + alt + {q,r}
+	bspc {quit,wm -r}
 
+# quit/restart bspwm and panel
+super + alt + Escape
+	pkill -x bsp_lemonbar.sh; bspc quit
+
+# restart panel
+#super + {_,shift + }b
+#	~/.config/bspwm/scripts/barcycle.sh &
+	 
 # close and kill
 super + {_,shift + }w
 	bspc node -{c,k}
-
-# close
-super + x
-	bspc node --close
 
 # alternate between the tiled and monocle layout
 super + m
@@ -60,8 +63,8 @@ super + ctrl + {m,x,y,z}
 #
 
 # focus the node in the given direction
-super + {Up,Right,Down,Left}
-	bspc node -{f} {north,east,south,west}
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
 super + {p,b,comma,period}
@@ -75,9 +78,6 @@ super + {_,shift + }c
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
-{XF86Forward,XF86Back}
-	bspc desktop -f {next,prev}.local
-
 # focus the last node/desktop
 super + {grave,Tab}
 	bspc {node,desktop} -f last
@@ -89,27 +89,23 @@ super + {o,i}
 	bspc wm -h on
 
 # focus or send to the given desktop
-super + {_,alt + }{1-9,0}
+super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
-
-# swap nodes
-super + alt + {Up,Right,Down,Left}
-	bspc node --swap {north,east,south,west}
 
 #
 # preselect
 #
 
 # preselect the direction
-super + shift + {Up,Right,Down,Left}
-	bspc node -p {north,east,south,west}
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
 
 # preselect the ratio
-super + shift + {1-9}
+super + ctrl + {1-9}
 	bspc node -o 0.{1-9}
 
 # cancel the preselection for the focused node
-super + shift + space
+super + ctrl + space
 	bspc node -p cancel
 
 # cancel the preselection for the focused desktop
@@ -121,52 +117,33 @@ super + ctrl + shift + space
 #
 
 # expand a window by moving one of its side outward
-super + ctrl + {Up,Right,Down,Left}
-	bspc node -z {top 0 -20,right 20 0,bottom 0 20,left -20 0}
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
-super + ctrl + shift + {Up,Right,Down,Left}
-	bspc node -z {bottom 0 -20,left 20 0,top 0 20,right -20 0}
+super + alt + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
-super + alt + {Left,Down,Up,Right}
+super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
-# multimedia keys
-# pulse audio volume control
-XF86AudioLowerVolume
-	pulseaudio-ctl down
-XF86AudioRaiseVolume
-	pulseaudio-ctl up
-XF86AudioMute
-	pulseaudio-ctl mute
-XF86AudioMicMute
-	pulseaudio-ctl mute-input
+#
+# launchers
+#
 
-# print screen
-super + Print
-	scrot ~/Pictures/Screenshots/screenshot-%m%d%Y-%H:%M:%S.png
-
-super + Shift + Print
-	scrot -u ~/Pictures/Screenshots/screenshot-%m%d%Y-%H:%M:%S.png
-
-# lock screen
-ctrl + alt + l
-	xset s activate
-
-
-# custom program launchers
+# chromium
 super + F1
-	bspc desktop -f 1;chromium &
+	exec chromium
 
+# urxvtc
 super + F2
-	bspc desktop -f 2;urxvtc &
+	exec urxvtc
 
+# thunar
 super + F3
-	bspc desktop -f 3;thunar &
-
+	exec thunar
+	
+# atom
 super + F4
-	bspc desktop -f 4;atom &
-
-super + F5
-	bspc desktop -f 5;bspc desktop --layout monocle;vmplayer &
+	exec atom	

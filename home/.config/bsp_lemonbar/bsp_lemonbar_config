@@ -1,105 +1,147 @@
-#!\bin\bash
+#!/bin/bash
 # bspwm panel config. Powerline style.
+# _                            _                _
+#| | ___ _ __ ___   ___  _ __ | |__   __ _ _ __| |
+#| |/ _ \ '_ ` _ \ / _ \| '_ \| '_ \ / _` | '__| |
+#| |  __/ | | | | | (_) | | | | |_) | (_| | |  |_|
+#|_|\___|_| |_| |_|\___/|_| |_|_.__/ \__,_|_|  (_)
+#
 
 panel_fifo="/tmp/bsp_lemonbar_${USER}"
 
-geometry="1568x16+16+8"
+geometry="x16"
 font="-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*"
-iconfont="Material Design Icons:size=10"
+iconfont="Material Design Icons:pixelsize=12:antialiasing=true"
 clickables=16
+panel_wm_name=bspwm_panel
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
 # Alarm settings
-cpu_alert=75				# % cpu use
-bat_alert=5				# low battery %
-temp_alert=90				# high temp
+bat_alert=5   # low battery %
 
 # update timers, in minutes
-mail_timer=5				# Mail check timer (min)
-upd_timer=30				# Update check (min)
+mail_timer=5 # Mail check timer (min)
+upd_timer=30 # Update check (min)
 
 # grab colors from Xresources
-fgd=$(xrdb -query | grep -m 1 '*.foreground' | cut -f 2 | tr -d "#")
-bgd=$(xrdb -query | grep -m 1 '*.background' | cut -f 2 | tr -d "#")
-bla=$(xrdb -query | grep -m 1 '*.color0' | cut -f 2 | tr -d "#")
-bbla=$(xrdb -query | grep -m 1 '*.color8' | cut -f 2 | tr -d "#")
-red=$(xrdb -query | grep -m 1 '*.color1' | cut -f 2 | tr -d "#")
-bred=$(xrdb -query | grep -m 1 '*.color9' | cut -f 2 | tr -d "#")
-grn=$(xrdb -query | grep -m 1 '*.color2' | cut -f 2 | tr -d "#")
-bgrn=$(xrdb -query | grep -m 1 '*.color10' | cut -f 2 | tr -d "#")
-ylw=$(xrdb -query | grep -m 1 '*.color3' | cut -f 2 | tr -d "#")
-bylw=$(xrdb -query | grep -m 1 '*.color11' | cut -f 2 | tr -d "#")
-blu=$(xrdb -query | grep -m 1 '*.color4' | cut -f 2 | tr -d "#")
-bblu=$(xrdb -query | grep -m 1 '*.color12' | cut -f 2 | tr -d "#")
-mgt=$(xrdb -query | grep -m 1 '*.color5' | cut -f 2 | tr -d "#")
-bmgt=$(xrdb -query | grep -m 1 '*.color13' | cut -f 2 | tr -d "#")
-cya=$(xrdb -query | grep -m 1 '*.color6' | cut -f 2 | tr -d "#")
-bcya=$(xrdb -query | grep -m 1 '*.color14' | cut -f 2 | tr -d "#")
-whi=$(xrdb -query | grep -m 1 '*.color7' | cut -f 2 | tr -d "#")
-bwhi=$(xrdb -query | grep -m 1 '*.color15' | cut -f 2 | tr -d "#")
+fgd=$(xrdb -query | grep '*.foreground:' | cut -f 2 | tr -d "#")
+bgd=$(xrdb -query | grep '*.background:' | cut -f 2 | tr -d "#")
+bla=$(xrdb -query | grep '*.color0:' | cut -f 2 | tr -d "#")
+bbla=$(xrdb -query | grep '*.color8:' | cut -f 2 | tr -d "#")
+red=$(xrdb -query | grep '*.color1:' | cut -f 2 | tr -d "#")
+bred=$(xrdb -query | grep '*.color9:' | cut -f 2 | tr -d "#")
+grn=$(xrdb -query | grep '*.color2:' | cut -f 2 | tr -d "#")
+bgrn=$(xrdb -query | grep '*.color10:' | cut -f 2 | tr -d "#")
+ylw=$(xrdb -query | grep '*.color3:' | cut -f 2 | tr -d "#")
+bylw=$(xrdb -query | grep '*.color11:' | cut -f 2 | tr -d "#")
+blu=$(xrdb -query | grep '*.color4:' | cut -f 2 | tr -d "#")
+bblu=$(xrdb -query | grep '*.color12:' | cut -f 2 | tr -d "#")
+mgt=$(xrdb -query | grep '*.color5:' | cut -f 2 | tr -d "#")
+bmgt=$(xrdb -query | grep '*.color13:' | cut -f 2 | tr -d "#")
+cya=$(xrdb -query | grep '*.color6:' | cut -f 2 | tr -d "#")
+bcya=$(xrdb -query | grep '*.color14:' | cut -f 2 | tr -d "#")
+whi=$(xrdb -query | grep '*.color7:' | cut -f 2 | tr -d "#")
+bwhi=$(xrdb -query | grep '*.color15:' | cut -f 2 | tr -d "#")
 
 # bar color definitions
-color_back="#C0${bgd}"			# Default background
-color_fore="#${fgd}"			# Default foreground
-color_title="#${bwhi}"			# Window title foreground
-color_head="#C0${blu}"			# Background for first element
-color_wsp="#${bla}"			# Background for selected workspace
-color_act="#${fgd}"		        # Foreground for active workspace
-color_ina="#${bla}"		        # Foreground for inactive workspace
-color_sec_b1="#C0282828"		# Background for section 1
-color_sec_b2="#C0${bgd}"		# Background for section 2
-color_icon="#${whi}"  			# For icons
-color_icon_dark="#FF282828"		# For icons (dark)
-color_netdown="#C0${bla}"		# For inactive network interface icons
-color_mail="#C0DD4B39"			# Background color for mail alert
-color_upd="#C01793D0"			# Background color for update alert
-color_alert="#C0${red}"			# Background color for  alert
+color_back="#C0${bgd}"    # Default background
+color_fore="#${fgd}"      # Default foreground
+color_title="#${bwhi}"    # Window title foreground
+color_stat="#C0${bla}"    # Background for i3 status section
+color_ina="#C0${blu}"     # Background for inactive workspace
+color_wsp="#${bblu}"      # Background for selected workspace
+color_act_fore="#282828"  # Foreground for active workspace
+color_ina_fore="#${bla}"  # Foreground for inactive workspace
+color_sec_b1="#C0282828"  # Background for section 1
+color_sec_b2="#C0${bgd}"  # Background for section 2
+color_icon="#${whi}"      # For icons
+color_icon_dark="#282828" # For icons (dark)
+color_netdown="#${bbla}"  # For inactive network interface icons
+color_mail="#C0DD4B39"    # Background color for mail alert
+color_upd="#C01793D0"     # Background color for update alert
+color_alert="#C0${red}"   # Background color for alert
+color_mode="#${bred}"     # Foreground color for binding mode
 
 #default space between sections
 if [ "${res_w}" -gt 1024 ]; then
-        stab='  '
+  stab='  '
 else
-        stab=' '
+  stab=' '
 fi
 
 # Char glyps for powerline fonts
-sep_left=""				# Powerline separator left
-sep_right=""				# Powerline separator right
+sep_left=""        # Powerline separator left
+sep_right=""       # Powerline separator right
 
 # Icon glyphs from Material Icons
-icon_clock=""				# Clock icon
-icon_cal=""				# Calendar icon
-icon_ethup=""				# Ethernet up icon
-icon_ethdown=""			# Ethernet down icon
-icon_wifi_up=""			# Wifi up icon
-icon_wifi_down=""			# Wifi down icon
-icon_mail=""				# Mail icon
-icon_arch=""				# Arch icon
+icon_clock=""      # Clock icon
+icon_ethup=""      # Ethernet up icon
+icon_ethdown=""    # Ethernet down icon
+icon_wifi_up=""    # Wifi up icon
+icon_wifi_down=""  # Wifi down icon
+icon_mail=""       # Mail icon
+icon_arch=""       # Arch icon
 
-icon_bright_100=""			# Full brightness icon
-icon_bright_80=""			# 80% brightness icon
-icon_bright_51=""			# 51% brightness icon
-icon_bright_31=""			# 31% brightness icon
-icon_bright_19=""			# 19% brightness icon
-icon_bright_11=""			# 11% brightness icon
-icon_bright_6=""			# <6% brightness icon
+icon_default=""    # default mode icon
+icon_resize="﨣"     # resize mode icon
 
-icon_vol_hi=""			# Full brightness icon
-icon_vol_med=""         		# 80% brightness icon
-icon_vol_lo=""		               	# 51% brightness icon
-icon_vol_off=""			        # 31% brightness icon
-icon_vol_mute=""         		# 19% brightness icon
+icon_splith=""     # horizontal split layout icon
+icon_splitv=""     # vertical split icon
+icon_tabbed=""     # tabbed layout icon
+icon_stacked="ﮧ"    # stacked layout icon
 
-icon_bat_charge=""			# On charger icon
-icon_bat_full=""			# Full battery icon
-icon_bat_90=""				# 90% battery icon
-icon_bat_80=""				# 80% battery icon
-icon_bat_70=""				# 70% battery icon
-icon_bat_60=""				# 60% battery icon
-icon_bat_50=""				# 50% battery icon
-icon_bat_40=""				# 40% battery icon
-icon_bat_30=""				# 30% battery icon
-icon_bat_20=""				# 20% battery icon
-icon_bat_10=""				# 10% battery icon
-icon_bat_0=""				# 0% battery icon
-icon_bat_low=""				# Low battery icon
+icon_bright_100="" # Full brightness icon
+icon_bright_80=""  # 80% brightness icon
+icon_bright_51=""  # 51% brightness icon
+icon_bright_31=""  # 31% brightness icon
+icon_bright_19=""  # 19% brightness icon
+icon_bright_11=""  # 11% brightness icon
+icon_bright_6=""   # <6% brightness icon
+
+icon_vol_hi=""     # High volume icon
+icon_vol_med=""    # Medium volume icon
+icon_vol_lo=""     # Low volume icon
+icon_vol_off=""    # Volume off icon
+icon_vol_mute="﷤"   # Mute icon
+icon_vol_over=""   # Boosted volume icon
+
+icon_bat_charge="" # On charger icon
+icon_bat_full=""   # Full battery icon
+icon_bat_90=""     # 90% battery icon
+icon_bat_80=""     # 80% battery icon
+icon_bat_70=""     # 70% battery icon
+icon_bat_60=""     # 60% battery icon
+icon_bat_50=""     # 50% battery icon
+icon_bat_40=""     # 40% battery icon
+icon_bat_30=""     # 30% battery icon
+icon_bat_20=""     # 20% battery icon
+icon_bat_10=""     # 10% battery icon
+icon_bat_0=""      # 0% battery icon
+icon_bat_low=""    # Low battery icon
+
+icon_power="" # Power icon
+
+COLOR_DEFAULT_FG="#a7a5a5"
+COLOR_DEFAULT_BG="#333232"
+COLOR_MONITOR_FG="#8dbcdf"
+COLOR_MONITOR_BG="#333232"
+COLOR_FOCUSED_MONITOR_FG="#b1d0e8"
+COLOR_FOCUSED_MONITOR_BG="#144b6c"
+COLOR_FREE_FG="#737171"
+COLOR_FREE_BG="#333232"
+COLOR_FOCUSED_FREE_FG="#000000"
+COLOR_FOCUSED_FREE_BG="#504e4e"
+COLOR_OCCUPIED_FG="#a7a5a5"
+COLOR_OCCUPIED_BG="#333232"
+COLOR_FOCUSED_OCCUPIED_FG="#d6d3d2"
+COLOR_FOCUSED_OCCUPIED_BG="#504e4e"
+COLOR_URGENT_FG="#f15d66"
+COLOR_URGENT_BG="#333232"
+COLOR_FOCUSED_URGENT_FG="#501d1f"
+COLOR_FOCUSED_URGENT_BG="#d5443e"
+COLOR_STATE_FG="#89b09c"
+COLOR_STATE_BG="#333232"
+COLOR_TITLE_FG="#a8a2c0"
+COLOR_TITLE_BG="#333232"
+COLOR_SYS_FG="#b1a57d"
+COLOR_SYS_BG="#333232"

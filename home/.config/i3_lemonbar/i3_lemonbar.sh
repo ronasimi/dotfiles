@@ -66,11 +66,6 @@ while :; do
 
 done &
 
-# date/time
-
-"$(dirname $0)"/scripts/clk > "${panel_fifo}" &
-"$(dirname $0)"/scripts/day > "${panel_fifo}" &
-
 # Backlight, "BRI"
 while read -r; do
 
@@ -99,6 +94,11 @@ while read -r; do
   (acpi -b | awk '{print "BAT" $4}' | tr -d '%,' >"${panel_fifo}")
 
 done < <(echo && upower --monitor) &
+
+# date/time
+
+"$(dirname $0)"/scripts/clk >"${panel_fifo}" &
+"$(dirname $0)"/scripts/day >"${panel_fifo}" &
 
 #### LOOP FIFO
 

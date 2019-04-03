@@ -15,7 +15,7 @@
 # min init
 title="%{F${color_ina} B-}${sep_right}%{F${color_title} T1} ${win}"
 # power button
-powerbutton="%{F${mode_cicon} B${color_stat} T2} ${icon_power}"
+powerbutton="%{F${mode_cicon} B${color_sec_b2} T2} ${icon_power}"
 
 # parser
 while read -r line; do
@@ -127,7 +127,7 @@ while read -r line; do
       icon_vol=${icon_vol_off}
     fi
 
-    vol="%{F${color_stat}}${sep_left}%{F${color_icon} B${color_stat}} %{T2}${icon_vol}"
+    vol="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_vol}"
 
     ;;
 
@@ -149,12 +149,12 @@ while read -r line; do
       icon_bright=${icon_bright_6}
     fi
 
-    bright="%{F${color_icon} B${color_stat}}%{T2} ${icon_bright}"
+    bright="%{F${color_icon} B${color_sec_b2}}%{T2} ${icon_bright}"
     ;;
 
   ETH*)
     # ethernet
-    eth_cback=${color_stat}
+    eth_cback=${color_sec_b2}
     eth_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -170,7 +170,7 @@ while read -r line; do
 
   WFI*)
     # wlan
-    wlan_cback=${color_stat}
+    wlan_cback=${color_sec_b2}
     wlan_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -214,13 +214,13 @@ while read -r line; do
     fi
 
     if [ "${line#???}" -le "${bat_alert}" ]; then
-      bat_cback=${color_stat}
+      bat_cback=${color_sec_b2}
       bat_cicon=${color_alert}
       bat_cfore=${color_fore}
       icon_bat=${icon_bat_low}
       (notify-send -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work")
     else
-      bat_cback=${color_stat}
+      bat_cback=${color_sec_b2}
       bat_cicon=${color_icon}
       bat_cfore=${color_fore}
     fi

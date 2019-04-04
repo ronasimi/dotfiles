@@ -16,9 +16,7 @@ clickables=14
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
 # Alarm settings
-cpu_alert=75  # % cpu use
 bat_alert=5   # low battery %
-temp_alert=90 # high temp
 
 # update timers, in minutes
 mail_timer=5 # Mail check timer (min)

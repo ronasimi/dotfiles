@@ -64,7 +64,7 @@
     # the top and down respectevly.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "400x12-8+24"
+    geometry = "400x12-8+28"
 
     # Frame
     frame_width = 0

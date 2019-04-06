@@ -15,8 +15,8 @@ iconfont="Material Design Icons:pixelsize=12"
 clickables=14
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
-# Alarm settings
-bat_alert=5   # low battery %
+# alarm settings
+bat_alert=5  # low battery %
 
 # update timers, in minutes
 mail_timer=5 # Mail check timer (min)
@@ -55,10 +55,11 @@ color_sec_b1="#C0282828"  # Background for section 1
 color_sec_b2="#C0${bgd}"  # Background for section 2
 color_icon="#${whi}"      # For icons
 color_icon_dark="#282828" # For icons (dark)
-color_netdown="#${bbla}"   # For inactive network interface icons
+color_netdown="#${bbla}"  # For inactive network interface icons
 color_mail="#C0DD4B39"    # Background color for mail alert
 color_upd="#C01793D0"     # Background color for update alert
-color_alert="#C0${red}"   # Background color for alert
+color_warn="#C0${ylw}"    # Color for warning
+color_alert="#C0${red}"   # Color for alert
 color_mode="#${bred}"     # Foreground color for binding mode
 
 #default space between sections

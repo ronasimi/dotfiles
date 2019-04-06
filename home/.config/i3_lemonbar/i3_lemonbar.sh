@@ -35,11 +35,11 @@ done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace", "binding" ]') 
 # i3 Workspaces, "WSP"
 "$(dirname $0)"/scripts/workspaces.pl >"${panel_fifo}" &
 
-# Window title, "WIN"
+# window title, "WIN"
 (xtitle -i -s | awk '{print "WIN" $0; fflush(stdout)}' >"${panel_fifo}") &
 
-# Updates, "UPD"
-### Update check interval
+# updates, "UPD"
+### update check interval
 cnt_update="${upd_timer}"
 
 while :; do
@@ -52,8 +52,8 @@ while :; do
 
 done &
 
-# GMAIL, "GMA"
-### Mail check interval
+# gmail, "GMA"
+### mail check interval
 cnt_mail="${mail_timer}"
 
 while :; do
@@ -66,18 +66,7 @@ while :; do
 
 done &
 
-# date/time
-
-"$(dirname $0)"/scripts/time >"${panel_fifo}" &
-
-# Volume, "MUT", "VOL"
-while read -r; do
-
-  (pamixer --get-volume | awk '{print "VOL" $1}' >"${panel_fifo}") &
-
-done < <(echo && stdbuf -oL alsactl monitor pulse) &
-
-# Network, "ETH", "WFI"
+# network, "ETH", "WFI"
 while read -r; do
 
   (nmcli -t | grep enp0s25: | awk '{print "ETH" $2}' >"${panel_fifo}")
@@ -85,12 +74,22 @@ while read -r; do
 
 done < <(echo && nmcli m) &
 
-# Battery, "BAT"
+# volume, "MUT", "VOL"
+while read -r; do
+
+  (pamixer --get-volume | awk '{print "VOL" $1}' >"${panel_fifo}") &
+
+done < <(echo && stdbuf -oL alsactl monitor pulse) &
+
+# battery, "BAT"
 while read -r; do
 
   (acpi -b | awk '{print "BAT" $4}' | tr -d '%,' >"${panel_fifo}")
 
 done < <(echo && upower --monitor) &
+
+# date/time
+"$(dirname $0)"/scripts/time >"${panel_fifo}" &
 
 #### LOOP FIFO
 

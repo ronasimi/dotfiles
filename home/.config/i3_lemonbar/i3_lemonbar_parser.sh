@@ -49,7 +49,7 @@ while read -r line; do
     ;;
 
   WSP*)
-    # I3 Workspaces
+    # i3 Workspaces
     wsp="%{B${color_ina}}"
     set -- ${line#???}
 
@@ -75,7 +75,7 @@ while read -r line; do
     ;;
 
   UPD*)
-    # Updates
+    # updates
     if [ "${line#???}" != "0" ]; then
       updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_upd} B${color_sec_b1}} %{T2}${icon_arch}%{T1} ${line#???}"
     else
@@ -88,7 +88,7 @@ while read -r line; do
     ;;
 
   GMA*)
-    # Gmail
+    # gmail
     if [ "${line#???}" != "0" ]; then
       gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_mail} B${color_sec_b1}} %{T2}${icon_mail}%{T1} ${line#???}"
     else
@@ -130,27 +130,27 @@ while read -r line; do
     ;;
 
   VOL*)
-    # Speakers on/off
+    # speakers on/off
     muted=$(pacmd list-sinks | grep "muted" | awk '{print $2}')
 
     if [ "${muted}" == "yes" ]; then
       icon_vol=${icon_vol_mute}
-	  vol_cicon=${color_netdown}
-    elif [ "${line#???}" -ge 101 ]; then
+      vol_cicon=${color_netdown}
+    elif [ "${line#???}" -gt 100 ]; then
       icon_vol=${icon_vol_hi}
-	  vol_cicon=${color_alert}
+      vol_cicon=${color_alert}
     elif [ "${line#???}" -ge 75 ]; then
       icon_vol=${icon_vol_hi}
-	  vol_cicon=${color_icon}
+      vol_cicon=${color_icon}
     elif [ "${line#???}" -ge 50 ]; then
       icon_vol=${icon_vol_med}
-	  vol_cicon=${color_icon}
+      vol_cicon=${color_icon}
     elif [ "${line#???}" -ge 1 ]; then
       icon_vol=${icon_vol_lo}
-	  vol_cicon=${color_icon}
+      vol_cicon=${color_icon}
     elif [ "${line#???}" -eq 0 ]; then
       icon_vol=${icon_vol_off}
-	  vol_cicon=${color_netdown}
+      vol_cicon=${color_netdown}
     fi
 
     vol="%{F${color_sec_b1}}${sep_left}%{F${vol_cicon} B${color_sec_b1}} %{T2}${icon_vol}"
@@ -162,7 +162,7 @@ while read -r line; do
 
     if [ "${oncharger}" == "1" ]; then
       icon_bat=${icon_bat_charge}
-      # battery level
+    # battery level
     elif [ "${line#???}" -ge 95 ]; then
       icon_bat=${icon_bat_full}
     elif [ "${line#???}" -ge 85 ]; then
@@ -179,20 +179,17 @@ while read -r line; do
       icon_bat=${icon_bat_40}
     elif [ "${line#???}" -ge 25 ]; then
       icon_bat=${icon_bat_30}
+      bat_cicon=${color_warn}
     elif [ "${line#???}" -ge 15 ]; then
       icon_bat=${icon_bat_20}
+      bat_cicon=${color_warn}
     elif [ "${line#???}" -gt "${bat_alert}" ]; then
       icon_bat=${icon_bat_10}
-    fi
-
-    if [ "${line#???}" -le "${bat_alert}" ]; then
-      bat_cicon=${color_alert}
-      bat_cfore=${color_fore}
+      bat_cicon=${color_warn}
+    elif [ "${line#???}" -le "${bat_alert}" ]; then
       icon_bat=${icon_bat_low}
+      bat_cicon=${color_alert}
       (notify-send -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work")
-    else
-      bat_cicon=${color_icon}
-      bat_cfore=${color_fore}
     fi
 
     bat="%{F${color_sec_b1}}${sep_left}%{F${bat_cicon} B${color_sec_b1} T2} ${icon_bat}"
@@ -205,6 +202,6 @@ while read -r line; do
 
   esac
 
-  # And finally, output
-  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_vol.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{F- B-}"
+  # and finally, output
+  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_vol.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{F- B-}"
 done

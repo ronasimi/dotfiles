@@ -71,7 +71,7 @@ while read -r line; do
 
   WIN*)
     # window title
-    title="%{F${color_ina} B-}${T1}${sep_right} %{F${color_title} T1} ${line#???}%{T-}"
+    title="%{F${color_ina} B-}${T1}${sep_right}%{F${color_title} T1} ${line#???}%{T-}"
     ;;
 
   UPD*)

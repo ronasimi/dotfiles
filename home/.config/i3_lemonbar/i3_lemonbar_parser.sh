@@ -71,13 +71,13 @@ while read -r line; do
 
   WIN*)
     # window title
-    title="%{F${color_ina} B-}${T1}${sep_right} %{F${color_title} T3} ${line#???}%{T-}"
+    title="%{F${color_ina} B-}${T1}${sep_right} %{F${color_title} T1} ${line#???}%{T-}"
     ;;
 
   UPD*)
     # Updates
     if [ "${line#???}" != "0" ]; then
-      updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_upd} B${color_sec_b1}} %{T2}${icon_arch}%{T1} ${line#???}"
+      updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_upd} B${color_sec_b1}} %{T2}${icon_arch}%{T1}%{F${color_fore}} ${line#???}"
     else
       upd_cback=${color_sec_b1}
       upd_cicon=${color_icon}
@@ -90,7 +90,7 @@ while read -r line; do
   GMA*)
     # Gmail
     if [ "${line#???}" != "0" ]; then
-      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_mail} B${color_sec_b1}} %{T2}${icon_mail}%{T1} ${line#???}"
+      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_mail} B${color_sec_b1}} %{T2}${icon_mail}%{T1}%{F${color_fore}} ${line#???}"
     else
       gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_netdown} B${color_sec_b1}} %{T2}${icon_mail}"
     fi
@@ -200,7 +200,7 @@ while read -r line; do
 
   CLK*)
     # time
-    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock} %{F${color_fore} T3} ${line#???}%{T-}"
+    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock} %{F${color_fore} T1} ${line#???}%{T-}"
     ;;
 
   esac

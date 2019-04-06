@@ -189,7 +189,7 @@ while read -r line; do
     elif [ "${line#???}" -le "${bat_alert}" ]; then
       icon_bat=${icon_bat_low}
       bat_cicon=${color_alert}
-      (notify-send -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work")
+      (dunstify -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work")
     fi
 
     bat="%{F${color_sec_b1}}${sep_left}%{F${bat_cicon} B${color_sec_b1} T2} ${icon_bat}"

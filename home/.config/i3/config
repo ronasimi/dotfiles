@@ -1,4 +1,4 @@
-# _ _____                    __ _
+dunstify# _ _____                    __ _
 # (_)___ /    ___ ___  _ __  / _(_) __ _
 # | | |_ \   / __/ _ \| '_ \| |_| |/ _` |
 # | |___) | | (_| (_) | | | |  _| | (_| |
@@ -188,8 +188,8 @@ bindsym XF86AudioMute exec --no-startup-id pulseaudio-ctl mute
 bindsym XF86AudioMicMute exec --no-startup-id pulseaudio-ctl mute-input
 
 # print screen
-bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/screenshot-%Y%m%d-%H:%M:%S.png & notify-send -u low $'Screenshot' 'saved to ~/Pictures/Screenshots'
-bindsym Mod1+Sys_Req exec --no-startup-id scrot -u ~/Pictures/Screenshots/window-%Y%m%d-%H:%M:%S.png & notify-send -u low $'Window screenshot' 'saved to ~/Pictures/Screenshots'
+bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/screenshot-%Y%m%d-%H:%M:%S.png & dunstify -u low $'Screenshot' 'saved to ~/Pictures/Screenshots'
+bindsym Mod1+Sys_Req exec --no-startup-id scrot -u ~/Pictures/Screenshots/window-%Y%m%d-%H:%M:%S.png & dunstify -u low $'Window screenshot' 'saved to ~/Pictures/Screenshots'
 
 # move focused window
 bindsym $mod+Shift+h move left

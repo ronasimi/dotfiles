@@ -78,6 +78,7 @@ done < <(echo && nmcli m) &
 while read -r; do
 
   (pamixer --get-volume | awk '{print "VOL" $1}' >"${panel_fifo}") &
+  "$(dirname $0)"/scripts/volindicator.sh &
 
 done < <(echo && stdbuf -oL alsactl monitor pulse) &
 

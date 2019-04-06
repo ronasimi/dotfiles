@@ -77,7 +77,7 @@ while read -r line; do
   UPD*)
     # Updates
     if [ "${line#???}" != "0" ]; then
-      updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_upd} B${color_sec_b1}} %{T2}${icon_arch}%{T1}%{F${color_fore}} ${line#???}"
+      updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_upd} B${color_sec_b1}} %{T2}${icon_arch}%{T1} ${line#???}"
     else
       upd_cback=${color_sec_b1}
       upd_cicon=${color_icon}
@@ -90,7 +90,7 @@ while read -r line; do
   GMA*)
     # Gmail
     if [ "${line#???}" != "0" ]; then
-      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_mail} B${color_sec_b1}} %{T2}${icon_mail}%{T1}%{F${color_fore}} ${line#???}"
+      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_mail} B${color_sec_b1}} %{T2}${icon_mail}%{T1} ${line#???}"
     else
       gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_netdown} B${color_sec_b1}} %{T2}${icon_mail}"
     fi

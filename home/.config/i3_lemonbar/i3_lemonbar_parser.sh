@@ -82,7 +82,7 @@ while read -r line; do
       upd_cback=${color_sec_b1}
       upd_cicon=${color_icon}
       upd_cfore=${color_fore}
-      updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_arch}"
+      updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_netdown} B${color_sec_b1}} %{T2}${icon_arch}"
     fi
 
     ;;
@@ -92,40 +92,14 @@ while read -r line; do
     if [ "${line#???}" != "0" ]; then
       gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_mail} B${color_sec_b1}} %{T2}${icon_mail}%{T1} ${line#???}"
     else
-      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_mail}"
+      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_netdown} B${color_sec_b1}} %{T2}${icon_mail}"
     fi
-    ;;
-
-  CLK*)
-    # time
-    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock} %{F${color_fore} T3} ${line#???}%{T-}"
-    ;;
-
-  VOL*)
-    # Speakers on/off
-	muted=$(pacmd list-sinks | grep "muted" | awk '{print $2}')
-
-    if [ "${muted}" == "yes" ]; then
-      icon_vol=${icon_vol_mute}
-    elif [ "${line#???}" -ge 101 ]; then
-      icon_vol=${icon_vol_over}
-    elif [ "${line#???}" -ge 75 ]; then
-      icon_vol=${icon_vol_hi}
-    elif [ "${line#???}" -ge 50 ]; then
-      icon_vol=${icon_vol_med}
-    elif [ "${line#???}" -ge 1 ]; then
-      icon_vol=${icon_vol_lo}
-    elif [ "${line#???}" -eq 0 ]; then
-      icon_vol=${icon_vol_off}
-    fi
-
-    vol="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_vol}"
     ;;
 
   ETH*)
 
     # ethernet
-    eth_cback=${color_sec_b1}
+    eth_cback=${color_sec_b2}
     eth_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -136,12 +110,12 @@ while read -r line; do
       eth_cicon=${color_netdown}
     fi
 
-    ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback}} %{T2}%{F${eth_cicon} T1}${ethup}"
+    ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback}}%{T2} %{F${eth_cicon}}${ethup}"
     ;;
 
   WFI*)
     # wlan
-    wlan_cback=${color_sec_b1}
+    wlan_cback=${color_sec_b2}
     wlan_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -152,7 +126,34 @@ while read -r line; do
       wlan_cicon=${color_netdown}
     fi
 
-    wifi="%{F${wlan_cback}}${sep_left}%{F${wlan_cicon} B${wlan_cback}} %{T2}%{F${wlan_cicon} T1}${wlanup}"
+    wifi="%{F${wlan_cback}}${sep_left}%{F${wlan_cicon} B${wlan_cback}}%{T2} %{F${wlan_cicon}}${wlanup}"
+    ;;
+
+  VOL*)
+    # Speakers on/off
+    muted=$(pacmd list-sinks | grep "muted" | awk '{print $2}')
+
+    if [ "${muted}" == "yes" ]; then
+      icon_vol=${icon_vol_mute}
+	  vol_cicon=${color_netdown}
+    elif [ "${line#???}" -ge 101 ]; then
+      icon_vol=${icon_vol_hi}
+	  vol_cicon=${color_alert}
+    elif [ "${line#???}" -ge 75 ]; then
+      icon_vol=${icon_vol_hi}
+	  vol_cicon=${color_icon}
+    elif [ "${line#???}" -ge 50 ]; then
+      icon_vol=${icon_vol_med}
+	  vol_cicon=${color_icon}
+    elif [ "${line#???}" -ge 1 ]; then
+      icon_vol=${icon_vol_lo}
+	  vol_cicon=${color_icon}
+    elif [ "${line#???}" -eq 0 ]; then
+      icon_vol=${icon_vol_off}
+	  vol_cicon=${color_netdown}
+    fi
+
+    vol="%{F${color_sec_b1}}${sep_left}%{F${vol_cicon} B${color_sec_b1}} %{T2}${icon_vol}"
     ;;
 
   BAT*)
@@ -194,11 +195,16 @@ while read -r line; do
       bat_cfore=${color_fore}
     fi
 
-    bat="%{F${bat_cicon} B${color_sec_b1} T2}${icon_bat}%{F${bat_cfore} T1}"
+    bat="%{F${color_sec_b1}}${sep_left}%{F${bat_cicon} B${color_sec_b1} T2} ${icon_bat}"
+    ;;
+
+  CLK*)
+    # time
+    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock} %{F${color_fore} T3} ${line#???}%{T-}"
     ;;
 
   esac
 
   # And finally, output
-  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_vol.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}${stab}%{A}%{F- B-}"
+  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_vol.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{F- B-}"
 done

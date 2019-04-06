@@ -1,7 +1,7 @@
-URxvt*font:			-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*,\
+URxvt*font:			xft:TamzenForPowerline:style=Regular:pixelsize=14:antialiasing=false:hinting=false,\
 				xft:Material Design Icons:pixelsize=8:antialiasing=true:hinting=true,\
 				xft:Segoe UI Symbol:pixelsize=14:antialiasing=true:hinting=true
-URxvt*boldFont:			-*-tamzenforpowerline-bold-r-*-*-14-*-*-*-*-*-*-*
+URxvt*boldFont:			xft:TamzenForPowerline:style=Bold:pixelsize=14:antialiasing=false:hinting=false
 URxvt*depth:			24
 URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true
@@ -32,23 +32,14 @@ URxvt*keysym.KP_Home:		\033[1~
 URxvt*keysym.KP_End:		\033[4~
 URxvt*iso14755:			false
 
-Xft.dpi:			96
-
-Xft.antialias:			1
-Xft.hinting:			1
-Xft.autohint:			0
-Xft.hintstyle:			hintslight
-Xft.lcdfilter:			lcddefault
-Xft.rgba:			rgb
-
 ! special
 *.foreground:   #bdbdbd
 *.background:   #383838
 *.cursorColor:  #bdbdbd
 
 ! black
-*.color0:       #4b4b4b
-*.color8:       #6e6e6e
+*.color0:       #5d5d5d
+*.color8:       #818181
 
 ! red
 *.color1:       #ac4142

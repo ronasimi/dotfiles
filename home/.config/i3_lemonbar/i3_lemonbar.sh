@@ -92,6 +92,16 @@ done < <(echo && upower --monitor) &
 # date/time
 "$(dirname $0)"/scripts/time >"${panel_fifo}" &
 
+
+# backlight
+## this isn't displayed in the bar, just used for notifications
+while read -r; do
+
+"$(dirname $0)"/scripts/brightindicator.sh &
+
+done < <(echo && inotifywait -m -e modify /sys/class/backlight/acpi_video0/actual_brightness /sys/class/backlight/intel_backlight/actual_brightness -e open /sys/class/power_supply/AC/uevent) &
+
+
 #### LOOP FIFO
 
 (cat "${panel_fifo}" | "$(dirname $0)"/i3_lemonbar_parser.sh |

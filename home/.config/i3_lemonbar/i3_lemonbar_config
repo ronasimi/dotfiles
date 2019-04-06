@@ -12,7 +12,7 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 geometry="1584x16+8+8"
 font="-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:pixelsize=12:antialiasing=true"
-xftfont="Inter:pixelsize=10:antialiasing=true"
+xftfont="Inter:style=Medium:pixelsize=10:antialiasing=true"
 clickables=16
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 

@@ -90,43 +90,10 @@ while read -r line; do
   GMA*)
     # gmail
     if [ "${line#???}" != "0" ]; then
-      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_mail} B${color_sec_b1}} %{T2}${icon_mail}%{T1} ${line#???}"
+      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_mail} B${color_sec_b1}}%{T2}${icon_mail}%{T1} ${line#???}"
     else
-      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_netdown} B${color_sec_b1}} %{T2}${icon_mail}"
+      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_netdown} B${color_sec_b1}}%{T2}${icon_mail}"
     fi
-    ;;
-
-  ETH*)
-
-    # ethernet
-    eth_cback=${color_sec_b2}
-    eth_cfore=${color_fore}
-
-    if [ "${line#???}" == "connected" ]; then
-      ethup=${icon_ethup}
-      eth_cicon=${color_icon}
-    else
-      ethup=${icon_ethdown}
-      eth_cicon=${color_netdown}
-    fi
-
-    ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback}}%{T2} %{F${eth_cicon}}${ethup}"
-    ;;
-
-  WFI*)
-    # wlan
-    wlan_cback=${color_sec_b2}
-    wlan_cfore=${color_fore}
-
-    if [ "${line#???}" == "connected" ]; then
-      wlanup=${icon_wifi_up}
-      wlan_cicon=${color_icon}
-    else
-      wlanup=${icon_wifi_down}
-      wlan_cicon=${color_netdown}
-    fi
-
-    wifi="%{F${wlan_cback}}${sep_left}%{F${wlan_cicon} B${wlan_cback}}%{T2} %{F${wlan_cicon}}${wlanup}"
     ;;
 
   VOL*)
@@ -153,7 +120,61 @@ while read -r line; do
       vol_cicon=${color_netdown}
     fi
 
-    vol="%{F${color_sec_b1}}${sep_left}%{F${vol_cicon} B${color_sec_b1}} %{T2}${icon_vol}"
+    vol="%{F${color_sec_b2}}${sep_left}%{F${vol_cicon} B${color_sec_b2}} %{T2}${icon_vol}"
+    ;;
+
+  BRI*)
+    # brightness
+    if [ "${line#???}" == 100 ]; then
+      icon_bright=${icon_bright_100}
+    elif [ "${line#???}" -ge 80 ]; then
+      icon_bright=${icon_bright_80}
+    elif [ "${line#???}" -ge 51 ]; then
+      icon_bright=${icon_bright_51}
+    elif [ "${line#???}" -ge 31 ]; then
+      icon_bright=${icon_bright_31}
+    elif [ "${line#???}" -ge 19 ]; then
+      icon_bright=${icon_bright_19}
+    elif [ "${line#???}" -ge 11 ]; then
+      icon_bright=${icon_bright_11}
+    elif [ "${line#???}" -ge 6 ]; then
+      icon_bright=${icon_bright_6}
+    fi
+
+    bright="%{F${color_icon} B${color_sec_b2}} %{T2}${icon_bright}"
+    ;;
+
+  ETH*)
+
+    # ethernet
+    eth_cback=${color_sec_b2}
+    eth_cfore=${color_fore}
+
+    if [ "${line#???}" == "connected" ]; then
+      ethup=${icon_ethup}
+      eth_cicon=${color_icon}
+    else
+      ethup=${icon_ethdown}
+      eth_cicon=${color_netdown}
+    fi
+
+    ethernet="%{F${eth_cicon} B${eth_cback}}%{T2} %{F${eth_cicon}}${ethup}"
+    ;;
+
+  WFI*)
+    # wlan
+    wlan_cback=${color_sec_b2}
+    wlan_cfore=${color_fore}
+
+    if [ "${line#???}" == "connected" ]; then
+      wlanup=${icon_wifi_up}
+      wlan_cicon=${color_icon}
+    else
+      wlanup=${icon_wifi_down}
+      wlan_cicon=${color_netdown}
+    fi
+
+    wifi="%{F${wlan_cicon} B${wlan_cback}}%{T2} %{F${wlan_cicon}}${wlanup}"
     ;;
 
   BAT*)
@@ -192,16 +213,16 @@ while read -r line; do
       (dunstify -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work")
     fi
 
-    bat="%{F${color_sec_b1}}${sep_left}%{F${bat_cicon} B${color_sec_b1} T2} ${icon_bat}"
+    bat="%{F${bat_cicon} B${color_sec_b2} T2} ${icon_bat}"
     ;;
 
   CLK*)
     # time
-    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock} %{F${color_fore} T1} ${line#???}%{T-}"
+    time="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_clock} %{F${color_fore} T1} ${line#???}%{T-}"
     ;;
 
   esac
 
   # and finally, output
-  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A}${stab}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{F- B-}"
+  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}%{A} %{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{F- B-}"
 done

@@ -66,14 +66,6 @@ while :; do
 
 done &
 
-# network, "ETH", "WFI"
-while read -r; do
-
-  (nmcli -t | grep enp0s25: | awk '{print "ETH" $2}' >"${panel_fifo}")
-  (nmcli -t | grep wlp3s0: | awk '{print "WFI" $2}' >"${panel_fifo}")
-
-done < <(echo && nmcli m) &
-
 # volume, "MUT", "VOL"
 while read -r; do
 
@@ -81,6 +73,22 @@ while read -r; do
   "$(dirname $0)"/scripts/volindicator.sh &
 
 done < <(echo && stdbuf -oL alsactl monitor pulse) &
+
+# Backlight, "BRI"
+while read -r; do
+
+  (xbacklight -get | awk '{print "BRI" $1}' >"${panel_fifo}")
+  "$(dirname $0)"/scripts/brightindicator.sh
+
+done < <(echo && inotifywait -m -e modify /sys/class/backlight/acpi_video0/actual_brightness /sys/class/backlight/intel_backlight/actual_brightness -e open /sys/class/power_supply/AC/uevent) &
+
+# network, "ETH", "WFI"
+while read -r; do
+
+  (nmcli -t | grep enp0s25: | awk '{print "ETH" $2}' >"${panel_fifo}")
+  (nmcli -t | grep wlp3s0: | awk '{print "WFI" $2}' >"${panel_fifo}")
+
+done < <(echo && nmcli m) &
 
 # battery, "BAT"
 while read -r; do
@@ -91,16 +99,6 @@ done < <(echo && upower --monitor) &
 
 # date/time
 "$(dirname $0)"/scripts/time >"${panel_fifo}" &
-
-
-# backlight
-## this isn't displayed in the bar, just used for notifications
-while read -r; do
-
-"$(dirname $0)"/scripts/brightindicator.sh &
-
-done < <(echo && inotifywait -m -e modify /sys/class/backlight/acpi_video0/actual_brightness /sys/class/backlight/intel_backlight/actual_brightness -e open /sys/class/power_supply/AC/uevent) &
-
 
 #### LOOP FIFO
 

@@ -66,17 +66,14 @@ while :; do
 
 done &
 
-# Backlight, "BRI"
-while read -r; do
+# date/time
 
-  (xbacklight -get | awk '{print "BRI" $1}' >"${panel_fifo}")
-
-done < <(echo && inotifywait -m -e modify /sys/class/backlight/acpi_video0/actual_brightness /sys/class/backlight/intel_backlight/actual_brightness -e open /sys/class/power_supply/AC/uevent) &
+"$(dirname $0)"/scripts/time >"${panel_fifo}" &
 
 # Volume, "MUT", "VOL"
 while read -r; do
 
-  (pamixer --get-volume | awk '{print "VOL" $1}' >"${panel_fifo}")
+  (pamixer --get-volume | awk '{print "VOL" $1}' >"${panel_fifo}") &
 
 done < <(echo && stdbuf -oL alsactl monitor pulse) &
 
@@ -95,15 +92,10 @@ while read -r; do
 
 done < <(echo && upower --monitor) &
 
-# date/time
-
-"$(dirname $0)"/scripts/clk >"${panel_fifo}" &
-"$(dirname $0)"/scripts/day >"${panel_fifo}" &
-
 #### LOOP FIFO
 
 (cat "${panel_fifo}" | "$(dirname $0)"/i3_lemonbar_parser.sh |
-  lemonbar -p -d -f "${font}" -f "${iconfont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
+  lemonbar -p -d -f "${font}" -f "${iconfont}" -f "${xftfont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
 
 #### Keep lemonbar below fullscreen windows
 

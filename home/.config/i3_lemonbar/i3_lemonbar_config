@@ -12,7 +12,8 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 geometry="1584x16+8+8"
 font="-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:pixelsize=12:antialiasing=true"
-clickables=14
+xftfont="Inter:pixelsize=10:antialiasing=true"
+clickables=16
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
 # Alarm settings
@@ -73,8 +74,7 @@ sep_left=""        # Powerline separator left
 sep_right=""       # Powerline separator right
 
 # Icon glyphs from Material Icons
-icon_clock=""      # Clock icon
-icon_cal=""        # Calendar icon
+icon_clock=""      # Clock icon
 icon_ethup=""      # Ethernet up icon
 icon_ethdown=""    # Ethernet down icon
 icon_wifi_up=""    # Wifi up icon
@@ -89,14 +89,6 @@ icon_splith=""     # horizontal split layout icon
 icon_splitv=""     # vertical split icon
 icon_tabbed=""     # tabbed layout icon
 icon_stacked="ﮧ"    # stacked layout icon
-
-icon_bright_100="" # Full brightness icon
-icon_bright_80=""  # 80% brightness icon
-icon_bright_51=""  # 51% brightness icon
-icon_bright_31=""  # 31% brightness icon
-icon_bright_19=""  # 19% brightness icon
-icon_bright_11=""  # 11% brightness icon
-icon_bright_6=""   # <6% brightness icon
 
 icon_vol_hi=""     # High volume icon
 icon_vol_med=""    # Medium volume icon

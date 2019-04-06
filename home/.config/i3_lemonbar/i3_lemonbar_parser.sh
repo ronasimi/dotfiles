@@ -71,61 +71,39 @@ while read -r line; do
 
   WIN*)
     # window title
-    title="%{F${color_ina} B-}${T1}${sep_right}%{F${color_title} T1} ${line#???}"
+    title="%{F${color_ina} B-}${T1}${sep_right} %{F${color_title} T3} ${line#???}%{T-}"
     ;;
 
   UPD*)
     # Updates
     if [ "${line#???}" != "0" ]; then
-      upd_cback=${color_upd}
-      upd_cicon=${color_icon_dark}
-      upd_cfore=${color_back}
+      updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_upd} B${color_sec_b1}} %{T2}${icon_arch}%{T1} ${line#???}"
     else
       upd_cback=${color_sec_b1}
       upd_cicon=${color_icon}
       upd_cfore=${color_fore}
+      updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_arch}"
     fi
-    updates="%{F${upd_cback} T1}${sep_left}%{F${upd_cicon} B${upd_cback}} %{T2}${icon_arch}%{F${upd_cfore} T1} ${line#???}"
+
     ;;
 
   GMA*)
     # Gmail
     if [ "${line#???}" != "0" ]; then
-      mail_cback=${color_mail}
-      mail_cicon=${color_title}
-      mail_cfore=${color_title}
+      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_mail} B${color_sec_b1}} %{T2}${icon_mail}%{T1} ${line#???}"
     else
-      mail_cback=${color_sec_b2}
-      mail_cicon=${color_icon}
-      mail_cfore=${color_fore}
+      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_mail}"
     fi
-    gmail="%{F${mail_cback} T1}${sep_left}%{F${mail_cicon} B${mail_cback}} %{T2}${icon_mail}%{F${mail_cfore} T1} ${line#???}"
     ;;
 
-  BRI*)
-    # Brightness
-    if [ "${line#???}" == 100 ]; then
-      icon_bright=${icon_bright_100}
-    elif [ "${line#???}" -ge 80 ]; then
-      icon_bright=${icon_bright_80}
-    elif [ "${line#???}" -ge 51 ]; then
-      icon_bright=${icon_bright_51}
-    elif [ "${line#???}" -ge 31 ]; then
-      icon_bright=${icon_bright_31}
-    elif [ "${line#???}" -ge 19 ]; then
-      icon_bright=${icon_bright_19}
-    elif [ "${line#???}" -ge 11 ]; then
-      icon_bright=${icon_bright_11}
-    elif [ "${line#???}" -ge 6 ]; then
-      icon_bright=${icon_bright_6}
-    fi
-
-    bright="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_bright} %{F- T1}${line#???}%"
+  CLK*)
+    # time
+    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock} %{F${color_fore} T3} ${line#???}%{T-}"
     ;;
 
   VOL*)
     # Speakers on/off
-    muted=$(pacmd list-sinks | grep "muted" | awk '{print $2}')
+	muted=$(pacmd list-sinks | grep "muted" | awk '{print $2}')
 
     if [ "${muted}" == "yes" ]; then
       icon_vol=${icon_vol_mute}
@@ -141,11 +119,11 @@ while read -r line; do
       icon_vol=${icon_vol_off}
     fi
 
-    vol="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_vol} %{F- T1}${line#???}%"
-
+    vol="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_vol}"
     ;;
 
   ETH*)
+
     # ethernet
     eth_cback=${color_sec_b1}
     eth_cfore=${color_fore}
@@ -207,32 +185,20 @@ while read -r line; do
     fi
 
     if [ "${line#???}" -le "${bat_alert}" ]; then
-      bat_cback=${color_alert}
-      bat_cicon=${color_icon}
+      bat_cicon=${color_alert}
       bat_cfore=${color_fore}
       icon_bat=${icon_bat_low}
       (notify-send -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work")
     else
-      bat_cback=${color_sec_b2}
       bat_cicon=${color_icon}
       bat_cfore=${color_fore}
     fi
 
-    bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${line#???}%"
-    ;;
-
-  DAY*)
-    # date
-    date="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_cal}%{F${color_fore} T1} ${line#???}"
-    ;;
-
-  CLK*)
-    # time
-    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock}%{F${color_fore} T1} ${line#???}"
+    bat="%{F${bat_cicon} B${color_sec_b1} T2}${icon_bat}%{F${bat_cfore} T1}"
     ;;
 
   esac
 
   # And finally, output
-  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}${stab}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}${stab}%{A}%{A}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}${stab}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A}${stab}%{F- B-}"
+  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}%{A}%{A1:exec chromium 'mail.google.com' &:}${gmail}${stab}%{A}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_vol.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A}%{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}${stab}%{A}%{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}${stab}%{A}%{F- B-}"
 done

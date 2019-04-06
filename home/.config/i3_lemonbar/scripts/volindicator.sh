@@ -8,13 +8,13 @@ msgId="991049"
 amixer -c 0 set Master "$@" > /dev/null
 
 # Query amixer for the current volume and whether or not the speaker is muted
-volume="$(amixer -c 0 get Master | tail -1 | awk '{print $4}' | sed 's/[^0-9]*//g')"
-mute="$(amixer -c 0 get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
-if [[ $volume == 0 || "$mute" == "off" ]]; then
+volume="$(pamixer --get-volume)"
+mute="$(pamixer --get-mute)"
+if [[ $volume == 0 || "$mute" == "true" ]]; then
 	# Show the sound muted notification
 	dunstify -a "changeVolume" -u low -i audio-volume-muted -r "$msgId" "Volume muted"
 else
 	# Show the volume notification
 	dunstify -a "changeVolume" -u low -i audio-volume-high -r "$msgId" \
-	"Volume: ${volume}%" 
+	"Volume: ${volume}%"
 fi

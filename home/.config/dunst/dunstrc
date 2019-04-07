@@ -1,5 +1,5 @@
 [global]
-    font = "Inter 9"
+    font = "Tamzen 14px"
 
     # Allow a small subset of html markup:
     #   <b>bold</b>

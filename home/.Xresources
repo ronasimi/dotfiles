@@ -1,6 +1,6 @@
 URxvt*font:			xft:TamzenForPowerline:style=Regular:pixelsize=14:antialiasing=false:hinting=false,\
-				xft:Material Design Icons:pixelsize=8:antialiasing=true:hinting=true,\
-				xft:Segoe UI Symbol:pixelsize=14:antialiasing=true:hinting=true
+				xft:Material Design Icons:pixelsize=8:antialiasing=false:hinting=false,\
+				xft:Segoe UI Symbol:pixelsize=14:antialiasing=false:hinting=false
 URxvt*boldFont:			xft:TamzenForPowerline:style=Bold:pixelsize=14:antialiasing=false:hinting=false
 URxvt*depth:			24
 URxvt*intensityStyles:		false

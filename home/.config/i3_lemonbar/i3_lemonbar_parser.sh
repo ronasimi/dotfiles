@@ -90,9 +90,9 @@ while read -r line; do
   GMA*)
     # gmail
     if [ "${line#???}" != "0" ]; then
-      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_mail} B${color_sec_b1}}%{T2}${icon_mail}%{T1} ${line#???}"
+      gmail="%{F${color_mail} B${color_sec_b1}}%{T2}${icon_mail}%{T1} ${line#???}"
     else
-      gmail="%{F${color_sec_b1} T1}${sep_left}%{F${color_netdown} B${color_sec_b1}}%{T2}${icon_mail}"
+      gmail="%{F${color_netdown} B${color_sec_b1}} %{T2}${icon_mail}"
     fi
     ;;
 
@@ -224,5 +224,5 @@ while read -r line; do
   esac
 
   # and finally, output
-  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:}${updates}%{A} %{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{F- B-}"
+  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:} ${updates}%{A} %{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{F- B-}"
 done

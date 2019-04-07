@@ -147,7 +147,7 @@ while read -r line; do
   ETH*)
 
     # ethernet
-    eth_cback=${color_sec_b2}
+    eth_cback=${color_sec_b1}
     eth_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -158,12 +158,12 @@ while read -r line; do
       eth_cicon=${color_netdown}
     fi
 
-    ethernet="%{F${eth_cicon} B${eth_cback}}%{T2} %{F${eth_cicon}}${ethup}"
+    ethernet="%{F${color_sec_b1}}${sep_left}%{F${eth_cicon} B${eth_cback}}%{T2} %{F${eth_cicon}}${ethup}"
     ;;
 
   WFI*)
     # wlan
-    wlan_cback=${color_sec_b2}
+    wlan_cback=${color_sec_b1}
     wlan_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -213,16 +213,16 @@ while read -r line; do
       (dunstify -u critical "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work")
     fi
 
-    bat="%{F${bat_cicon} B${color_sec_b2} T2} ${icon_bat}"
+    bat="%{F${bat_cicon} B${color_sec_b1} T2} ${icon_bat}"
     ;;
 
   CLK*)
     # time
-    time="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_clock} %{F${color_fore} T1} ${line#???}%{T-}"
+    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock} %{F${color_fore} T1} ${line#???}%{T-}"
     ;;
 
   esac
 
   # and finally, output
-  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:} ${updates}%{A} %{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{F- B-}"
+  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:} ${updates}%{A} %{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}%{A}%{A}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A}${stab}%{F- B-}"
 done

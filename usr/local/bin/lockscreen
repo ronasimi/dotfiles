@@ -9,5 +9,5 @@ RESW=$(xrandr | grep "current" | awk '{print $8a}' | sed 's/,$//')
 RESV=$(xrandr | grep "current" | awk '{print $10a}' | sed 's/,$//')
 
 ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY -filter_complex "smartblur=5:1,hue=s=1" -vframes 1 $TMPBG
-i3lock -S=0 -n -u -i $TMPBG --timepos='x+60:h-120' --datepos='tx:h-75' --clock --timestr="%H:%M:%S" --date-align 1 --datestr "Type password to unlock..." --time-align=1 --date-align=1 --time-font="Inter Extra Bold" --timesize=72 --date-font="Inter Semi Bold" --datesize=36 --timecolor=ffffffff --datecolor=ffffffff
+i3lock -S=0 -n -u -i $TMPBG --timepos='x+60:h-135' --datepos='tx:h-75' --clock --timestr="%H:%M" --date-align 1 --datestr "%A, %B %d" --time-align=1 --date-align=1 --time-font="Inter Medium" --timesize=96 --date-font="Inter" --datesize=48 --timecolor=ffffffff --datecolor=ffffffff
 rm $TMPBG

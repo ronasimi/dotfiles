@@ -1,4 +1,4 @@
-#!\bin\bash
+#!/bin/bash
 # i3 panel config. Powerline style.
 # _                            _                _
 #| | ___ _ __ ___   ___  _ __ | |__   __ _ _ __| |

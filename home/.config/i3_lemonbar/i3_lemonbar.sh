@@ -80,7 +80,7 @@ while read -r; do
   (xbacklight -get | awk '{print "BRI" $1}' >"${panel_fifo}")
   "$(dirname $0)"/scripts/brightindicator.sh
 
-done < <(echo && inotifywait -m -e modify /sys/class/backlight/acpi_video0/actual_brightness /sys/class/backlight/intel_backlight/actual_brightness & udevadm monitor --kernel --subsystem-match=power_supply | awk '/AC/{print $0; fflush();}') &
+done < <(echo && inotifywait -m -e modify /sys/class/backlight/acpi_video0/actual_brightness /sys/class/backlight/intel_backlight/actual_brightness & udevadm monitor --kernel --subsystem-match=power_supply) &
 
 # network, "ETH", "WFI"
 while read -r; do

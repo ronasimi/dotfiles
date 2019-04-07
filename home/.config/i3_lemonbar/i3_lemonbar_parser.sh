@@ -90,7 +90,7 @@ while read -r line; do
   GMA*)
     # gmail
     if [ "${line#???}" != "0" ]; then
-      gmail="%{F${color_mail} B${color_sec_b1}}%{T2}${icon_mail}%{T1} ${line#???}"
+      gmail="%{F${color_mail} B${color_sec_b1}} %{T2}${icon_mail}%{T1} ${line#???}"
     else
       gmail="%{F${color_netdown} B${color_sec_b1}} %{T2}${icon_mail}"
     fi

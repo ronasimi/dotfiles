@@ -14,6 +14,7 @@
 
 # min init
 title="%{F${color_ina} B-}${sep_right}%{F${color_title} T1} "
+updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_netdown} B${color_sec_b1}} %{T2}${icon_arch}"
 
 # parser
 while read -r line; do

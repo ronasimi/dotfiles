@@ -7,9 +7,12 @@ msgId="991049"
 # Query amixer for the current volume and whether or not the speaker is muted
 volume="$(pamixer --get-volume)"
 mute="$(pamixer --get-mute)"
-if [[ $volume == 0 || "$mute" == "true" ]]; then
+if [ "$mute" == "true" ]; then
 	# Show the sound muted notification
 	dunstify -a "changeVolume" -u critical -r "$msgId" "Volume muted"
+elif [ "$volume" == 0 ]; then
+	# Show the volume off notification
+	dunstify -a "changeVolume" -u normal -r "$msgId" "Volume off"
 else
 	# Show the volume notification
 	dunstify -a "changeVolume" -u low -r "$msgId" "Volume: ${volume}%"

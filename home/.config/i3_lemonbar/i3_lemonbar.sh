@@ -70,7 +70,7 @@ done &
 # volume, "MUT", "VOL"
 while read -r; do
 
-  (printf "%s%s\n" "VOL" "$(pamixer --get-volume)" > "${panel_fifo}") &
+  (printf "%s%s\n" "VOL" "$(pamixer --get-volume)" >"${panel_fifo}") &
   "$(dirname $0)"/scripts/volindicator.sh &
 
 done < <(echo && stdbuf -oL alsactl monitor pulse) &
@@ -78,7 +78,7 @@ done < <(echo && stdbuf -oL alsactl monitor pulse) &
 # Backlight, "BRI"
 while read -r; do
 
-  (printf "%s%s\n" "BRI" "$(xbacklight -get)" > "${panel_fifo}")
+  (printf "%s%s\n" "BRI" "$(xbacklight -get)" >"${panel_fifo}")
   "$(dirname $0)"/scripts/brightindicator.sh
 
 done < <(
@@ -89,15 +89,15 @@ done < <(
 # network, "ETH", "WFI"
 while read -r; do
 
-  printf "%s%s\n" "ETH" "$(nmcli -t | grep enp0s25: | cut -d ' ' -f 2)" > "${panel_fifo}"
-  printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: |  cut -d ' ' -f 2)" > "${panel_fifo}"
+  printf "%s%s\n" "ETH" "$(nmcli -t | grep enp0s25: | cut -d ' ' -f 2)" >"${panel_fifo}"
+  printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cut -d ' ' -f 2)" >"${panel_fifo}"
 
 done < <(echo && nmcli m) &
 
 # battery, "BAT"
 while read -r; do
 
-  printf "%s%s\n" "BAT" "$(acpi -b | cut -d ' ' -f 4 | tr -d '%,')" > "${panel_fifo}"
+  printf "%s%s\n" "BAT" "$(acpi -b | cut -d ' ' -f 4 | tr -d '%,')" >"${panel_fifo}"
 
 done < <(echo && upower --monitor) &
 

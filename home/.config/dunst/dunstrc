@@ -381,13 +381,6 @@
 #    # This notification will not be saved in history
 #    summary = "foobar"
 #    history_ignore = yes
-[volume-history-ignore]
-appname = Volume
-history_ignore = yes
-
-[brightness-history-ignore]
-appname = Brightness
-history_ignore = yes
 
 #[skip-display]
 #    # This notification will not be displayed, but will be included in the history
@@ -418,4 +411,24 @@ history_ignore = yes
 #    appname = "some_volume_notifiers"
 #    set_stack_tag = "volume"
 #
+[volume-history-ignore]
+appname = volIndicator
+history_ignore = yes
+
+[brightness-history-ignore]
+appname = brightIndicator
+history_ignore = yes
+
+[battery-history-ignore]
+appname = clickBat
+history_ignore = yes
+
+[ethernet-history-ignore]
+appname = clickEth
+history_ignore = yes
+
+[wifi-history-ignore]
+appname = clickWifi
+history_ignore = yes
+
 # vim: ft=cfg

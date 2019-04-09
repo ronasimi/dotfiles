@@ -9,11 +9,11 @@ volume="$(pamixer --get-volume)"
 mute="$(pamixer --get-mute)"
 if [ "$mute" == "true" ]; then
 	# Show the sound muted notification
-	dunstify -a "Volume" -u critical -r "$msgId" "Volume muted"
+	dunstify -a "volIndicator" -u critical -r "$msgId" "Volume muted"
 elif [ "$volume" == 0 ]; then
 	# Show the volume off notification
-	dunstify -a "Volume" -u normal -r "$msgId" "Volume off"
+	dunstify -a "volIndicator" -u normal -r "$msgId" "Volume off"
 else
 	# Show the volume notification
-	dunstify -a "Volume" -u low -r "$msgId" "Volume: ${volume}%"
+	dunstify -a "volIndicator" -u low -r "$msgId" "Volume: ${volume}%"
 fi

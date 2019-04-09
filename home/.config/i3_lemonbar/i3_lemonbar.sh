@@ -24,12 +24,12 @@ mkfifo "${panel_fifo}"
 ### EVENTS METERS
 
 # i3 binding mode "MOD"
-(printf "%s\n" "MODinit" >"${panel_fifo}" && i3-msg -t subscribe -m '[ "mode" ]' | awk -F '"' '{print "MOD" $4; fflush(stdout)}' >"${panel_fifo}") &
+printf "%s\n" "MODinit" >"${panel_fifo}" && i3-msg -t subscribe -m '[ "mode" ]' | awk -F '"' '{print "MOD" $4; fflush(stdout)}' >"${panel_fifo}" &
 
 # container layout, "LAY"
 while read -r; do
 
-  (printf "%s%s\n" "LAY" "$(i3-msg -t get_tree | jq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')" >"${panel_fifo}")
+  printf "%s%s\n" "LAY" "$(i3-msg -t get_tree | jq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')" >"${panel_fifo}"
 
 done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace", "binding" ]') &
 
@@ -37,7 +37,7 @@ done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace", "binding" ]') 
 "$(dirname $0)"/scripts/workspaces.pl >"${panel_fifo}" &
 
 # window title, "WIN"
-(xtitle -sf 'WIN%s\n' >"${panel_fifo}") &
+xtitle -sf 'WIN%s\n' >"${panel_fifo}" &
 
 # updates, "UPD"
 ### update check interval
@@ -70,7 +70,7 @@ done &
 # volume, "MUT", "VOL"
 while read -r; do
 
-  (printf "%s%s\n" "VOL" "$(pamixer --get-volume)" >"${panel_fifo}") &
+  printf "%s%s\n" "VOL" "$(pamixer --get-volume)" >"${panel_fifo}"
   "$(dirname $0)"/scripts/volindicator.sh &
 
 done < <(echo && stdbuf -oL alsactl monitor pulse) &
@@ -78,7 +78,7 @@ done < <(echo && stdbuf -oL alsactl monitor pulse) &
 # Backlight, "BRI"
 while read -r; do
 
-  (printf "%s%s\n" "BRI" "$(xbacklight -get)" >"${panel_fifo}")
+  printf "%s%s\n" "BRI" "$(xbacklight -get)" >"${panel_fifo}"
   "$(dirname $0)"/scripts/brightindicator.sh
 
 done < <(

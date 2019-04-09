@@ -177,34 +177,43 @@ while read -r line; do
     ;;
 
   BAT*)
-    # charger
-    oncharger=$(cat /sys/class/power_supply/AC/online)
-
-    if [ "${oncharger}" == "1" ]; then
+    # battery status
+    if [ $(cat /sys/class/power_supply/AC/online) == "1" ]; then
       icon_bat=${icon_bat_charge}
-    # battery level
-    elif [ "${line#???}" -ge 95 ]; then
+      bat_cicon=${color_icon}
+      # battery level
+    elif [ "${line#???}" -ge 98 ]; then
       icon_bat=${icon_bat_full}
-    elif [ "${line#???}" -ge 85 ]; then
+      bat_cicon=${color_icon}
+    elif [ "${line#???}" -ge 90 ]; then
       icon_bat=${icon_bat_90}
-    elif [ "${line#???}" -ge 75 ]; then
+      bat_cicon=${color_icon}
+    elif [ "${line#???}" -ge 80 ]; then
       icon_bat=${icon_bat_80}
-    elif [ "${line#???}" -ge 65 ]; then
+      bat_cicon=${color_icon}
+    elif [ "${line#???}" -ge 70 ]; then
       icon_bat=${icon_bat_70}
-    elif [ "${line#???}" -ge 55 ]; then
+      bat_cicon=${color_icon}
+    elif [ "${line#???}" -ge 60 ]; then
       icon_bat=${icon_bat_60}
-    elif [ "${line#???}" -ge 45 ]; then
+      bat_cicon=${color_icon}
+    elif [ "${line#???}" -ge 50 ]; then
       icon_bat=${icon_bat_50}
-    elif [ "${line#???}" -ge 35 ]; then
+      bat_cicon=${color_icon}
+    elif [ "${line#???}" -ge 40 ]; then
       icon_bat=${icon_bat_40}
-    elif [ "${line#???}" -ge 25 ]; then
+      bat_cicon=${color_icon}
+    elif [ "${line#???}" -ge 30 ]; then
       icon_bat=${icon_bat_30}
-      bat_cicon=${color_warn}
-    elif [ "${line#???}" -ge 15 ]; then
+      bat_cicon=${color_icon}
+    elif [ "${line#???}" -ge 20 ]; then
       icon_bat=${icon_bat_20}
+      bat_cicon=${color_icon}
+    elif [ "${line#???}" -ge 10 ]; then
+      icon_bat=${icon_bat_10}
       bat_cicon=${color_warn}
     elif [ "${line#???}" -gt "${bat_alert}" ]; then
-      icon_bat=${icon_bat_10}
+      icon_bat=${icon_bat_0}
       bat_cicon=${color_warn}
     elif [ "${line#???}" -le "${bat_alert}" ]; then
       icon_bat=${icon_bat_low}

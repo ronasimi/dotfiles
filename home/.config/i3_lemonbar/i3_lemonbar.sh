@@ -24,20 +24,20 @@ mkfifo "${panel_fifo}"
 ### EVENTS METERS
 
 # i3 binding mode "MOD"
-printf "%s\n" "MODinit" >"${panel_fifo}" && i3-msg -t subscribe -m '[ "mode" ]' | awk -F '"' '{print "MOD" $4; fflush(stdout)}' >"${panel_fifo}" &
+(printf "%s\n" "MODinit" >"${panel_fifo}" && i3-msg -t subscribe -m '[ "mode" ]' | awk -F '"' '{print "MOD" $4; fflush(stdout)}') >"${panel_fifo}" &
 
 # container layout, "LAY"
 while read -r; do
 
-  printf "%s%s\n" "LAY" "$(i3-msg -t get_tree | jq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')" >"${panel_fifo}"
+  (printf "%s%s\n" "LAY" "$(i3-msg -t get_tree | jq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')" >"${panel_fifo}") &
 
 done < <(echo && i3-msg -t subscribe -m '[ "window", "workspace", "binding" ]') &
 
 # i3 Workspaces, "WSP"
-"$(dirname $0)"/scripts/workspaces.pl >"${panel_fifo}" &
+("$(dirname $0)"/scripts/workspaces.pl >"${panel_fifo}") &
 
 # window title, "WIN"
-xtitle -sf 'WIN%s\n' >"${panel_fifo}" &
+(xtitle -sf 'WIN%s\n' >"${panel_fifo}") &
 
 # updates, "UPD"
 ### update check interval
@@ -45,7 +45,7 @@ cnt_update="${upd_timer}"
 
 while :; do
   if [ $((cnt_update++)) -ge "${upd_timer}" ]; then
-    printf "%s%s\n" "UPD" "$("$(dirname $0)"/scripts/updates.sh)" >"${panel_fifo}"
+    (printf "%s%s\n" "UPD" "$("$(dirname $0)"/scripts/updates.sh)" >"${panel_fifo}") &
     cnt_update=0
   fi
 
@@ -59,7 +59,7 @@ cnt_mail="${mail_timer}"
 
 while :; do
   if [ $((cnt_mail++)) -ge "${mail_timer}" ]; then
-    printf "%s%s\n" "GMA" "$("$(dirname $0)"/scripts/gmail.sh)" >"${panel_fifo}"
+    (printf "%s%s\n" "GMA" "$("$(dirname $0)"/scripts/gmail.sh)" >"${panel_fifo}") &
     cnt_mail=0
   fi
 
@@ -70,7 +70,7 @@ done &
 # volume, "MUT", "VOL"
 while read -r; do
 
-  printf "%s%s\n" "VOL" "$(pamixer --get-volume)" >"${panel_fifo}"
+  (printf "%s%s\n" "VOL" "$(pamixer --get-volume)" >"${panel_fifo}") &
   "$(dirname $0)"/scripts/volindicator.sh &
 
 done < <(echo && stdbuf -oL alsactl monitor pulse) &
@@ -78,7 +78,7 @@ done < <(echo && stdbuf -oL alsactl monitor pulse) &
 # Backlight, "BRI"
 while read -r; do
 
-  printf "%s%s\n" "BRI" "$(xbacklight -get)" >"${panel_fifo}"
+  (printf "%s%s\n" "BRI" "$(xbacklight -get)" >"${panel_fifo}") &
   "$(dirname $0)"/scripts/brightindicator.sh
 
 done < <(
@@ -89,15 +89,15 @@ done < <(
 # network, "ETH", "WFI"
 while read -r; do
 
-  printf "%s%s\n" "ETH" "$(nmcli -t | grep enp0s25: | cut -d ' ' -f 2)" >"${panel_fifo}"
-  printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cut -d ' ' -f 2)" >"${panel_fifo}"
+  (printf "%s%s\n" "ETH" "$(nmcli -t | grep enp0s25: | cut -d ' ' -f 2)" >"${panel_fifo}") &
+  (printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cut -d ' ' -f 2)" >"${panel_fifo}") &
 
 done < <(echo && nmcli m) &
 
 # battery, "BAT"
 while read -r; do
 
-  printf "%s%s\n" "BAT" "$(acpi -b | cut -d ' ' -f 4 | tr -d '%,')" >"${panel_fifo}"
+  (printf "%s%s\n" "BAT" "$(acpi -b | cut -d ' ' -f 4 | tr -d '%,')" >"${panel_fifo}") &
 
 done < <(echo && upower --monitor) &
 

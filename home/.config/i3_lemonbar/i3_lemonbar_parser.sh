@@ -99,9 +99,7 @@ while read -r line; do
 
   VOL*)
     # speakers on/off
-    muted=$(pacmd list-sinks | grep "muted" | awk '{print $2}')
-
-    if [ "${muted}" == "yes" ]; then
+    if [ "$(pamixer --get-mute)" == "true" ]; then
       icon_vol=${icon_vol_mute}
       vol_cicon=${color_netdown}
     elif [ "${line#???}" -gt 100 ]; then

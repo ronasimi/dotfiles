@@ -227,7 +227,7 @@ bindsym $mod+Shift+Delete move scratchpad
 bindsym $mod+Delete scratchpad show
 
 # reload the configuration file
-bindsym $mod+Shift+c reload; exec notify-send -u low "i3 config reloaded"
+bindsym $mod+Shift+c reload; exec dunstify -u low "i3 config reloaded"
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r exec pkill lemonbar, restart

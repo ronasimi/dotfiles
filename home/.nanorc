@@ -17,7 +17,7 @@ set statuscolor white,black
 set errorcolor black,red
 set selectedcolor black,blue
 set stripecolor yellow
-set numbercolor yellow
+set numbercolor yellow,black
 set keycolor cyan
 set functioncolor green
 

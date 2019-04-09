@@ -283,7 +283,7 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
 
 # POWERLEVEL10K OPTIONS
-POWERLEVEL9K_MODE='nerdfont-complete'
+#POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir_writable context dir)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs vcs)
 DEFAULT_USER="ron"

@@ -182,6 +182,10 @@ while read -r line; do
       icon_bat=${icon_bat_charge}
       bat_cicon=${color_icon}
       # battery level
+    elif [ "${line#???}" -le "${bat_alert}" ]; then
+      icon_bat=${icon_bat_low}
+      bat_cicon=${color_alert}
+      (dunstify -u critical -r 109966 "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work")
     elif [ "${line#???}" -ge 98 ]; then
       icon_bat=${icon_bat_full}
       bat_cicon=${color_icon}
@@ -212,13 +216,9 @@ while read -r line; do
     elif [ "${line#???}" -ge 10 ]; then
       icon_bat=${icon_bat_10}
       bat_cicon=${color_warn}
-    elif [ "${line#???}" -gt "${bat_alert}" ]; then
+    elif [ "${line#???}" -ge 0 ]; then
       icon_bat=${icon_bat_0}
       bat_cicon=${color_warn}
-    elif [ "${line#???}" -le "${bat_alert}" ]; then
-      icon_bat=${icon_bat_low}
-      bat_cicon=${color_alert}
-      (dunstify -u critical -r 109966 "BATTERY CRITICALLY LOW" "Please plug in AC adapter immediately to avoid losing work")
     fi
 
     bat="%{F${bat_cicon} B${color_sec_b1} T2} ${icon_bat}"

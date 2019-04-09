@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Input parser for i3 bar
-# Feb 22 2018 - ronasimi
+# Ron Asimi
 # _                            _                _
 #| | ___ _ __ ___   ___  _ __ | |__   __ _ _ __| |
 #| |/ _ \ '_ ` _ \ / _ \| '_ \| '_ \ / _` | '__| |

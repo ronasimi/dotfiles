@@ -1,6 +1,7 @@
 #! /bin/bash
 #
 # I3 bar with https://github.com/LemonBoy/bar
+# Ron Asimi
 # _                            _                _
 #| | ___ _ __ ___   ___  _ __ | |__   __ _ _ __| |
 #| |/ _ \ '_ ` _ \ / _ \| '_ \| '_ \ / _` | '__| |

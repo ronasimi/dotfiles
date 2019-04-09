@@ -8,4 +8,4 @@ msgId="991050"
 bright="$(xbacklight -get)"
 
 # Show the brightness notification
-dunstify -a "changeBrightness" -u low -r "$msgId" "Backlight: ${bright}%"
+dunstify -a "Brightness" -u low -r "$msgId" "Backlight: ${bright}%"

@@ -106,7 +106,8 @@ icon_bright_19=""  # 19% brightness icon
 icon_bright_11=""  # 11% brightness icon
 icon_bright_6=""   # <6% brightness icon
 
-icon_bat_charge="" # On charger icon
+icon_bat_ac=""     # On charger icon
+icon_bat_charge="" # Battery charging icon
 icon_bat_full=""   # Full battery icon
 icon_bat_90=""     # 90% battery icon
 icon_bat_80=""     # 80% battery icon

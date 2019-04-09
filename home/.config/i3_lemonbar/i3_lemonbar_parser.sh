@@ -178,14 +178,14 @@ while read -r line; do
 
   BAT*)
     # ac status
-	if [ $(cat /sys/class/power_supply/AC/online) == "1" ]; then
-		if [ $(acpi | awk '{gsub(",",""); print $3}') == "Charging" ]; then
-			icon_bat=${icon_bat_charge}
-			bat_cicon=${color_icon}
-		else
-	  		icon_bat=${icon_bat_ac}
-      		bat_cicon=${color_icon}
-	  	fi
+    if [ $(cat /sys/class/power_supply/AC/online) == "1" ]; then
+      if [ $(acpi | awk '{gsub(",",""); print $3}') == "Charging" ]; then
+        icon_bat=${icon_bat_charge}
+        bat_cicon=${color_icon}
+      else
+        icon_bat=${icon_bat_ac}
+        bat_cicon=${color_icon}
+      fi
       # battery discharge level
     elif [ "${line#???}" -le "${bat_alert}" ]; then
       icon_bat=${icon_bat_low}

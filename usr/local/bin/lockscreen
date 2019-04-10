@@ -3,7 +3,7 @@
 # lockscreen script using ffmpeg and i3lock-color
 
 TMPBG=/tmp/screen.png
-LOCK=$HOME/.config/lockscreen/face.png
+LOCK=$HOME/.config/lockscreen/lock.png
 RES=$(xrandr | grep "current" | awk '{print $8a"x"$10a}' | sed 's/,$//')
 RESW=$(xrandr | grep "current" | awk '{print $8a}' | sed 's/,$//')
 RESV=$(xrandr | grep "current" | awk '{print $10a}' | sed 's/,$//')

@@ -67,7 +67,7 @@ while :; do
 
 done &
 
-# volume, "MUT", "VOL"
+# volume, "VOL"
 while read -r; do
 
   printf "%s%s\n" "VOL" "$(pamixer --get-volume)" >"${panel_fifo}" &
@@ -75,6 +75,7 @@ while read -r; do
 
 done < <(
   echo &&
+    # restart alsactl if it exits with anything other than 0 (fixes suspend/resume issue)
     until stdbuf -oL alsactl monitor pulse; do
       echo "alsactl crashed with exit code $?.  Respawning.." >&2
       sleep 1
@@ -107,7 +108,7 @@ while read -r; do
 
 done < <(echo && upower --monitor) &
 
-# date/time
+# date/time, "DAY"/"CLK"
 "$(dirname $0)"/scripts/date >"${panel_fifo}" &
 "$(dirname $0)"/scripts/clock >"${panel_fifo}" &
 

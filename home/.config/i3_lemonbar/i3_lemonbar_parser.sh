@@ -177,13 +177,15 @@ while read -r line; do
 
   BAT*)
     # ac status
+    # on charger and charging
     if [ "$(cat /sys/class/power_supply/AC/online)" == "1" ] && [ "$(acpi | awk '{gsub(",",""); print $3}')" == "Charging" ]; then
       icon_bat=${icon_bat_charge}
-      bat_cicon=${color_icon}
-  elif [ "$(cat /sys/class/power_supply/AC/online)" == "1" ] && [ "$(acpi | awk '{gsub(",",""); print $3}')" == "Unknown" ]; then
+      bat_cicon=${color_warn}
+    # on charger and not charging/full
+    elif [ "$(cat /sys/class/power_supply/AC/online)" == "1" ] && [ "$(acpi | awk '{gsub(",",""); print $3}')" == "Unknown" ]; then
       icon_bat=${icon_bat_ac}
-      bat_cicon=${color_icon}
-      # battery discharge level
+      bat_cicon=${color_ok}
+    # battery discharging
     elif [ "${line#???}" -le "${bat_alert}" ]; then
       icon_bat=${icon_bat_low}
       bat_cicon=${color_alert}
@@ -226,15 +228,15 @@ while read -r line; do
     bat="%{F${bat_cicon} B${color_sec_b2} T2} ${icon_bat}"
     ;;
 
-	  DAY*)
-	    # date
-	    date="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_cal}%{F${color_fore} T1} ${line#???}%{T-}"
-	    ;;
+  DAY*)
+    # date
+    date="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_cal}%{F${color_fore} T1} ${line#???}%{T-}"
+    ;;
 
-		  CLK*)
-		    # time
-		    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock}%{F${color_fore} T1} ${line#???}%{T-}"
-		    ;;
+  CLK*)
+    # time
+    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock}%{F${color_fore} T1} ${line#???}%{T-}"
+    ;;
 
   esac
 

@@ -74,11 +74,12 @@ while read -r; do
   "$(dirname $0)"/scripts/volindicator.sh &
 
 done < <(
-echo &&
-until stdbuf -oL alsactl monitor pulse; do
-	echo "alsactl crashed with exit code $?.  Respawning.." >&2
-    sleep 1
-done) &
+  echo &&
+    until stdbuf -oL alsactl monitor pulse; do
+      echo "alsactl crashed with exit code $?.  Respawning.." >&2
+      sleep 1
+    done
+) &
 
 # Backlight, "BRI"
 while read -r; do
@@ -117,7 +118,7 @@ done < <(echo && upower --monitor) &
 #### Keep lemonbar below fullscreen windows
 
 tries_left=20
-while [ -z "$wid" -a "$tries_left" -gt 0 ]; do
+while [ -z "$wid" ] && [ "$tries_left" -gt 0 ]; do
   sleep 0.05
   xdo above -t $(xwininfo -root -children | grep -E -o "0x[[:xdigit:]]+" | tail -1) "$(xdo id -a bar)"
   tries_left=$((tries_left - 1))

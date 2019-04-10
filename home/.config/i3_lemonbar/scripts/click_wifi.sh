@@ -7,5 +7,5 @@ msgId="991053"
 if [ "${wifion}" == "connected" ]; then
 	(dunstify -a "clickWifi" -u low -r "$msgId" "WiFi connected" "SSID: $ssid\nCurrent IP addresses: $wifiIP")
 else
-	(dunstify -a "clickWifi" -u normal -r "$msgId" "WiFi disconnected" "Not currently connected to wireless network")
+	(dunstify -a "clickWifi" -u normal -r "$msgId" "WiFi disconnected")
 fi

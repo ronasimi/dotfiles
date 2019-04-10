@@ -76,6 +76,7 @@ while read -r; do
 done < <(
 echo &&
 until stdbuf -oL alsactl monitor pulse; do
+	echo "alsactl crashed with exit code $?.  Respawning.." >&2
     sleep 1
 done) &
 

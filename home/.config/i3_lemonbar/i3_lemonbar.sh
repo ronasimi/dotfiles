@@ -108,7 +108,8 @@ while read -r; do
 done < <(echo && upower --monitor) &
 
 # date/time
-"$(dirname $0)"/scripts/time >"${panel_fifo}" &
+"$(dirname $0)"/scripts/date >"${panel_fifo}" &
+"$(dirname $0)"/scripts/clock >"${panel_fifo}" &
 
 #### LOOP FIFO
 

@@ -14,7 +14,6 @@
 
 # min init
 title="%{F${color_ina} B-}${sep_right}%{F${color_title} T1} "
-updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_netdown} B${color_sec_b1}} %{T2}${icon_arch}"
 
 # parser
 while read -r line; do
@@ -78,12 +77,12 @@ while read -r line; do
   UPD*)
     # updates
     if [ "${line#???}" != "0" ]; then
-      updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_upd} B${color_sec_b1}} %{T2}${icon_arch}%{F${color_fore} T1} ${line#???}"
+      updates="%{F${color_upd} T1}${sep_left}%{F${color_icon_dark} B${color_upd}} %{T2}${icon_arch}%{T1} ${line#???}${stab}"
     else
       upd_cback=${color_sec_b1}
       upd_cicon=${color_icon}
       upd_cfore=${color_fore}
-      updates="%{F${color_sec_b1} T1}${sep_left}%{F${color_netdown} B${color_sec_b1}} %{T2}${icon_arch}"
+      updates=""
     fi
 
     ;;
@@ -91,9 +90,9 @@ while read -r line; do
   GMA*)
     # gmail
     if [ "${line#???}" != "0" ]; then
-      gmail="%{F${color_mail} B${color_sec_b1}} %{T2}${icon_mail}%{F${color_fore} T1} ${line#???}"
+      gmail="%{F${color_mail} T1}${sep_left}%{F${color_title} B${color_mail}} %{T2}${icon_mail}%{T1} ${line#???}${stab}"
     else
-      gmail="%{F${color_netdown} B${color_sec_b1}} %{T2}${icon_mail}"
+      gmail=""
     fi
     ;;
 
@@ -119,7 +118,7 @@ while read -r line; do
       vol_cicon=${color_netdown}
     fi
 
-    vol="%{F${color_sec_b2}}${sep_left}%{F${vol_cicon} B${color_sec_b2}} %{T2}${icon_vol}"
+    vol="%{F${color_sec_b1}}${sep_left}%{F${vol_cicon} B${color_sec_b1}} %{T2}${icon_vol}"
     ;;
 
   BRI*)
@@ -140,13 +139,13 @@ while read -r line; do
       icon_bright=${icon_bright_6}
     fi
 
-    bright="%{F${color_icon} B${color_sec_b2}} %{T2}${icon_bright}"
+    bright="%{F${color_icon} B${color_sec_b1}} %{T2}${icon_bright}"
     ;;
 
   ETH*)
 
     # ethernet
-    eth_cback=${color_sec_b1}
+    eth_cback=${color_sec_b2}
     eth_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -157,12 +156,12 @@ while read -r line; do
       eth_cicon=${color_netdown}
     fi
 
-    ethernet="%{F${color_sec_b1}}${sep_left}%{F${eth_cicon} B${eth_cback}}%{T2} %{F${eth_cicon}}${ethup}"
+    ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback}}%{T2} %{F${eth_cicon}}${ethup}"
     ;;
 
   WFI*)
     # wlan
-    wlan_cback=${color_sec_b1}
+    wlan_cback=${color_sec_b2}
     wlan_cfore=${color_fore}
 
     if [ "${line#???}" == "connected" ]; then
@@ -224,16 +223,21 @@ while read -r line; do
       bat_cicon=${color_warn}
     fi
 
-    bat="%{F${bat_cicon} B${color_sec_b1} T2} ${icon_bat}"
+    bat="%{F${bat_cicon} B${color_sec_b2} T2} ${icon_bat}"
     ;;
 
-  CLK*)
-    # time
-    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock}%{F${color_fore} T1} ${line#???}%{T-}"
-    ;;
+	  DAY*)
+	    # date
+	    date="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_cal}%{F${color_fore} T1} ${line#???}%{T-}"
+	    ;;
+
+		  CLK*)
+		    # time
+		    time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock}%{F${color_fore} T1} ${line#???}%{T-}"
+		    ;;
 
   esac
 
   # and finally, output
-  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:} ${updates}%{A} %{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}${stab}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}%{A}%{A}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${time}%{A} %{F- B-}"
+  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec chromium 'www.archlinux.org' &:} ${updates}%{A} %{A1:exec chromium 'mail.google.com' &:}${gmail}%{A}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pulseaudio-ctl mute:}%{A4:pulseaudio-ctl up:}%{A5:pulseaudio-ctl down:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}%{A}%{A}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}${ethernet}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}${wifi}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A} %{F- B-}"
 done

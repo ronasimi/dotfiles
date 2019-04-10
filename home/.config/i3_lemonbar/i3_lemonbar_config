@@ -60,7 +60,6 @@ color_icon_dark="#282828" # For icons (dark)
 color_netdown="#${bla}"   # For inactive network interface icons
 color_mail="#C0DD4B39"    # Color for mail alert
 color_upd="#C01793D0"     # Color for update alert
-color_ok="#${grn}"        # Color for saul goodman
 color_warn="#${ylw}"      # Color for warning
 color_alert="#${red}"     # Color for alert
 color_mode="#${bred}"     # Foreground color for binding mode

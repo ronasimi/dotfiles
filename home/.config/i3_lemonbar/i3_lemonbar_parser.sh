@@ -184,7 +184,7 @@ while read -r line; do
     # on charger and not charging/full
     elif [ "$(cat /sys/class/power_supply/AC/online)" == "1" ] && [ "$(acpi | awk '{gsub(",",""); print $3}')" == "Unknown" ]; then
       icon_bat=${icon_bat_ac}
-      bat_cicon=${color_ok}
+      bat_cicon=${color_icon}
     # battery discharging
     elif [ "${line#???}" -le "${bat_alert}" ]; then
       icon_bat=${icon_bat_low}

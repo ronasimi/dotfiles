@@ -73,7 +73,7 @@ while read -r; do
   printf "%s%s\n" "VOL" "$(pamixer --get-volume)" >"${panel_fifo}" &
   "$(dirname $0)"/scripts/volindicator.sh &
 
-done < <(echo &&  pactl subscribe | awk '/sink/ {print $1; fflush(stdout)}') &
+done < <(echo &&  pactl subscribe | awk '/sink/ {print $1; fflush()}') &
 
 # Backlight, "BRI"
 while read -r; do

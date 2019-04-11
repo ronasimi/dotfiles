@@ -11,7 +11,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font xft: Inter Medium 9
+font xft: Tamzen 14px
 
 ## Workspace names
 # workspace name variables

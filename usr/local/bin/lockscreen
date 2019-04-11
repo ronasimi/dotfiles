@@ -6,8 +6,10 @@ TMPBG=/tmp/screen.png
 LOCK=$HOME/.config/lockscreen/lock.png
 RES=$(xrandr | grep "current" | awk '{print $8a"x"$10a}' | sed 's/,$//')
 RESW=$(xrandr | grep "current" | awk '{print $8a}' | sed 's/,$//')
-RESV=$(xrandr | grep "current" | awk '{print $10a}' | sed 's/,$//')
-
-ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY -i $LOCK -filter_complex "smartblur=5:1,hue=s=0.75,overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/3" -vframes 1 $TMPBG
+if [ "$RESW" != 1600 ]; then
+	ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY -i $LOCK -filter_complex "smartblur=5:1,hue=s=0.75,overlay=(1600-overlay_w)/2:(main_h-overlay_h)/3" -vframes 1 $TMPBG
+else
+	ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY -i $LOCK -filter_complex "smartblur=5:1,hue=s=0.75,overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/3" -vframes 1 $TMPBG
+fi
 i3lock -S=0 -n -u -i $TMPBG --timepos='x+60:h-135' --datepos='tx:h-75' --clock --timestr="%H:%M" --date-align 1 --datestr "%A, %B %d" --time-align=1 --date-align=1 --time-font="Inter Medium" --timesize=96 --date-font="Inter Light BETA" --datesize=48 --timecolor=ac4142ff --datecolor=ac4142ff
 rm $TMPBG

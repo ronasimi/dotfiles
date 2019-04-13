@@ -39,5 +39,5 @@ clipster -d &
 syndaemon -i 0.5 1 -K -R -d &
 xset s 300 600 &
 xset m 3 0 &
-exec_always --no-startup-id ~/.fehbg
+~/.fehbg &
 exec i3

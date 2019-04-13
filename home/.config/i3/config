@@ -283,7 +283,6 @@ bar {
 }
 
 # autostart
-exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id thunar --daemon
 exec --no-startup-id urxvtd -q -o -f
 exec --no-startup-id xss-lock lockscreen

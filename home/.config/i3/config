@@ -246,7 +246,7 @@ bindsym $mod+Ctrl+e exec --no-startup-id ~/.config/i3/scripts/i3_exit.sh
 
 ## Program Keybinds
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -h 16 -w 1584 -x 8 -y 8 -nb '$bg' -nf '$fg' -sb '$ind' -sf '$bg' -fn '-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -h 16 -nb '$bg' -nf '$fg' -sb '$ind' -sf '$bg' -fn '-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*'"
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium

@@ -117,6 +117,4 @@ done < <(echo && upower --monitor) &
 (cat "${panel_fifo}" | "$(dirname $0)"/i3_lemonbar_parser.sh |
   lemonbar -p -o 0 -f "${font}" -o -0.5 -f "${iconfont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
 
-#### Keep lemonbar below fullscreen windows
-
 wait

@@ -97,7 +97,7 @@ icon_vol_hi=""     # High volume icon
 icon_vol_med=""    # Medium volume icon
 icon_vol_lo=""     # Low volume icon
 icon_vol_off=""    # Volume off icon
-icon_vol_mute="﷤"   # Mute icon
+icon_vol_mute="﹨"   # Mute icon
 
 icon_bright_100="" # Full brightness icon
 icon_bright_80=""  # 80% brightness icon

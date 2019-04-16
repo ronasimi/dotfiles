@@ -97,7 +97,7 @@ while read -r line; do
     ;;
 
   VOL*)
-    # speakers on/off
+    # speakers volume/muted
     if [ "$(pamixer --get-mute)" == "true" ]; then
       icon_vol=${icon_vol_mute}
       vol_cicon=${color_netdown}

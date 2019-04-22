@@ -56,9 +56,8 @@ while read -r line; do
 			while [ $# -gt 0 ]; do
 				case $1 in
 					FOC*)
-						name=$(echo ${1#???} | cut -d ":" -f 2)
-						number=$(echo ${1#???} | cut -d ":" -f 1)
-						wsp="${wsp}%{F${color_ina} B${color_wsp}}${sep_right}%{F${color_act_fore} B${color_wsp} T2}%{A1:i3-msg workspace number ${number}:} ${name} %{A}%{F${color_wsp} B${color_ina}}${T1}${sep_right}"
+					name=$(echo ${1#???} | cut -d ":" -f 2)
+						wsp="${wsp}%{F${color_ina} B${color_wsp}}${sep_right}%{F${color_act_fore} B${color_wsp} T2} ${name} %{F${color_wsp} B${color_ina}}${T1}${sep_right}"
 						;;
 					INA* | ACT*)
 						name=$(echo ${1#???} | cut -d ":" -f 2)

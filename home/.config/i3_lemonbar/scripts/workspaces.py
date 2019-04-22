@@ -18,7 +18,6 @@
 import sys
 import time
 import subprocess
-import re
 
 import i3
 
@@ -85,7 +84,6 @@ class i3ws(object):
 
     def display(self, text):
         # Displays the text in stdout
-        text = re.sub(r'[0-9]|\:', '', text)
         print(text)
         sys.stdout.flush()
 

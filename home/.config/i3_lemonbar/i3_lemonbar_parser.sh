@@ -56,13 +56,19 @@ while read -r line; do
 			while [ $# -gt 0 ]; do
 				case $1 in
 					FOC*)
-						wsp="${wsp}%{F${color_ina} B${color_wsp}}${sep_right}%{F${color_act_fore} B${color_wsp} T2} ${1#???} %{F${color_wsp} B${color_ina}}${T1}${sep_right}"
+						name=$(echo ${1#???} | cut -d ":" -f 2)
+						number=$(echo ${1#???} | cut -d ":" -f 1)
+						wsp="${wsp}%{F${color_ina} B${color_wsp}}${sep_right}%{F${color_act_fore} B${color_wsp} T2}%{A1:i3-msg workspace number ${number}:} ${name} %{A}%{F${color_wsp} B${color_ina}}${T1}${sep_right}"
 						;;
 					INA* | ACT*)
-						wsp="${wsp}%{F${color_ina} B${color_ina}}${sep_right}%{F${color_ina_fore} B${color_ina} T2} ${1#???} %{F${color_ina} B${color_ina}}${T1}${sep_right}"
+						name=$(echo ${1#???} | cut -d ":" -f 2)
+						number=$(echo ${1#???} | cut -d ":" -f 1)
+						wsp="${wsp}%{F${color_ina} B${color_ina}}${sep_right}%{F${color_ina_fore} B${color_ina} T2}%{A1:i3-msg workspace number ${number}:} ${name} %{A}%{F${color_ina} B${color_ina}}${T1}${sep_right}"
 						;;
 					URG*)
-						wsp="${wsp}%{F${color_ina} B${color_alert}}${sep_right}%{F${color_act_fore} B${color_alert} T2} ${1#???} %{F${color_alert} B${color_ina}}${T1}${sep_right}"
+						name=$(echo ${1#???} | cut -d ":" -f 2)
+						number=$(echo ${1#???} | cut -d ":" -f 1)
+						wsp="${wsp}%{F${color_ina} B${color_alert}}${sep_right}%{F${color_act_fore} B${color_alert} T2}%{A1:i3-msg workspace number ${number}:} ${name} %{A}%{F${color_alert} B${color_ina}}${T1}${sep_right}"
 						;;
 				esac
 				shift

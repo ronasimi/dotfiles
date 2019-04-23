@@ -31,7 +31,7 @@ mkfifo "${panel_fifo}"
 "$(dirname $0)"/scripts/layout.py >"${panel_fifo}" &
 
 # i3 Workspaces, "WSP"
-"$(dirname $0)"/scripts/workspaces.py >"${panel_fifo}" &
+"$(dirname $0)"/scripts/workspaces.pl >"${panel_fifo}" &
 
 # window title, "WIN"
 (xtitle -sf 'WIN%s\n' >"${panel_fifo}") &

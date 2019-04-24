@@ -86,9 +86,7 @@ while read -r; do
   "$(dirname $0)"/scripts/brightindicator.sh
 
 done < <(
-  echo && inotifywait -m -e modify /sys/class/backlight/acpi_video0/actual_brightness /sys/class/backlight/intel_backlight/actual_brightness &
-  udevadm monitor --kernel --subsystem-match=power_supply
-) &
+  echo && udevadm monitor --kernel --subsystem-match=backlight & udevadm monitor --kernel --subsystem-match=power_supply) &
 
 # network, "ETH", "WFI"
 while read -r; do
@@ -103,7 +101,7 @@ while read -r; do
 
   (printf "%s%s\n" "BAT" "$(acpi -b | cut -d ' ' -f 4 | tr -d '%,')") >"${panel_fifo}" &
 
-done < <(echo && upower --monitor) &
+done < <(echo && udevadm monitor --kernel --subsystem-match=power_supply) &
 
 # date/time, "DAY"/"CLK"
 "$(dirname $0)"/scripts/date >"${panel_fifo}" &

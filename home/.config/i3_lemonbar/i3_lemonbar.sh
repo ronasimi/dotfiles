@@ -86,7 +86,7 @@ while read -r; do
   "$(dirname $0)"/scripts/brightindicator.sh
 
 done < <(
-  echo && udevadm monitor --kernel --subsystem-match=backlight & udevadm monitor --kernel --subsystem-match=power_supply) &
+  echo && udevadm monitor --kernel --subsystem-match=backlight --subsystem-match=power_supply) &
 
 # network, "ETH", "WFI"
 while read -r; do

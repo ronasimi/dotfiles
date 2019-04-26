@@ -2,8 +2,6 @@
 # Default acpi script that takes an entry for all actions
 
 # Function to get current environment
-#!/bin/bash
-
 pid=$(pgrep -t tty$(fgconsole) xinit)
 pid=$(pgrep -P $pid -n)
 

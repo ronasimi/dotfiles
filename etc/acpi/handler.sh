@@ -1,6 +1,23 @@
 #!/bin/bash
 # Default acpi script that takes an entry for all actions
 
+# Function to get current environment
+#!/bin/bash
+
+pid=$(pgrep -t tty$(fgconsole) xinit)
+pid=$(pgrep -P $pid -n)
+
+import_environment() {
+        (( pid )) && for var; do
+                IFS='=' read key val < <(egrep -z "$var" /proc/$pid/environ)
+
+                printf -v "$key" %s "$val"
+                [[ ${!key} ]] && export "$key"
+        done
+}
+
+import_environment XAUTHORITY USER DISPLAY
+
 case "$1" in
   button/power)
     case "$2" in
@@ -68,14 +85,14 @@ case "$1" in
 
           # Otherwise blank screen
         else
-          sudo -u `ps -o ruser= -C xinit` xset -display :0 dpms force off
+          sudo -u `ps -o ruser= -C xinit` xset dpms force off
         fi
 
         ;;
       open)
         logger 'LID opened'
         # Force Monitor on, regardless of suspended status
-        sudo -u `ps -o ruser= -C xinit` xset -display :0 dpms force on
+        sudo -u `ps -o ruser= -C xinit` xset dpms force on
         ;;
       *)
         logger "ACPI action undefined: $3"

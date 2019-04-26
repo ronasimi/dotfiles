@@ -76,7 +76,7 @@ case "$1" in
         logger 'LID closed'
 
         # Closed on Battery (suspend)
-        acpi | grep -q "Discharging"
+        acpi -a | grep -q "off-line"
         if [ $? = 0 ] ; then
           systemctl suspend
 

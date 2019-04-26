@@ -13,7 +13,6 @@ import_environment() {
                 [[ ${!key} ]] && export "$key"
         done
 }
-
 import_environment XAUTHORITY USER DISPLAY
 
 case "$1" in
@@ -83,14 +82,11 @@ case "$1" in
 
           # Otherwise blank screen
         else
-          sudo -u `ps -o ruser= -C xinit` xset dpms force off
+	   sudo -u `ps -o ruser= -C xinit` xset s activate
         fi
-
         ;;
       open)
         logger 'LID opened'
-        # Force Monitor on, regardless of suspended status
-        sudo -u `ps -o ruser= -C xinit` xset dpms force on
         ;;
       *)
         logger "ACPI action undefined: $3"

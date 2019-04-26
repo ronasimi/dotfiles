@@ -286,5 +286,5 @@ bar {
 exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id thunar --daemon
 exec --no-startup-id urxvtd -q -o -f
-exec --no-startup-id xss-lock lockscreen
-exec --no-startup-id sleep 0.1; exec xset s activate
+exec --no-startup-id xss-lock -q lockscreen
+exec --no-startup-id sleep 0.1; xset s activate

@@ -86,7 +86,13 @@ while read -r; do
   "$(dirname $0)"/scripts/brightindicator.sh
 
 done < <(
-  echo && udevadm monitor --kernel --subsystem-match=backlight --subsystem-match=power_supply) &
+  echo &&
+    # restart udevadm if it exits with anything other than 0 (fixes suspend/resume issue)
+    until udevadm monitor --kernel --subsystem-match=backlight --subsystem-match=power_supply; do
+      echo "udevadm crashed with exit code $?.  Respawning.." >&2
+      sleep 1
+    done
+) &
 
 # network, "ETH", "WFI"
 while read -r; do
@@ -94,14 +100,28 @@ while read -r; do
   (printf "%s%s\n" "ETH" "$(nmcli -t | grep enp0s25: | cut -d ' ' -f 2)" >"${panel_fifo}") &
   (printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cut -d ' ' -f 2)" >"${panel_fifo}") &
 
-done < <(echo && nmcli m) &
+done < <(
+  echo &&
+    # restart nmcli if it exits with anything other than 0 (fixes suspend/resume issue)
+    until nmcli m; do
+      echo "nmcli crashed with exit code $?.  Respawning.." >&2
+      sleep 1
+    done
+) &
 
 # battery, "BAT"
 while read -r; do
 
   (printf "%s%s\n" "BAT" "$(acpi -b | cut -d ' ' -f 4 | tr -d '%,')") >"${panel_fifo}" &
 
-done < <(echo && stdbuf -oL inotifywait -m -e open /sys/class/power_supply/BAT0/capacity) &
+done < <(
+  echo &&
+    # restart inotifywait if it exits with anything other than 0 (fixes suspend/resume issue)
+    until stdbuf -oL inotifywait -m -e open /sys/class/power_supply/BAT0/capacity; do
+      echo "inotifywait crashed with exit code $?.  Respawning.." >&2
+      sleep 1
+    done
+) &
 
 # date/time, "DAY"/"CLK"
 "$(dirname $0)"/scripts/date >"${panel_fifo}" &

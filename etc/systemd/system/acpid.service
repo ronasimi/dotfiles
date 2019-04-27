@@ -8,4 +8,4 @@ Type=idle
 ExecStart=/usr/bin/acpid --foreground --netlink
 
 [Install]
-WantedBy=graphical.target
+WantedBy=multi-user.target

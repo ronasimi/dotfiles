@@ -4,7 +4,7 @@ After=suspend.target
 
 [Service]
 Type=simple
-ExecStart=/bin/sh -c "xbacklight -set $(cat /tmp/brightness-value)"
+ExecStart=/bin/sh -c "xbacklight -set $(cat /tmp/brightness-value) && rm /tmp/brightness-value"
 
 [Install]
 WantedBy=suspend.target

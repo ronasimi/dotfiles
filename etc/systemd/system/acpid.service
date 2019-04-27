@@ -1,0 +1,11 @@
+[Unit]
+Description=ACPI event daemon
+Documentation=man:acpid(8)
+After=systemd-udev-settle.service
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/acpid --foreground --netlink
+
+[Install]
+WantedBy=graphical.target

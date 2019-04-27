@@ -79,14 +79,15 @@ case "$1" in
         acpi -a | grep -q "off-line"
         if [ $? = 0 ] ; then
           systemctl suspend
-
-          # Otherwise blank screen
+        # Otherwise lock screen
         else
 	   sudo -u `ps -o ruser= -C xinit` xset s activate
         fi
         ;;
       open)
         logger 'LID opened'
+        # Force monitor on
+        sudo -u `ps -o ruser= -C xinit` xset dpms force on
         ;;
       *)
         logger "ACPI action undefined: $3"

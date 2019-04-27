@@ -5,7 +5,7 @@ paster
 paste
 rename
 rename stallman.jpg
-open_with 
 .config
 cd .config
 set preview_images_method kitty
+open_with 

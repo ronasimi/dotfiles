@@ -101,7 +101,7 @@ while read -r; do
 
   (printf "%s%s\n" "BAT" "$(acpi -b | cut -d ' ' -f 4 | tr -d '%,')") >"${panel_fifo}" &
 
-done < <(echo && upower -m) &
+done < <(echo && stdbuf -oL inotifywait -m -e open /sys/class/power_supply/BAT0/capacity) &
 
 # date/time, "DAY"/"CLK"
 "$(dirname $0)"/scripts/date >"${panel_fifo}" &

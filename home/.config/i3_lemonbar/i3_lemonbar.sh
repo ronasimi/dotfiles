@@ -116,7 +116,7 @@ while read -r; do
 
 done < <(
   echo &&
-    # restart inotifywait if it exits with anything other than 0 (fixes suspend/resume issue)
+    # restart upower if it exits with anything other than 0 (fixes suspend/resume issue)
     until upower --monitor; do
       echo "upower crashed with exit code $?.  Respawning.." >&2
       sleep 1

@@ -117,8 +117,8 @@ while read -r; do
 done < <(
   echo &&
     # restart inotifywait if it exits with anything other than 0 (fixes suspend/resume issue)
-    until stdbuf -oL inotifywait -m -e open /sys/class/power_supply/BAT0/capacity; do
-      echo "inotifywait crashed with exit code $?.  Respawning.." >&2
+    until upower --monitor; do
+      echo "upower crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
 ) &

@@ -21,7 +21,7 @@
             "percent": 0.5,
             "swallows": [
                {
-               // "class": "^URxvt$",
+               "class": "^URxvt$"
                // "instance": "^urxvt$",
                // "title": "^ranger\\:\\/home\\/ron$"
                }
@@ -42,7 +42,7 @@
             "percent": 0.5,
             "swallows": [
                {
-               // "class": "^Thunar$",
+               "class": "^Thunar$"
                // "instance": "^thunar$",
                // "title": "^ron\\ \\-\\ File\\ Manager$",
                // "window_role": "^Thunar\\-1556517523\\-1122796334$"
@@ -52,4 +52,3 @@
         }
     ]
 }
-

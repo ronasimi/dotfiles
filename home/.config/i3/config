@@ -274,6 +274,7 @@ bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
 # saved workspace layouts
 bindsym $mod+Shift+F1 exec --no-startup-id ~/.config/i3/scripts/ws1.sh
 bindsym $mod+Shift+F2 exec --no-startup-id ~/.config/i3/scripts/ws2.sh
+bindsym $mod+Shift+F3 exec --no-startup-id ~/.config/i3/scripts/ws3.sh
 bindsym $mod+Shift+F4 exec --no-startup-id ~/.config/i3/scripts/ws4.sh
 
 # Status bar

@@ -73,7 +73,7 @@ while read -r; do
 done < <(
   echo &&
     # restart alsactl if it exits with anything other than 0 (fixes suspend/resume issue)
-    until stdbuf -oL alsactl monitor pulse; do
+    until stdbuf -o0 alsactl monitor pulse; do
       echo "alsactl crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
@@ -88,7 +88,7 @@ while read -r; do
 done < <(
   echo &&
     # restart udevadm if it exits with anything other than 0 (fixes suspend/resume issue)
-    until udevadm monitor --kernel --subsystem-match=backlight --subsystem-match=power_supply; do
+    until stdbuf -o0 udevadm monitor --kernel --subsystem-match=backlight --subsystem-match=power_supply; do
       echo "udevadm crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
@@ -117,7 +117,7 @@ while read -r; do
 done < <(
   echo &&
     # restart upower if it exits with anything other than 0 (fixes suspend/resume issue)
-    until upower --monitor; do
+    until stdbuf -o0 upower --monitor; do
       echo "upower crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done

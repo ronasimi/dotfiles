@@ -1,0 +1,55 @@
+// vim:ts=4:sw=4:et
+{
+    // tabbed split container with 2 children
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "tabbed",
+    "percent": null,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 364,
+               "width": 588,
+               "x": 0,
+               "y": 0
+            },
+            "name": "ranger:/home/ron",
+            "percent": 0.5,
+            "swallows": [
+               {
+               // "class": "^URxvt$",
+               // "instance": "^urxvt$",
+               // "title": "^ranger\\:\\/home\\/ron$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 868,
+               "width": 1584,
+               "x": 0,
+               "y": 0
+            },
+            "name": "ron - File Manager",
+            "percent": 0.5,
+            "swallows": [
+               {
+               // "class": "^Thunar$",
+               // "instance": "^thunar$",
+               // "title": "^ron\\ \\-\\ File\\ Manager$",
+               // "window_role": "^Thunar\\-1556517523\\-1122796334$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+

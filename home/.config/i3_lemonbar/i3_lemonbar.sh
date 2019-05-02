@@ -87,7 +87,7 @@ while read -r; do
 
 done < <(
   echo &&
-    # restart udevadm if it exits with anything other than 0 (fixes suspend/resume issue)
+    # restart udevadm if it exits with anything other than 0
     until stdbuf -o0 udevadm monitor --kernel --subsystem-match=backlight --subsystem-match=power_supply; do
       echo "udevadm crashed with exit code $?.  Respawning.." >&2
       sleep 1
@@ -102,7 +102,7 @@ while read -r; do
 
 done < <(
   echo &&
-    # restart nmcli if it exits with anything other than 0 (fixes suspend/resume issue)
+    # restart nmcli if it exits with anything other than 0
     until nmcli m; do
       echo "nmcli crashed with exit code $?.  Respawning.." >&2
       sleep 1
@@ -116,7 +116,7 @@ while read -r; do
 
 done < <(
   echo &&
-    # restart upower if it exits with anything other than 0 (fixes suspend/resume issue)
+    # restart upower if it exits with anything other than 0
     until stdbuf -o0 upower --monitor; do
       echo "upower crashed with exit code $?.  Respawning.." >&2
       sleep 1

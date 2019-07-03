@@ -14,6 +14,8 @@ CON=`echo $MAIL | grep -c "<fullcount>"`
 NUM=`echo $MAIL | grep -o "<entry>" | wc -l`
 RES="err"
 
+sleep 30
+
 if [ $CON -ne 1 ]; then
   RES="err"
 else

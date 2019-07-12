@@ -7,14 +7,15 @@
 # 12 ene 2015
 
 # Ruta a los password
+
+sleep 30
+
 . ~/.private/accounts
 
 MAIL=`curl -u $MAIL_USER:$MAIL_PASS --silent https://mail.google.com/mail/feed/atom`
 CON=`echo $MAIL | grep -c "<fullcount>"`
 NUM=`echo $MAIL | grep -o "<entry>" | wc -l`
 RES="err"
-
-sleep 30
 
 if [ $CON -ne 1 ]; then
   RES="err"

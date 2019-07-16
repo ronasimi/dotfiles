@@ -1,6 +1,6 @@
 #!/bin/bash
 # check for package and aur updates
-sleep 30
+sleep 60
 
 wget -q --spider http://www.archlinux.org
 

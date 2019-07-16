@@ -11,6 +11,7 @@ set suspend
 set nowrap
 set rawsequences
 #set guidestripe 4
+set nohelp
 
 set titlecolor white,black
 set statuscolor white,black

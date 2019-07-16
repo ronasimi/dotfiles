@@ -8,7 +8,7 @@
 
 # Ruta a los password
 
-sleep 30
+sleep 60
 
 . ~/.private/accounts
 

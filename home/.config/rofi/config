@@ -25,3 +25,4 @@ rofi.icon-theme: Papirus-Dark
 rofi.location: 0
 rofi.terminal: urxvtc
 rofi.modi: drun,run,window
+rofi.window-format: {c} {t}

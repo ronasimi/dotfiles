@@ -17,16 +17,17 @@ if [ "$TERM" = "linux" ]; then
       echo -en "$i"
     done
     clear
-  autoload -Uz promptinit
-  promptinit
-  prompt walters
+#  autoload -Uz promptinit
+#  promptinit
+#  prompt walters
+  source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+  source /usr/share/zsh-theme-powerlevel10k/config/p10k-lean.zsh
 else
   # POWERLEVEL10K
   source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
   # POWERLINE STYLE SUDO
   export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 0) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
 fi
-
 
 # WINDOW TITLE
 case $TERM in
@@ -288,6 +289,7 @@ export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
 
 # POWERLEVEL10K OPTIONS
 #POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_IGNORE_TERM_COLORS=true
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir_writable context dir)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs vcs)
 DEFAULT_USER="ron"

@@ -271,6 +271,9 @@ bindsym $mod+F6 workspace $ws6; exec gimp
 for_window [class="URxvt" instance="floating"] $FLOAT-border
 bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
 
+# open an empty container
+bindsym $mod+Insert exec i3-msg open
+
 # saved workspace layouts
 bindsym $mod+Shift+F1 exec --no-startup-id ~/.config/i3/scripts/ws1.sh
 bindsym $mod+Shift+F2 exec --no-startup-id ~/.config/i3/scripts/ws2.sh

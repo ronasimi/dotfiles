@@ -10,7 +10,7 @@ URxvt*scrollBar:		false
 URxvt*scrollTtyOutput:		false
 URxvt*scrollWithBuffer:		true
 URxvt*scrollTtyKeypress:	true
-URxvt*internalBorder:		14
+URxvt*internalBorder:		16
 URxvt*cursorBlink:		true
 URxvt*cursorUnderline:		false
 URxvt*pointerBlank:		true

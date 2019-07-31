@@ -1,0 +1,300 @@
+# _ _____                    __ _
+# (_)___ /    ___ ___  _ __  / _(_) __ _
+# | | |_ \   / __/ _ \| '_ \| |_| |/ _` |
+# | |___) | | (_| (_) | | | |  _| | (_| |
+# |_|____/   \___\___/|_| |_|_| |_|\__, |
+#                                  |___/
+
+set $mod Mod4
+
+# Configure libinput options
+input 2:7:SynPS/2_Synaptics_TouchPad {
+    tap enabled
+    natural_scroll enabled
+}
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font -misc-tamzen-medium-r-normal-*-14-*-*-*-*-*-*-*
+
+## Workspace names
+# workspace name variables
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:"
+set $ws5 "5:ﶤ"
+set $ws6 "6:"
+set $ws7 "7:"
+set $ws8 "8:"
+set $ws9 "9:"
+set $ws10 "10:"
+
+## I3 appearance
+set $fg #e5e5e5
+set $bg #383838
+set $act #e0e0e0
+set $ina #5d5d5d
+set $urg #ac4142
+set $ind #6a9fb5
+
+# colors
+# class				border		backgr.		text		indicator	child_border
+client.focused			$bg		$bg		$act		$ind		$bg
+client.focused_inactive		$bg		$bg		$fg		$bg		$bg
+client.unfocused		$bg		#282828		$ina		$bg		$bg
+client.urgent			$fg		$urg		$fg		$ind		$fg
+client.placeholder		$ind		$ind		$bg		$ind		$ind
+client.background		$bg
+
+# window borders
+default_border pixel 2
+default_floating_border none
+
+# useless gaps
+gaps inner 16
+gaps outer 0
+#gaps horizontal <px>
+#gaps vertical <px>
+#gaps top 24
+#gaps right <px>
+#gaps bottom 8
+#gaps left <px>
+
+#hide_edge_borders smart
+#smart_gaps on
+smart_borders on
+
+# Set variables for floating and un-floating commands
+set $FLOAT-border floating enable, border pixel 2
+set $FLOAT-noborder floating enable, border none
+
+## Client rules
+# client placement
+assign [class="Chromium"] $ws1
+assign [class="Atom"] $ws4
+assign [class="Meld"] $ws4
+assign [class="Vmware"] $ws5
+assign [class="Vmplayer"] $ws5
+assign [class="libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice"] $ws5
+assign [class="Gimp|Gimp-2.10"] $ws6
+
+# split toggle for URxvt
+#for_window [class="URxvt"] split toggle; split toggle
+
+# application exceptions
+for_window [class="mpv"] $FLOAT-noborder
+for_window [class="mpv"] sticky enable
+for_window [class="feh"] $FLOAT-noborder
+for_window [title="Hangouts"] $FLOAT-border
+
+## Resize mode
+bindsym $mod+r mode "resize"
+
+mode "resize" {
+# These bindings trigger as soon as you enter the resize mode
+
+# Pressing left will shrink the window’s width.
+# Pressing right will grow the window’s width.
+# Pressing up will grow the window’s height.
+# Pressing down will shrink the window’s height.
+bindsym j resize shrink width 10 px or 10 ppt
+bindsym k resize shrink height 10 px or 10 ppt
+bindsym l resize grow height 10 px or 10 ppt
+bindsym semicolon resize grow width 10 px or 10 ppt
+
+# same bindings, but for the arrow keys
+bindsym Left resize shrink width 10 px or 10 ppt
+bindsym Down resize shrink height 10 px or 10 ppt
+bindsym Up resize grow height 10 px or 10 ppt
+bindsym Right resize grow width 10 px or 10 ppt
+
+# back to normal: Enter or Escape
+bindsym Return mode "default"
+bindsym Escape mode "default"
+}
+
+## Keybinds
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec kitty
+
+# kill focused window
+bindsym $mod+x kill
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+z focus child
+
+# sticky toggle
+bindsym $mod+shift+s sticky toggle
+
+# workspace navigation
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+bindsym XF86Forward workspace next
+bindsym XF86Back workspace prev
+
+# move workspace to display
+bindsym $mod+Ctrl+XF86Forward move workspace to output right
+bindsym $mod+Ctrl+XF86Back move workspace to output left
+
+# load layouts
+bindsym $mod+Shift+m append_layout ~/.config/i3/layouts/master-stack.json
+
+# multimedia keys
+# pulse audio volume control
+bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
+bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up
+bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ 150%
+bindsym XF86AudioMute exec --no-startup-id pulseaudio-ctl mute
+bindsym XF86AudioMicMute exec --no-startup-id pulseaudio-ctl mute-input
+
+# print screen
+bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/screenshot-%Y%m%d-%H:%M:%S.png & dunstify -u low $'Screenshot' 'saved to ~/Pictures/Screenshots'
+bindsym Mod1+Sys_Req exec --no-startup-id scrot -u ~/Pictures/Screenshots/window-%Y%m%d-%H:%M:%S.png & dunstify -u low $'Window screenshot' 'saved to ~/Pictures/Screenshots'
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10; workspace $ws10
+bindsym $mod+Shift+XF86Forward move container to workspace next; workspace next
+bindsym $mod+Shift+XF86Back move container to workspace prev; workspace prev
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+Delete move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+Delete scratchpad show
+
+# reload the configuration file
+bindsym $mod+Shift+c reload; exec dunstify -u low "i3 config reloaded"
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r exec pkill lemonbar, restart
+
+# restart bar
+bindsym $mod+Shift+b exec --no-startup-id "~/.config/i3/scripts/barcycle.sh"
+
+# bind some fn keys, power menu
+bindsym XF86ScreenSaver exec --no-startup-id xset s activate
+bindsym XF86TouchpadToggle exec --no-startup-id ~/.config/i3/scripts/touchpad-toggle.sh
+bindsym XF86Display exec --no-startup-id ~/.config/i3/scripts/monitors.sh
+bindsym XF86WebCam exec --no-startup-id "mpv --demuxer-lavf-format video4linux2 --demuxer-lavf-o-set input_format=mjpeg /dev/video0"
+bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
+bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
+bindsym $mod+Ctrl+e exec --no-startup-id ~/.config/i3/scripts/i3_exit.sh
+
+## Program Keybinds
+# start dmenu (a program launcher)
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -h 16 -nb '$bg' -nf '$fg' -sb '$ind' -sf '$bg' -fn '-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*'"
+
+# chromium
+bindsym $mod+F1 workspace $ws1; exec chromium
+bindsym $mod+Mod1+F1 workspace $ws1; exec chromium --incognito
+
+# urxvt
+bindsym $mod+F2 workspace $ws2; exec --no-startup-id kitty
+
+# thunar
+bindsym $mod+F3 workspace $ws3; exec thunar
+
+# atom
+bindsym $mod+F4 workspace $ws4; exec atom
+
+# libreoffice writer
+bindsym $mod+F5 workspace $ws5, exec libreoffice --writer
+
+# gimp
+bindsym $mod+F6 workspace $ws6; exec gimp
+
+# draw terminals
+#for_window [class="URxvt" instance="floating"] $FLOAT-border
+#bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
+
+# open an empty container
+bindsym $mod+Insert exec i3-msg open
+
+# saved workspace layouts
+bindsym $mod+Shift+F1 exec --no-startup-id ~/.config/i3/scripts/ws1.sh
+bindsym $mod+Shift+F2 exec --no-startup-id ~/.config/i3/scripts/ws2.sh
+bindsym $mod+Shift+F3 exec --no-startup-id ~/.config/i3/scripts/ws3.sh
+bindsym $mod+Shift+F4 exec --no-startup-id ~/.config/i3/scripts/ws4.sh
+
+# Status bar
+# lemonbar
+#bar {
+#	i3bar_command "~/.config/i3_lemonbar/i3_lemonbar.sh &2> /dev/null"
+#}
+
+# autostart
+exec_always --no-startup-id swaybg -i Pictures/Favorites/marc-olivier-jodoin-249222-unsplash.png -m stretch
+#exec --no-startup-id thunar --daemon
+#exec --no-startup-id urxvtd -q -o -f
+#exec --no-startup-id xss-lock -q lockscreen
+#exec --no-startup-id sleep 0.1; xset s activate

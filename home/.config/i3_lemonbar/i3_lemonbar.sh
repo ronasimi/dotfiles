@@ -73,7 +73,7 @@ while read -r; do
 done < <(
   echo &&
     # restart alsactl if it exits with anything other than 0 (fixes suspend/resume issue)
-    until stdbuf -o0 alsactl monitor pulse; do
+    until stdbuf -o0 pactl subscribe | grep --line-buffered "Event 'change' on sink #0"; do
       echo "alsactl crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
@@ -94,18 +94,31 @@ done < <(
     done
 ) &
 
-# network, "ETH", "WFI"
+# wired network, "ETH"
 while read -r; do
 
   (printf "%s%s\n" "ETH" "$(nmcli -t | grep enp0s25: | cut -d ' ' -f 2)" >"${panel_fifo}") &
-  (printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cut -d ' ' -f 2)" >"${panel_fifo}") &
   "$(dirname $0)"/scripts/click_eth.sh
+
+done < <(
+  echo &&
+    # restart nmcli if it exits with anything other than 0
+    until nmcli device monitor enp0s25; do
+      echo "nmcli crashed with exit code $?.  Respawning.." >&2
+      sleep 1
+    done
+) &
+
+# wireless network, "WFI"
+while read -r; do
+
+  (printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cut -d ' ' -f 2)" >"${panel_fifo}") &
   "$(dirname $0)"/scripts/click_wifi.sh
 
 done < <(
   echo &&
     # restart nmcli if it exits with anything other than 0
-    until nmcli m; do
+    until nmcli device monitor wlp3s0; do
       echo "nmcli crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done

@@ -100,7 +100,7 @@ icon_vol_off=""    # Volume off icon
 icon_vol_mute="﹨"   # Mute icon
 
 icon_bright_100="" # Full brightness icon
-icon_bright_c0=""  # c0% brightness icon
+icon_bright_80=""  # c0% brightness icon
 icon_bright_51=""  # 51% brightness icon
 icon_bright_31=""  # 31% brightness icon
 icon_bright_19=""  # 19% brightness icon
@@ -111,7 +111,7 @@ icon_bat_ac=""     # On charger icon
 icon_bat_charge="" # Battery charging icon
 icon_bat_full=""   # Full battery icon
 icon_bat_90=""     # 90% battery icon
-icon_bat_c0=""     # c0% battery icon
+icon_bat_80=""     # c0% battery icon
 icon_bat_70=""     # 70% battery icon
 icon_bat_60=""     # 60% battery icon
 icon_bat_50=""     # 50% battery icon

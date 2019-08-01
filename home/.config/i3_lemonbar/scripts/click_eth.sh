@@ -6,5 +6,5 @@ msgId="991052"
 if [ "${ethon}" == "connected" ]; then
 	(dunstify -a "clickEth" -u low -t 10000 -r "$msgId" "Ethernet connected" "IP addresses: $ethIP")
 else
-	(dunstify -a "clickEth" -u normal -r "$msgId" "Network cable unplugged")
+	(dunstify -a "clickEth" -u normal -r "$msgId" "Ethernet disconnected")
 fi

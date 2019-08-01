@@ -99,6 +99,8 @@ while read -r; do
 
   (printf "%s%s\n" "ETH" "$(nmcli -t | grep enp0s25: | cut -d ' ' -f 2)" >"${panel_fifo}") &
   (printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cut -d ' ' -f 2)" >"${panel_fifo}") &
+  "$(dirname $0)"/scripts/click_eth.sh
+  "$(dirname $0)"/scripts/click_wifi.sh
 
 done < <(
   echo &&

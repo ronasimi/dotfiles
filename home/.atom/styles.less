@@ -29,17 +29,3 @@ atom-workspace {
 .tab-bar .tab.active:hover .close-icon {
   position: right;
 }
-//Fira Code for ligatures
-atom-text-editor.editor {
-  .syntax--storage.syntax--type.syntax--function.syntax--arrow,
-  .syntax--keyword.syntax--operator:not(.accessor),
-  .syntax--operator,
-  .syntax--punctuation.syntax--definition {
-    font-family: "Fira Code";
-  }
-
-  .syntax--string.syntax--quoted,
-  .syntax--string.syntax--regexp {
-    -webkit-font-feature-settings: "liga" off, "calt" off;
-  }
-}

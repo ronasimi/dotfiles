@@ -13,7 +13,7 @@
 . "$(dirname $0)"/i3_lemonbar_config
 
 # min init
-title="%{F${color_ina} B-}${sep_right}%{F${color_title} T1} "
+title="%{F${color_ina} B- T2}${sep_right}%{F${color_title} T1} "
 
 # parser
 while read -r line; do
@@ -30,7 +30,7 @@ while read -r line; do
 				mode_cicon=${color_icon}
 			fi
 
-			mode="%{F${mode_cicon} B${color_stat} T2} ${icon_mode} "
+			mode="%{F${mode_cicon} B${color_stat} T3} ${icon_mode} "
 			;;
 
 		LAY*)
@@ -45,7 +45,7 @@ while read -r line; do
 				icon_layout=${icon_stacked}
 			fi
 
-			layout="%{F${color_icon} B${color_stat} T2}${icon_layout} %{F${color_stat} B${color_ina}}%{T1}${sep_right}"
+			layout="%{F${color_icon} B${color_stat} T3}${icon_layout} %{F${color_stat} B${color_ina}}%{T2}${sep_right}"
 			;;
 
 		WSP*)
@@ -57,17 +57,17 @@ while read -r line; do
 				case $1 in
 					FOC*)
 						act_name=$(echo ${1#???} | cut -d ":" -f 2)
-						wsp="${wsp}%{F${color_ina} B${color_wsp}}${sep_right}%{F${color_act_fore} B${color_wsp} T2} ${act_name} %{F${color_wsp} B${color_ina}}${T1}${sep_right}"
+						wsp="${wsp}%{F${color_ina} B${color_wsp} T2}${sep_right}%{F${color_act_fore} B${color_wsp} T3} ${act_name} %{F${color_wsp} B${color_ina}T2}${sep_right}"
 						;;
 					INA* | ACT*)
 						ina_name=$(echo ${1#???} | cut -d ":" -f 2)
 						ina_number=$(echo ${1#???} | cut -d ":" -f 1)
-						wsp="${wsp}%{F${color_ina} B${color_ina}}${sep_right}%{F${color_ina_fore} B${color_ina} T2}%{A1:i3-msg workspace number ${ina_number}:} ${ina_name} %{A}%{F${color_ina} B${color_ina}}${T1}${sep_right}"
+						wsp="${wsp}%{F${color_ina} B${color_ina} T2}${sep_right}%{F${color_ina_fore} B${color_ina} T3}%{A1:i3-msg workspace number ${ina_number}:} ${ina_name} %{A}%{F${color_ina} B${color_ina} T2}${sep_right}"
 						;;
 					URG*)
 						urg_name=$(echo ${1#???} | cut -d ":" -f 2)
 						urg_number=$(echo ${1#???} | cut -d ":" -f 1)
-						wsp="${wsp}%{F${color_ina} B${color_alert}}${sep_right}%{F${color_act_fore} B${color_alert} T2}%{A1:i3-msg workspace number ${urg_number}:} ${urg_name} %{A}%{F${color_alert} B${color_ina}}${T1}${sep_right}"
+						wsp="${wsp}%{F${color_ina} B${color_alert} T2}${sep_right}%{F${color_act_fore} B${color_alert} T3}%{A1:i3-msg workspace number ${urg_number}:} ${urg_name} %{A}%{F${color_alert} B${color_ina}}${T1}${sep_right}"
 						;;
 				esac
 				shift
@@ -76,13 +76,13 @@ while read -r line; do
 
 		WIN*)
 			# window title
-			title="%{F${color_ina} B-}${T1}${sep_right}%{F${color_title} T1} ${line#???}%{T-}"
+			title="%{F${color_ina} B- T2}${sep_right}%{F${color_title} T1} ${line#???}%{T-}"
 			;;
 
 		UPD*)
 			# updates
 			if [ "${line#???}" != "0" ]; then
-				updates="%{F${color_upd} T1}${sep_left}%{F${color_icon_dark} B${color_upd}} %{T2}${icon_arch}%{T1} ${line#???}${stab}"
+				updates="%{F${color_upd} T2}${sep_left}%{F${color_icon_dark} B${color_upd}T3} ${icon_arch}%{T1} ${line#???}${stab}"
 			else
 				upd_cback=${color_sec_b1}
 				upd_cicon=${color_icon}
@@ -95,7 +95,7 @@ while read -r line; do
 		GMA*)
 			# gmail
 			if [ "${line#???}" != "0" ]; then
-				gmail="%{F${color_mail} T1}${sep_left}%{F${color_title} B${color_mail}} %{T2}${icon_mail}%{T1} ${line#???}${stab}"
+				gmail="%{F${color_mail} T2}${sep_left}%{F${color_title} B${color_mail}} %{T3}${icon_mail}%{T1} ${line#???}${stab}"
 			else
 				gmail=""
 			fi
@@ -123,7 +123,7 @@ while read -r line; do
 				vol_cicon=${color_netdown}
 			fi
 
-			vol="%{F${color_sec_b1}}${sep_left}%{F${vol_cicon} B${color_sec_b1} T2} ${icon_vol}"
+			vol="%{F${color_sec_b1}T2}${sep_left}%{F${vol_cicon} B${color_sec_b1} T3} ${icon_vol}"
 			;;
 
 		BRI*)
@@ -144,7 +144,7 @@ while read -r line; do
 				icon_bright=${icon_bright_6}
 			fi
 
-			bright="%{F${color_icon} B${color_sec_b1} T2} ${icon_bright}"
+			bright="%{F${color_icon} B${color_sec_b1} T3} ${icon_bright}"
 			;;
 
 		ETH*)
@@ -161,7 +161,7 @@ while read -r line; do
 				eth_cicon=${color_netdown}
 			fi
 
-			ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback} T2} ${ethup}"
+			ethernet="%{F${eth_cback}T2}${sep_left}%{F${eth_cicon} B${eth_cback} T3} ${ethup}"
 			;;
 
 		WFI*)
@@ -177,7 +177,7 @@ while read -r line; do
 				wlan_cicon=${color_netdown}
 			fi
 
-			wifi="%{F${wlan_cicon} B${wlan_cback} T2} ${wlanup}"
+			wifi="%{F${wlan_cicon} B${wlan_cback} T3} ${wlanup}"
 			;;
 
 		BAT*)
@@ -233,17 +233,17 @@ while read -r line; do
 				bat_cicon=${color_warn}
 			fi
 
-			bat="%{F${bat_cicon} B${color_sec_b2} T2} ${icon_bat}"
+			bat="%{F${bat_cicon} B${color_sec_b2} T3} ${icon_bat}"
 			;;
 
 		DAY*)
 			# date
-			date="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_cal}%{F${color_fore} T1} ${line#???}%{T-}"
+			date="%{F${color_sec_b1}T2}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T3}${icon_cal}%{F${color_fore} T1} ${line#???}%{T-}"
 			;;
 
 		CLK*)
 			# time
-			time="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_clock}%{F${color_fore} T1} ${line#???}%{T-}"
+			time="%{F${color_sec_b2}T2}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T3}${icon_clock}%{F${color_fore} T1} ${line#???}%{T-}"
 			;;
 
 	esac

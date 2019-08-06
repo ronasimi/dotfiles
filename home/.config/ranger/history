@@ -9,3 +9,6 @@ rename stallman.jpg
 cd .config
 set preview_images_method kitty
 open_with 
+search storage
+search help
+help

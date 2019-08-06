@@ -75,8 +75,8 @@ assign [class="Vmplayer"] $ws5
 assign [class="libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice"] $ws5
 assign [class="Gimp|Gimp-2.10"] $ws6
 
-# split toggle for URxvt
-#for_window [class="URxvt"] split toggle; split toggle
+# split toggle for kitty
+#for_window [class="kitty"] split toggle; split toggle
 
 # application exceptions
 for_window [class="mpv"] $FLOAT-noborder
@@ -115,7 +115,7 @@ bindsym Escape mode "default"
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvtc
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+x kill
@@ -252,8 +252,8 @@ bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -h 16 -n
 bindsym $mod+F1 workspace $ws1; exec chromium
 bindsym $mod+Mod1+F1 workspace $ws1; exec chromium --incognito
 
-# urxvt
-bindsym $mod+F2 workspace $ws2; exec --no-startup-id urxvtc
+# kitty
+bindsym $mod+F2 workspace $ws2; exec --no-startup-id kitty
 
 # thunar
 bindsym $mod+F3 workspace $ws3; exec thunar
@@ -268,8 +268,8 @@ bindsym $mod+F5 workspace $ws5, exec libreoffice --writer
 bindsym $mod+F6 workspace $ws6; exec gimp
 
 # draw terminals
-for_window [class="URxvt" instance="floating"] $FLOAT-border
-bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
+#for_window [class="urxvt" instance="floating"] $FLOAT-border
+#bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
 
 # open an empty container
 bindsym $mod+Insert exec --no-startup-id i3-msg open
@@ -289,6 +289,5 @@ bar {
 # autostart
 exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id thunar --daemon
-exec --no-startup-id urxvtd -q -o -f
 exec --no-startup-id xss-lock --transfer-sleep-lock -q lockscreen
 exec --no-startup-id sleep 0.1; xset s activate

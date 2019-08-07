@@ -82,7 +82,7 @@ while read -r line; do
 		UPD*)
 			# updates
 			if [ "${line#???}" != "0" ]; then
-				updates="%{F${color_upd} T2}${sep_left} %{F${color_icon_dark} B${color_upd}T3} ${icon_arch}%{T1} ${line#???}${stab}"
+				updates="%{F${color_upd} T2}${sep_left}%{F${color_icon_dark} B${color_upd}T3} ${icon_arch}%{T1} ${line#???}${stab}"
 			else
 				upd_cback=${color_sec_b1}
 				upd_cicon=${color_icon}

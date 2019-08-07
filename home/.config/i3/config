@@ -11,7 +11,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Input Mono 9
+font pango:Input Mono 8
 
 ## Workspace names
 # workspace name variables
@@ -28,7 +28,7 @@ set $ws10 "10:"
 
 ## I3 appearance
 set_from_resource $fg i3wm.foreground #e5e5e5
-set_from_resource $bg i3wm.background #383838
+set_from_resource $bg i3wm.background #353535
 set_from_resource $act i3wm.color15 #e0e0e0
 set_from_resource $ina i3wm.color16 #5d5d5d
 set_from_resource $urg i3wm.color1 #ac4142
@@ -246,7 +246,7 @@ bindsym $mod+Ctrl+e exec --no-startup-id ~/.config/i3/scripts/i3_exit.sh
 
 ## Program Keybinds
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -h 16 -nb '$bg' -nf '$fg' -sb '$ind' -sf '$bg' -fn 'Fira Code:size=8.5'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -h 16 -nb '$bg' -nf '$fg' -sb '$ind' -sf '$bg' -fn 'Input Mono:size=8'"
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium

@@ -21,7 +21,7 @@
             "percent": 0.6,
             "swallows": [
                {
-               "class": "^URxvt$"
+               "class": "^kitty$"
                // "instance": "^urxvt$",
                // "title": "^i3\\-save\\-tree\\ \\-\\-workspace\\ 2\\ \\>\\ ws2\\.json$"
                }
@@ -50,7 +50,7 @@
                     "percent": 0.333333333333333,
                     "swallows": [
                        {
-                       "class": "^URxvt$"
+                       "class": "^kitty$"
                        // "instance": "^urxvt$",
                        // "title": "^ron\\@archpad\\:\\ \\~$"
                        }
@@ -71,7 +71,7 @@
                     "percent": 0.333333333333333,
                     "swallows": [
                        {
-                       "class": "^URxvt$"
+                       "class": "^kitty$"
                        // "instance": "^urxvt$",
                        // "title": "^ron\\@archpad\\:\\ \\~$"
                        }
@@ -92,7 +92,7 @@
                     "percent": 0.333333333333333,
                     "swallows": [
                        {
-                       "class": "^URxvt$"
+                       "class": "^kitty$"
                        // "instance": "^urxvt$",
                        // "title": "^ron\\@archpad\\:\\ \\~$"
                        }

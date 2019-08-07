@@ -28,7 +28,7 @@ set $ws10 "10:"
 
 ## I3 appearance
 set_from_resource $fg i3wm.foreground #e5e5e5
-set_from_resource $bg i3wm.background #383838
+set_from_resource $bg i3wm.background #353535
 set_from_resource $act i3wm.color15 #e0e0e0
 set_from_resource $ina i3wm.color16 #5d5d5d
 set_from_resource $urg i3wm.color1 #ac4142

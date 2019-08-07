@@ -32,14 +32,6 @@ URxvt*keysym.KP_Home:		\033[1~
 URxvt*keysym.KP_End:		\033[4~
 URxvt*iso14755:			false
 
-Xft.autohint: 0
-Xft.antialias: 1
-Xft.hinting: true
-Xft.hintstyle: hintslight
-Xft.dpi: 96
-Xft.rgba: rgb
-Xft.lcdfilter: lcddefault
-
 ! special
 *.foreground:   #bdbdbd
 *.background:   #353535

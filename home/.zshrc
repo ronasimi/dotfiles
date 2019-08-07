@@ -70,14 +70,21 @@ autoload -U colors zsh-mime-setup select-word-style
 colors          # colors
 zsh-mime-setup  # run everything as if it's an executable
 select-word-style bash # ctrl+w on words
+
 # History search
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
-bindkey "^[[A" up-line-or-beginning-search # Up
-bindkey "^[[B" down-line-or-beginning-search # Down
+
+# FOR URXVT
+#bindkey "^[[A" up-line-or-beginning-search # Up
+#bindkey "^[[B" down-line-or-beginning-search # Down
+
+# FOR KITTY
+bindkey '\eOA' up-line-or-beginning-search # or ^[OA
+bindkey '\eOB' down-line-or-beginning-search # or ^[OB
 
 zstyle :compinstall filename '/home/ron/.zshrc'
 

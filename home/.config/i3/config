@@ -232,6 +232,9 @@ bindsym $mod+Shift+c reload; exec dunstify -u low "i3 config reloaded"
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r exec pkill lemonbar, restart
 
+# exit i3
+bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/i3_exit.sh
+
 # restart bar
 bindsym $mod+Shift+b exec --no-startup-id "~/.config/i3/scripts/barcycle.sh"
 
@@ -242,7 +245,6 @@ bindsym XF86Display exec --no-startup-id ~/.config/i3/scripts/monitors.sh
 bindsym XF86WebCam exec --no-startup-id "mpv --demuxer-lavf-format video4linux2 --demuxer-lavf-o-set input_format=mjpeg /dev/video0"
 bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
-bindsym $mod+Ctrl+e exec --no-startup-id ~/.config/i3/scripts/i3_exit.sh
 
 ## Program Keybinds
 # start dmenu (a program launcher)

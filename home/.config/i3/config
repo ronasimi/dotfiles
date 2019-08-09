@@ -75,8 +75,8 @@ assign [class="Vmplayer"] $ws5
 assign [class="libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice"] $ws5
 assign [class="Gimp|Gimp-2.10"] $ws6
 
-# split toggle for kitty
-#for_window [class="kitty"] split toggle; split toggle
+# split toggle for alacritty
+#for_window [class="alacritty"] split toggle; split toggle
 
 # application exceptions
 for_window [class="mpv"] $FLOAT-noborder
@@ -115,7 +115,7 @@ bindsym Escape mode "default"
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+x kill
@@ -254,8 +254,8 @@ bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu  -i -h 16 -n
 bindsym $mod+F1 workspace $ws1; exec chromium
 bindsym $mod+Mod1+F1 workspace $ws1; exec chromium --incognito
 
-# kitty
-bindsym $mod+F2 workspace $ws2; exec --no-startup-id kitty
+# alacritty
+bindsym $mod+F2 workspace $ws2; exec --no-startup-id alacritty
 
 # thunar
 bindsym $mod+F3 workspace $ws3; exec thunar

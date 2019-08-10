@@ -20,10 +20,10 @@ aW=$(($W + ($M * 2))) && aH=$(($H + ($M * 2)))
 
 if [ "$W" -gt "1" ]; then
   # Calculate width and height to block/font size
-  let W=$(($W / 9))
-  let H=$(($H / 21))
+  let W=$(($W / 7))
+  let H=$(($H / 14))
 
-  urxvtc -g $W"x"$H"+"$X"+"$Y -name "floatingterm" &
+  alacritty -d $W $H --position $X $Y -t drawterm &
 
   for i in {0..49}; do # timeout
     if ps -p $! >/dev/null; then

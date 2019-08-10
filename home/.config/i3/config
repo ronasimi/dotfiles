@@ -270,8 +270,8 @@ bindsym $mod+F5 workspace $ws5, exec libreoffice --writer
 bindsym $mod+F6 workspace $ws6; exec gimp
 
 # draw terminals
-#for_window [class="urxvt" instance="floating"] $FLOAT-border
-#bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
+for_window [class="Alacritty" title="drawterm"] $FLOAT-border
+bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
 
 # open an empty container
 bindsym $mod+Insert exec --no-startup-id i3-msg open

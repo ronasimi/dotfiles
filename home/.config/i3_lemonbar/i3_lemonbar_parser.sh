@@ -67,7 +67,7 @@ while read -r line; do
 					URG*)
 						urg_name=$(echo ${1#???} | cut -d ":" -f 2)
 						urg_number=$(echo ${1#???} | cut -d ":" -f 1)
-						wsp="${wsp}%{F${color_ina} B${color_alert} T2}${sep_right}%{F${color_act_fore} B${color_alert} T3}%{A1:i3-msg workspace number ${urg_number}:} ${urg_name} %{A}%{F${color_alert} B${color_ina}}${T1}${sep_right}"
+						wsp="${wsp}%{F${color_ina} B${color_alert} T2}${sep_right}%{F${color_act_fore} B${color_alert} T3}%{A1:i3-msg workspace number ${urg_number}:} ${urg_name} %{A}%{F${color_alert} B${color_ina} T2}${sep_right}"
 						;;
 				esac
 				shift

@@ -10,10 +10,10 @@
 
 panel_fifo="/tmp/i3_lemonbar_${USER}"
 
-geometry="1600x16"
+geometry="1600x17"
 font="Source Code Pro:size=9"
-plfont="-*-tamzenforpowerline-medium-r-*-*-14-*-*-*-*-*-*-*"
-iconfont="Material Design Icons:size=9.5"
+plfont="-*-tamzenforpowerline-medium-r-*-*-15-*-*-*-*-*-*-*"
+iconfont="Material Design Icons:size=9"
 
 clickables=32
 res_w=$(xrandr | grep "current" | awk '{print $8a}')

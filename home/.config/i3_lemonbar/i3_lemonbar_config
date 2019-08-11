@@ -12,7 +12,7 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 
 geometry="1600x17"
 font="Source Code Pro:size=9"
-plfont="-*-tamzenforpowerline-medium-r-*-*-15-*-*-*-*-*-*-*"
+plfont="-*-tamzenforpowerline-medium-r-*-*-17-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:size=9"
 
 clickables=32

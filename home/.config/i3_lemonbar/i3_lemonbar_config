@@ -11,7 +11,7 @@
 panel_fifo="/tmp/i3_lemonbar_${USER}"
 
 geometry="1600x16"
-font="Source Code Pro:size=9"
+font="Hack:size=9"
 plfont="-*-tamzenforpowerline-medium-r-*-*-16-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:size=9.5"
 
@@ -101,7 +101,7 @@ icon_vol_off=""    # Volume off icon
 icon_vol_mute="﹨"   # Mute icon
 
 icon_bright_100="" # Full brightness icon
-icon_bright_80=""  # c0% brightness icon
+icon_bright_80=""  # 80% brightness icon
 icon_bright_51=""  # 51% brightness icon
 icon_bright_31=""  # 31% brightness icon
 icon_bright_19=""  # 19% brightness icon

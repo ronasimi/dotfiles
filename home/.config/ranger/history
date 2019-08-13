@@ -8,8 +8,9 @@ rename stallman.jpg
 .config
 cd .config
 set preview_images_method kitty
-open_with 
 search storage
 search help
 help
 
+open_with 
+open_with gimp

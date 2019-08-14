@@ -52,7 +52,7 @@ gaps inner 16
 gaps outer 0
 #gaps horizontal <px>
 #gaps vertical <px>
-#gaps top 24
+#gaps top 16
 #gaps right <px>
 #gaps bottom 8
 #gaps left <px>

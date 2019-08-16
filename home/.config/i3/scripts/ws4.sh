@@ -5,4 +5,4 @@ i3-msg "workspace 4:; append_layout ~/.config/i3/layouts/ws4.json"
 
 # And finally we fill the containers with the programs they had
 (exec atom &)
-(urxvtc -cd /home/ron/repos &)
+(alacritty --working-directory /home/ron/repos &)

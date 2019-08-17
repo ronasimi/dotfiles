@@ -11,7 +11,7 @@ set mouse=a
 set ttymouse=xterm
 set number
 let g:airline_powerline_fonts=1
-let g:airline_theme='minimalist'
+let g:airline_theme='angr'
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 :hi Comment cterm=italic

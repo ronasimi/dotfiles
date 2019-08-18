@@ -82,9 +82,11 @@ zle -N down-line-or-beginning-search
 #bindkey "^[[A" up-line-or-beginning-search # Up
 #bindkey "^[[B" down-line-or-beginning-search # Down
 
-# FOR KITTY
+# FOR ALACRITTY
 bindkey '\eOA' up-line-or-beginning-search # or ^[OA
 bindkey '\eOB' down-line-or-beginning-search # or ^[OB
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
 
 zstyle :compinstall filename '/home/ron/.zshrc'
 
@@ -99,8 +101,8 @@ bindkey "\e[5C" forward-word
 bindkey "\eOc"  emacs-forward-word
 bindkey "\e[5D" backward-word
 bindkey "\eOd"  emacs-backward-word
-bindkey "\ee[C" forward-word
-bindkey "\ee[D" backward-word
+bindkey "\eeOC" forward-word
+bindkey "\eeOD" backward-word
 bindkey "^H"    backward-delete-word
 bindkey "^R" history-incremental-search-backward
 # for rxvt

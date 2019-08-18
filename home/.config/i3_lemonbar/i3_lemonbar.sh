@@ -34,7 +34,7 @@ mkfifo "${panel_fifo}"
 "$(dirname $0)"/scripts/workspaces.pl >"${panel_fifo}" &
 
 # window title, "WIN"
-(xtitle -sf 'WIN%s\n' >"${panel_fifo}") &
+xtitle -sf 'WIN%s\n' >"${panel_fifo}" &
 
 # updates, "UPD"
 ### update check interval
@@ -73,7 +73,7 @@ while read -r; do
 done < <(
   echo &&
     # restart alsactl if it exits with anything other than 0 (fixes suspend/resume issue)
-    until stdbuf -o0 alsactl -c monitor pulse | grep --line-buffered "Master Playback"; do
+    until (stdbuf -o0 alsactl -c monitor pulse | grep --line-buffered "Master Playback"); do
       echo "alsactl crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
@@ -82,13 +82,13 @@ done < <(
 # Backlight, "BRI"
 while read -r; do
 
-  (printf "%s%s\n" "BRI" "$(xbacklight -get)" >"${panel_fifo}") &
+  printf "%s%s\n" "BRI" "$(xbacklight -get)" >"${panel_fifo}" &
   "$(dirname $0)"/scripts/brightindicator.sh
 
 done < <(
   echo &&
     # restart udevadm if it exits with anything other than 0
-    until stdbuf -o0 udevadm monitor --kernel --subsystem-match=backlight --subsystem-match=power_supply; do
+    until (stdbuf -o0 udevadm monitor --kernel --subsystem-match=backlight --subsystem-match=power_supply); do
       echo "udevadm crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
@@ -97,13 +97,13 @@ done < <(
 # wired network, "ETH"
 while read -r; do
 
-  (printf "%s%s\n" "ETH" "$(nmcli -t | grep enp0s25: | cut -d ' ' -f 2)" >"${panel_fifo}") &
+  printf "%s%s\n" "ETH" "$(nmcli -t | grep enp0s25: | cut -d ' ' -f 2)" >"${panel_fifo}" &
   "$(dirname $0)"/scripts/click_eth.sh
 
 done < <(
   echo &&
     # restart nmcli if it exits with anything other than 0
-    until nmcli device monitor enp0s25; do
+    until (nmcli device monitor enp0s25); do
       echo "nmcli crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
@@ -112,13 +112,13 @@ done < <(
 # wireless network, "WFI"
 while read -r; do
 
-  (printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cut -d ' ' -f 2)" >"${panel_fifo}") &
+  printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cut -d ' ' -f 2)" >"${panel_fifo}" &
   "$(dirname $0)"/scripts/click_wifi.sh
 
 done < <(
   echo &&
     # restart nmcli if it exits with anything other than 0
-    until nmcli device monitor wlp3s0; do
+    until (nmcli device monitor wlp3s0); do
       echo "nmcli crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
@@ -127,12 +127,12 @@ done < <(
 # battery, "BAT"
 while read -r; do
 
-  (printf "%s%s\n" "BAT" "$(acpi -b | cut -d ' ' -f 4 | tr -d '%,')") >"${panel_fifo}" &
+  printf "%s%s\n" "BAT" "$(acpi -b | cut -d ' ' -f 4 | tr -d '%,')" >"${panel_fifo}" &
 
 done < <(
   echo &&
     # restart upower if it exits with anything other than 0
-    until stdbuf -o0 upower --monitor; do
+    until (stdbuf -o0 upower --monitor); do
       echo "upower crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done

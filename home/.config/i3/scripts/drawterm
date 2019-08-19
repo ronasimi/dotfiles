@@ -8,7 +8,7 @@
 #   Note:           if using compton w/ shadows, exclude "class_g = 'slop'"
 #
 
-M=3 # slop border width
+M=2 # slop border width
 
 REC=$(slop -t 0 -b $M -c 1,1,1,1 -f "%w %h %x %y" --nokeyboard) || exit 1
 #REC=$(xrectsel) || exit 1

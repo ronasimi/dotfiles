@@ -11,7 +11,7 @@
 panel_fifo="/tmp/i3_lemonbar_${USER}"
 
 geometry="1600x16"
-font="Source Code Pro:size=9"
+font="Hack:size=9"
 plfont="-*-tamzenforpowerline-medium-r-*-*-16-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:size=9.5"
 

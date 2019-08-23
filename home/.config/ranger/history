@@ -11,6 +11,6 @@ set preview_images_method kitty
 search storage
 search help
 help
-
 open_with 
 open_with gimp
+

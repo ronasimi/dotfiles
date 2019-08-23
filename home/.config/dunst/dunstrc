@@ -86,7 +86,7 @@
 
     ### Text ###
 
-    font = Operator Mono Book 10.5
+    font = Hack 9
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.

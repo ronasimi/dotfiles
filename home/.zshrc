@@ -296,6 +296,16 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 # AIRCRACK-NG
 export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
 
+# 'GOOGLE' function
+  google() {
+    search=""
+    echo "Googling: $@"
+    for term in $@; do
+      search="$search%20$term"
+    done
+  xdg-open "http://www.google.com/search?q=$search"
+}
+
 # POWERLEVEL10K OPTIONS
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_IGNORE_TERM_COLORS=true

@@ -48,7 +48,7 @@ default_border pixel 2
 default_floating_border none
 
 # useless gaps
-gaps inner 10
+gaps inner 18
 gaps outer 0
 #gaps horizontal <px>
 #gaps vertical <px>
@@ -248,7 +248,7 @@ bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
 
 ## Program Keybinds
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -h 20 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Hack:size=9'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -h 18 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Hack:size=9'"
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium

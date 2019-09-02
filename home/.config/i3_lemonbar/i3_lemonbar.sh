@@ -67,7 +67,7 @@ done &
 # volume, "VOL"
 while read -r; do
 
-  printf "%s%s\n" "VOL" "$(pamixer --get-volume)" >"${panel_fifo}" &
+  (printf "%s%s\n" "VOL" "$(pamixer --get-volume)") >"${panel_fifo}" &
   "$(dirname $0)"/scripts/volindicator.sh &
 
 done < <(
@@ -82,7 +82,7 @@ done < <(
 # Backlight, "BRI"
 while read -r; do
 
-  printf "%s%s\n" "BRI" "$(xbacklight -get)" >"${panel_fifo}" &
+  (printf "%s%s\n" "BRI" "$(xbacklight -get)") >"${panel_fifo}" &
   "$(dirname $0)"/scripts/brightindicator.sh
 
 done < <(

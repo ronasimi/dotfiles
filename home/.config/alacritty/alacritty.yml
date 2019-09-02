@@ -136,7 +136,7 @@ font:
     #style: Italic
 
   # Point size
-  size: 10
+  size: 9
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -149,7 +149,7 @@ font:
   # increasing `y` moves the glyph upwards.
   glyph_offset:
     x: 0
-    y: -1
+    y: 0
 
   # Thin stroke font rendering (macOS only)
   #

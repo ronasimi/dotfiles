@@ -11,7 +11,7 @@
 panel_fifo="/tmp/i3_lemonbar_${USER}"
 
 geometry="1600x16"
-font="Roboto Mono:style=Medium:size=9.5:hinting=true:antialiasing=true"
+font="Cousine:style=Medium:size=9.5:hinting=true:antialiasing=true"
 plfont="-*-tamzenforpowerline-medium-r-*-*-16-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:size=8.0"
 

@@ -1,8 +1,6 @@
 rename 6pnYQUv.jpg
 c
-copy
 paster
-paste
 rename
 rename stallman.jpg
 .config
@@ -14,3 +12,6 @@ help
 open_with 
 open_with gimp
 
+copy
+paste
+delete

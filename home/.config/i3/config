@@ -11,7 +11,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font xft:Hack 9
+font xft:Hack 10
 
 ## Workspace names
 # workspace name variables
@@ -48,7 +48,7 @@ default_border pixel 2
 default_floating_border none
 
 # useless gaps
-gaps inner 16
+gaps inner 18
 gaps outer 0
 #gaps horizontal <px>
 #gaps vertical <px>
@@ -248,7 +248,7 @@ bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
 
 ## Program Keybinds
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -h 16 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Hack:size=9'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -h 18 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Hack:size=10'"
 
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium

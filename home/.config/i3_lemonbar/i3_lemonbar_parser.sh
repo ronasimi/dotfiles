@@ -103,7 +103,7 @@ while read -r line; do
 
 		VOL*)
 			# speakers volume/muted
-			if [ "${line#???}" == 'muted' ]; then
+			if [ "${line#???}" == "muted" ]; then
 				icon_vol=${icon_vol_mute}
 				vol_cicon=${color_netdown}
 			elif [ "${line#???}" -gt 100 ]; then

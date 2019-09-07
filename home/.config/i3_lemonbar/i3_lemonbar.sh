@@ -67,14 +67,14 @@ done &
 # volume, "VOL"
 while read -r; do
 
-  printf "%s%s\n" "VOL" "$(pamixer --get-volume)" >"${panel_fifo}" &
+  pamixer --get-volume-human | tr -d "%" | awk ' {print "VOL"$1} ' >"${panel_fifo}" &
   "$(dirname $0)"/scripts/volindicator.sh &
 
 done < <(
   echo &&
-    # restart alsactl if it exits with anything other than 0 (fixes suspend/resume issue)
-    until (stdbuf -o0 alsactl -c monitor pulse | grep --line-buffered "Master Playback"); do
-      echo "alsactl crashed with exit code $?.  Respawning.." >&2
+    # restart pactl if it exits with anything other than 0 (fixes suspend/resume issue)
+    until (stdbuf -o0 pactl subscribe | grep --line-buffered "Event 'change' on sink #0"); do
+      echo "pactl crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
 ) &

@@ -73,8 +73,8 @@ while read -r; do
 done < <(
   echo &&
     # restart pactl if it exits with anything other than 0 (fixes suspend/resume issue)
-    until (stdbuf -o0 pactl subscribe | grep --line-buffered "Event 'change' on sink #0"); do
-      echo "pactl crashed with exit code $?.  Respawning.." >&2
+    until (stdbuf -oL alsactl monitor pulse | grep --line-buffered "Master Playback"); do
+      echo "pactl crashed with exit code $?.  Respawning.."
       sleep 1
     done
 ) &

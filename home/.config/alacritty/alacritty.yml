@@ -111,7 +111,7 @@ font:
     family: DejaVuSansMono Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
-    #style: Regular
+    style: Book
 
   # Bold font face
   #bold:

@@ -72,9 +72,9 @@ while read -r; do
 
 done < <(
   echo &&
-    # restart pactl if it exits
-    until (stdbuf -oL pactl subscribe | grep --line-buffered "Event 'change' on sink #0"); do
-      echo "pactl crashed with exit code $?.  Respawning.." >&2
+    # restart inotifywait if it exits
+    until (stdbuf -oL inotifywait -m -e access /dev/snd/controlC0); do
+      echo "inotifywait crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
 ) &

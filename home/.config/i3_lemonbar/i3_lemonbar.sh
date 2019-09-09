@@ -72,9 +72,9 @@ while read -r; do
 
 done < <(
   echo &&
-    # restart alsactl if it exits
-    until (stdbuf -oL alsactl monitor pulse | grep --line-buffered "Master Playback"); do
-      echo "alsactl crashed with exit code $?.  Respawning.."
+    # restart pactl if it exits
+    until (stdbuf -oL pactl subscribe | grep --line-buffered "Event 'change' on sink #0"); do
+      echo "pactl crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
 ) &

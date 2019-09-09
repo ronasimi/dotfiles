@@ -72,9 +72,9 @@ while read -r; do
 
 done < <(
   echo &&
-    # restart pactl if it exits with anything other than 0 (fixes suspend/resume issue)
-    until (stdbuf -oL alsactl monitor pulse | grep --line-buffered "Master Playback"); do
-      echo "pactl crashed with exit code $?.  Respawning.."
+    # restart inotifywait if it exits
+    until (stdbuf -oL inotifywait -m -e access /dev/snd/controlC0); do
+      echo "inotifywait crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done
 ) &

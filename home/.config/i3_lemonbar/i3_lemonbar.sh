@@ -73,7 +73,7 @@ while read -r; do
 done < <(
   echo &&
     # restart alsactl if it exits with anything other than 0 (fixes suspend/resume issue)
-    until (stdbuf -oL stdbuf -o0 alsactl -c monitor pulse | grep --line-buffered "Master Playback"); do
+    until (stdbuf -oL alsactl -c monitor pulse | grep --line-buffered "Master Playback"); do
       echo "alsactl crashed with exit code $?.  Respawning.."
       sleep 1
     done

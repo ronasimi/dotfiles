@@ -257,7 +257,7 @@
     # "mod3" and "mod4" (windows-key).
     # Xev might be helpful to find names for keys.
 
-    # Close notification.
+    # Close notification.``
     close = ctrl+space
 
     # Close all notifications.
@@ -267,10 +267,10 @@
     # On the US keyboard layout "grave" is normally above TAB and left
     # of "1". Make sure this key actually exists on your keyboard layout,
     # e.g. check output of 'xmodmap -pke'
-    history = ctrl+shift+grave
+    history = mod4+grave
 
     # Context menu.
-    context = ctrl+shift+period
+    context = mod4+period
 
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.

@@ -1,7 +1,8 @@
-URxvt*font:			xft:TamzenForPowerline:style=Regular:pixelsize=14:antialiasing=false:hinting=false,\
-				xft:Material Design Icons:pixelsize=8:antialiasing=false:hinting=false:minsize=true,\
-				xft:Segoe UI Symbol:pixelsize=14:antialiasing=false:hinting=false:minsize=true
-URxvt*boldFont:			xft:TamzenForPowerline:style=Bold:pixelsize=14:antialiasing=false:hinting=false
+URxvt*font:			xft:DejaVuSansMono Nerd Font Mono:style=Book:size=9.5,\
+				xft:Material Design Icons:size=8.5\
+URxvt*boldFont:			xft:DejaVuSansMono Nerd Font Mono:style=Bold:size=9.5
+URxvt*italicFont:		xft:DejaVuSansMono Nerd Font Mono:style=Oblique:size=9.5
+URxvt*boldItalicFont:		xft:DejaVuSansMono Nerd Font Mono:style=Bold Oblique:size=9.5
 URxvt*depth:			24
 URxvt*intensityStyles:		false
 URxvt*urgentOnBell:		true

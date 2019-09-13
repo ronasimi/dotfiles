@@ -108,13 +108,13 @@ font:
     #   - (macOS) Menlo
     #   - (Linux) monospace
     #   - (Windows) Consolas
-    family: DejaVuSansMono Nerd Font Mono
+    family: BlexMono Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
-    #style: Regular
+    style: Text
 
   # Bold font face
-  #bold:
+  bold:
     # Font family
     #
     # If the bold family is not specified, it will fall back to the
@@ -122,10 +122,10 @@ font:
     #family: monospace
 
     # The `style` can be specified to pick a specific face.
-    #style: Bold
+    style: SemiBold
 
   # Italic font face
-  #italic:
+  italic:
     # Font family
     #
     # If the italic family is not specified, it will fall back to the
@@ -133,7 +133,7 @@ font:
     #family: monospace
 
     # The `style` can be specified to pick a specific face.
-    #style: Italic
+    style: Text Italic
 
   # Point size
   size: 9.75
@@ -142,7 +142,7 @@ font:
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
   offset:
     x: 0
-    y: 0
+    y: 1
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the right,

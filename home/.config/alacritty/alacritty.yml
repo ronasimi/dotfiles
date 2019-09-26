@@ -34,8 +34,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 16
-    y: 16
+    x: 18
+    y: 18
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: false
@@ -108,7 +108,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux) monospace
     #   - (Windows) Consolas
-    family: FantasqueSansMono Nerd Font Mono
+    family: MesloLGS Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
     #style: Regular
@@ -136,20 +136,20 @@ font:
     #style: Italic
 
   # Point size
-  size: 10.5
+  size: 9.75
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
   offset:
     x: 0
-    y: 0
+    y: 1
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the right,
   # increasing `y` moves the glyph upwards.
   glyph_offset:
     x: 0
-    y: -1
+    y: 0
 
   # Thin stroke font rendering (macOS only)
   #

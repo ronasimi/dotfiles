@@ -32,7 +32,7 @@
 ### and set its name as the value.
 
 
-export INFINALITY_FT="ultimate4"
+export INFINALITY_FT="ultimate5"
 
 
 ### 2. If you want to create a custom style, uncomment the variables below
@@ -51,8 +51,8 @@ export INFINALITY_FT="ultimate4"
 #export INFINALITY_FT_STEM_DARKENING_AUTOFIT="false"
 #export INFINALITY_FT_STEM_DARKENING_CFF="false"
 #export INFINALITY_FT_GAMMA_CORRECTION="0 100"
-export INFINALITY_FT_BRIGHTNESS="-25"
-export INFINALITY_FT_CONTRAST="25"
+#export INFINALITY_FT_BRIGHTNESS="-25"
+#export INFINALITY_FT_CONTRAST="25"
 #export INFINALITY_FT_USE_VARIOUS_TWEAKS="true"
 #export INFINALITY_FT_AUTOHINT_INCREASE_GLYPH_HEIGHTS="true"
 #export INFINALITY_FT_AUTOHINT_SNAP_STEM_HEIGHT="0"

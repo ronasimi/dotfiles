@@ -106,7 +106,7 @@ while read -r line; do
 			if [ "${line#???}" == "muted" ]; then
 				icon_vol=${icon_vol_mute}
 				vol_cicon=${color_netdown}
-			elif [ "${line#???}" -ge 75 ]; then
+			elif [ "${line#???}" -ge 80 ]; then
 				icon_vol=${icon_vol_hi}
 				vol_cicon=${color_icon}
 			elif [ "${line#???}" -ge 50 ]; then

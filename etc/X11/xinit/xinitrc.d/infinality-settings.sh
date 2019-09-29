@@ -32,7 +32,7 @@
 ### and set its name as the value.
 
 
-export INFINALITY_FT="ultimate5"
+export INFINALITY_FT="ultimate4"
 
 
 ### 2. If you want to create a custom style, uncomment the variables below

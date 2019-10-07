@@ -3,4 +3,5 @@
 pkill lemonbar &&
 pkill thunar &&
 pkill compton &&
+pkill dunst &&
 i3-msg exit

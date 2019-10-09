@@ -1,6 +1,7 @@
 #!/bin/sh
 case $1/$2 in
   pre/*)
+    touch /tmp/brightness-value
     xbacklight -get > /tmp/brightness-value
   ;;
   post/*)

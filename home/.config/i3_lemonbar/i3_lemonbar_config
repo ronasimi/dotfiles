@@ -46,16 +46,16 @@ whi=$(xrdb -query | grep '*.color7:' | cut -f 2 | tr -d "#")
 bwhi=$(xrdb -query | grep '*.color15:' | cut -f 2 | tr -d "#")
 
 # bar color definitions
-color_back="#BF${bgd}"    # Default background
+color_back="#80${bgd}"    # Default background
 color_fore="#${fgd}"      # Default foreground
 color_title="#${bwhi}"    # Window title foreground
-color_stat="#BF${bla}"    # Background for i3 status section
+color_stat="#${bla}"    # Background for i3 status section
 color_ina="#${blu}"       # Background for inactive workspace
 color_wsp="#${bblu}"      # Background for selected workspace
 color_act_fore="#252525"  # Foreground for active workspace
 color_ina_fore="#${bla}"  # Foreground for inactive workspace
-color_sec_b1="#BF252525"  # Background for section 1
-color_sec_b2="#BF${bgd}"  # Background for section 2
+color_sec_b1="#252525"  # Background for section 1
+color_sec_b2="#${bgd}"  # Background for section 2
 color_icon="#${whi}"      # For icons
 color_icon_dark="#252525" # For icons (dark)
 color_netdown="#${bla}"   # For inactive network interface icons

@@ -34,8 +34,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 16
-    y: 16
+    x: 18
+    y: 18
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: false
@@ -136,7 +136,7 @@ font:
     #style: Italic
 
   # Point size
-  size: 9.75
+  size: 10.5
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -149,7 +149,7 @@ font:
   # increasing `y` moves the glyph upwards.
   glyph_offset:
     x: 0
-    y: 0
+    y: -1
 
   # Thin stroke font rendering (macOS only)
   #

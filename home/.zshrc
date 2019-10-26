@@ -90,6 +90,8 @@ bindkey "^[[1;5D" backward-word
 
 zstyle :compinstall filename '/home/ron/.zshrc'
 
+ZLE_RPROMPT_INDENT=0
+
 # Key bindings
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line

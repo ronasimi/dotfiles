@@ -1,5 +1,3 @@
 feh -B black \
--F \
--N \
-#--geometry 1280x720 \
---auto-zoom
+-g 1560x840+20-40 \
+-. \

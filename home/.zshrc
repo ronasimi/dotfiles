@@ -77,6 +77,9 @@ autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
+# FZF
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 
 # FOR URXVT
 #bindkey "^[[A" up-line-or-beginning-search # Up

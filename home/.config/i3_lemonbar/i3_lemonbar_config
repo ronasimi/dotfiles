@@ -15,7 +15,7 @@ font="Source Code Pro:style=SemiBold:size=10.5"
 plfont="-*-tamzenforpowerline-medium-r-*-*-20-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:size=8.25"
 
-clickables=32
+clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
 # alarm settings

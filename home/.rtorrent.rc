@@ -97,7 +97,8 @@ dht_port = 6881
 
 # Send text for each completed torrent
 
-method.set_key = event.download.finished,notify_me,"execute=/home/ron/.bin/mail.sh,$d.name="
+#method.set_key = event.download.finished,notify_me,"execute=/home/ron/.bin/mail.sh,$d.name="
+system.method.set_key = event.download.finished,notify_me,"execute=/path/to/mail.sh,$d.get_name="
 
 # UI/VIEW: Colors
 ui.color.alarm.set="bold white on red"

@@ -1,2 +1,7 @@
+# Disable HiDPI scaling
 export WINIT_HIDPI_FACTOR=1.0
-[[ $(fgconsole 2>/dev/null) == 1 ]] && exec startx -- vt1 &> /dev/null
+
+# Start Xorg if logged into VT1
+if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+  exec startx -- vt1 &> /dev/null
+fi

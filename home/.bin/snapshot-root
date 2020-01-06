@@ -1,15 +1,15 @@
 #!/bin/sh
 
-mount /mnt/btrfs_vol
+mount /.snapshots
  
-dest=/mnt/btrfs_vol
+dest=/.snapshots
 
 day=$( date +'%m-%d-%Y-%H:%M:%S')
  
 echo "taking root filesystem snapshot..."
  
 # The command
-btrfs subvolume snapshot / $dest/_root-$day
+btrfs subvolume snapshot / $dest/@root-$day
 
-umount /mnt/btrfs_vol
+umount /.snapshots
 

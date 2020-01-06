@@ -1,0 +1,58 @@
+{
+  "_from": "https://www.atom.io/api/packages/atom-minimal-ui/versions/0.2.1/tarball",
+  "_id": "atom-minimal-ui@0.2.1",
+  "_inBundle": false,
+  "_integrity": "sha512-C8CQNEmBHdYWOBoHiAkgvvKwpjy4kRJYcVLhHiTNPpv8bYiNbvUSO8dB4ezoWAlLGEmKQXXmfJSu/gx5EJeZ8w==",
+  "_location": "/atom-minimal-ui",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "https://www.atom.io/api/packages/atom-minimal-ui/versions/0.2.1/tarball",
+    "rawSpec": "https://www.atom.io/api/packages/atom-minimal-ui/versions/0.2.1/tarball",
+    "saveSpec": "https://www.atom.io/api/packages/atom-minimal-ui/versions/0.2.1/tarball",
+    "fetchSpec": "https://www.atom.io/api/packages/atom-minimal-ui/versions/0.2.1/tarball"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://www.atom.io/api/packages/atom-minimal-ui/versions/0.2.1/tarball",
+  "_shasum": "3dd6885264792c501f9c210540a0daaf799ac361",
+  "_spec": "https://www.atom.io/api/packages/atom-minimal-ui/versions/0.2.1/tarball",
+  "_where": "/tmp/apm-install-dir-202004-6900-1asa9t7.yyhl",
+  "bugs": {
+    "url": "https://github.com/PietroPate/atom-minimal-ui/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A minimal UI that lets the syntax theme shine",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/PietroPate/atom-minimal-ui#readme",
+  "keywords": [
+    "ui",
+    "theme",
+    "minimal",
+    "minimalist",
+    "zen"
+  ],
+  "license": "MIT",
+  "name": "atom-minimal-ui",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PietroPate/atom-minimal-ui.git"
+  },
+  "theme": "ui",
+  "version": "0.2.1",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

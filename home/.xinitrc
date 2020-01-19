@@ -33,6 +33,7 @@ fi
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+systemctl --user import-environment DISPLAY &
 compton --config ~/.config/compton/compton.conf -b -d :0 &
 /usr/bin/dunst &
 clipster -d &

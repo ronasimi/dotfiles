@@ -112,7 +112,7 @@ done < <(
 # wireless network, "WFI"
 while read -r; do
 
-  printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cut -d ' ' -f 2)" >"${panel_fifo}" &
+  printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cqqqqqut -d ' ' -f 2)" >"${panel_fifo}" &
   "$(dirname $0)"/scripts/click_wifi.sh
 
 done < <(

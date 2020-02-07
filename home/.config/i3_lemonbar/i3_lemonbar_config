@@ -8,13 +8,14 @@
 #|_|\___|_| |_| |_|\___/|_| |_|_.__/ \__,_|_|  (_)
 #
 
+# initialize the pipe
 panel_fifo="/tmp/i3_lemonbar_${USER}"
 
+# lemonbar settings
 geometry="1600x20"
 font="Source Code Pro:style=SemiBold:size=10.5"
 plfont="-*-tamzenforpowerline-medium-r-*-*-20-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:size=9"
-
 clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
@@ -78,7 +79,7 @@ sep_right=""       # Powerline separator right
 
 # Icon glyphs from Material Icons
 icon_cal=""        # Calendar icon
-icon_clock="肋"      # Clock icon
+icon_clock=""      # Clock icon
 icon_ethup=""      # Ethernet up icon
 icon_ethdown=""    # Ethernet down icon
 icon_wifi_up=""    # Wifi up icon

@@ -1,0 +1,9 @@
+set v15-compat
+set sendcharsets=utf-8,iso-8859-1
+set fullnames
+set sendwait
+set mimetypes-load-control
+set from="Ron Asimi <ron.asimi@gmail.com>"
+
+# gmail
+set mta=smtp://ron.asimi:sxrkskjhfycjbecn@smtp.gmail.com smtp-use-starttls

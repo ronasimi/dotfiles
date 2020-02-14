@@ -87,7 +87,11 @@ dht_port = 6881
 
 # Enable peer exchange (for torrents not marked private)
 #
-#peer_exchange = yes
+peer_exchange = yes
+
+# Enable rtorrent-ps features
+#
+method.insert = pyro.extended, value|const, 1
 
 # Color options
 #color_inactive_fg = 4
@@ -96,9 +100,10 @@ dht_port = 6881
 #color_finished_fg = 2
 
 # Send text for each completed torrent
-
-#method.set_key = event.download.finished,notify_me,"execute=/home/ron/.bin/mail.sh,$d.name="
-system.method.set_key = event.download.finished,notify_me,"execute=/path/to/mail.sh,$d.get_name="
+#
+method.set_key = event.download.finished,notify_me,"execute=/home/ron/.bin/mail.sh,$d.name="
+#system.method.set_key = event.download.finished,notify_me,"execute=/home/ron/.bin/mail.sh,$d.get_name="
+#method.set_key = event.download.finished,fileprocessing,"execute=/home/ron/.bin/mail.sh,$d.get_name="
 
 # UI/VIEW: Colors
 ui.color.alarm.set="bold white on red"

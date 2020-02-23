@@ -40,4 +40,5 @@ clipster -d &
 syndaemon -i 0.5 1 -K -R -d &
 xset s 300 600 &
 xset m 3 0 &
+xss-lock --transfer-sleep-lock -q lockscreen &
 exec i3

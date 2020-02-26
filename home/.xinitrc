@@ -39,6 +39,6 @@ compton --config ~/.config/compton/compton.conf -b -d :0 &
 clipster -d &
 syndaemon -i 0.5 1 -K -R -d &
 xset s 300 600 &
-xset m 3 0 &
+xset m 4 0 &
 xss-lock --transfer-sleep-lock -q lockscreen &
 exec i3

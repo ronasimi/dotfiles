@@ -182,10 +182,10 @@ bindsym $mod+Shift+m append_layout ~/.config/i3/layouts/master-stack.json
 
 # multimedia keys
 # pulse audio volume control
-bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume @DEFAULT_SINK@ -5%"
-bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume @DEFAULT_SINK@ +5%"
-bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ true ; pactl set-sink-volume @DEFAULT_SINK@ 150% ; pactl set-sink-mute @DEFAULT_SINK@ false"
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
+bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up
+bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ true ; pactl set-sink-volume @DEFAULT_SINK@ 150% ; pactl set-sink-mute @DEFAULT_SINK@ false"
+bindsym XF86AudioMute exec --no-startup-id pulseaudio-ctl mute toggle
 bindsym XF86AudioMicMute exec --no-startup-id pulseaudio-ctl mute-input
 
 # print screen

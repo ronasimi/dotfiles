@@ -95,6 +95,7 @@ icon_splitv=""     # vertical split icon
 icon_tabbed=""     # tabbed layout icon
 icon_stacked="ﮧ"    # stacked layout icon
 
+icon_vol_boost=""  # Boosted volume icon
 icon_vol_hi=""     # High volume icon
 icon_vol_med=""    # Medium volume icon
 icon_vol_lo=""     # Low volume icon

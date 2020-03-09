@@ -15,7 +15,7 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 geometry="1600x20"
 font="Source Code Pro:style=SemiBold:size=10.5"
 plfont="-*-tamzenforpowerline-medium-r-*-*-20-*-*-*-*-*-*-*"
-iconfont="Material Design Icons:size=9"
+iconfont="Material Design Icons:style:Regular:size=9"
 clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
@@ -77,52 +77,50 @@ fi
 sep_left=""        # Powerline separator left
 sep_right=""       # Powerline separator right
 
-# Icon glyphs from Material Icons
-icon_cal=""        # Calendar icon
-icon_clock=""      # Clock icon
-icon_ethup=""      # Ethernet up icon
-icon_ethdown=""    # Ethernet down icon
-icon_wifi_up=""    # Wifi up icon
-icon_wifi_down=""  # Wifi down icon
-icon_mail=""       # Mail icon
-icon_arch=""       # Arch icon
+# Icon glyphs from Material Design Icons
+icon_cal="󰃶"        # Calendar icon
+icon_clock="󰅐"      # Clock icon
+icon_ethup="󰈁"      # Ethernet up icon
+icon_ethdown="󰈂"    # Ethernet down icon
+icon_wifi_up="󰖩"    # Wifi up icon
+icon_wifi_down="󰖪"  # Wifi down icon
+icon_mail="󰊫"       # Mail icon
+icon_arch="󰣇"       # Arch icon
 
-icon_default=""    # default mode icon
-icon_resize="﨣"     # resize mode icon
+icon_default="󰌌"    # default mode icon
+icon_resize="󰩨"     # resize mode icon
 
-icon_splith=""     # horizontal split layout icon
-icon_splitv=""     # vertical split icon
-icon_tabbed=""     # tabbed layout icon
-icon_stacked="ﮧ"    # stacked layout icon
+icon_splith="󰜨"     # horizontal split layout icon
+icon_splitv="󰜩"     # vertical split icon
+icon_tabbed="󰓩"     # tabbed layout icon
+icon_stacked="󰯋"    # stacked layout icon
 
-icon_vol_boost=""  # Boosted volume icon
-icon_vol_hi=""     # High volume icon
-icon_vol_med=""    # Medium volume icon
-icon_vol_lo=""     # Low volume icon
-icon_vol_off=""    # Volume off icon
-icon_vol_mute="﹨"   # Mute icon
+icon_vol_boost="󰕾"  # Boosted volume icon
+icon_vol_hi="󰕾"     # High volume icon
+icon_vol_med="󰖀"    # Medium volume icon
+icon_vol_lo="󰕿"     # Low volume icon
+icon_vol_off="󰸈"    # Volume off icon
+icon_vol_mute="󰝟"   # Mute icon
 
-icon_bright_100="" # Full brightness icon
-icon_bright_80=""  # 80% brightness icon
-icon_bright_51=""  # 51% brightness icon
-icon_bright_31=""  # 31% brightness icon
-icon_bright_19=""  # 19% brightness icon
-icon_bright_11=""  # 11% brightness icon
-icon_bright_6=""   # <6% brightness icon
+icon_bright_100="󰃠" # Full brightness icon
+icon_bright_80="󰃟"  # 80% brightness icon
+icon_bright_51="󰃞"  # 51% brightness icon
+icon_bright_31="󰃝"  # 31% brightness icon
+icon_bright_19="󰃜"  # 19% brightness icon
+icon_bright_11="󰃛"  # 11% brightness icon
+icon_bright_6="󰃚"   # <6% brightness icon
 
-icon_bat_ac=""     # On charger icon
-icon_bat_charge="" # Battery charging icon
-icon_bat_full=""   # Full battery icon
-icon_bat_90=""     # 90% battery icon
-icon_bat_80=""     # 80% battery icon
-icon_bat_70=""     # 70% battery icon
-icon_bat_60=""     # 60% battery icon
-icon_bat_50=""     # 50% battery icon
-icon_bat_40=""     # 40% battery icon
-icon_bat_30=""     # 30% battery icon
-icon_bat_20=""     # 20% battery icon
-icon_bat_10=""     # 10% battery icon
-icon_bat_0=""      # 0% battery icon
-icon_bat_low=""    # Low battery icon
-
-icon_power="" # Power icon
+icon_bat_ac="󰚥"     # On charger icon
+icon_bat_charge="󰂄" # Battery charging icon
+icon_bat_full="󰁹"   # Full battery icon
+icon_bat_90="󰂂"     # 90% battery icon
+icon_bat_80="󰂁"     # 80% battery icon
+icon_bat_70="󰂀"     # 70% battery icon
+icon_bat_60="󰁿"     # 60% battery icon
+icon_bat_50="󰁾"     # 50% battery icon
+icon_bat_40="󰁽"     # 40% battery icon
+icon_bat_30="󰁼"     # 30% battery icon
+icon_bat_20="󰁻"     # 20% battery icon
+icon_bat_10="󰁺"     # 10% battery icon
+icon_bat_0="󰂃"      # 0% battery icon
+icon_bat_low="󰂃"    # Low battery icon

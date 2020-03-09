@@ -33,9 +33,9 @@ URxvt*keysym.KP_End:		\033[4~
 URxvt*iso14755:			false
 
 ! special
-*.foreground:   #bdbdbd
+*.foreground:   #c3c3c3
 *.background:   #353535
-*.cursorColor:  #bdbdbd
+*.cursorColor:  #c3c3c3
 
 ! black
 *.color0:       #5d5d5d

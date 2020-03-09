@@ -66,5 +66,5 @@ URxvt*iso14755:			false
 *.color14:      #90c3bb
 
 ! white
-*.color7:       #bdbdbd
+*.color7:       #d0d0d0
 *.color15:      #e0e0e0

@@ -1,3 +1,4 @@
+[41773:0310/142412.938087:ERROR:buffer_manager.cc(491)] [.BrowserCompositor-0xc7daf543700]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
 Attempting to call a function in a renderer window that has been closed or released.
 Function provided here: worker.js:79:22
 Remote event names: destroyed, crashed

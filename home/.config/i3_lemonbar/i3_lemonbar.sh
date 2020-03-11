@@ -73,7 +73,7 @@ while read -r; do
 done < <(
   echo &&
     # restart inotifywait if it exits
-    until (pactl subscribe | grep --line-buffered "sink"); do
+    until (stdbuf -oL inotifywait -m -e access /dev/snd/controlC0); do
       echo "inotifywait crashed with exit code $?.  Respawning.." >&2
       sleep 1
     done

@@ -1,0 +1,9 @@
+#!/bin/sh
+# A fuzzy file-finder and opener based on dmenu
+# Requires: dmenu, xdg-utils
+
+act=$(xrdb -query | grep '*.foreground:' | cut -f 2)
+bg=$(xrdb -query | grep '*.background:' | cut -f 2)
+ind=$(xrdb -query | grep '*.color4:' | cut -f 2)
+
+find . -not -path '*/\.*' | sed 's/ /\\ /g' | sort -f | dmenu -p "open file:" -i -h 20 -nb $bg -nf $act -sb $ind -sf $bg -fn 'Source Code Pro:size=10.5' | xargs xdg-open

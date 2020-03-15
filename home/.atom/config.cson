@@ -10,6 +10,8 @@
     fontFamily: "LigaSrc Pro, Material Design Icons"
   "exception-reporting":
     userId: "88b49b10-0169-4aa7-bbf7-f5b48d955392"
+  "linter-ui-default":
+    showPanel: true
   minimap:
     plugins:
       "minimap-hide": true

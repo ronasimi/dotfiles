@@ -34,7 +34,7 @@ URxvt*iso14755:			false
 
 ! special
 *.foreground:   #c3c3c3
-*.background:   #353535
+*.background:   #2d2d2d
 *.cursorColor:  #c3c3c3
 
 ! black

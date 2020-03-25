@@ -20,8 +20,8 @@ aW=$(($W + ($M * 2))) && aH=$(($H + ($M * 2)))
 
 if [ "$W" -gt "1" ]; then
   # Calculate width and height to block/font size
-  let W=$(($W / 7))
-  let H=$(($H / 14))
+  let W=$(($W / 8))
+  let H=$(($H / 18))
 
   alacritty -d $W $H --position $X $Y -t drawterm &
 

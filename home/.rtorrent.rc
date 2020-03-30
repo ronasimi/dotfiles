@@ -14,9 +14,9 @@ max_peers_seed = 50
 #max_uploads = 10
 
 # Maximum number of simultaneous downloads
-#max_downloads_global = 5
+max_downloads_global = 3
 # Maximum number of simultaneous uploads
-#max_uploads_global = 10
+max_uploads_global = 5
 
 # Global upload and download rate in KiB. "0" for unlimited.
 download_rate = 0
@@ -49,7 +49,7 @@ schedule = low_diskspace,5,60,close_low_diskspace=100M
 #bind = rakshasa.no
 
 # Port range to use for listening.
-port_range = 49153-49351
+network.port_range.set = 2048-65535
 
 # Start opening ports at a random position within the port range.
 port_random = yes
@@ -59,7 +59,7 @@ port_random = yes
 check_hash = yes
 
 # Set whether the client should try to connect to UDP trackers.
-#use_udp_trackers = yes
+trackers.use_udp.set = 1
 
 # Alternative calls to bind and ip that should handle dynamic ip's.
 #schedule = ip_tick,0,1800,ip=rakshasa
@@ -79,7 +79,7 @@ encryption = allow_incoming,try_outgoing,enable_retry
 # "auto" (start and stop DHT as needed), or "on" (start DHT immediately).
 # The default is "off". For DHT to work, a session directory must be defined.
 # 
-dht = auto
+dht.mode.set = auto
 
 # UDP port to use for DHT. 
 # 

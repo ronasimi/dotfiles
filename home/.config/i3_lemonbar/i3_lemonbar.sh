@@ -67,7 +67,7 @@ done &
 # volume, "VOL"
 while read -r; do
 
-  (echo "VOL""$(pamixer --get-volume-human | tr -d "%")") >"${panel_fifo}" &
+  (printf "%s%s\n" "VOL" "$(pamixer --get-volume-human | tr -d "%")") >"${panel_fifo}" &
   "$(dirname $0)"/scripts/volindicator.sh &
 
 done < <(

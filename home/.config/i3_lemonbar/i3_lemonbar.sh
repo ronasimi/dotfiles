@@ -24,7 +24,8 @@ mkfifo "${panel_fifo}"
 ### EVENTS METERS
 
 # i3 binding mode "MOD"
-(printf "%s\n" "MODinit" >"${panel_fifo}" && i3-msg -t subscribe -m '[ "mode" ]' | awk -F '"' '{print "MOD" $4; fflush(stdout)}') >"${panel_fifo}" &
+printf "%s\n" "MODinit" > "${panel_fifo}" &
+i3-msg -t subscribe -m '[ "mode" ]' | awk -F '"' '{print "MOD" $4; fflush(stdout)}' > "${panel_fifo}" &
 
 # container layout, "LAY"
 

@@ -19,8 +19,8 @@ elif parent.layout == 'tabbed':
 	print(tabbed_text)
 	sys.stdout.flush()
 elif parent.layout == 'stacked':
-		print(stacked_text)
-		sys.stdout.flush()
+	print(stacked_text)
+	sys.stdout.flush()
 
 def on_event(self, _):
 	parent = i3.get_tree().find_focused().parent
@@ -41,5 +41,6 @@ def on_event(self, _):
 # Subscribe to events
 i3.on("window::focus", on_event)
 i3.on("binding", on_event)
+
 # Start the main loop and wait for events to come in.
 i3.main()

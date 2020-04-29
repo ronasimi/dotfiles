@@ -293,3 +293,4 @@ bar {
 exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id thunar --daemon
 exec --no-startup-id sleep 0.1; xset s activate
+exec --no-startup-id ~/.config/i3/scripts/alternating_layouts.py

@@ -15,7 +15,7 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 geometry="1600x16"
 font="Fantasque Sans Mono:style=SemiBold:size=10.5"
 plfont="-*-tamzenforpowerline-medium-r-*-*-16-*-*-*-*-*-*-*"
-iconfont="Material Design Icons:style:Regular:size=9"
+iconfont="Material Design Icons:style:Regular:size=8"
 clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 

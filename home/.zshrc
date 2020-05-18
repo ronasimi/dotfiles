@@ -134,6 +134,9 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 fi
 
 # Help functions
+autoload -Uz run-help
+unalias run-help
+alias help=run-help
 autoload -Uz run-help-git
 autoload -Uz run-help-ip
 autoload -Uz run-help-openssl

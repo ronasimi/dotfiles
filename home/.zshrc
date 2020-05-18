@@ -17,11 +17,9 @@ if [ "$TERM" = "linux" ]; then
       echo -en "$i"
     done
     clear
-#  autoload -Uz promptinit
-#  promptinit
-#  prompt walters
-  source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-  source /usr/share/zsh-theme-powerlevel10k/config/p10k-lean.zsh
+  autoload -Uz promptinit
+  promptinit
+  prompt walters
 else
   # POWERLEVEL10K
   source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
@@ -30,22 +28,22 @@ else
 fi
 
 # WINDOW TITLE
-case $TERM in
-  termite|*xterm*|rxvt|rxvt-unicode|rxvt-256color|rxvt-unicode-256color|(dt|k|E)term|alacritty)
-    precmd () { print -Pn "\e]0;%n@%m: %~\a" }
-    preexec () { print -Pn "\e]0;$1\a" }
-  ;;
-  screen|screen-256color|tmux|tmux-256color)
-    precmd () {
-      print -Pn "\e]83;title \"$1\"\a"
-      print -Pn "\e]0;$TERM\a"
-      }
-    preexec () {
-      print -Pn "\e]83;title \"$1\"\a"
-      print -Pn "\e]0;$TERM - $1\a"
-      }
-  ;;
-esac
+autoload -Uz add-zsh-hook
+
+function xterm_title_precmd () {
+	print -Pn -- '\e]2;%n@%m %~\a'
+	[[ "$TERM" == 'screen'* ]] && print -Pn -- '\e_\005{g}%n\005{-}@\005{m}%m\005{-} \005{B}%~\005{-}\e\\'
+}
+
+function xterm_title_preexec () {
+	print -Pn -- '\e]2;%n@%m %~ %# ' && print -n -- "${(q)1}\a"
+	[[ "$TERM" == 'screen'* ]] && { print -Pn -- '\e_\005{g}%n\005{-}@\005{m}%m\005{-} \005{B}%~\005{-} %# ' && print -n -- "${(q)1}\e\\"; }
+}
+
+if [[ "$TERM" == (alacritty*|gnome*|konsole*|putty*|rxvt*|screen*|tmux*|xterm*) ]]; then
+	add-zsh-hook -Uz precmd xterm_title_precmd
+	add-zsh-hook -Uz preexec xterm_title_preexec
+fi
 
 HISTFILE=~/.histfile
 HISTSIZE=10000

@@ -78,24 +78,43 @@ encryption = allow_incoming,try_outgoing,enable_retry
 # May be set to "disable" (completely disable DHT), "off" (do not start DHT),
 # "auto" (start and stop DHT as needed), or "on" (start DHT immediately).
 # The default is "off". For DHT to work, a session directory must be defined.
-# 
+#
 dht.mode.set = auto
 
-# UDP port to use for DHT. 
-# 
+# UDP port to use for DHT.
+#
 dht_port = 6881
 
 # Enable peer exchange (for torrents not marked private)
 #
 protocol.pex.set = yes
 
-# Color options
-color_inactive_fg = 4
-color_dead_fg = 1
-color_active_fg = 3
-color_finished_fg = 2
+# Enable rtorrent-ps features
+method.insert = pyro.extended, value|const, 1
+
+# UI/VIEW: Colors
+ui.color.alarm.set="bold white on red"
+ui.color.complete.set="bright green"
+ui.color.even.set=""
+ui.color.focus.set="reverse"
+ui.color.footer.set="bold black on white"
+ui.color.incomplete.set="yellow"
+ui.color.info.set="white"
+ui.color.label.set="gray"
+ui.color.leeching.set="bold bright yellow"
+ui.color.odd.set=""
+ui.color.progress0.set="red"
+ui.color.progress20.set="bold bright red"
+ui.color.progress40.set="bold bright magenta"
+ui.color.progress60.set="yellow"
+ui.color.progress80.set="bold bright yellow"
+ui.color.progress100.set="green"
+ui.color.progress120.set="bold bright green"
+ui.color.queued.set="magenta"
+ui.color.seeding.set="bold bright green"
+ui.color.stopped.set="blue"
+ui.color.title.set="bold black on white"
 
 # Send text for each completed torrent
 #
 method.set_key = event.download.finished,notify_me,"execute=/home/ron/.bin/mail.sh,$d.name="
-

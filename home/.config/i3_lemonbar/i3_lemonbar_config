@@ -20,7 +20,7 @@ clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
 # alarm settings
-bat_alert=5  # low battery %
+bat_alert=10  # low battery %
 
 # update timers, in minutes
 mail_timer=5 # Mail check timer (min)
@@ -80,10 +80,14 @@ sep_right=""       # Powerline separator right
 # Icon glyphs from Material Design Icons
 icon_cal="󰃶"        # Calendar icon
 icon_clock="󰅐"      # Clock icon
+
 icon_ethup="󰈁"      # Ethernet up icon
 icon_ethdown="󰈂"    # Ethernet down icon
 icon_wifi_up="󰤨"    # Wifi up icon
 icon_wifi_down="󰤮"  # Wifi down icon
+icon_bluetooth="󰂯"  # Bluetooth icon
+icon_blueup="󰂱"     # Bluetooth connected icon
+icon_bluedown="󰂲"   # Bluetooth off icon
 icon_mail="󰊫"       # Mail icon
 icon_arch="󰣇"       # Arch icon
 

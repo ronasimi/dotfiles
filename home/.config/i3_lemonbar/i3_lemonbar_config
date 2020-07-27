@@ -47,7 +47,7 @@ whi=$(xrdb -query | grep '*.color7:' | cut -f 2 | tr -d "#")
 bwhi=$(xrdb -query | grep '*.color15:' | cut -f 2 | tr -d "#")
 
 # bar color definitions
-color_back="#E6${bgd}"    # Default background
+color_back="#${bgd}"    # Default background
 color_fore="#${fgd}"      # Default foreground
 color_title="#${bwhi}"    # Window title foreground
 color_stat="#${bla}"      # Background for i3 status section
@@ -85,9 +85,9 @@ icon_ethup="󰈁"      # Ethernet up icon
 icon_ethdown="󰈂"    # Ethernet down icon
 icon_wifi_up="󰤨"    # Wifi up icon
 icon_wifi_down="󰤮"  # Wifi down icon
-icon_bluetooth="󰂯"  # Bluetooth icon
-icon_blueup="󰂱"     # Bluetooth connected icon
+icon_blueup="󰂯"  # Bluetooth icon
 icon_bluedown="󰂲"   # Bluetooth off icon
+icon_blueconn="󰂱"     # Bluetooth connected icon
 icon_mail="󰊫"       # Mail icon
 icon_arch="󰣇"       # Arch icon
 

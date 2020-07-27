@@ -71,13 +71,13 @@ while read -r; do
   (printf "%s%s\n" "VOL" "$(pamixer --get-volume-human | tr -d "%")") >"${panel_fifo}" &
   "$(dirname $0)"/scripts/volindicator.sh &
 
-done < <(
+  done < <(
   echo &&
-    # restart inotifywait if it exits
-    until (stdbuf -oL inotifywait -m -e access /dev/snd/by-path/pci-0000:00:1b.0); do
-      echo "inotifywait crashed with exit code $?.  Respawning.." >&2
-      sleep 1
-    done
+  # restart inotifywait if it exits
+  until (stdbuf -oL inotifywait -m -e access /dev/snd/by-path/pci-0000:00:1b.0); do
+    echo "inotifywait crashed with exit code $?.  Respawning.." >&2
+    sleep 1
+  done
 ) &
 
 # Backlight, "BRI"
@@ -86,13 +86,13 @@ while read -r; do
   printf "%s%s\n" "BRI" "$(xbacklight -get)" >"${panel_fifo}" &
   "$(dirname $0)"/scripts/brightindicator.sh
 
-done < <(
+  done < <(
   echo &&
-    # restart udevadm if it exits with anything other than 0
-    until (stdbuf -o0 udevadm monitor --kernel --subsystem-match=backlight --subsystem-match=power_supply); do
-      echo "udevadm crashed with exit code $?.  Respawning.." >&2
-      sleep 1
-    done
+  # restart udevadm if it exits with anything other than 0
+  until (stdbuf -o0 udevadm monitor --kernel --subsystem-match=backlight --subsystem-match=power_supply); do
+    echo "udevadm crashed with exit code $?.  Respawning.." >&2
+    sleep 1
+  done
 ) &
 
 # wired network, "ETH"
@@ -101,13 +101,13 @@ while read -r; do
   printf "%s%s\n" "ETH" "$(nmcli -t | grep enp0s25: | cut -d ' ' -f 2)" >"${panel_fifo}" &
   "$(dirname $0)"/scripts/click_eth.sh
 
-done < <(
+  done < <(
   echo &&
-    # restart nmcli if it exits with anything other than 0
-    until (nmcli device monitor enp0s25); do
-      echo "nmcli crashed with exit code $?.  Respawning.." >&2
-      sleep 1
-    done
+  # restart nmcli if it exits with anything other than 0
+  until (nmcli device monitor enp0s25); do
+    echo "nmcli crashed with exit code $?.  Respawning.." >&2
+    sleep 1
+  done
 ) &
 
 # wireless network, "WFI"
@@ -116,26 +116,26 @@ while read -r; do
   printf "%s%s\n" "WFI" "$(nmcli -t | grep wlp3s0: | cut -d ' ' -f 2)" >"${panel_fifo}" &
   "$(dirname $0)"/scripts/click_wifi.sh
 
-done < <(
+  done < <(
   echo &&
-    # restart nmcli if it exits with anything other than 0
-    until (nmcli device monitor wlp3s0); do
-      echo "nmcli crashed with exit code $?.  Respawning.." >&2
-      sleep 1
-    done
+  # restart nmcli if it exits with anything other than 0
+  until (nmcli device monitor wlp3s0); do
+    echo "nmcli crashed with exit code $?.  Respawning.." >&2
+    sleep 1
+  done
 ) &
 
 # battery, "BAT"
 while read -r; do
   printf "%s%s\n" "BAT" "$(acpi -b | cut -d ' ' -f 4 | tr -d '%,')" >"${panel_fifo}" &
 
-done < <(
+  done < <(
   echo &&
-    # restart upower if it exits with anything other than 0
-    until (stdbuf -o0 upower --monitor); do
-      echo "upower crashed with exit code $?.  Respawning.." >&2
-      sleep 1
-    done
+  # restart upower if it exits with anything other than 0
+  until (stdbuf -o0 upower --monitor); do
+    echo "upower crashed with exit code $?.  Respawning.." >&2
+    sleep 1
+  done
 ) &
 
 # date/time, "DAY"/"CLK"
@@ -145,6 +145,6 @@ done < <(
 #### LOOP FIFO
 
 (cat "${panel_fifo}" | "$(dirname $0)"/i3_lemonbar_parser.sh |
-  lemonbar -p -o -2 -f "${font}" -o 0 -f "${plfont}" -o -4 -f "${iconfont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
+lemonbar -p -o -2 -f "${font}" -o 0 -f "${plfont}" -o -4 -f "${iconfont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
 
 wait

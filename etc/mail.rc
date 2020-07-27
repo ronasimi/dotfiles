@@ -6,4 +6,4 @@ set mimetypes-load-control
 set from="Ron Asimi <ron.asimi@gmail.com>"
 
 # gmail
-set mta=smtp://ron.asimi:sxrkskjhfycjbecn@smtp.gmail.com smtp-use-starttls
+set mta=smtps://ron.asimi:mfdmmjejtyyokrdy@smtp.gmail.com:465 smtp-use-starttls

@@ -13,7 +13,7 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 
 # lemonbar settings
 geometry="1600x20"
-font="Source Code Pro:style=SemiBold:size=10.5"
+font="Inter:style=SemiBold:size=10.5"
 plfont="-*-tamzenforpowerline-medium-r-*-*-20-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:style:Regular:size=9"
 clickables=64

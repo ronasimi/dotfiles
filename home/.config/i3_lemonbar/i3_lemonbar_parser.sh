@@ -183,8 +183,13 @@ while read -r line; do
         blue_cfore=${color_fore}
 
         if [ "${line#???}" == "on" ]; then
-          blueup=${icon_blueup}
-          blue_cicon=${color_icon}
+          if [ "$(bt-device -l | egrep '\(.*\)' | grep -oP '(?<=\()[^\)]+' | xargs -n1 bt-device -i | grep Connected: | cut -d ' ' -f 4)" == "1" ]; then
+            blueup=${icon_blueconn}
+            blue_cicon=${color_icon}
+          else
+            blueup=${icon_blueup}
+            blue_cicon=${color_icon}
+          fi
         else
           blueup=${icon_bluedown}
           blue_cicon=${color_netdown}

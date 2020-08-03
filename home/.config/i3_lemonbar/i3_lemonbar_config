@@ -16,6 +16,7 @@ geometry="1580x20+10+5"
 font="Source Code Pro:style=SemiBold:size=10.5"
 plfont="-*-tamzenforpowerline-medium-r-*-*-20-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:style:Regular:size=9"
+titlefont="Inter:style:Medium:size=10.5"
 clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 

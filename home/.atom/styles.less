@@ -5,3 +5,20 @@ atom-workspace {
 html, body, .tree-view, .tab-bar .tab {
   font-size: @font-size;
 }
+
+// Make the tabs span the whole tab bar width
+.tab-bar {
+  .tab {
+    max-width: 100%;
+    flex-grow: 2;
+    text-align: center;
+    // But move the Tree View's tab text to the left. Just a personal taste.
+    &[data-type="TreeView"] {
+      text-align: left;
+    }
+  }
+}
+
+//atom-text-editor {
+//  font-family: "LigaOperatorMonoSSm-Book", "Operator Mono SSm Book", "Material Design Icons";
+//}

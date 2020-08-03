@@ -159,6 +159,14 @@ while read -r; do
 #### LOOP FIFO
 
 (cat "${panel_fifo}" | "$(dirname $0)"/i3_lemonbar_parser.sh |
-lemonbar -p -o -2 -f "${font}" -o 0 -f "${plfont}" -o -4 -f "${iconfont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
+lemonbar -p -d -o -2 -f "${font}" -o 0 -f "${plfont}" -o -4 -f "${iconfont}" -a "${clickables}" -g "${geometry}" -B "${color_transp}" -F "${color_fore}" | sh) &
 
 wait
+
+#### Keep lemonbar below fullscreen windows
+tries_left=20
+while [ -z "$wid" ] && [ "$tries_left" -gt 0 ]; do
+  sleep 0.05
+  xdo above -t $(xwininfo -root -children | grep -E -o "0x[[:xdigit:]]+" | tail -1) "$(xdo id -a bar)"
+  tries_left=$((tries_left - 1))
+done

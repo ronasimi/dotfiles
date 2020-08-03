@@ -16,6 +16,7 @@ geometry="1600x20"
 font="Source Code Pro:style=SemiBold:size=10.5"
 plfont="-*-tamzenforpowerline-medium-r-*-*-20-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:style:Regular:size=9"
+titlefont="Inter:style:Medium:size=10.5"
 clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
@@ -66,7 +67,7 @@ color_warn="#${ylw}"      # Color for warning
 color_alert="#${red}"     # Color for alert
 color_mode="#${bred}"     # Foreground color for binding mode
 
-#default space between sections
+# default space between sections
 if [ "${res_w}" -gt 1024 ]; then
   stab='  '
 else

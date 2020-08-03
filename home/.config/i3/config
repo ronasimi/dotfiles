@@ -11,7 +11,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Source Code Pro SemiBold 10.5
+font pango:Inter Medium 9.75
 
 ## Workspace names
 # workspace name variables
@@ -38,7 +38,7 @@ set_from_resource $ind i3wm.color4 #6a9fb5
 # class				border		backgr.		text		indicator	child_border
 client.focused			$bg		$bg		$act		$ind		$bg
 client.focused_inactive		$bg		$bg		$fg		$bg		$bg
-client.unfocused		$bg		#252525		$ina		$bg		$bg
+client.unfocused		$bg		#1f1f1f		$ina		$bg		$bg
 client.urgent			$fg		$urg		$fg		$ind		$fg
 client.placeholder		$ind		$ind		$bg		$ind		$ind
 client.background		$bg

@@ -1,6 +1,8 @@
 #!/bin/bash
-ethon=$(nmcli -t | grep enp0s25: | awk '{print $2}')
-ethIP=$(ip addr show enp0s25 | grep inet | awk ' { print $2 } ')
+
+. "$(dirname $0)"/../i3_lemonbar_config
+ethon=$(nmcli -t | grep $eth: | awk '{print $2}')
+ethIP=$(ip addr show $eth | grep inet | awk ' { print $2 } ')
 msgId="991052"
 
 if [ "${ethon}" == "connected" ]; then

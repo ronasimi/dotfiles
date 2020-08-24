@@ -243,14 +243,14 @@ bindsym $mod+Shift+b exec --no-startup-id "~/.config/i3/scripts/barcycle.sh"
 bindsym XF86ScreenSaver exec --no-startup-id xset s activate
 bindsym XF86TouchpadToggle exec --no-startup-id ~/.config/i3/scripts/touchpad-toggle.sh
 bindsym XF86Display exec --no-startup-id ~/.config/i3/scripts/monitors.sh
-bindsym XF86WebCam exec --no-startup-id "mpv --demuxer-lavf-format video4linux2 --demuxer-lavf-o-set input_format=mjpeg /dev/video0"
+bindsym XF86WebCam exec --no-startup-id "mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:/dev/video0"
 bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
 
 ## Program Keybinds
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'run:' -i -h 20 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Source Code Pro:size=10.5'"
-bindsym $mod+Shift+d exec --no-startup-id ~/.bin/dmenu-open
+
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium
 bindsym $mod+Mod1+F1 workspace $ws1; exec chromium --incognito

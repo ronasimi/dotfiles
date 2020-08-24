@@ -49,10 +49,10 @@ schedule = low_diskspace,5,60,close_low_diskspace=100M
 #bind = rakshasa.no
 
 # Port range to use for listening.
-network.port_range.set = 2048-65535
+network.port_range.set = 49256-49256
 
 # Start opening ports at a random position within the port range.
-port_random = yes
+port_random = no
 
 # Check hash for finished torrents. Might be usefull until the bug is
 # fixed that causes lack of diskspace not to be properly reported.

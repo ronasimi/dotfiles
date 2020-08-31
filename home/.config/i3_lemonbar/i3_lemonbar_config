@@ -29,7 +29,7 @@ upd_timer=30 # Update check (min)
 
 # network interface names
 eth="enp0s25"
-wifi="wlan0"
+wifi="wlp3s0"
 
 # grab colors from Xresources
 fgd=$(xrdb -query | grep '*.foreground:' | cut -f 2 | tr -d "#")

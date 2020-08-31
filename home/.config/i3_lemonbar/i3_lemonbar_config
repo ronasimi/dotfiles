@@ -78,10 +78,6 @@ else
   stab=' '
 fi
 
-# Char glyps for powerline fonts
-sep_left=""        # Powerline separator left
-sep_right=""       # Powerline separator right
-
 # Icon glyphs from Material Design Icons
 icon_cal="󰃶"        # Calendar icon
 icon_clock="󰅐"      # Clock icon

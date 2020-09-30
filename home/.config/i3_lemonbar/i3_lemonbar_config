@@ -16,7 +16,7 @@ geometry="1600x20"
 font="Source Code Pro:style=Regular:size=10.5"
 plfont="Source Code Pro:style=Regular:size=12.75"
 iconfont="Material Design Icons:style:Regular:size=9"
-titlefont="Source Code Pro:style=SemiBold:size=10.5"
+titlefont="Source Code Pro:style=Semibold:size=10.5"
 clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 

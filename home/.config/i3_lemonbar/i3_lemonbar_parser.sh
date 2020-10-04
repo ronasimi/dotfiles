@@ -176,27 +176,27 @@ while read -r line; do
       wifi="%{F${wlan_cicon} B${wlan_cback} T3} ${wlanup}"
       ;;
 
-      BLU*)
+    BLU*)
 
-        # bluetooth
-        blue_cback=${color_sec_b2}
-        blue_cfore=${color_fore}
+      # bluetooth
+      blue_cback=${color_sec_b2}
+      blue_cfore=${color_fore}
 
-        if [ "${line#???}" == "on" ]; then
-          if [ "$(bt-device -l | egrep '\(.*\)' | grep -oP '(?<=\()[^\)]+' | xargs -n1 bt-device -i | grep -c "Connected: 1")" == "0" ]; then
-            blueup=${icon_blueup}
-            blue_cicon=${color_icon}
-          else
-            blueup=${icon_blueconn}
-            blue_cicon=${color_icon}
-          fi
+      if [ "${line#???}" == "on" ]; then
+        if [ "$(bt-device -l | egrep '\(.*\)' | grep -oP '(?<=\()[^\)]+' | xargs -n1 bt-device -i | grep -c "Connected: 1")" == "0" ]; then
+          blueup=${icon_blueup}
+          blue_cicon=${color_icon}
         else
-          blueup=${icon_bluedown}
-          blue_cicon=${color_netdown}
+          blueup=${icon_blueconn}
+          blue_cicon=${color_icon}
         fi
+      else
+        blueup=${icon_bluedown}
+        blue_cicon=${color_netdown}
+      fi
 
-        bluetooth="%{F${blue_cicon} B${blue_cback} T3} ${blueup}"
-        ;;
+      bluetooth="%{F${blue_cicon} B${blue_cback} T3} ${blueup}"
+      ;;
 
     BAT*)
       # ac status

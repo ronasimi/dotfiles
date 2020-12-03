@@ -13,9 +13,16 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 
 # lemonbar settings
 geometry="1600x20"
+<<<<<<< Updated upstream
 font="Operator Mono SSm:style=Medium:size=10.5"
 plfont="-*-tamzenforpowerline-medium-r-*-*-20-*-*-*-*-*-*-*"
 iconfont="Material Design Icons:style:Regular:size=9"
+=======
+font="Liga Operator Mono SSm:style=Book:size=10.5"
+plfont="Source Code Pro:style=Regular:size=12.75"
+iconfont="Material Design Icons:style:Regular:size=10.5"
+titlefont="Liga Operator Mono SSm:style=Italic:size=10.5"
+>>>>>>> Stashed changes
 clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 

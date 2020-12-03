@@ -5,5 +5,10 @@ file:///home/ron/Pictures
 file:///home/ron/Videos
 file:///home/ron/repos
 file:///media/storage/torrents
+<<<<<<< Updated upstream
 smb://coreelec/sda1-ata-st2000dm001-1ch1/
 smb://192.168.2.39/videos/
+=======
+smb://arachne/archive/
+smb://veronica/share/
+>>>>>>> Stashed changes

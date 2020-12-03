@@ -13,25 +13,23 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 
 # lemonbar settings
 geometry="1600x20"
-<<<<<<< Updated upstream
-font="Operator Mono SSm:style=Medium:size=10.5"
-plfont="-*-tamzenforpowerline-medium-r-*-*-20-*-*-*-*-*-*-*"
-iconfont="Material Design Icons:style:Regular:size=9"
-=======
 font="Liga Operator Mono SSm:style=Book:size=10.5"
 plfont="Source Code Pro:style=Regular:size=12.75"
 iconfont="Material Design Icons:style:Regular:size=10.5"
 titlefont="Liga Operator Mono SSm:style=Italic:size=10.5"
->>>>>>> Stashed changes
 clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
 # alarm settings
-bat_alert=5  # low battery %
+bat_alert=10  # low battery %
 
 # update timers, in minutes
 mail_timer=5 # Mail check timer (min)
 upd_timer=30 # Update check (min)
+
+# network interface names
+eth="enp0s25"
+wifi="wlp3s0"
 
 # grab colors from Xresources
 fgd=$(xrdb -query | grep '*.foreground:' | cut -f 2 | tr -d "#")
@@ -54,7 +52,7 @@ whi=$(xrdb -query | grep '*.color7:' | cut -f 2 | tr -d "#")
 bwhi=$(xrdb -query | grep '*.color15:' | cut -f 2 | tr -d "#")
 
 # bar color definitions
-color_back="#E6${bgd}"    # Default background
+color_back="#BF${bgd}"    # Default background
 color_fore="#${fgd}"      # Default foreground
 color_title="#${bwhi}"    # Window title foreground
 color_stat="#${bla}"      # Background for i3 status section
@@ -73,7 +71,7 @@ color_warn="#${ylw}"      # Color for warning
 color_alert="#${red}"     # Color for alert
 color_mode="#${bred}"     # Foreground color for binding mode
 
-#default space between sections
+# default space between sections
 if [ "${res_w}" -gt 1024 ]; then
   stab='  '
 else
@@ -87,17 +85,21 @@ sep_right=""       # Powerline separator right
 # Icon glyphs from Material Design Icons
 icon_cal="󰃶"        # Calendar icon
 icon_clock="󰅐"      # Clock icon
+
 icon_ethup="󰈁"      # Ethernet up icon
 icon_ethdown="󰈂"    # Ethernet down icon
 icon_wifi_up="󰤨"    # Wifi up icon
 icon_wifi_down="󰤮"  # Wifi down icon
+icon_blueup="󰂯"  # Bluetooth icon
+icon_bluedown="󰂲"   # Bluetooth off icon
+icon_blueconn="󰂱"     # Bluetooth connected icon
 icon_mail="󰊫"       # Mail icon
 icon_arch="󰣇"       # Arch icon
 
 icon_default="󰌌"    # default mode icon
 icon_resize="󰩨"     # resize mode icon
 
-icon_splith="󰜨"     # horizontal split layout icon
+icon_splith="󰕶"     # horizontal split layout icon
 icon_splitv="󰜩"     # vertical split icon
 icon_tabbed="󰓩"     # tabbed layout icon
 icon_stacked="󰯋"    # stacked layout icon

@@ -11,11 +11,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-<<<<<<< Updated upstream
-font pango:Operator Mono SSm Medium 10.5
-=======
 font pango:Operator Mono SSm Italic 10.5
->>>>>>> Stashed changes
 
 ## Workspace names
 # workspace name variables
@@ -25,7 +21,7 @@ set $ws3 "3:󰉋"
 set $ws4 "4:󰊢"
 set $ws5 "5:󰷈"
 set $ws6 "6:󱇣"
-set $ws7 "7:󰕴"
+set $ws7 "7:󱏚"
 set $ws8 "8:󰕴"
 set $ws9 "9:󰕴"
 set $ws10 "10:󰕴"
@@ -42,7 +38,7 @@ set_from_resource $ind i3wm.color4 #6a9fb5
 # class				border		backgr.		text		indicator	child_border
 client.focused			$bg		$bg		$act		$ind		$bg
 client.focused_inactive		$bg		$bg		$fg		$bg		$bg
-client.unfocused		$bg		#252525		$ina		$bg		$bg
+client.unfocused		$bg		#1f1f1f		$ina		$bg		$bg
 client.urgent			$fg		$urg		$fg		$ind		$fg
 client.placeholder		$ind		$ind		$bg		$ind		$ind
 client.background		$bg
@@ -74,8 +70,8 @@ set $FLOAT-noborder floating enable, border none
 assign [class="Chromium"] $ws1
 assign [class="Atom"] $ws4
 assign [class="Meld"] $ws4
-assign [class="Vmware"] $ws5
-assign [class="Vmplayer"] $ws5
+assign [class="Vmware"] $ws7
+assign [class="Vmplayer"] $ws7
 assign [class="libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice"] $ws5
 assign [class="Gimp|Gimp-2.10"] $ws6
 
@@ -186,11 +182,11 @@ bindsym $mod+Shift+m append_layout ~/.config/i3/layouts/master-stack.json
 
 # multimedia keys
 # pulse audio volume control
-bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
-bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up
+bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5
+bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5
 bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ true ; pactl set-sink-volume @DEFAULT_SINK@ 150% ; pactl set-sink-mute @DEFAULT_SINK@ false"
-bindsym XF86AudioMute exec --no-startup-id pulseaudio-ctl mute toggle
-bindsym XF86AudioMicMute exec --no-startup-id pulseaudio-ctl mute-input
+bindsym XF86AudioMute exec --no-startup-id pamixer -t
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
 
 # print screen
 bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/screenshot-%Y%m%d-%H:%M:%S.png & dunstify -u low $'Screenshot' 'saved to ~/Pictures/Screenshots'
@@ -247,14 +243,14 @@ bindsym $mod+Shift+b exec --no-startup-id "~/.config/i3/scripts/barcycle.sh"
 bindsym XF86ScreenSaver exec --no-startup-id xset s activate
 bindsym XF86TouchpadToggle exec --no-startup-id ~/.config/i3/scripts/touchpad-toggle.sh
 bindsym XF86Display exec --no-startup-id ~/.config/i3/scripts/monitors.sh
-bindsym XF86WebCam exec --no-startup-id "mpv --demuxer-lavf-format video4linux2 --demuxer-lavf-o-set input_format=mjpeg /dev/video0"
+bindsym XF86WebCam exec --no-startup-id "mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:/dev/video0"
 bindsym $mod+Ctrl+p exec --no-startup-id systemctl poweroff
 bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
 
 ## Program Keybinds
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'run:' -i -h 20 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Source Code Pro:size=10.5'"
-bindsym $mod+Shift+d exec --no-startup-id ~/.bin/dmenu-open
+
 # chromium
 bindsym $mod+F1 workspace $ws1; exec chromium
 bindsym $mod+Mod1+F1 workspace $ws1; exec chromium --incognito
@@ -273,6 +269,9 @@ bindsym $mod+F5 workspace $ws5, exec libreoffice --writer
 
 # gimp
 bindsym $mod+F6 workspace $ws6; exec gimp
+
+# vmware player
+bindsym $mod+F7 workspace $ws7; exec vmplayer
 
 # draw terminals
 for_window [class="Alacritty" title="drawterm"] $FLOAT-border

@@ -34,7 +34,7 @@ eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 systemctl --user import-environment DISPLAY &
-picom --config ~/.config/picom/picom.conf -b &
+picom --config ~/.config/picom/picom.conf -b --experimental-backends &
 /usr/bin/dunst &
 clipster -d &
 syndaemon -i 0.5 1 -K -R -d &

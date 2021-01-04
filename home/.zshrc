@@ -150,7 +150,7 @@ autoload -Uz compinit
 compinit
 zmodload -i zsh/complist
 setopt hash_list_all            # hash everything before completion
-setopt completealiases          # complete alisases
+setopt completealiases          # complete aliases
 setopt COMPLETE_ALIASES		# complete command line switches
 setopt always_to_end            # when completing from the middle of a word, move the cursor to the end of the word
 setopt complete_in_word         # allow completion from within a word/phrase

@@ -97,13 +97,13 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: Operator Mono SSm Nerd Font Mono
+    family: SauceCode Pro Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
-    style: Book
+    #style: Regular
 
   # Bold font face
-  bold:
+  #bold:
     # Font family
     #
     # If the bold family is not specified, it will fall back to the
@@ -111,10 +111,10 @@ font:
     #family: monospace
 
     # The `style` can be specified to pick a specific face.
-    style: Regular
+    #style: Bold
 
   # Italic font face
-  italic:
+  #italic:
     # Font family
     #
     # If the italic family is not specified, it will fall back to the
@@ -122,10 +122,10 @@ font:
     #family: monospace
 
     # The `style` can be specified to pick a specific face.
-    style: Book Italic
+    #style: Italic
 
   # Bold italic font face
-  bold_italic:
+  #bold_italic:
     # Font family
     #
     # If the bold italic family is not specified, it will fall back to the
@@ -133,7 +133,7 @@ font:
     #family: monospace
 
     # The `style` can be specified to pick a specific face.
-    style: Regular Italic
+    #style: Bold Italic
 
   # Point size
   size: 10.5

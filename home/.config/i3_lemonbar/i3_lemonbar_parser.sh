@@ -82,7 +82,7 @@ while read -r line; do
     UPD*)
       # updates
       if [ "${line#???}" != "0" ]; then
-        updates="%{F${color_upd} T2}${sep_left}%{F${color_icon_dark} B${color_upd}T3} ${icon_arch}%{T4} ${line#???}%{T-}${stab}"
+        updates="%{F${color_upd} T2}${sep_left}%{F${color_icon_dark} B${color_upd}T3} ${icon_arch}%{T1} ${line#???}%{T-}${stab}"
       else
         updates=""
       fi
@@ -91,7 +91,7 @@ while read -r line; do
     GMA*)
       # gmail
       if [ "${line#???}" != "0" ]; then
-        gmail="%{F${color_mail} T2}${sep_left}%{F${color_title} B${color_mail}T3} ${icon_mail}%{T4} ${line#???}%{T-}${stab}"
+        gmail="%{F${color_mail} T2}${sep_left}%{F${color_title} B${color_mail}T3} ${icon_mail}%{T1} ${line#???}%{T-}${stab}"
       else
         gmail=""
       fi
@@ -256,12 +256,12 @@ while read -r line; do
 
     DAY*)
       # date
-      date="%{F${color_sec_b1}T2}${sep_left}%{F${color_icon} B${color_sec_b1}}%{T3} ${icon_cal}%{F${color_fore} T4} ${line#???}%{T-}"
+      date="%{F${color_sec_b1}T2}${sep_left}%{F${color_icon} B${color_sec_b1}}%{T3} ${icon_cal}%{F${color_fore} T1} ${line#???}%{T-}"
       ;;
 
     CLK*)
       # time
-      time="%{F${color_sec_b2}T2}${sep_left}%{F${color_icon} B${color_sec_b2}}%{T3} ${icon_clock}%{F${color_fore} T4} ${line#???}%{T-}"
+      time="%{F${color_sec_b2}T2}${sep_left}%{F${color_icon} B${color_sec_b2}}%{T3} ${icon_clock}%{F${color_fore} T1} ${line#???}%{T-}"
       ;;
 
   esac

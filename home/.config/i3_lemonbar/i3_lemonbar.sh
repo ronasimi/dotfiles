@@ -89,7 +89,7 @@ while read -r; do
   done < <(
   echo &&
   # restart udevadm if it exits with anything other than 0
-  until (stdbuf -o0 udevadm monitor --udev --subsystem-match="backlight" --tag-match="seat"); do
+  until (stdbuf -o0 udevadm monitor --udev --subsystem-match="backlight"); do
     echo "udevadm crashed with exit code $?.  Respawning.." >&2
     sleep 1
   done

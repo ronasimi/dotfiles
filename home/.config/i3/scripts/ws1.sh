@@ -4,6 +4,6 @@
 i3-msg "workspace 1:󰊯; append_layout ~/.config/i3/layouts/ws1.json"
 
 # And finally we fill the containers with the programs they had
-(exec chromium &)
+(exec google-chrome-stable &)
 sleep 1
-(exec chromium --incognito &)
+(exec google-chrome-stable --incognito &)

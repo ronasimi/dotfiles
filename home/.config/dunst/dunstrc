@@ -236,9 +236,9 @@
     #              invoke it. If there are multiple and no default, open the context menu.
     # * close_current: Close current notification.
     # * close_all: Close all notifications.
-    mouse_left_click = do_action
+    mouse_left_click = close_current
     mouse_middle_click = close_all
-    mouse_right_click = close_current
+    mouse_right_click = do_action
 
 # Experimental features that may or may not work correctly. Do not expect them
 # to have a consistent behaviour across releases.

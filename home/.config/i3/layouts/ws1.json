@@ -17,13 +17,13 @@
                "x": 8,
                "y": 32
             },
-            "name": "Chromium",
+            "name": "Google-chrome",
             "percent": 0.5,
             "swallows": [
                {
-               "class": "^Chromium$"
-               // "instance": "^chromium$",
-               // "title": "^linuxmulti\\ subreddits\\ curated\\ by\\ u\\/ronasimi\\ \\-\\ Chromium$",
+               "class": "^Google-chrome$"
+               // "instance": "^google-chrome$",
+               // "title": "^linuxmulti\\ subreddits\\ curated\\ by\\ u\\/ronasimi\\ \\-\\ Google-chrome$",
                // "window_role": "^browser$"
                }
             ],
@@ -53,4 +53,3 @@
         }
     ]
 }
-

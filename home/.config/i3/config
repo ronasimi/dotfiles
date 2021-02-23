@@ -273,10 +273,6 @@ bindsym $mod+F6 workspace $ws6; exec gimp
 # vmware player
 bindsym $mod+F7 workspace $ws7; exec vmplayer
 
-# draw terminals
-for_window [class="Alacritty" title="drawterm"] $FLOAT-border
-bindsym --release $mod+t exec --no-startup-id ~/.config/i3/scripts/drawterm
-
 # open an empty container
 bindsym $mod+Insert exec --no-startup-id i3-msg open
 

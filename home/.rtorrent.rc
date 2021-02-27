@@ -49,7 +49,7 @@ schedule = low_diskspace,5,60,close_low_diskspace=100M
 #bind = rakshasa.no
 
 # Port range to use for listening.
-network.port_range.set = 49256-49256
+network.port_range.set = 49459-49459
 
 # Start opening ports at a random position within the port range.
 port_random = no

@@ -1,0 +1,1 @@
+typeset -U PATH path

@@ -41,4 +41,4 @@ syndaemon -i 0.5 1 -K -R -d &
 xset s 300 600 &
 xset m 4 0 &
 xss-lock --transfer-sleep-lock -q lockscreen &
-exec i3
+exec dbus-launch --sh-syntax --exit-with-session i3

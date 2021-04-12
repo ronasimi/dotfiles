@@ -32,7 +32,7 @@ set_from_resource $bg i3wm.background #272727
 set_from_resource $act i3wm.color15 #e0e0e0
 set_from_resource $ina i3wm.color16 #5d5d5d
 set_from_resource $urg i3wm.color1 #ac4142
-set_from_resource $ind i3wm.color4 #6a9fb5
+set_from_resource $ind i3wm.color4 #8ab4f8
 
 # colors
 # class				border		backgr.		text		indicator	child_border
@@ -84,6 +84,7 @@ for_window [class="mpv"] sticky enable
 for_window [class="feh"] $FLOAT-noborder
 for_window [title="Hangouts"] $FLOAT-border
 for_window [class="Alacritty" instance="nmtui"] $FLOAT-noborder
+for_window [class="scratchpad"] $FLOAT-noborder, resize set 1180 600, move position center, move scratchpad, scratchpad show
 
 ## Resize mode
 bindsym $mod+r mode "resize"
@@ -275,6 +276,9 @@ bindsym $mod+F7 workspace $ws7; exec vmplayer
 
 # open an empty container
 bindsym $mod+Insert exec --no-startup-id i3-msg open
+
+# alacritty scratchpad Window
+bindsym $mod+p exec "alacritty --class scratchpad,scratchpad"
 
 # saved workspace layouts
 bindsym $mod+Shift+F1 exec --no-startup-id ~/.config/i3/scripts/ws1.sh

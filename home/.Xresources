@@ -33,7 +33,7 @@ URxvt*iso14755:			false
 
 ! special
 *.foreground:   #c3c3c3
-*.background:   #2d2d2d
+*.background:   #272727
 *.cursorColor:  #c3c3c3
 
 ! black
@@ -53,8 +53,8 @@ URxvt*iso14755:			false
 *.color11:      #f6cb90
 
 ! blue
-*.color4:       #6a9fb5
-*.color12:      #87b2c3
+*.color4:       #8ab4f8
+*.color12:      #a1c3f9
 
 ! magenta
 *.color5:       #aa759f

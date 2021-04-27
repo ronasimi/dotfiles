@@ -2,7 +2,7 @@
 
 . "$(dirname $0)"/../i3_lemonbar_config
 
-wifion=$(nmcli -t | grep $wifi: | awk '{print $2}')
+wifion=$(nmcli -t | grep -m 1 $wifi: | awk '{print $2}')
 wifiIP4=$(ip -4 addr show $wifi | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 wifiIP6=$(ip -6 addr show $wifi | grep -oP '(?<=inet6\s)[\da-f:]+')
 wifirate=$(iwconfig $wifi | grep Bit | cut -d '=' -f 2 | cut -d ' ' -f 1-2)

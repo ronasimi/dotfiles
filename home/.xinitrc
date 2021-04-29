@@ -37,7 +37,6 @@ systemctl --user import-environment DISPLAY &
 picom --config ~/.config/picom/picom.conf -b --experimental-backends &
 /usr/bin/dunst &
 clipster -d &
-syndaemon -i 0.5 1 -K -R -d &
 xset s 300 600 &
 xset m 4 0 &
 xss-lock --transfer-sleep-lock -q lockscreen &

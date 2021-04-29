@@ -176,28 +176,6 @@ while read -r line; do
       wifi="%{F${wlan_cicon} B${wlan_cback} T3} ${wlanup}"
       ;;
 
-    BLU*)
-
-      # bluetooth
-      blue_cback=${color_sec_b2}
-      blue_cfore=${color_fore}
-
-      if [ "${line#???}" == "on" ]; then
-        if [ "$(bt-device -l | egrep '\(.*\)' | grep -oP '(?<=\()[^\)]+' | xargs -n1 bt-device -i | grep -c "Connected: 1")" == "0" ]; then
-          blueup=${icon_blueup}
-          blue_cicon=${color_icon}
-        else
-          blueup=${icon_blueconn}
-          blue_cicon=${color_icon}
-        fi
-      else
-        blueup=${icon_bluedown}
-        blue_cicon=${color_netdown}
-      fi
-
-      bluetooth="%{F${blue_cicon} B${blue_cback} T3} ${blueup}"
-      ;;
-
     BAT*)
       # ac status
       # on charger and charging
@@ -267,5 +245,5 @@ while read -r line; do
   esac
 
   # and finally, output
-  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec $(dirname $0)/scripts/updatelist.sh &:}%{A3:exec chromium 'archlinux.org' &:}${updates}%{A}%{A}%{A1:exec $(dirname $0)/scripts/gmaillist.sh &:}%{A3:exec chromium 'mail.google.com' &:}${gmail}%{A}%{A}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pamixer -t:}%{A4:pamixer -i 5:}%{A5:pamixer -d 5:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}%{A}%{A}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${ethernet}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${wifi}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bluetooth.sh &:}%{A3:exec $(dirname $0)/scripts/makefloat.sh blueman-manager &:}${bluetooth}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A} %{F- B-}"
+  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec $(dirname $0)/scripts/updatelist.sh &:}%{A3:exec chromium 'archlinux.org' &:}${updates}%{A}%{A}%{A1:exec $(dirname $0)/scripts/gmaillist.sh &:}%{A3:exec chromium 'mail.google.com' &:}${gmail}%{A}%{A}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pamixer -t:}%{A4:pamixer -i 5:}%{A5:pamixer -d 5:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A4:xbacklight -inc 5:}%{A5:xbacklight -dec 5:}${bright}%{A}%{A}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${ethernet}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${wifi}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec chromium 'calendar.google.com' &:}${date}${stab}${time}%{A} %{F- B-}"
 done

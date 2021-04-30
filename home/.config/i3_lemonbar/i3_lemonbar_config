@@ -90,6 +90,9 @@ icon_ethup="󰈁"      # Ethernet up icon
 icon_ethdown="󰈂"    # Ethernet down icon
 icon_wifi_up="󰤨"    # Wifi up icon
 icon_wifi_down="󰤮"  # Wifi down icon
+icon_blueup="󰂯"  # Bluetooth icon
+icon_bluedown="󰂲"   # Bluetooth off icon
+icon_blueconn="󰂱"     # Bluetooth connected icon
 icon_mail="󰊫"       # Mail icon
 icon_arch="󰣇"       # Arch icon
 

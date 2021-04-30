@@ -125,6 +125,20 @@ while read -r; do
   done
 ) &
 
+# bluetooth status, "BLU"
+while read -r; do
+
+  printf "%s%s\n" "BLU" "$(bluetooth | cut -d " " -f 3)" >"${panel_fifo}" &
+
+  done < <(
+  echo &&
+  # restart udevadm if it exits with anything other than 0
+  until (stdbuf -o0 udevadm monitor --udev SUBSYSTEM=="bluez"); do
+    echo "udevadm crashed with exit code $?.  Respawning.." >&2
+    sleep 1
+  done
+) &
+
 # battery, "BAT"
 while read -r; do
   printf "%s%s\n" "BAT" "$(acpi -b | cut -d ' ' -f 4 | tr -d '%,')" >"${panel_fifo}" &

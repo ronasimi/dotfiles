@@ -284,7 +284,7 @@ export EDITOR="nano"
 
 # CCACHE
 export USE_CCACHE=1
-export CCACHE_DIR=/media/storage/ccache
+export CCACHE_DIR=/home/ron/.ccache
 export CCACHE_SLOPPINESS=include_file_mtime
 
 #PKGFILE HOOK

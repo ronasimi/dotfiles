@@ -81,6 +81,7 @@ for_window [class="feh"] $FLOAT-noborder
 for_window [title="Hangouts"] $FLOAT-border
 for_window [class="Alacritty" instance="nmtui"] $FLOAT-noborder
 for_window [class="scratchpad"] $FLOAT-noborder, resize set 1180 600, move position center, move scratchpad, scratchpad show
+for_window [class="Gnome-calculator"] $FLOAT-noborder, resize set 432 386, move position center
 
 ## Resize mode
 bindsym $mod+r mode "resize"

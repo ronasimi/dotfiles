@@ -169,6 +169,8 @@ bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
+bindsym $mod+Prior workspace prev
+bindsym $mod+Next workspace next
 
 # load layouts
 bindsym $mod+Shift+m append_layout ~/.config/i3/layouts/master-stack.json
@@ -211,6 +213,8 @@ bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+Prior move container to workspace prev; workspace prev
+bindsym $mod+Shift+Next move container to workspace next; workspace next
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+Delete move scratchpad

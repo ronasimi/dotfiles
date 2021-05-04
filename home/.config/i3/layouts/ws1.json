@@ -12,8 +12,8 @@
             "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
-               "height": 860,
-               "width": 1584,
+               "height": 1040,
+               "width": 1900,
                "x": 8,
                "y": 32
             },
@@ -34,17 +34,17 @@
             "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
-               "height": 860,
-               "width": 1584,
+               "height": 1040,
+               "width": 1900,
                "x": 18,
                "y": 42
             },
-            "name": "Chromium",
+            "name": "Google-chrome",
             "percent": 0.5,
             "swallows": [
                {
-               "class": "^Chromium$"
-               // "instance": "^chromium$",
+               "class": "^Google-chrome$"
+               // "instance": "^google-chrome$",
                // "title": "^How\\ do\\ I\\ open\\ Chromium\\ in\\ incognito\\ mode\\ by\\ default\\?\\ \\-\\ Ask\\ Ubuntu\\ \\-\\ Chromium$",
                // "window_role": "^browser$"
                }

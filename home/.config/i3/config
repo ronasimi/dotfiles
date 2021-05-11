@@ -64,7 +64,6 @@ smart_borders on
 set $FLOAT-border floating enable, border pixel 2
 set $FLOAT-noborder floating enable, border none
 
-## Client rules
 # client placement
 assign [class="Google-chrome"] $ws1
 assign [class="Atom"] $ws4
@@ -73,6 +72,9 @@ assign [class="Vmware"] $ws7
 assign [class="Vmplayer"] $ws7
 assign [class="libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice"] $ws5
 assign [class="Gimp|Gimp-2.10"] $ws6
+
+# switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
 
 # application exceptions
 for_window [class="mpv"] $FLOAT-noborder

@@ -73,9 +73,6 @@ assign [class="Vmplayer"] $ws7
 assign [class="libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice"] $ws5
 assign [class="Gimp|Gimp-2.10"] $ws6
 
-# switch to workspace with urgent window automatically
-for_window [urgent=latest] focus
-
 # application exceptions
 for_window [class="mpv"] $FLOAT-noborder
 for_window [class="mpv"] sticky enable

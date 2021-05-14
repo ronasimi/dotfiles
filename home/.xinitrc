@@ -38,6 +38,5 @@ picom --config ~/.config/picom/picom.conf -b --experimental-backends &
 /usr/bin/dunst &
 clipster -d &
 xset s 300 600 &
-xset m 4 0 &
 xss-lock --transfer-sleep-lock -q lockscreen &
 exec i3

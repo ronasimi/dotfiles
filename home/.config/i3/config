@@ -19,8 +19,8 @@ set $ws1 "1:󰊯"
 set $ws2 "2:󰆍"
 set $ws3 "3:󰉋"
 set $ws4 "4:󰊢"
-set $ws5 "5:󰷈"
-set $ws6 "6:󱇣"
+set $ws5 "5:󱇣"
+set $ws6 "6:󰷈"
 set $ws7 "7:󱏚"
 set $ws8 "8:󰕴"
 set $ws9 "9:󰕴"
@@ -70,8 +70,8 @@ assign [class="Atom"] $ws4
 assign [class="Meld"] $ws4
 assign [class="Vmware"] $ws7
 assign [class="Vmplayer"] $ws7
-assign [class="libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice"] $ws5
-assign [class="Gimp|Gimp-2.10"] $ws6
+assign [class="libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice"] $ws6
+assign [class="Gimp|Gimp-2.10"] $ws5
 
 # application exceptions
 for_window [class="mpv"] $FLOAT-noborder
@@ -265,11 +265,11 @@ bindsym $mod+F3 workspace $ws3; exec thunar
 # atom
 bindsym $mod+F4 workspace $ws4; exec atom
 
-# libreoffice writer
-bindsym $mod+F5 workspace $ws5, exec libreoffice --writer
-
 # gimp
-bindsym $mod+F6 workspace $ws6; exec gimp
+bindsym $mod+F5 workspace $ws6; exec gimp
+
+# libreoffice writer
+bindsym $mod+F6 workspace $ws5, exec libreoffice --writer
 
 # vmware player
 bindsym $mod+F7 workspace $ws7; exec vmplayer

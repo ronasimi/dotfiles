@@ -266,10 +266,10 @@ bindsym $mod+F3 workspace $ws3; exec thunar
 bindsym $mod+F4 workspace $ws4; exec atom
 
 # gimp
-bindsym $mod+F5 workspace $ws6; exec gimp
+bindsym $mod+F5 workspace $ws5; exec gimp
 
 # libreoffice writer
-bindsym $mod+F6 workspace $ws5, exec libreoffice --writer
+bindsym $mod+F6 workspace $ws6, exec libreoffice --writer
 
 # vmware player
 bindsym $mod+F7 workspace $ws7; exec vmplayer

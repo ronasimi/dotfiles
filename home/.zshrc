@@ -135,7 +135,7 @@ fi
 
 # Help functions
 autoload -Uz run-help
-unalias run-help
+unalias run-help &>/dev/null
 alias help=run-help
 autoload -Uz run-help-git
 autoload -Uz run-help-ip
@@ -161,6 +161,7 @@ CORRECT_IGNORE_FILE='.*'
 
 zstyle ':completion::complete:*' use-cache on               # completion caching, use rehash to clear
 zstyle ':completion:*' rehash true
+zstyle ":completion:*:commands" rehash true
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # ignore case
 zstyle ':completion:*' menu select=2                        # menu if nb items > 2
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} =     # colorz !

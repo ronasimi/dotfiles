@@ -280,6 +280,9 @@ bindsym $mod+Insert exec --no-startup-id i3-msg open
 # alacritty scratchpad Window
 bindsym $mod+p exec "alacritty --class scratchpad,scratchpad"
 
+# rtorrent scratchpad Window
+bindsym $mod+t exec /home/ron/.bin/startrt; exec "alacritty --class scratchpad,scratchpad -e '/home/ron/.bin/chkrt'"
+
 # saved workspace layouts
 bindsym $mod+Shift+F1 exec --no-startup-id ~/.config/i3/scripts/ws1.sh
 bindsym $mod+Shift+F2 exec --no-startup-id ~/.config/i3/scripts/ws2.sh

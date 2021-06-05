@@ -79,7 +79,8 @@ for_window [class="mpv"] sticky enable
 for_window [class="feh"] $FLOAT-noborder
 for_window [title="Hangouts"] $FLOAT-border
 for_window [class="Alacritty" instance="nmtui"] $FLOAT-noborder
-for_window [class="scratchpad"] $FLOAT-noborder, resize set 1180 600, move position center, move scratchpad, scratchpad show
+for_window [class="scratchpad"] $FLOAT-noborder, resize set 1280 720, move position center, move scratchpad, scratchpad show
+for_window [class="glances"] $FLOAT-noborder, resize set 1600 900, move position center
 for_window [class="Gnome-calculator"] $FLOAT-noborder, resize set 432 386, move position center
 
 ## Resize mode
@@ -99,8 +100,8 @@ bindsym semicolon resize grow width 10 px or 10 ppt
 
 # same bindings, but for the arrow keys
 bindsym Left resize shrink width 10 px or 10 ppt
-bindsym Down resize shrink height 10 px or 10 ppt
-bindsym Up resize grow height 10 px or 10 ppt
+bindsym Down resize grow height 10 px or 10 ppt
+bindsym Up resize shrink height 10 px or 10 ppt
 bindsym Right resize grow width 10 px or 10 ppt
 
 # back to normal: Enter or Escape
@@ -243,6 +244,11 @@ bindsym $mod+Ctrl+r exec --no-startup-id systemctl reboot
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5
 bindsym $mod+l exec --no-startup-id xset s activate
+
+# F8-F12 on T540p
+bindsym XF86Tools exec --no-startup-id "alacritty --class glances,glances -e glances"
+
+# dedicated keys above numpad
 bindsym XF86Calculator exec --no-startup-id gnome-calculator
 bindsym XF86HomePage exec google-chrome-stable
 bindsym Mod1+XF86HomePage exec google-chrome-stable --incognito

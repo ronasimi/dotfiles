@@ -15,7 +15,7 @@ font pango:Source Sans Pro Semibold 10.5
 
 ## Workspace names
 # workspace name variables
-set $ws1 "1:󰈹"
+set $ws1 "1:󰊯"
 set $ws2 "2:󰆍"
 set $ws3 "3:󰉋"
 set $ws4 "4:󰊢"
@@ -65,7 +65,7 @@ set $FLOAT-border floating enable, border pixel 2
 set $FLOAT-noborder floating enable, border none
 
 # client placement
-assign [class="firefox"] $ws1
+assign [class="Google-chrome"] $ws1
 assign [class="Atom"] $ws4
 assign [class="Meld"] $ws4
 assign [class="Vmware"] $ws7
@@ -250,17 +250,17 @@ bindsym XF86Tools exec --no-startup-id "alacritty --class glances,glances -e gla
 
 # dedicated keys above numpad
 bindsym XF86Calculator exec --no-startup-id gnome-calculator
-bindsym XF86HomePage exec firefox
-bindsym Mod1+XF86HomePage exec firefox --private-window
+bindsym XF86HomePage exec google-chrome-stable
+bindsym Mod1+XF86HomePage exec google-chrome-stable --incognito
 bindsym $mod+e exec --no-startup-id thunar
 
 ## Program Keybinds
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'run:' -i -h 20 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Source Code Pro:size=10.5'"
 
-# browser
-bindsym $mod+F1 workspace $ws1; exec firefox
-bindsym $mod+Mod1+F1 workspace $ws1; exec firefox --private-window
+# google chrome
+bindsym $mod+F1 workspace $ws1; exec google-chrome-stable
+bindsym $mod+Mod1+F1 workspace $ws1; exec google-chrome-stable --incognito
 
 # alacritty
 bindsym $mod+F2 workspace $ws2; exec --no-startup-id alacritty

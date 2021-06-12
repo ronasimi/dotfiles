@@ -1,6 +1,6 @@
 #!/bin/bash
 ## kill lemonbar and daemons before exiting i3
-pkill lemonbar &&
-pkill thunar &&
-pkill compton &&
+killall lemonbar &
+killall thunar &
+killall picom &
 i3-msg exit

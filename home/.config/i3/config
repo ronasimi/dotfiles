@@ -229,7 +229,7 @@ bindsym $mod+Shift+c reload; exec dunstify -u low "i3 config reloaded"
 bindsym $mod+Shift+r exec pkill lemonbar, restart
 
 # exit i3
-bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/i3_exit.sh
+bindsym $mod+Shift+e exec --no-startup-id "~/.config/i3/scripts/i3_exit.sh"
 
 # restart bar
 bindsym $mod+Shift+b exec --no-startup-id "~/.config/i3/scripts/barcycle.sh"
@@ -278,7 +278,7 @@ bindsym $mod+F5 workspace $ws5; exec gimp
 bindsym $mod+F6 workspace $ws6, exec libreoffice --writer
 
 # vmware player
-bindsym $mod+F7 workspace $ws7; exec vmplayer
+bindsym $mod+F7 workspace $ws7; exec vmware
 
 # open an empty container
 bindsym $mod+Insert exec --no-startup-id i3-msg open

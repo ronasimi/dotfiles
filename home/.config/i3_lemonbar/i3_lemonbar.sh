@@ -74,8 +74,8 @@ while read -r; do
   done < <(
   echo &&
   # restart inotifywait if it exits
-  until (stdbuf -oL inotifywait -m -e access /dev/snd/by-path/pci-0000:00:1b.0); do
-    echo "inotifywait crashed with exit code $?.  Respawning.." >&2
+  until (pactl subscribe | grep --line-buffered "sink"); do
+    echo "pactl crashed with exit code $?.  Respawning.." >&2
     sleep 1
   done
 ) &

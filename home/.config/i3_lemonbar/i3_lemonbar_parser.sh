@@ -252,18 +252,13 @@ while read -r line; do
       bat="%{F${bat_cicon} B${color_sec_b2} T3} ${icon_bat}"
       ;;
 
-    DAY*)
-      # date
-      date="%{F${color_sec_b1}T2}${sep_left}%{F${color_icon} B${color_sec_b1}}%{T3} ${icon_cal}%{F${color_fore} T4} ${line#???}%{T-}"
-      ;;
-
     CLK*)
       # time
-      time="%{F${color_sec_b2}T2}${sep_left}%{F${color_icon} B${color_sec_b2}}%{T3} ${icon_clock}%{F${color_fore} T4} ${line#???}%{T-}"
+      time="%{F${color_sec_b1}T2}${sep_left}%{F${color_icon} B${color_sec_b1}}%{T3} ${icon_clock}%{F${color_fore} T4} ${line#???}%{T-}"
       ;;
 
   esac
 
   # and finally, output
-  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec $(dirname $0)/scripts/updatelist.sh &:}%{A3:exec google-chrome-stable 'archlinux.org' &:}${updates}%{A}%{A}%{A1:exec $(dirname $0)/scripts/gmaillist.sh &:}%{A3:exec google-chrome-stable 'mail.google.com' &:}${gmail}%{A}%{A}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pamixer -t:}%{A5:pamixer -i 5:}%{A4:pamixer -d 5:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A5:xbacklight -inc 5:}%{A4:xbacklight -dec 5:}${bright}%{A}%{A}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${ethernet}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${wifi}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bluetooth.sh &:}%{A3:exec $(dirname $0)/scripts/makefloat.sh blueman-manager &:}${bluetooth}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec google-chrome-stable 'calendar.google.com' &:}${date}${stab}${time}%{A} %{F- B-}"
+  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec $(dirname $0)/scripts/updatelist.sh &:}%{A3:exec google-chrome-stable 'archlinux.org' &:}${updates}%{A}%{A}%{A1:exec $(dirname $0)/scripts/gmaillist.sh &:}%{A3:exec google-chrome-stable 'mail.google.com' &:}${gmail}%{A}%{A}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pamixer -t:}%{A5:pamixer -i 5:}%{A4:pamixer -d 5:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A5:xbacklight -inc 5:}%{A4:xbacklight -dec 5:}${bright}%{A}%{A}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${ethernet}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${wifi}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bluetooth.sh &:}%{A3:exec $(dirname $0)/scripts/makefloat.sh blueman-manager &:}${bluetooth}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_clock.sh &:}%{A3:exec google-chrome-stable 'calendar.google.com' &:}${time}%{A}%{A} %{F- B-}"
 done

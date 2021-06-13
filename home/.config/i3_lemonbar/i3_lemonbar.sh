@@ -153,7 +153,6 @@ while read -r; do
 ) &
 
 # date/time, "DAY"/"CLK"
-"$(dirname $0)"/scripts/date >"${panel_fifo}" &
 "$(dirname $0)"/scripts/clock >"${panel_fifo}" &
 
 #### LOOP FIFO

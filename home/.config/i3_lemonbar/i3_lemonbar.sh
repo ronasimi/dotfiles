@@ -73,7 +73,7 @@ while read -r; do
 
   done < <(
   echo &&
-  # restart inotifywait if it exits
+  # restart pactl if it exits
   until (pactl subscribe | grep --line-buffered "sink"); do
     echo "pactl crashed with exit code $?.  Respawning.." >&2
     sleep 1

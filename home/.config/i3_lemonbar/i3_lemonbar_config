@@ -84,7 +84,7 @@ sep_right=""       # Powerline separator right
 
 # Icon glyphs from Material Design Icons
 icon_cal="󰃶"        # Calendar icon
-icon_clock="󰅐"      # Clock icon
+icon_clock="󰥔"      # Clock icon
 
 icon_ethup="󰈁"      # Ethernet up icon
 icon_ethdown="󰈂"    # Ethernet down icon
@@ -94,13 +94,12 @@ icon_blueup="󰂯"  # Bluetooth icon
 icon_bluedown="󰂲"   # Bluetooth off icon
 icon_blueconn="󰂱"     # Bluetooth connected icon
 icon_mail="󰊫"       # Mail icon
-icon_arch="󰣇"       # Arch icon
-
-icon_default="󰌌"    # default mode icon
+icon_arch="󰣇"       # Arch icon󱂫
+icon_default="󰌌"    # default mo󱂩e icon
 icon_resize="󰩨"     # resize mode icon
 
-icon_splith="󰕶"     # horizontal split layout icon
-icon_splitv="󰜩"     # vertical split icon
+icon_splith="󱂫"     # horizontal split layout icon
+icon_splitv="󱂩"     # vertical split icon
 icon_tabbed="󰓩"     # tabbed layout icon
 icon_stacked="󰯋"    # stacked layout icon
 

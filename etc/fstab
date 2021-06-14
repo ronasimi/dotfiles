@@ -1,0 +1,12 @@
+# /dev/sda1
+UUID=6904-E86A      	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+# /dev/sda2
+UUID=8f741dbb-aeb5-456a-80d3-9e47bf00c945	/         	btrfs     	rw,relatime,compress=zstd:3,ssd,space_cache,subvolid=256,subvol=/@root,subvol=@root	0 0
+
+# /dev/sda2
+UUID=8f741dbb-aeb5-456a-80d3-9e47bf00c945	/home     	btrfs     	rw,relatime,compress=zstd:3,ssd,space_cache,subvolid=257,subvol=/@home,subvol=@home	0 0
+
+# /dev/sda3
+UUID=6a67be6b-04bf-4e2c-867c-a8de8407943c	none      	swap      	defaults  	0 0
+

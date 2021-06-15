@@ -54,10 +54,10 @@
     separator_height = 8
 
     # Padding between text and separator.
-    padding = 16
+    padding = 8
 
     # Horizontal padding.
-    horizontal_padding = 16
+    horizontal_padding = 8
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.

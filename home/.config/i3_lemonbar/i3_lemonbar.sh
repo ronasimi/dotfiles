@@ -158,6 +158,6 @@ while read -r; do
 #### LOOP FIFO
 
 (cat "${panel_fifo}" | "$(dirname $0)"/i3_lemonbar_parser.sh |
-lemonbar -p -o -3 -f "${font}" -o 3 -f "${plfont}" -o -3 -f "${iconfont}" -o -2 -f "${titlefont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
+lemonbar -p -o -3 -f "${font}" -o 2 -f "${plfont}" -o -4 -f "${iconfont}" -o -2 -f "${titlefont}" -a "${clickables}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" | sh) &
 
 wait

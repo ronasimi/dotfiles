@@ -8,5 +8,5 @@ SCRSZ=$(xrandr | grep "current")
 RESW=$(echo $SCRSZ | awk '{print $8a}' | sed 's/,$//')
 RESH=$(echo $SCRSZ | awk '{print $10a}' | sed 's/,$//')
 ffmpeg -f x11grab -video_size "$RESW"x"$RESH" -y -i $DISPLAY -i $LOCK -filter_complex "smartblur=5:1,hue=s=0.90,overlay=($RESW-overlay_w)/2:($RESH-overlay_h)/3" -vframes 1 $TMPBG
-i3lock -S=0 -n -u -i $TMPBG --time-pos='x+60:h-135' --date-pos='tx:h-75' --clock --time-str="%H:%M" --date-align 1 --date-str "%A, %B %d" --time-align=1 --date-align=1 --time-font="Source Sans Pro SemiBold" --time-size=96 --date-font="Source Sans Pro Light" --date-size=48 --time-color=ac4142ff --date-color=ac4142ff
+i3lock -S=0 -n -u -i $TMPBG --time-pos='x+60:h-135' --date-pos='tx:h-75' --clock --time-str="%H:%M" --date-align 1 --date-str "%A, %B %d" --time-align=1 --date-align=1 --time-font="Source Sans Pro Semibold" --time-size=96 --date-font="Source Sans Pro Regular" --date-size=48 --time-color=ac4142ff --date-color=ac4142ff
 rm $TMPBG

@@ -254,7 +254,7 @@ while read -r line; do
 
     CLK*)
       # time
-      time="%{F${color_sec_b2}T2}${sep_left}%{F${color_icon_dark} B${color_sec_b2}}%{T3} ${icon_clock}%{F${color_icon_dark} T4} ${line#???}%{T-}"
+      time="%{F${color_sec_b2}T2}${sep_left}%{F${color_icon_dark} B${color_sec_b2}}%{T3} ${icon_clock}%{F${color_icon_dark} T1} ${line#???}%{T-}"
       ;;
 
   esac

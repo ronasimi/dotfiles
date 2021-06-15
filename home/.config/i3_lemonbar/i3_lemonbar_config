@@ -12,11 +12,11 @@
 panel_fifo="/tmp/i3_lemonbar_${USER}"
 
 # lemonbar settings
-geometry="1920x20"
-font="Source Code Pro:style=Regular:size=10.5"
-plfont="Source Code Pro:style=Regular:size=12.75"
-iconfont="Material Design Icons:style:Regular:size=10.5"
-titlefont="Source Code Pro:style=Semibold:size=10.5"
+geometry="1920x24"
+font="Source Code Pro:style=Regular:size=12"
+plfont="Source Code Pro:style=Regular:size=14.25"
+iconfont="Material Design Icons:style:Regular:size=12"
+titlefont="Source Code Pro:style=Semibold:size=12"
 clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 
@@ -58,13 +58,13 @@ color_title="#${bwhi}"    # Window title foreground
 color_stat="#${bla}"      # Background for i3 status section
 color_ina="#${blu}"       # Background for inactive workspace
 color_wsp="#${bblu}"      # Background for selected workspace
-color_act_fore="#121212"  # Foreground for active workspace
-color_ina_fore="#${bla}"  # Foreground for inactive workspace
-color_sec_b1="#121212"    # Background for section 1
-color_sec_b2="#${bgd}"    # Background for section 2
+color_act_fore="#${bgd}"  # Foreground for active workspace
+color_ina_fore="#${bbla}"  # Foreground for inactive workspace
+color_sec_b1="#${bla}"    # Background for section 1
+color_sec_b2="#${grn}"    # Background for section 2
 color_icon="#${whi}"      # For icons
-color_icon_dark="#272727" # For icons (dark)
-color_netdown="#${bla}"   # For inactive network interface icons
+color_icon_dark="#${bgd}" # For icons (dark)
+color_netdown="#${bbla}"   # For inactive network interface icons
 color_mail="#DD4B39"      # Color for mail alert
 color_upd="#1793D0"       # Color for update alert
 color_warn="#${ylw}"      # Color for warning

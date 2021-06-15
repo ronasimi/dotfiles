@@ -48,7 +48,7 @@ default_border pixel 2
 default_floating_border none
 
 # useless gaps
-gaps inner 16
+gaps inner 8
 gaps outer 8
 #gaps vertical <px>
 #gaps top 16

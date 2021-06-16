@@ -24,6 +24,9 @@ else
   source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
   # POWERLINE STYLE SUDO
   #export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 0) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
+  POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+  # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 fi
 
 # WINDOW TITLE
@@ -311,8 +314,3 @@ export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
     done
   xdg-open "http://www.google.com/search?q=$search"
 }
-
-POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

@@ -30,7 +30,7 @@ while read -r line; do
         mode_cicon=${color_icon}
       fi
 
-      mode="%{F${mode_cicon} B${color_stat} T3} ${icon_mode} "
+      mode="%{F${mode_cicon} T3} ${icon_mode} "
       ;;
 
     LAY*)
@@ -45,29 +45,29 @@ while read -r line; do
         icon_layout=${icon_stacked}
       fi
 
-      layout="%{F${color_icon} B${color_stat} T3}${icon_layout} %{F${color_stat} B${color_ina}}"
+      layout="%{F${color_icon} T3}${icon_layout}"
       ;;
 
     WSP*)
       # i3 Workspaces
-      wsp="%{B${color_ina}}"
       set -- ${line#???}
+      wsp=""
 
       while [ $# -gt 0 ]; do
         case $1 in
           FOC*)
             act_name=$(echo ${1#???} | cut -d ":" -f 2)
-            wsp="${wsp}%{F${color_ina} B${color_wsp} T2}%{F${color_act_fore} B${color_wsp} T3} ${act_name} "
+            wsp="${wsp}%{F${color_act_fore} T3} ${act_name} "
             ;;
           INA* | ACT*)
             ina_name=$(echo ${1#???} | cut -d ":" -f 2)
             ina_number=$(echo ${1#???} | cut -d ":" -f 1)
-            wsp="${wsp}%{F${color_ina} B${color_ina} T2}%{F${color_ina_fore} B${color_ina} T3}%{A1:i3-msg workspace number ${ina_number}:} ${ina_name} %{A}"
+            wsp="${wsp}%{F${color_ina_fore} T3}%{A1:i3-msg workspace number ${ina_number}:} ${ina_name} %{A}"
             ;;
           URG*)
             urg_name=$(echo ${1#???} | cut -d ":" -f 2)
             urg_number=$(echo ${1#???} | cut -d ":" -f 1)
-            wsp="${wsp}%{F${color_act_fore} B${color_alert} T3}%{A1:i3-msg workspace number ${urg_number}:} ${urg_name} %{A}%"
+            wsp="${wsp}%{F${color_alert} T3}%{A1:i3-msg workspace number ${urg_number}:} ${urg_name} %{A}"
             ;;
         esac
         shift
@@ -76,7 +76,7 @@ while read -r line; do
 
     WIN*)
       # window title
-      title="%{F${color_title} B- T4}${stab}${line#???}%{T-}"
+      title="%{F${color_title} B- T4}${line#???}%{T-}"
       ;;
 
     UPD*)
@@ -140,7 +140,7 @@ while read -r line; do
         icon_bright=${icon_bright_6}
       fi
 
-      bright="%{F${color_icon} B${color_sec_b1} T3} ${icon_bright}"
+      bright="%{F${color_icon} B${color_sec_b1} T3} ${icon_bright} "
       ;;
 
     ETH*)
@@ -157,7 +157,7 @@ while read -r line; do
         eth_cicon=${color_netdown}
       fi
 
-      ethernet="%{F${eth_cback}T2}${sep_left}%{F${eth_cicon} B${eth_cback} T3} ${ethup}"
+      ethernet="%{F${eth_cicon} B${eth_cback} T3} ${ethup}"
       ;;
 
     WFI*)

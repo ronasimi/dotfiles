@@ -256,7 +256,7 @@ bindsym $mod+e exec --no-startup-id thunar
 
 ## Program Keybinds
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'run:' -i -h 20 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Source Code Pro:size=10.5'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'run:' -i -h 24 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Source Code Pro:size=10.5'"
 
 # google chrome
 bindsym $mod+F1 workspace $ws1; exec google-chrome-stable

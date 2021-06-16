@@ -14,7 +14,6 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 # lemonbar settings
 geometry="1920x24"
 font="Source Code Pro:style=Semibold:size=10.5"
-plfont="Source Code Pro:style=Regular:size=14.25"
 iconfont="Material Design Icons:style:Regular:size=12"
 titlefont="Source Code Pro:style=Semibold:size=10.5"
 clickables=64

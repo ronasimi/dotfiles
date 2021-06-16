@@ -30,7 +30,7 @@ while read -r line; do
         mode_cicon=${color_icon}
       fi
 
-      mode="%{F${mode_cicon} T3} ${icon_mode} "
+      mode="%{F${mode_cicon} T2} ${icon_mode} "
       ;;
 
     LAY*)
@@ -45,7 +45,7 @@ while read -r line; do
         icon_layout=${icon_stacked}
       fi
 
-      layout="%{F${color_icon} T3}${icon_layout}"
+      layout="%{F${color_icon} T2}${icon_layout}"
       ;;
 
     WSP*)
@@ -57,17 +57,17 @@ while read -r line; do
         case $1 in
           FOC*)
             act_name=$(echo ${1#???} | cut -d ":" -f 2)
-            wsp="${wsp}%{F${color_act_fore} T3} ${act_name} "
+            wsp="${wsp}%{F${color_act_fore} T2} ${act_name} "
             ;;
           INA* | ACT*)
             ina_name=$(echo ${1#???} | cut -d ":" -f 2)
             ina_number=$(echo ${1#???} | cut -d ":" -f 1)
-            wsp="${wsp}%{F${color_ina_fore} T3}%{A1:i3-msg workspace number ${ina_number}:} ${ina_name} %{A}"
+            wsp="${wsp}%{F${color_ina_fore} T2}%{A1:i3-msg workspace number ${ina_number}:} ${ina_name} %{A}"
             ;;
           URG*)
             urg_name=$(echo ${1#???} | cut -d ":" -f 2)
             urg_number=$(echo ${1#???} | cut -d ":" -f 1)
-            wsp="${wsp}%{F${color_alert} T3}%{A1:i3-msg workspace number ${urg_number}:} ${urg_name} %{A}"
+            wsp="${wsp}%{F${color_alert} T2}%{A1:i3-msg workspace number ${urg_number}:} ${urg_name} %{A}"
             ;;
         esac
         shift
@@ -76,13 +76,13 @@ while read -r line; do
 
     WIN*)
       # window title
-      title="%{F${color_title} B- T4}${line#???}%{T-}"
+      title="%{F${color_title} B- T3}${line#???}%{T-}"
       ;;
 
     UPD*)
       # updates
       if [ "${line#???}" != "0" ]; then
-        updates="%{F${color_upd} T3} ${icon_arch}%{T1} ${line#???}%{T-}${stab}"
+        updates="%{F${color_upd} T2} ${icon_arch}%{T1} ${line#???}%{T-}${stab}"
       else
         updates=""
       fi
@@ -91,7 +91,7 @@ while read -r line; do
     GMA*)
       # gmail
       if [ "${line#???}" != "0" ]; then
-        gmail="%{F${color_mail} T3} ${icon_mail}%{T1} ${line#???}%{T-}${stab}"
+        gmail="%{F${color_mail} T2} ${icon_mail}%{T1} ${line#???}%{T-}${stab}"
       else
         gmail=""
       fi
@@ -119,7 +119,7 @@ while read -r line; do
         vol_cicon=${color_netdown}
       fi
 
-      vol="%{F${vol_cicon} B${color_sec_b1} T3} ${icon_vol}"
+      vol="%{F${vol_cicon} B${color_sec_b1} T2} ${icon_vol}"
       ;;
 
     BRI*)
@@ -140,7 +140,7 @@ while read -r line; do
         icon_bright=${icon_bright_6}
       fi
 
-      bright="%{F${color_icon} B${color_sec_b1} T3} ${icon_bright} "
+      bright="%{F${color_icon} B${color_sec_b1} T2} ${icon_bright} "
       ;;
 
     ETH*)
@@ -157,7 +157,7 @@ while read -r line; do
         eth_cicon=${color_netdown}
       fi
 
-      ethernet="%{F${eth_cicon} B${eth_cback} T3} ${ethup}"
+      ethernet="%{F${eth_cicon} B${eth_cback} T2} ${ethup}"
       ;;
 
     WFI*)
@@ -173,7 +173,7 @@ while read -r line; do
         wlan_cicon=${color_netdown}
       fi
 
-      wifi="%{F${wlan_cicon} B${wlan_cback} T3} ${wlanup}"
+      wifi="%{F${wlan_cicon} B${wlan_cback} T2} ${wlanup}"
       ;;
 
     BLU*)
@@ -193,7 +193,7 @@ while read -r line; do
         blueup=${icon_bluedown}
         blue_cicon=${color_netdown}
       fi
-      bluetooth="%{F${blue_cicon} B${blue_cback} T3} ${blueup}"
+      bluetooth="%{F${blue_cicon} B${blue_cback} T2} ${blueup}"
       ;;
 
     BAT*)
@@ -249,7 +249,7 @@ while read -r line; do
         bat_cicon=${color_warn}
       fi
 
-      bat="%{F${bat_cicon} T3} ${icon_bat}"
+      bat="%{F${bat_cicon} T2} ${icon_bat}"
       ;;
 
     CLK*)

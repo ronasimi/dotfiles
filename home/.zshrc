@@ -1,4 +1,3 @@
-
 #           _
 #   _______| |__  _ __ ___
 #  |_  / __| '_ \| '__/ __|
@@ -24,7 +23,7 @@ else
   # POWERLEVEL10K
   source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
   # POWERLINE STYLE SUDO
-  export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 0) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
+  #export SUDO_PROMPT="$(tput setab 1)$(tput setaf 7) sudo $(tput setab 4)$(tput setaf 1)$(echo "\uE0B0")$(tput setab 4)$(tput setaf 0) password for %p $(tput sgr0)$(tput setaf 4)$(echo "\uE0B0")$(tput sgr0) "
 fi
 
 # WINDOW TITLE
@@ -313,19 +312,7 @@ export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
   xdg-open "http://www.google.com/search?q=$search"
 }
 
-# POWERLEVEL10K OPTIONS
-POWERLEVEL9K_MODE='nerdfont-complete'
-POWERLEVEL9K_IGNORE_TERM_COLORS=true
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir_writable context dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs vcs)
-DEFAULT_USER="ron"
-POWERLEVEL9K_CONTEXT_TEMPLATE="%n@`hostname -f`"
-POWERLEVEL9K_ALWAYS_SHOW_USER=true
-POWERLEVEL9K_VCS_GIT_HOOKS=(vcs-detect-changes git-untracked git-aheadbehind git-stash git-remotebranch git-tagname)
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="white"
-POWERLEVEL9K_CONTEXT_SUDO_FOREGROUND="black"
-POWERLEVEL9K_CONTEXT_SUDO_BACKROUND="orange"
-POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND="white"
-POWERLEVEL9K_CONTEXT_ROOT_BACKROUND="red"
-POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_FOREGROUND="white"
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="white"
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

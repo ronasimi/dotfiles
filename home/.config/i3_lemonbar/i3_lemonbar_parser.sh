@@ -13,7 +13,7 @@
 . "$(dirname $0)"/i3_lemonbar_config
 
 # min init
-title="%{F${color_ina} B- T2}${sep_right}%{F${color_title} T1} "
+title="%{F${color_title} T1} "
 
 # parser
 while read -r line; do
@@ -45,7 +45,7 @@ while read -r line; do
         icon_layout=${icon_stacked}
       fi
 
-      layout="%{F${color_icon} B${color_stat} T3}${icon_layout} %{F${color_stat} B${color_ina}}%{T2}${sep_right}"
+      layout="%{F${color_icon} B${color_stat} T3}${icon_layout} %{F${color_stat} B${color_ina}}"
       ;;
 
     WSP*)
@@ -57,17 +57,17 @@ while read -r line; do
         case $1 in
           FOC*)
             act_name=$(echo ${1#???} | cut -d ":" -f 2)
-            wsp="${wsp}%{F${color_ina} B${color_wsp} T2}${sep_right}%{F${color_act_fore} B${color_wsp} T3} ${act_name} %{F${color_wsp} B${color_ina}T2}${sep_right}"
+            wsp="${wsp}%{F${color_ina} B${color_wsp} T2}%{F${color_act_fore} B${color_wsp} T3} ${act_name} "
             ;;
           INA* | ACT*)
             ina_name=$(echo ${1#???} | cut -d ":" -f 2)
             ina_number=$(echo ${1#???} | cut -d ":" -f 1)
-            wsp="${wsp}%{F${color_ina} B${color_ina} T2}${sep_right}%{F${color_ina_fore} B${color_ina} T3}%{A1:i3-msg workspace number ${ina_number}:} ${ina_name} %{A}%{F${color_ina} B${color_ina} T2}${sep_right}"
+            wsp="${wsp}%{F${color_ina} B${color_ina} T2}%{F${color_ina_fore} B${color_ina} T3}%{A1:i3-msg workspace number ${ina_number}:} ${ina_name} %{A}"
             ;;
           URG*)
             urg_name=$(echo ${1#???} | cut -d ":" -f 2)
             urg_number=$(echo ${1#???} | cut -d ":" -f 1)
-            wsp="${wsp}%{F${color_ina} B${color_alert} T2}${sep_right}%{F${color_act_fore} B${color_alert} T3}%{A1:i3-msg workspace number ${urg_number}:} ${urg_name} %{A}%{F${color_alert} B${color_ina} T2}${sep_right}"
+            wsp="${wsp}%{F${color_act_fore} B${color_alert} T3}%{A1:i3-msg workspace number ${urg_number}:} ${urg_name} %{A}%"
             ;;
         esac
         shift
@@ -76,13 +76,13 @@ while read -r line; do
 
     WIN*)
       # window title
-      title="%{F${color_ina} B${color_back}}${sep_right}%{F${color_title} T4}${stab}${line#???}%{T-}"
+      title="%{F${color_title} B- T4}${stab}${line#???}%{T-}"
       ;;
 
     UPD*)
       # updates
       if [ "${line#???}" != "0" ]; then
-        updates="%{F${color_upd} T2}${sep_left}%{F${color_icon_dark} B${color_upd}T3} ${icon_arch}%{T1} ${line#???}%{T-}${stab}"
+        updates="%{F${color_upd} T3} ${icon_arch}%{T1} ${line#???}%{T-}${stab}"
       else
         updates=""
       fi
@@ -91,7 +91,7 @@ while read -r line; do
     GMA*)
       # gmail
       if [ "${line#???}" != "0" ]; then
-        gmail="%{F${color_mail} T2}${sep_left}%{F${color_title} B${color_mail}T3} ${icon_mail}%{T1} ${line#???}%{T-}${stab}"
+        gmail="%{F${color_mail} T3} ${icon_mail}%{T1} ${line#???}%{T-}${stab}"
       else
         gmail=""
       fi
@@ -107,19 +107,19 @@ while read -r line; do
         vol_cicon=${color_alert}
       elif [ "${line#???}" -ge 75 ]; then
         icon_vol=${icon_vol_hi}
-        vol_cicon=${color_icon_dark}
+        vol_cicon=${color_icon}
       elif [ "${line#???}" -ge 50 ]; then
         icon_vol=${icon_vol_med}
-        vol_cicon=${color_icon_dark}
+        vol_cicon=${color_icon}
       elif [ "${line#???}" -ge 1 ]; then
         icon_vol=${icon_vol_lo}
-        vol_cicon=${color_icon_dark}
+        vol_cicon=${color_icon}
       elif [ "${line#???}" -eq 0 ]; then
         icon_vol=${icon_vol_off}
         vol_cicon=${color_netdown}
       fi
 
-      vol="%{F${color_sec_b1}T2}${sep_left}%{F${vol_cicon} B${color_sec_b1} T3} ${icon_vol}"
+      vol="%{F${vol_cicon} B${color_sec_b1} T3} ${icon_vol}"
       ;;
 
     BRI*)
@@ -140,7 +140,7 @@ while read -r line; do
         icon_bright=${icon_bright_6}
       fi
 
-      bright="%{F${color_icon_dark} B${color_sec_b1} T3} ${icon_bright}"
+      bright="%{F${color_icon} B${color_sec_b1} T3} ${icon_bright}"
       ;;
 
     ETH*)
@@ -151,7 +151,7 @@ while read -r line; do
 
       if [ "${line#???}" == "connected" ]; then
         ethup=${icon_ethup}
-        eth_cicon=${color_icon_dark}
+        eth_cicon=${color_icon}
       else
         ethup=${icon_ethdown}
         eth_cicon=${color_netdown}
@@ -167,7 +167,7 @@ while read -r line; do
 
       if [ "${line#???}" == "connected" ]; then
         wlanup=${icon_wifi_up}
-        wlan_cicon=${color_icon_dark}
+        wlan_cicon=${color_icon}
       else
         wlanup=${icon_wifi_down}
         wlan_cicon=${color_netdown}
@@ -184,10 +184,10 @@ while read -r line; do
       if [ "${line#???}" == "on" ]; then
         if [ "$(bt-device -l | egrep '\(.*\)' | grep -oP '(?<=\()[^\)]+' | xargs -n1 bt-device -i | grep -c "Connected: 1")" == "0" ]; then
           blueup=${icon_blueup}
-          blue_cicon=${color_icon_dark}
+          blue_cicon=${color_icon}
         else
           blueup=${icon_blueconn}
-          blue_cicon=${color_icon_dark}
+          blue_cicon=${color_icon}
         fi
       else
         blueup=${icon_bluedown}
@@ -208,7 +208,7 @@ while read -r line; do
         bat_cicon=${color_icon_dark}
       elif [ "$(cat /sys/class/power_supply/AC/online)" == "1" ] && [ "$(acpi | awk '{gsub(",",""); print $3}')" == "Unknown" ]; then
         icon_bat=${icon_bat_ac}
-        bat_cicon=${color_icon_dark}
+        bat_cicon=${color_icon}
         # battery discharging
       elif [ "${line#???}" -le "${bat_alert}" ]; then
         icon_bat=${icon_bat_low}
@@ -216,31 +216,31 @@ while read -r line; do
         (dunstify -u critical -r 109966 "BATTERY AT ${line#???}%" "System will hibernate at 5% battery. Please plug in AC adapter immediately to avoid losing work")
       elif [ "${line#???}" -ge 98 ]; then
         icon_bat=${icon_bat_full}
-        bat_cicon=${color_icon_dark}
+        bat_cicon=${color_icon}
       elif [ "${line#???}" -ge 90 ]; then
         icon_bat=${icon_bat_90}
-        bat_cicon=${color_icon_dark}
+        bat_cicon=${color_icon_}
       elif [ "${line#???}" -ge 80 ]; then
         icon_bat=${icon_bat_80}
-        bat_cicon=${color_icon_dark}
+        bat_cicon=${color_icon}
       elif [ "${line#???}" -ge 70 ]; then
         icon_bat=${icon_bat_70}
-        bat_cicon=${color_icon_dark}
+        bat_cicon=${color_icon}
       elif [ "${line#???}" -ge 60 ]; then
         icon_bat=${icon_bat_60}
-        bat_cicon=${color_icon_dark}
+        bat_cicon=${color_icon}
       elif [ "${line#???}" -ge 50 ]; then
         icon_bat=${icon_bat_50}
-        bat_cicon=${color_icon_dark}
+        bat_cicon=${color_icon}
       elif [ "${line#???}" -ge 40 ]; then
         icon_bat=${icon_bat_40}
-        bat_cicon=${color_icon_dark}
+        bat_cicon=${color_icon}
       elif [ "${line#???}" -ge 30 ]; then
         icon_bat=${icon_bat_30}
-        bat_cicon=${color_icon_dark}
+        bat_cicon=${color_icon}
       elif [ "${line#???}" -ge 20 ]; then
         icon_bat=${icon_bat_20}
-        bat_cicon=${color_icon_dark}
+        bat_cicon=${color_icon}
       elif [ "${line#???}" -ge 10 ]; then
         icon_bat=${icon_bat_10}
         bat_cicon=${color_warn}
@@ -249,16 +249,16 @@ while read -r line; do
         bat_cicon=${color_warn}
       fi
 
-      bat="%{F${bat_cicon} B${color_sec_b1} T3} ${icon_bat}"
+      bat="%{F${bat_cicon} T3} ${icon_bat}"
       ;;
 
     CLK*)
       # time
-      time="%{F${color_sec_b2}T2}${sep_left}%{F${color_icon_dark} B${color_sec_b2}}%{T3} ${icon_clock}%{F${color_icon_dark} T1} ${line#???}%{T-}"
+      time="%{T1} ${line#???}%{T-}"
       ;;
 
   esac
 
   # and finally, output
-  printf "%s\n" "%{l}${mode}${layout}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${title}%{r}%{A1:exec $(dirname $0)/scripts/updatelist.sh &:}%{A3:exec google-chrome-stable 'archlinux.org' &:}${updates}%{A}%{A}%{A1:exec $(dirname $0)/scripts/gmaillist.sh &:}%{A3:exec google-chrome-stable 'mail.google.com' &:}${gmail}%{A}%{A}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pamixer -t:}%{A5:pamixer -i 5:}%{A4:pamixer -d 5:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A5:xbacklight -inc 5:}%{A4:xbacklight -dec 5:}${bright}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${ethernet}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${wifi}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bluetooth.sh &:}%{A3:exec $(dirname $0)/scripts/makefloat.sh blueman-manager &:}${bluetooth}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_clock.sh &:}%{A3:exec google-chrome-stable 'calendar.google.com' &:}${time}%{A}%{A} %{F- B-}"
+  printf "%s\n" "%{l}${mode}${layout}${stab}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}%{c}${title}%{r}%{A1:exec $(dirname $0)/scripts/updatelist.sh &:}%{A3:exec google-chrome-stable 'archlinux.org' &:}${updates}%{A}%{A}%{A1:exec $(dirname $0)/scripts/gmaillist.sh &:}%{A3:exec google-chrome-stable 'mail.google.com' &:}${gmail}%{A}%{A}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pamixer -t:}%{A5:pamixer -i 5:}%{A4:pamixer -d 5:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A5:xbacklight -inc 5:}%{A4:xbacklight -dec 5:}${bright}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${ethernet}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${wifi}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bluetooth.sh &:}%{A3:exec $(dirname $0)/scripts/makefloat.sh blueman-manager &:}${bluetooth}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_clock.sh &:}%{A3:exec google-chrome-stable 'calendar.google.com' &:}${time}%{A}%{A} %{F- B-}"
 done

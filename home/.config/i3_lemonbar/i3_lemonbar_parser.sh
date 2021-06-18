@@ -213,7 +213,7 @@ while read -r line; do
       elif [ "${line#???}" -le "${bat_alert}" ]; then
         icon_bat=${icon_bat_low}
         bat_cicon=${color_alert}
-        (dunstify -u critical -r 109966 "BATTERY AT ${line#???}%" "System will hibernate at 5% battery. Please plug in AC adapter immediately to avoid losing work")
+        (dunstify -u critical -r 109966 "BATTERY AT ${line#???}%" "System will suspend at 8% battery. Please plug in AC adapter immediately to avoid losing work")
       elif [ "${line#???}" -ge 98 ]; then
         icon_bat=${icon_bat_full}
         bat_cicon=${color_icon}

@@ -69,8 +69,7 @@ done &
 while read -r; do
 
   (printf "%s%s\n" "VOL" "$(pamixer --get-volume-human | tr -d "%")") >"${panel_fifo}" &
-  "$(dirname $0)"/scripts/volindicator.sh &
-
+  
   done < <(
   echo &&
   # restart pactl if it exits

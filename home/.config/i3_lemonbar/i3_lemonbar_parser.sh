@@ -27,7 +27,7 @@ while read -r line; do
         mode_cicon=${color_mode}
       else
         icon_mode=${icon_default}
-        mode_cicon=${color_icon}
+        mode_cicon=${color_sec_b2}
       fi
 
       mode="%{F${mode_cicon} T2} ${icon_mode} "
@@ -45,7 +45,7 @@ while read -r line; do
         icon_layout=${icon_stacked}
       fi
 
-      layout="%{F${color_icon} T2}${icon_layout}"
+      layout="%{F${color_warn} T2}${icon_layout}"
       ;;
 
     WSP*)
@@ -254,7 +254,7 @@ while read -r line; do
 
     CLK*)
       # time
-      time="%{T1} ${line#???}%{T-}"
+      time="%{F${color_sec_b2} T1} ${line#???}%{T-}"
       ;;
 
   esac

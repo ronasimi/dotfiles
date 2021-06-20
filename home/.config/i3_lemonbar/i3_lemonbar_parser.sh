@@ -119,7 +119,7 @@ while read -r line; do
         vol_cicon=${color_netdown}
       fi
 
-      vol="%{F${vol_cicon} B${color_sec_b1} T2} ${icon_vol}"
+      vol="%{F${vol_cicon} B${color_sec_b1} T2}${icon_vol} "
       ;;
 
     BRI*)
@@ -140,7 +140,7 @@ while read -r line; do
         icon_bright=${icon_bright_6}
       fi
 
-      bright="%{F${color_icon} B${color_sec_b1} T2} ${icon_bright} "
+      bright="%{F${color_icon} B${color_sec_b1} T2}${icon_bright} "
       ;;
 
     ETH*)
@@ -157,7 +157,7 @@ while read -r line; do
         eth_cicon=${color_netdown}
       fi
 
-      ethernet="%{F${eth_cicon} B${eth_cback} T2} ${ethup}"
+      ethernet="%{F${eth_cicon} B${eth_cback} T2} ${ethup} "
       ;;
 
     WFI*)
@@ -173,7 +173,7 @@ while read -r line; do
         wlan_cicon=${color_netdown}
       fi
 
-      wifi="%{F${wlan_cicon} B${wlan_cback} T2} ${wlanup}"
+      wifi="%{F${wlan_cicon} B${wlan_cback} T2}${wlanup} "
       ;;
 
     BLU*)
@@ -193,7 +193,7 @@ while read -r line; do
         blueup=${icon_bluedown}
         blue_cicon=${color_netdown}
       fi
-      bluetooth="%{F${blue_cicon} B${blue_cback} T2} ${blueup}"
+      bluetooth="%{F${blue_cicon} B${blue_cback} T2}${blueup} "
       ;;
 
     BAT*)
@@ -249,12 +249,12 @@ while read -r line; do
         bat_cicon=${color_warn}
       fi
 
-      bat="%{F${bat_cicon} T2} ${icon_bat}"
+      bat="%{F${bat_cicon} T2}${icon_bat} "
       ;;
 
     CLK*)
       # time
-      time="%{F${color_sec_b2} T1} ${line#???}%{T-}"
+      time="%{F${color_icon} T1}${icon_clock} ${line#???}%{T-}"
       ;;
 
   esac

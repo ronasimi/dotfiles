@@ -83,9 +83,10 @@ icon_blueup="󰂯"  # Bluetooth icon
 icon_bluedown="󰂲"   # Bluetooth off icon
 icon_blueconn="󰂱"     # Bluetooth connected icon
 icon_mail="󰊫"       # Mail icon
-icon_arch="󰣇"       # Arch icon󱂫
-icon_default="󰌌"    # default mo󱂩e icon
+icon_arch="󰣇"       # Arch icon
+icon_default="󰌌"    # default mode icon
 icon_resize="󰩨"     # resize mode icon
+icon_clock="󰥔"        # icon for clock
 
 icon_splith="󱂫"     # horizontal split layout icon
 icon_splitv="󱂩"     # vertical split icon

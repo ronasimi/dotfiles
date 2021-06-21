@@ -35,7 +35,7 @@ i3-msg -t subscribe -m '[ "mode" ]' | awk -F '"' '{print "MOD" $4; fflush(stdout
 "$(dirname $0)"/scripts/workspaces.pl >"${panel_fifo}" &
 
 # window title, "WIN"
-xtitle -sf 'WIN%s\n' >"${panel_fifo}" &
+xtitle -s -t 192 -f 'WIN%s\n' >"${panel_fifo}" &
 
 # updates, "UPD"
 ### update check interval
@@ -69,7 +69,7 @@ done &
 while read -r; do
 
   (printf "%s%s\n" "VOL" "$(pamixer --get-volume-human | tr -d "%")") >"${panel_fifo}" &
-  
+
   done < <(
   echo &&
   # restart pactl if it exits

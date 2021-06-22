@@ -51,7 +51,7 @@ whi=$(xrdb -query | grep '*.color7:' | cut -f 2 | tr -d "#")
 bwhi=$(xrdb -query | grep '*.color15:' | cut -f 2 | tr -d "#")
 
 # bar color definitions
-color_back="#D9${bgd}"    # Default background
+color_back="#E6${bgd}"    # Default background
 color_fore="#${fgd}"      # Default foreground
 color_title="#${bwhi}"    # Window title foreground
 color_act_fore="#${blu}"  # Foreground for active workspace

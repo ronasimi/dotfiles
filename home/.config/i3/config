@@ -257,6 +257,9 @@ bindsym $mod+e exec --no-startup-id thunar
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'run:' -i -h 24 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Source Code Pro:size=10.5'"
 
+# shortcut to selection widget (primary)
+bindsym $mod+c exec clipster -sp
+
 # google chrome
 bindsym $mod+F1 workspace $ws1; exec google-chrome-stable
 bindsym $mod+Mod1+F1 workspace $ws1; exec google-chrome-stable --incognito

@@ -51,7 +51,7 @@ default_floating_border none
 gaps inner 12
 #gaps outer 4
 #gaps vertical <px>
-#gaps top 16
+gaps top 24
 #gaps right <px>
 #gaps bottom 8
 #gaps left <px>

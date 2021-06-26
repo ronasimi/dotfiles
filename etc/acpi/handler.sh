@@ -79,6 +79,9 @@ case "$1" in
         acpi -a | grep -q "off-line"
         if [ $? = 0 ] ; then
           systemctl suspend
+	# Ignore if external display connected
+	elif [ "$(xrandr -q | grep ' connected' | wc -l)" != "1" ] ; then
+	  logger 'LID closed, External display connected'
         # Otherwise lock screen
         else
 	   sudo -u `ps -o ruser= -C xinit` xset s activate

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo switching display
+mons -s
+echo switching sound card
+pacmd set-default-sink alsa_output.usb-Generic_TX42BD100_201701110001-00.analog-stereo
+echo switching applications
+pacmd list-sink-inputs | awk '/index:/{print $2}' | xargs -r -I{} pacmd move-sink-input {} alsa_output.usb-Generic_TX42BD100_201701110001-00.analog-stereo

@@ -1,2 +1,4 @@
+#!/bin/bash
+
 tmux -L rt attach -t rt
 #tmux attach -t rt

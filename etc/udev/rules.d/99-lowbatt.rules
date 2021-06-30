@@ -1,2 +1,2 @@
-# Hibernate the system when battery level drops to 5% or lower
+# Hibernate the system when battery level drops to 8% or lower
 SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-8]", RUN+="/usr/bin/systemctl suspend"

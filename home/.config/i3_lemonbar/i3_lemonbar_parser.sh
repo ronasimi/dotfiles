@@ -201,11 +201,11 @@ while read -r line; do
       # on charger and charging
       if [ "$(cat /sys/class/power_supply/AC/online)" == "1" ] && [ "$(acpi | awk '{gsub(",",""); print $3}')" == "Charging" ]; then
         icon_bat=${icon_bat_charge}
-        bat_cicon=${color_icondark}
+        bat_cicon=${color_icon}
         # on charger and not charging/full
       elif [ "$(cat /sys/class/power_supply/AC/online)" == "1" ] && [ "$(acpi | awk '{gsub(",",""); print $3}')" == "Full" ]; then
         icon_bat=${icon_bat_ac}
-        bat_cicon=${color_icon_dark}
+        bat_cicon=${color_icon}
       elif [ "$(cat /sys/class/power_supply/AC/online)" == "1" ] && [ "$(acpi | awk '{gsub(",",""); print $3}')" == "Unknown" ]; then
         icon_bat=${icon_bat_ac}
         bat_cicon=${color_icon}

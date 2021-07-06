@@ -17,13 +17,13 @@
                "x": 8,
                "y": 32
             },
-            "name": "Google-chrome",
+            "name": "firefox",
             "percent": 0.5,
             "swallows": [
                {
-               "class": "^Google-chrome$"
-               // "instance": "^google-chrome$",
-               // "title": "^linuxmulti\\ subreddits\\ curated\\ by\\ u\\/ronasimi\\ \\-\\ Google-chrome$",
+               "class": "^firefox$"
+               // "instance": "^firefox$",
+               // "title": "^linuxmulti\\ subreddits\\ curated\\ by\\ u\\/ronasimi\\ \\-\\ firefox$",
                // "window_role": "^browser$"
                }
             ],
@@ -39,12 +39,12 @@
                "x": 18,
                "y": 42
             },
-            "name": "Google-chrome",
+            "name": "firefox",
             "percent": 0.5,
             "swallows": [
                {
-               "class": "^Google-chrome$"
-               // "instance": "^google-chrome$",
+               "class": "^firefox$"
+               // "instance": "^firefox$",
                // "title": "^How\\ do\\ I\\ open\\ Chromium\\ in\\ incognito\\ mode\\ by\\ default\\?\\ \\-\\ Ask\\ Ubuntu\\ \\-\\ Chromium$",
                // "window_role": "^browser$"
                }

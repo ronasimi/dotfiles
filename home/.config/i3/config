@@ -15,7 +15,7 @@ font pango:Source Sans Pro Semibold 10.5
 
 ## Workspace names
 # workspace name variables
-set $ws1 "1:󰊯"
+set $ws1 "1:󰈹"
 set $ws2 "2:󰆍"
 set $ws3 "3:󱋣"
 set $ws4 "4:󰊢"
@@ -260,7 +260,7 @@ bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'run:' -i
 # shortcut to selection widget (primary)
 bindsym $mod+c exec clipster -sp
 
-# google chrome
+# browser
 bindsym $mod+F1 workspace $ws1; exec firefox
 bindsym $mod+Mod1+F1 workspace $ws1; exec firefox -private-window
 

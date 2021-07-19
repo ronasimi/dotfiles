@@ -216,10 +216,10 @@ bindsym $mod+Shift+Prior move container to workspace prev; workspace prev
 bindsym $mod+Shift+Next move container to workspace next; workspace next
 
 # Make the currently focused window a scratchpad
-bindsym $mod+Shift+Delete move scratchpad
+bindsym $mod+Shift+Tab move scratchpad
 
 # Show the first scratchpad window
-bindsym $mod+Delete scratchpad show
+bindsym $mod+Tab scratchpad show
 
 # reload the configuration file
 bindsym $mod+Shift+c reload; exec dunstify -u low "i3 config reloaded"

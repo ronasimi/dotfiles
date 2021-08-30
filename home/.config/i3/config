@@ -11,7 +11,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Operator Mono Bold Italic 10.5
+font pango:Source Code Pro Bold 10.5
 
 ## Workspace names
 # workspace name variables
@@ -255,7 +255,7 @@ bindsym $mod+e exec --no-startup-id thunar
 
 ## Program Keybinds
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'run:' -i -h 24 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Operator Mono:style=Bold Italic:size=10.5'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'run:' -i -h 24 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Source Code Pro:style=Bold:size=10.5'"
 
 # shortcut to selection widget (primary)
 bindsym $mod+c exec clipster -sp

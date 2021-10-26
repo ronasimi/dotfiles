@@ -1,7 +1,7 @@
 typeset -U PATH path
 
 # Set VAAPI driver
-LIBVA_DRIVER_NAME = i965
+export LIBVA_DRIVER_NAME=i965
 
 # Disable HiDPI scaling
 export WINIT_HIDPI_FACTOR=1.0

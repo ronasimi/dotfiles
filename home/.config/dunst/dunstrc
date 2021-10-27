@@ -73,7 +73,7 @@
     # Draw a line of "separator_height" pixel height between two
     # notifications.
     # Set to 0 to disable.
-    separator_height = 8
+    separator_height = 6
 
     # Padding between text and separator.
     padding = 12

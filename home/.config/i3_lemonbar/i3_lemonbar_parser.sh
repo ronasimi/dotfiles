@@ -105,13 +105,13 @@ while read -r line; do
       elif [ "${line#???}" -gt 100 ]; then
         icon_vol=${icon_vol_boost}
         vol_cicon=${color_alert}
-      elif [ "${line#???}" -ge 75 ]; then
+      elif [ "${line#???}" -ge 70 ]; then
         icon_vol=${icon_vol_hi}
         vol_cicon=${color_icon}
-      elif [ "${line#???}" -ge 25 ]; then
+      elif [ "${line#???}" -ge 35 ]; then
         icon_vol=${icon_vol_med}
         vol_cicon=${color_icon}
-      elif [ "${line#???}" -ge 10 ]; then
+      elif [ "${line#???}" -ge 1 ]; then
         icon_vol=${icon_vol_lo}
         vol_cicon=${color_icon}
       elif [ "${line#???}" -eq 0 ]; then

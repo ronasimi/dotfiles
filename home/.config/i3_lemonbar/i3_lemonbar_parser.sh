@@ -1,4 +1,4 @@
-google-chrome-stableV#!/bin/bash
+#!/bin/bash
 #
 # Input parser for i3 bar
 # Ron Asimi

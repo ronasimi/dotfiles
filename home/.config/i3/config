@@ -177,9 +177,9 @@ bindsym $mod+Shift+m append_layout ~/.config/i3/layouts/master-stack.json
 
 # multimedia keys
 # pulse audio volume control
-bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5; exec ~/.config/i3_lemonbar/scripts/volindicator.sh
-bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5; exec ~/.config/i3_lemonbar/scripts/volindicator.sh
-bindsym XF86AudioMute exec --no-startup-id pamixer -t; exec ~/.config/i3_lemonbar/scripts/volindicator.sh
+bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5; exec --no-startup-id ~/.config/i3_lemonbar/scripts/volindicator.sh
+bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5; exec --no-startup-id ~/.config/i3_lemonbar/scripts/volindicator.sh
+bindsym XF86AudioMute exec --no-startup-id pamixer -t; exec --no-startup-id ~/.config/i3_lemonbar/scripts/volindicator.sh
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
 
 # print screen
@@ -265,7 +265,7 @@ bindsym $mod+F1 workspace $ws1; exec google-chrome-stable
 bindsym $mod+Mod1+F1 workspace $ws1; exec google-chrome-stable -incognito
 
 # alacritty
-bindsym $mod+F2 workspace $ws2; exec --no-startup-id alacritty
+bindsym $mod+F2 workspace $ws2; exec alacritty
 
 # thunar
 bindsym $mod+F3 workspace $ws3; exec thunar

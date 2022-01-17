@@ -2,4 +2,4 @@
 # 1st rule for when on AC
 ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="1", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/ron/.Xauthority", RUN+="/usr/bin/xbacklight -set 100"
 # 2nd rule for when on battery
-ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="0", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/ron/.Xauthority", RUN+="/usr/bin/xbacklight -set 25"
+ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="0", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/ron/.Xauthority", RUN+="/usr/bin/xbacklight -set 50"

@@ -30,8 +30,30 @@ while read -r line; do
         mode_cicon=${color_sec_b2}
       fi
 
-      mode="%{F${mode_cicon} T2} ${icon_mode} "
+      mode="%{F${mode_cicon} T2} ${icon_mode}"
       ;;
+
+    CAP*)
+      # caps lock indicator
+      if [ "${line#???}" == "on" ]; then
+        caps_cicon=${color_mode}
+      else
+        caps_cicon=${color_sec_b2}
+      fi
+
+      caps="%{F${caps_cicon} T2} ${icon_caps}"
+        ;;
+
+    NUM*)
+      # num lock indicator
+      if [ "${line#???}" == "on" ]; then
+        num_cicon=${color_mode}
+      else
+        num_cicon=${color_sec_b2}
+      fi
+
+      num="%{F${num_cicon} T2} ${icon_num} "
+        ;;
 
     LAY*)
       # container layout
@@ -45,7 +67,7 @@ while read -r line; do
         icon_layout=${icon_stacked}
       fi
 
-      layout="%{F${color_warn} T2}${icon_layout}"
+      layout="%{F${color_warn} T2} ${icon_layout}"
       ;;
 
     WSP*)
@@ -260,5 +282,5 @@ while read -r line; do
   esac
 
   # and finally, output
-  printf "%s\n" "%{l}${mode}${layout}${stab}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${stab}${title}%{r}%{A1:exec $(dirname $0)/scripts/updatelist.sh &:}%{A3:exec google-chrome-stable 'archlinux.org/news' &:}${updates}%{A}%{A}%{A1:exec $(dirname $0)/scripts/gmaillist.sh &:}%{A3:exec google-chrome-stable 'mail.google.com' &:}${gmail}%{A}%{A}${stab}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pamixer -t && exec $(dirname $0)/scripts/volindicator.sh &:}%{A5:pamixer -i 5 && exec $(dirname $0)/scripts/volindicator.sh &:}%{A4:pamixer -d 5 && exec $(dirname $0)/scripts/volindicator.sh &:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A5:xbacklight -inc 5:}%{A4:xbacklight -dec 5:}${bright}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${ethernet}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${wifi}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bluetooth.sh &:}%{A3:exec $(dirname $0)/scripts/makefloat.sh blueman-manager &:}${bluetooth}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_clock.sh &:}%{A3:exec google-chrome-stable 'calendar.google.com' &:}${time}%{A}%{A} %{F- B-}"
+  printf "%s\n" "%{l}${mode}${caps}${num}${layout}${stab}%{A4:i3-msg workspace next:}%{A5:i3-msg workspace previous:}${wsp}%{A}%{A}${stab}${title}%{r}%{A1:exec $(dirname $0)/scripts/updatelist.sh &:}%{A3:exec google-chrome-stable 'archlinux.org/news' &:}${updates}%{A}%{A}%{A1:exec $(dirname $0)/scripts/gmaillist.sh &:}%{A3:exec google-chrome-stable 'mail.google.com' &:}${gmail}%{A}%{A}${stab}%{A1:exec $(dirname $0)/scripts/volindicator.sh &:}%{A3:pamixer -t && exec $(dirname $0)/scripts/volindicator.sh &:}%{A5:pamixer -i 5 && exec $(dirname $0)/scripts/volindicator.sh &:}%{A4:pamixer -d 5 && exec $(dirname $0)/scripts/volindicator.sh &:}${vol}%{A}%{A}%{A}%{A} %{A1:exec $(dirname $0)/scripts/brightindicator.sh &:}%{A5:xbacklight -inc 5:}%{A4:xbacklight -dec 5:}${bright}%{A}%{A}%{A}%{A1:exec $(dirname $0)/scripts/click_eth.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${ethernet}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_wifi.sh &:}%{A3:exec alacritty --class nmtui -e nmtui &:}${wifi}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bluetooth.sh &:}%{A3:exec $(dirname $0)/scripts/makefloat.sh blueman-manager &:}${bluetooth}%{A}%{A} %{A1:exec $(dirname $0)/scripts/click_bat.sh &:}${bat}%{A}${stab}%{A1:exec $(dirname $0)/scripts/click_clock.sh &:}%{A3:exec google-chrome-stable 'calendar.google.com' &:}${time}%{A}%{A} %{F- B-}"
 done

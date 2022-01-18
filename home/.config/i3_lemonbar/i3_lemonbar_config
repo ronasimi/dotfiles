@@ -86,6 +86,8 @@ icon_mail="󰊫"       # Mail icon
 icon_arch="󰣇"       # Arch icon
 icon_default="󰌌"    # default mode icon
 icon_resize="󰩨"     # resize mode icon
+icon_caps="󰪛"        # caps lock icon
+icon_num="󰎠"        # num lock icon
 icon_clock="󰥔"        # icon for clock
 
 icon_splith="󱂫"     # horizontal split layout icon

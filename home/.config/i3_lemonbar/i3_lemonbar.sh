@@ -27,6 +27,34 @@ mkfifo "${panel_fifo}"
 printf "%s\n" "MODinit" > "${panel_fifo}" &
 i3-msg -t subscribe -m '[ "mode" ]' | awk -F '"' '{print "MOD" $4; fflush(stdout)}' > "${panel_fifo}" &
 
+# Caps Lock, "CAP"
+while read -r; do
+
+  (printf "%s%s\n" "CAP" "$(xset -q | awk '/Caps Lock/ {print $4}')") > "${panel_fifo}" &
+
+  done < <(
+  echo &&
+  # restart xinput if it exits
+  until (xinput --test 12 | grep --line-buffered "66"); do
+    echo "xinput crashed with exit code $?.  Respawning.." >&2
+    sleep 1
+  done
+) &
+
+# Num Lock, "NUM"
+while read -r; do
+
+  (printf "%s%s\n" "NUM" "$(xset -q | awk '/Num Lock/ {print $8}')") > "${panel_fifo}" &
+
+  done < <(
+  echo &&
+  # restart xinput if it exits
+  until (xinput --test 12 | grep --line-buffered "77"); do
+    echo "xinput crashed with exit code $?.  Respawning.." >&2
+    sleep 1
+  done
+) &
+
 # container layout, "LAY"
 
 "$(dirname $0)"/scripts/layout.py >"${panel_fifo}" &

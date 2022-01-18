@@ -35,7 +35,7 @@ while read -r; do
   done < <(
   echo &&
   # restart xinput if it exits
-  until (xinput --test 12 | grep --line-buffered "66"); do
+  until (xinput --test 12 | grep --line-buffered "66") & disown; do
     echo "xinput crashed with exit code $?.  Respawning.." >&2
     sleep 1
   done
@@ -49,7 +49,7 @@ while read -r; do
   done < <(
   echo &&
   # restart xinput if it exits
-  until (xinput --test 12 | grep --line-buffered "77"); do
+  until (xinput --test 12 | grep --line-buffered "77") & disown; do
     echo "xinput crashed with exit code $?.  Respawning.." >&2
     sleep 1
   done

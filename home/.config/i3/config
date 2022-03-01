@@ -180,7 +180,7 @@ bindsym $mod+Shift+m append_layout ~/.config/i3/layouts/master-stack.json
 bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5; exec --no-startup-id ~/.config/i3_lemonbar/scripts/volindicator.sh
 bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5; exec --no-startup-id ~/.config/i3_lemonbar/scripts/volindicator.sh
 bindsym XF86AudioMute exec --no-startup-id pamixer -t; exec --no-startup-id ~/.config/i3_lemonbar/scripts/volindicator.sh
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 0 toggle
 
 # print screen
 bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshots/screenshot-%Y%m%d-%H:%M:%S.png & dunstify -u low $'Screenshot' 'saved to ~/Pictures/Screenshots'

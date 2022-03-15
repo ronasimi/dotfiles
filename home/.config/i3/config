@@ -255,7 +255,7 @@ bindsym $mod+e exec --no-startup-id thunar
 
 ## Program Keybinds
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'run:' -i -h 24 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Source Code Pro:style=Semibold:size=10.5'"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -p 'run:' -i -h 24 -nb '$bg' -nf '$act' -sb '$ind' -sf '$bg' -fn 'Source Code Pro:style=SemiBold:size=10.5'"
 
 # shortcut to selection widget (primary)
 bindsym $mod+c exec clipster -sp

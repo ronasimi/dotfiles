@@ -5,4 +5,4 @@ file:///home/ron/Pictures
 file:///home/ron/Videos
 file:///home/ron/repos
 file:///home/ron/Downloads/torrents
-smb://arachne/archive/
+smb://sambashare@arachne/archive/ /archive/ on arachne

@@ -13,9 +13,9 @@ panel_fifo="/tmp/i3_lemonbar_${USER}"
 
 # lemonbar settings
 geometry="1920x24"
-font="Source Code Pro:style=SemiBold:size=10.5"
+font="Source Code Pro:style=Semibold:size=10.5"
 iconfont="Material Design Icons:style:Regular:size=12"
-titlefont="Source Code Pro:style=SemiBold:size=10.5"
+titlefont="SauceCode Pro Nerd Font Mono:style=Semibold:size=10.5"
 clickables=64
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 

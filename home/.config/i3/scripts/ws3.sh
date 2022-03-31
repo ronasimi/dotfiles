@@ -4,5 +4,5 @@
 i3-msg "workspace 3:󰉋; append_layout ~/.config/i3/layouts/ws3.json"
 
 # And finally we fill the containers with the programs they had
-(exec alacritty -e ranger &)
+(exec thunar &)
 (exec thunar &)

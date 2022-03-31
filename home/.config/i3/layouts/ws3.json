@@ -1,33 +1,13 @@
 // vim:ts=4:sw=4:et
 {
-    // tabbed split container with 2 children
+    // splitv split container with 1 children
     "border": "pixel",
     "floating": "auto_off",
-    "layout": "tabbed",
-    "percent": null,
+    "layout": "splitv",
+    "marks": [],
+    "percent": 0.5,
     "type": "con",
     "nodes": [
-        {
-            "border": "pixel",
-            "current_border_width": 2,
-            "floating": "auto_off",
-            "geometry": {
-               "height": 364,
-               "width": 588,
-               "x": 0,
-               "y": 0
-            },
-            "name": "ranger:/home/ron",
-            "percent": 0.5,
-            "swallows": [
-               {
-               "class": "^Alacritty$"
-               // "instance": "^urxvt$",
-               // "title": "^ranger\\:\\/home\\/ron$"
-               }
-            ],
-            "type": "con"
-        },
         {
             "border": "pixel",
             "current_border_width": 2,
@@ -38,14 +18,52 @@
                "x": 0,
                "y": 0
             },
-            "name": "ron - File Manager",
-            "percent": 0.5,
+            "marks": [],
+            "name": "ron",
+            "percent": 1,
             "swallows": [
                {
-               "class": "^Thunar$"
+               "class": "^Thunar$",
                // "instance": "^thunar$",
-               // "title": "^ron\\ \\-\\ File\\ Manager$",
-               // "window_role": "^Thunar\\-1556517523\\-1122796334$"
+               // "machine": "^muninn$",
+               // "title": "^ron$",
+               // "window_role": "^Thunar\\-1648733401\\-1158566770$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
+{
+    // splith split container with 1 children
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "splith",
+    "marks": [],
+    "percent": 0.5,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 868,
+               "width": 1584,
+               "x": 0,
+               "y": 0
+            },
+            "marks": [],
+            "name": "ron",
+            "percent": 1,
+            "swallows": [
+               {
+               "class": "^Thunar$",
+               // "instance": "^thunar$",
+               // "machine": "^muninn$",
+               // "title": "^ron$",
+               // "window_role": "^Thunar\\-1648733408\\-576758709$"
                }
             ],
             "type": "con"

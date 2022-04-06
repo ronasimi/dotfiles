@@ -4,6 +4,8 @@ msgId="991051"
 
 if [ "${charging}" == "Unknown" ]; then
         (dunstify -a "clickBat" -u low -r "$msgId" "On AC: $(acpi -b | awk '{print $4}' | tr -d ',')")
+elif [ "${charging}" == "Not" ]; then
+        (dunstify -a "clickBat" -u low -r "$msgId" "On AC: $(acpi -b | awk '{print $3,$4}' | tr -d ',')")
 elif [ "${charging}" == "Full" ]; then
         (dunstify -a "clickBat" -u low -r "$msgId" "Full Charge: $(acpi -b | awk '{print $4}' | tr -d ',')")
 elif [ "${charging}" == "Discharging" ]; then

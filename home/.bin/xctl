@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+
+# This file serves as a global variable value holder showing if the windows are mapped or not.
+state=/tmp/state
+
+for process in ${@:1}; do
+    case $1 in
+        (show) xdotool search --class $process windowmap %@ windowraise %@;;
+        (hide) xdotool search --onlyvisible --class $process windowunmap %@;;
+        (*) break;;
+    esac
+done
+
+[[ $1 == toggle ]] && {
+    [[ -f $state ]] && [[ `cat $state` == show ]] && xctl hide ${@:1} || xctl show ${@:1}
+} || echo $1 > $state

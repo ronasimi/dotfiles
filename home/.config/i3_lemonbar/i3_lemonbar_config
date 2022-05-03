@@ -51,12 +51,12 @@ whi=$(xrdb -query | grep '*.color7:' | cut -f 2 | tr -d "#")
 bwhi=$(xrdb -query | grep '*.color15:' | cut -f 2 | tr -d "#")
 
 # bar color definitions
-color_back="#D9${bgd}"    # Default background
+color_back="#B3${bgd}"    # Default background
 color_fore="#${fgd}"      # Default foreground
 color_title="#${bwhi}"    # Window title foreground
 color_act_fore="#${blu}"  # Foreground for active workspace
 color_ina_fore="#${bla}"  # Foreground for inactive workspace
-color_sec_b1="#D9${bgd}"    # Background for section 1
+color_sec_b1="#B3${bgd}"    # Background for section 1
 color_sec_b2="#${grn}"    # Background for section 2
 color_icon="#${whi}"      # For icons
 color_icon_dark="#${bgd}" # For icons (dark)
@@ -107,7 +107,7 @@ icon_bright_80="󰃟"  # 80% brightness icon
 icon_bright_51="󰃞"  # 51% brightness icon
 icon_bright_31="󰃝"  # 31% brightness icon
 icon_bright_19="󰃜"  # 19% brightness icon
-icon_bright_11="󰃛"  # 11% brightness icon
+icon_bright_11="󰃛"BF11% brightness icon
 icon_bright_6="󰃚"   # <6% brightness icon
 
 icon_bat_ac="󰚥"     # On charger icon

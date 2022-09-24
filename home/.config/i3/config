@@ -46,6 +46,7 @@ client.background		$bg
 # window borders
 default_border pixel 2
 default_floating_border none
+for_window [class="^.*"] border pixel 2
 
 # useless gaps
 gaps inner 12

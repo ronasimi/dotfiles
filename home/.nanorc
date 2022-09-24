@@ -6,7 +6,7 @@ set historylog
 set regexp
 set fill 72
 set multibuffer
-set suspend
+#set suspend
 set nowrap
 set rawsequences
 #set guidestripe 4

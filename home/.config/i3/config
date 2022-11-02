@@ -67,7 +67,7 @@ set $FLOAT-noborder floating enable, border none
 
 # client placement
 assign [class="Google-chrome"] $ws1
-assign [class="Atom"] $ws4
+assign [class="Code"] $ws4
 assign [class="Meld"] $ws4
 assign [class="Vmware"] $ws7
 assign [class="Vmplayer"] $ws7
@@ -235,7 +235,7 @@ bindsym $mod+Shift+e exec --no-startup-id "~/.config/i3/scripts/i3_exit.sh"
 bindsym $mod+Shift+b exec --no-startup-id "~/.config/i3/scripts/barcycle.sh"
 
 # map/unmap bar
-bindsym $mod+b exec --no-startup-id "~/.bin/xctl toggle Bar"
+bindsym $mod+b exec "xctl toggle Bar"
 
 # bind some fn keys, power menu
 bindsym XF86ScreenSaver exec --no-startup-id xset s activate
@@ -274,8 +274,8 @@ bindsym $mod+F2 workspace $ws2; exec alacritty
 # thunar
 bindsym $mod+F3 workspace $ws3; exec thunar
 
-# atom
-bindsym $mod+F4 workspace $ws4; exec atom
+# vscode
+bindsym $mod+F4 workspace $ws4; exec code
 
 # gimp
 bindsym $mod+F5 workspace $ws5; exec gimp

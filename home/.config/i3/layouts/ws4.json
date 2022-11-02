@@ -21,7 +21,7 @@
             "percent": 0.8,
             "swallows": [
                {
-               "class": "^Atom$"
+               "class": "^Code$"
                // "instance": "^atom$",
                // "title": "^i3_lemonbar\\.sh\\ \\—\\ \\~\\/\\.config\\/i3_lemonbar\\ \\—\\ Atom$",
                // "window_role": "^browser\\-window$"

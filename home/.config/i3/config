@@ -18,9 +18,9 @@ font pango:Source Code Pro Semibold 10.5
 set $ws1 "1:󰊯"
 set $ws2 "2:󰆍"
 set $ws3 "3:󱋣"
-set $ws4 "4:󰊢"
-set $ws5 "5:󱇣"
-set $ws6 "6:󰖳"
+set $ws4 "4:󰨞"
+set $ws5 "5:󰖳"
+set $ws6 "6:󱇣"
 set $ws7 "7:󰷈"
 set $ws8 "8:󰲮"
 set $ws9 "9:󰲰"
@@ -69,10 +69,10 @@ set $FLOAT-noborder floating enable, border none
 assign [class="Google-chrome"] $ws1
 assign [class="Code"] $ws4
 assign [class="Meld"] $ws4
-assign [class="Vmware"] $ws6
-assign [class="Vmplayer"] $ws6
+assign [class="Vmware"] $ws5
+assign [class="Vmplayer"] $ws5
 assign [class="libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice"] $ws7
-assign [class="Gimp|Gimp-2.10"] $ws5
+assign [class="Gimp|Gimp-2.10"] $ws6
 
 # application exceptions
 for_window [class="mpv"] $FLOAT-noborder
@@ -278,13 +278,13 @@ bindsym $mod+F3 workspace $ws3; exec thunar
 bindsym $mod+F4 workspace $ws4; exec code
 
 # gimp
-bindsym $mod+F5 workspace $ws5; exec gimp
+bindsym $mod+F6 workspace $ws6; exec gimp
 
 # libreoffice writer
 bindsym $mod+F7 workspace $ws7, exec libreoffice --writer
 
 # vmware player
-bindsym $mod+F6 workspace $ws6; exec vmware
+bindsym $mod+F5 workspace $ws5; exec vmware
 
 # open an empty container
 bindsym $mod+Insert exec --no-startup-id i3-msg open

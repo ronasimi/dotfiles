@@ -5,6 +5,9 @@ Xft.rgba:       rgb
 Xft.hinting:    true
 Xft.hintstyle:  hintfull
 
+Xcursor.theme:	OpenZone_White_Slim
+Xcursor.size:	16
+
 ! special
 *.foreground:   #c3c3c3
 *.background:   #272727

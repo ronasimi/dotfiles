@@ -79,6 +79,7 @@ for_window [class="mpv"] $FLOAT-noborder
 for_window [class="mpv"] sticky enable
 for_window [class="feh"] $FLOAT-noborder
 for_window [title="Hangouts"] $FLOAT-border
+for_window [title="File Operation Progress"] $FLOAT-noborder
 for_window [class="Alacritty" class="nmtui"] $FLOAT-noborder
 for_window [class="scratchpad"] $FLOAT-noborder, resize set 1280 720, move position center, move scratchpad, scratchpad show
 for_window [class="htop"] $FLOAT-noborder, resize set 1600 900, move position center

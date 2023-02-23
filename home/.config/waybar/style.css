@@ -1,11 +1,12 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: Source Code Pro, Material Design Icons;
+    font-family: Source Sans Variable, Material Design Icons;
     font-size: 14px;
 }
 
 window#waybar {
     background-color: rgba(39, 39, 39, 0.9);
+    color: #c3c3c3
 }
 
 window#waybar.hidden {
@@ -41,7 +42,6 @@ button {
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
     background: inherit;
-    box-shadow: inset 0 -3px #ffffff;
 }
 
 #workspaces button {
@@ -52,6 +52,7 @@ button:hover {
 
 #workspaces button:hover {
     background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
 }
 
 #workspaces button.focused {
@@ -68,6 +69,7 @@ button:hover {
 
 #workspaces button.urgent {
     background-color: #ac4142;
+    border-radius: 3px;
 }
 
 #mode {
@@ -98,6 +100,7 @@ button:hover {
 #window,
 #workspaces {
     margin: 0 4px;
+    font-weight: bold;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -111,17 +114,20 @@ button:hover {
 }
 
 #clock {
-    background-color: #64727D;
+    background-color: #c3c3c3;
+    color: #575757;
+    border-radius: 3px;
 }
 
 #battery {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #90a959;
+    color: #575757;
+    border-radius: 3px;
 }
 
 #battery.charging, #battery.plugged {
-    color: #ffffff;
-    background-color: #26A65B;
+    color: #c3c3c3;
+    background-color: transparent;
 }
 
 @keyframes blink {
@@ -132,8 +138,8 @@ button:hover {
 }
 
 #battery.critical:not(.charging) {
-    background-color: #f53c3c;
-    color: #ffffff;
+    background-color: #ac4142;
+    color: #c3c3c3;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -160,14 +166,22 @@ label:focus {
 
 #backlight {
     background-color: transparent;
+    color: #c3c3c3;
 }
 
 #network {
     background-color: transparent;
+    color: #c3c3c3;
+}
+
+#bluetooth {
+    background-color: transparent;
+    color: #c3c3c3;
 }
 
 #network.disconnected {
-    background-color: #f53c3c;
+    background-color: #ac4142;
+    color: #c3c3c3;
 }
 
 #pulseaudio {
@@ -176,7 +190,7 @@ label:focus {
 }
 
 #pulseaudio.muted {
-    background-color: #90b1b1;
+    background-color: transparent;
     color: #ac4142;
 }
 
@@ -259,8 +273,9 @@ label:focus {
 }
 
 #keyboard-state {
-    background: #97e1ad;
-    color: #c3c3c3;
+    background: #90a959;
+    color: #575757;
+    border-radius: 3px;
     padding: 0 0px;
     margin: 0 5px;
     min-width: 16px;

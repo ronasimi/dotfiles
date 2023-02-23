@@ -18,4 +18,10 @@ export XMODIFIERS=@im=fcitx
 export SDL_IM_MODULE=fcitx
 export GLFW_IM_MODULE=ibus
 
+# Testing using .xinitrc syntax
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+systemctl --user import-environment DISPLAY &
+
 exec Hyprland

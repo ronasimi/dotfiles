@@ -170,7 +170,7 @@ label:focus {
 #bluetooth {
     background-color: transparent;
     color: #c3c3c3;
-}
+    margin-right: 16}
 
 #pulseaudio {
     background-color: transparent;
@@ -197,7 +197,7 @@ label:focus {
 
 #keyboard-state {
     background: #90a959;
-    color: #575757;
+    color: #272727;
     border-radius: 5px;
     padding: 0 0px;
     margin: 0 5px;
@@ -206,9 +206,11 @@ label:focus {
 
 #keyboard-state > label {
     padding: 0 5px;
+    border-radius: 5px;
 }
 
 #keyboard-state > label.locked {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(39, 39, 39, 0.2);
+    border-radius: 5px;
 }
 

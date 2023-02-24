@@ -107,7 +107,7 @@
             "car": "",
             "default": ["󰕿", "󰖀", "󰕾"]
         },
-       "on-click": "{pavucontrol}",
+       "on-click": "pavucontrol",
        "max-volume": "100",
        "on-scroll-up": "pactl set-sink-mute 0 false ; pamixer -d 1",
        "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 1"

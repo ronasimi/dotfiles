@@ -18,6 +18,9 @@ export XMODIFIERS=@im=fcitx
 export SDL_IM_MODULE=fcitx
 export GLFW_IM_MODULE=ibus
 
+# Set GTK backend
+GDK_BACKEND=wayland
+
 # Testing using .xinitrc syntax
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK

@@ -33,7 +33,7 @@
     origin = top-right
 
     # Offset from the origin
-    offset = 6x30
+    offset = 6x6
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 1
@@ -89,7 +89,7 @@
     frame_width = 0
 
     # Defines color of the frame around the notification window.
-    frame_color = "#27272700"
+    frame_color = "#c3c3c300"
 
     # Define a color for the separator.
     # possible values are:
@@ -111,7 +111,7 @@
 
     ### Text ###
 
-    font = Source Sans Pro Semibold 10.5
+    font = Source Sans Variable Bold 10.5
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -229,7 +229,7 @@
     # corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
-    corner_radius = 0
+    corner_radius = 3
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
@@ -299,7 +299,7 @@
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#f4bf75"
+    background = "#c3c3c3"
     foreground = "#272727"
     timeout = 5
     # Icon for notifications with normal urgency, uncomment to enable

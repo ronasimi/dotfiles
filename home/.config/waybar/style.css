@@ -63,7 +63,7 @@ tooltip {
 
 #workspaces button:hover {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
 #workspaces button.focused {
@@ -80,7 +80,7 @@ tooltip {
 
 #workspaces button.urgent {
     background-color: #ac4142;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
 #mode {
@@ -117,13 +117,13 @@ tooltip {
 #clock {
     background-color: #c3c3c3;
     color: #272727;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
 #battery {
     background-color: #90a959;
     color: #575757;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
 #battery.charging, #battery.plugged {
@@ -198,7 +198,7 @@ label:focus {
 #keyboard-state {
     background: #90a959;
     color: #272727;
-    border-radius: 5px;
+    border-radius: 7px;
     padding: 0 0px;
     margin: 0 5px;
     min-width: 16px;
@@ -206,11 +206,11 @@ label:focus {
 
 #keyboard-state > label {
     padding: 0 5px;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
 #keyboard-state > label.locked {
     background: rgba(39, 39, 39, 0.2);
-    border-radius: 5px;
+    border-radius: 7px;
 }
 

@@ -3,5 +3,5 @@
 
 if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then
   export MOZ_ENABLE_WAYLAND=1
-  exec /home/ron/.bin/wrappedhl
+  exec /home/ron/.bin/wrappedhl &> /dev/null
 fi

@@ -38,8 +38,8 @@
              "focused": "",
              "default": "",
         },
-	"on-scroll-up": "hyprctl dispatch workspace e+1",
-	"on-scroll-down": "hyprctl dispatch workspace e-1"
+	"on-scroll-up": "hyprctl dispatch workspace e-1",
+	"on-scroll-down": "hyprctl dispatch workspace e+1"
     },
     //"hyprland/window": {
     //    "rotate": 90
@@ -56,7 +56,8 @@
     "backlight": {
         // "device": "acpi_video1",
         "format": "{icon}",
-        "format-icons": ["󰃚", "󰃛", "󰃜", "󰃜", "󰃜", "󰃝", "󰃞", "󰃟", "󰃠"]
+        "format-icons": ["󰃚", "󰃛", "󰃜", "󰃜", "󰃜", "󰃝", "󰃞", "󰃟", "󰃠"],
+        "reverse-scrolling": true
     },
     "battery": {
         "states": {
@@ -110,7 +111,8 @@
        "on-click": "pavucontrol",
        "max-volume": "100",
        "on-scroll-up": "pactl set-sink-mute 0 false ; pamixer -d 1",
-       "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 1"
+       "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 1",
+       "tooltip-format": "Volume: {volume}%"
     }
 }
 

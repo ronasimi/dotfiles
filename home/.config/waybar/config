@@ -41,6 +41,9 @@
 	"on-scroll-up": "hyprctl dispatch workspace e+1",
 	"on-scroll-down": "hyprctl dispatch workspace e-1"
     },
+    //"hyprland/window": {
+    //    "rotate": 90
+    //},
     "tray": {
         // "icon-size": 21,
         "spacing": 10
@@ -64,7 +67,7 @@
         "format": "{icon}",
         "format-charging": "󰂄",
         "format-plugged": "󰚥",
-        "format-alt": "{time} {icon}",
+        "format-alt": "{capacity}%",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["󰁺", "󰁼", "󰁾", "󰂁", "󰂄"]

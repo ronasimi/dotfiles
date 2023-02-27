@@ -36,7 +36,7 @@ button {
     box-shadow: inset 0 -3px transparent;
     /* Avoid rounded borders under each button name */
     border: none;
-    border-radius: 5;
+    border-radius: 7px;
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
@@ -98,10 +98,8 @@ tooltip {
     color: #c3c3c3;
 }
 
-#window,
 #workspaces {
     margin: 0 4px;
-    font-weight: bold;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -114,6 +112,11 @@ tooltip {
     margin-right: 0;
 }
 
+#window {
+    color: #ffffff;
+    font-weight: bold;
+}
+
 #clock {
     background-color: #c3c3c3;
     color: #272727;
@@ -121,8 +124,7 @@ tooltip {
 }
 
 #battery {
-    background-color: #90a959;
-    color: #575757;
+    color: #90a959;
     border-radius: 7px;
 }
 
@@ -139,8 +141,7 @@ tooltip {
 }
 
 #battery.critical:not(.charging) {
-    background-color: #ac4142;
-    color: #c3c3c3;
+    color: #ac4142;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -170,7 +171,7 @@ label:focus {
 #bluetooth {
     background-color: transparent;
     color: #c3c3c3;
-    margin-right: 16}
+}
 
 #pulseaudio {
     background-color: transparent;

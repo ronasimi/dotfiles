@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["keyboard-state", "wlr/workspaces"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["pulseaudio", "backlight", "network", "bluetooth", "battery", "clock", "tray"],
+    "modules-right": ["custom/updates", "pulseaudio", "backlight", "network", "bluetooth", "battery", "clock", "tray"],
     // Modules configuration
     "keyboard-state": {
         "numlock": true,
@@ -80,7 +80,8 @@
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰤮",
-        "format-alt": "{essid} ({signalStrength}%)"
+        "format-alt": "{essid} ({signalStrength}%)",
+        "on-click-right": "alacritty --class nmtui -e nmtui"
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
@@ -101,22 +102,22 @@
         "format-source": "󰍬",
         "format-source-muted": "󰍭",
         "format-icons": {
-            "headphone": "",
+            "headphone": "󰋋",
             "hands-free": "",
-            "headset": "",
-            "phone": "",
+            "headset": "󰋎",
+            "phone": "󰏲",
             "portable": "",
             "car": "",
             "default": ["󰕿", "󰖀", "󰕾"]
         },
        "on-click": "pavucontrol",
        "max-volume": "100",
-       "on-scroll-up": "pactl set-sink-mute 0 false ; pamixer -d 1",
-       "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 1",
+       "on-scroll-up": "pactl set-sink-mute 0 false ; pamixer -d 5",
+       "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 5",
        "tooltip-format": "Volume: {volume}%"
     },
     "custom/updates": {
-        "format": "{} {icon}",
+        "format": "{icon} {}",
         "return-type": "json",
         "format-icons": {
             "has-updates": "󰣇",

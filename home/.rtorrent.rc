@@ -116,4 +116,4 @@ color_finished_fg = 2
 
 # Send text for each completed torrent
 #
-method.set_key = event.download.finished,notify_me,"execute=~/.bin/mail.sh,$d.name="
+#method.set_key = event.download.finished,notify_me,"execute=~/.bin/mail.sh,$d.name="

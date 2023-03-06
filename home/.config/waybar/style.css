@@ -1,11 +1,11 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: Source Sans Variable, Material Design Icons;
-    font-size: 10.5pt;
+    font-size: 14px;
 }
 
 window#waybar {
-    background-color: rgba(39, 39, 39, 0.8);
+    background-color: rgba(39, 39, 39, 0.9);
     color: #c3c3c3;
 }
 
@@ -48,7 +48,7 @@ tooltip {
     color: #272727;
     background-color: #c3c3c3;
     text-shadow: none;
-    font-weight: bold;
+    font-weight: 600;
   }
   
   tooltip * {

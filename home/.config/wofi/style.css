@@ -19,7 +19,7 @@
     margin-bottom: 20px;
 
     box-shadow: none;
-    background-color: rgba(0.7, 0.7, 0.7, 0.9);
+    background-color: rgba(39, 39, 39, 0.9);
 }
 
 #input:focus {
@@ -47,5 +47,4 @@
 #entry:focus {
     color: #272727;
     background: #8ab4f8;
-    border: 1px solid #8ab4f8;
 }

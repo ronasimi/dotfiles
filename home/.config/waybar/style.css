@@ -79,7 +79,8 @@ tooltip {
 }
 
 #workspaces button.urgent {
-    background-color: #ac4142;
+    background-color: transparent;
+    color: #ac4142;
     border-radius: 7px;
 }
 
@@ -164,8 +165,8 @@ label:focus {
 }
 
 #network.disconnected {
-    background-color: #ac4142;
-    color: #c3c3c3;
+    background-color: transparent;
+    color: #5d5d5d;
 }
 
 #bluetooth {

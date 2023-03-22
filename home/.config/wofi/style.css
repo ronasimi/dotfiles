@@ -1,5 +1,5 @@
 #window {
-    background-color: rgba(39, 39, 39, 0.8);
+    background-color: rgba(39, 39, 39, 0.85);
     margin-right: 200px;
 }
 
@@ -19,7 +19,7 @@
     margin-bottom: 20px;
 
     box-shadow: none;
-    background-color: rgba(39, 39, 39, 0.9);
+    background-color: rgba(39, 39, 39, 0.85);
 }
 
 #input:focus {
@@ -31,7 +31,7 @@
     margin-bottom: 20px;
 
     box-shadow: none;
-    background-color: rgba(39, 39, 39, 0.9);
+    background-color: rgba(39, 39, 39, 0.85);
 }
 
 #entry {

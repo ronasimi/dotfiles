@@ -56,7 +56,7 @@ tooltip {
     text-shadow: none;
   }
 #workspaces button {
-    padding: 0 7px;
+    padding: 0 6px;
     background-color: transparent;
     color: #5d5d5d;
 }
@@ -89,13 +89,16 @@ tooltip {
     border-bottom: 3px solid #ffffff;
 }
 
-#clock,
+#clock {
+    padding: 0 12px;
+}
+
 #battery,
 #backlight,
 #network,
 #pulseaudio,
 #tray {
-    padding: 0 10px;
+    padding: 0 6px;
     color: #c3c3c3;
     background-color: transparent;
 }

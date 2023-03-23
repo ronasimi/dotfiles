@@ -8,7 +8,7 @@
     // Choose the order of the modules
     "modules-left": ["keyboard-state", "wlr/workspaces"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["custom/updates", "pulseaudio", "backlight", "network", "bluetooth", "battery", "clock", "tray"],
+    "modules-right": ["custom/updates", "pulseaudio", "backlight", "network", "bluetooth", "battery", "tray", "clock"],
 
     // Modules configuration
     "keyboard-state": {
@@ -46,7 +46,8 @@
     //},
     "tray": {
         // "icon-size": 21,
-        "spacing": 10
+        "spacing": 6,
+        "icon-size": 14
     },
     "clock": {
         // "timezone": "America/New_York",

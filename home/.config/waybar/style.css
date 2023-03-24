@@ -36,7 +36,7 @@ button {
     box-shadow: inset 0 -3px transparent;
     /* Avoid rounded borders under each button name */
     border: none;
-    border-radius: 7px;
+    border-radius: 6px;
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
@@ -63,7 +63,7 @@ tooltip {
 
 #workspaces button:hover {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 7px;
+    border-radius: 6px;
 }
 
 #workspaces button.focused {
@@ -81,7 +81,7 @@ tooltip {
 #workspaces button.urgent {
     background-color: transparent;
     color: #ac4142;
-    border-radius: 7px;
+    border-radius: 6px;
 }
 
 #mode {
@@ -129,7 +129,7 @@ tooltip {
 
 #battery {
     color: #90a959;
-    border-radius: 7px;
+    border-radius: 6px;
 }
 
 #battery.charging, #battery.plugged {
@@ -203,18 +203,18 @@ label:focus {
 #keyboard-state {
     color: #5d5d5d;
     padding: 0 0px;
-    margin: 0 7px;
-    min-width: 16px;
+    margin: 0 6px;
+    min-width: 12px;
 }
 
 #keyboard-state > label {
-    padding: 0 7px;
-    border-radius: 7px;
+    padding: 0 6px;
+    border-radius: 6px;
 }
 
 #keyboard-state > label.locked {
     color: #c3c3c3;
-    border-radius: 7px;
+    border-radius: 6px;
 }
 
 #custom-updates {

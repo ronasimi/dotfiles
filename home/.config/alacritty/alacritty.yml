@@ -385,9 +385,6 @@ working_directory:                 None
 # even if the ConPTY backend is available.
 #winpty_backend:                   false
 
-# Send ESC (\x1b) before characters when alt is pressed.
-alt_send_esc:                      true
-
 #mouse:
   # Click settings
   #

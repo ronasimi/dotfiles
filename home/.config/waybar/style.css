@@ -129,7 +129,7 @@ tooltip {
 
 #battery {
     color: #90a959;
-    border-radius: 6px;
+    border-radius: 7px;
 }
 
 #battery.charging, #battery.plugged {
@@ -209,12 +209,12 @@ label:focus {
 
 #keyboard-state > label {
     padding: 0 6px;
-    border-radius: 6px;
+    border-radius: 7px;
 }
 
 #keyboard-state > label.locked {
     color: #c3c3c3;
-    border-radius: 6px;
+    border-radius: 7px;
 }
 
 #custom-updates {

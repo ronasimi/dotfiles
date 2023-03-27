@@ -8,7 +8,17 @@ window#waybar {
     background-color: rgba(39, 39, 39, 0.85);
     color: #c3c3c3;
 }
-
+/*
+window > box {
+	margin-top: 12px;
+    margin-left: 12px;
+    margin-right: 12px;
+    background: rgba(39, 39, 39, 0.85);
+    color: #c3c3c3;
+    border-radius: 7px;
+    min-height: 24px;
+}
+*/
 window#waybar.hidden {
     opacity: 0.2;
 }
@@ -36,7 +46,7 @@ button {
     box-shadow: inset 0 -3px transparent;
     /* Avoid rounded borders under each button name */
     border: none;
-    border-radius: 6px;
+    border-radius: 7px;
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
@@ -63,7 +73,7 @@ tooltip {
 
 #workspaces button:hover {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
+    border-radius: 7px;
 }
 
 #workspaces button.focused {
@@ -81,7 +91,7 @@ tooltip {
 #workspaces button.urgent {
     background-color: transparent;
     color: #ac4142;
-    border-radius: 6px;
+    border-radius: 7px;
 }
 
 #mode {

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ~
+cd ~ || return
 
 # Log WLR errors and logs to the hyprland log. Recommended
 export HYPRLAND_LOG_WLR=1
@@ -19,10 +19,13 @@ export SDL_IM_MODULE=fcitx
 export GLFW_IM_MODULE=ibus
 
 # Set GTK backend
-GDK_BACKEND=wayland
+export GDK_BACKEND=wayland
+
+# Set Libreoffice to use GTK for wayland
+export SAL_USE_VCLPLUGIN=gtk3
 
 # Testing using .xinitrc syntax
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 systemctl --user import-environment DISPLAY &

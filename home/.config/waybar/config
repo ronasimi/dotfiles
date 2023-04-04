@@ -20,8 +20,8 @@
         "capslock": true,
         "format": {
             "numlock": "󰎠",
-            "capslock": "󰪛",                                                                                                                                                       
-        },
+            "capslock": "󰪛"                                                                                                                                                       
+        }
     },
     "wlr/workspaces": {
          "disable-scroll": false,
@@ -40,7 +40,7 @@
              "9": "󰎼",
              "urgent": "",
              "focused": "",
-             "default": "",
+             "default": ""
         },
 	"on-scroll-up": "hyprctl dispatch workspace e-1",
 	"on-scroll-down": "hyprctl dispatch workspace e+1"

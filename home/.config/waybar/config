@@ -81,8 +81,8 @@
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "󰤨 ",
-        "format-ethernet": "{ipaddr}/{cidr} 󰈁",
-        "tooltip-format": "Interface {ifname}\nGateway {gwaddr}\nIP {ipaddr}\nFrequency {frequency} GHz",
+        "format-ethernet": "󰈁 ",
+        "tooltip-format": "Interface {ifname}\nGateway {gwaddr}\nIP {ipaddr}\nFrequency {frequency} GHz\nSignal {signaldBm} dBm",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰤮",
         "format-alt": "{essid} ({signalStrength}%)",

@@ -62,7 +62,8 @@
         // "device": "acpi_video1",
         "format": "{icon}",
         "format-icons": ["󰃚", "󰃛", "󰃜", "󰃜", "󰃜", "󰃝", "󰃞", "󰃟", "󰃠"],
-        "reverse-scrolling": true
+        "reverse-scrolling": true,
+        "tooltip-format": "Brightness: {percent}%"
     },
     "battery": {
         "states": {

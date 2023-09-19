@@ -5,7 +5,7 @@
 }
 
 window#waybar {
-    background-color: rgba(39, 39, 39, 0.75);
+    background-color: rgba(39, 39, 39, 0.85);
     color: #c3c3c3;
 }
 /*
@@ -20,7 +20,7 @@ window > box {
 }
 */
 window#waybar.hidden {
-    opacity: 0.2;
+    opacity: 0.85;
 }
 
 /*
@@ -46,7 +46,7 @@ button {
     box-shadow: inset 0 -3px transparent;
     /* Avoid rounded borders under each button name */
     border: none;
-    border-radius: 9px;
+    border-radius: 7px;
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */

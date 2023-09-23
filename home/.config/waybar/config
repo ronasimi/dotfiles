@@ -83,9 +83,12 @@
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "󰤨 ",
         "format-ethernet": "󰈁 ",
-        "tooltip-format": "Interface {ifname}\nGateway {gwaddr}\nIP {ipaddr}\nFrequency {frequency} GHz\nSignal {signaldBm} dBm",
+        "tooltip-format": "{ifname}",
+        "tooltip-format-wifi": "Network {essid}\nGateway {gwaddr}\nIP {ipaddr}\nFrequency {frequency} GHz\nSignal {signaldBm} dBm ({signalStrength}%)",
+        "tooltip-format-ethernet": "{ifname}",
+        "tooltip-format-disconnected": "Disconnected",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "󰤮",
+        "format-disconnected": "󰈂",
         "format-alt": "{essid} ({signalStrength}%)",
         "on-click-right": "alacritty --class nmtui -e nmtui"
     },

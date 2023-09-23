@@ -1,5 +1,5 @@
 #window {
-    background-color: rgba(39, 39, 39, 0.8);
+    background-color: rgba(39, 39, 39, 0.85);
 }
 
 /*
@@ -33,7 +33,7 @@
 }
 
 #entry {
-	font-family: Source Sans Variable;
+	font-family: Source Sans Pro;
     font-size: 14px;
 	border-radius: 7px;
 	margin: 5px;

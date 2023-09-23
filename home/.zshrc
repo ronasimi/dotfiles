@@ -95,6 +95,15 @@ zstyle :compinstall filename '/home/ron/.zshrc'
 
 ZLE_RPROMPT_INDENT=0
 
+# Transient prompt works similarly to the builtin transient_rprompt option. It trims down prompt
+# when accepting a command line. Supported values:
+#
+#   - off:      Don't change prompt when accepting a command line.
+#   - always:   Trim down prompt when accepting a command line.
+#   - same-dir: Trim down prompt when accepting a command line unless this is the first command
+#               typed after changing current working directory.
+typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=always
+
 # Key bindings
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
@@ -153,12 +162,12 @@ compinit
 zmodload -i zsh/complist
 setopt hash_list_all            # hash everything before completion
 setopt completealiases          # complete aliases
-setopt COMPLETE_ALIASES		# complete command line switches
+setopt COMPLETE_ALIASES		      # complete command line switches
 setopt always_to_end            # when completing from the middle of a word, move the cursor to the end of the word
 setopt complete_in_word         # allow completion from within a word/phrase
 setopt correct_all              # spelling correction for commands
 setopt list_ambiguous           # complete as much of a completion until it gets ambiguous.
-setopt interactivecomments	# bash style interactive comments
+setopt interactivecomments	    # bash style interactive comments
 CORRECT_IGNORE_FILE='.*'
 
 zstyle ':completion::complete:*' use-cache on               # completion caching, use rehash to clear

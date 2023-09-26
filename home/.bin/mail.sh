@@ -1,1 +1,2 @@
-echo "$@: Done" | mailx ron.asimi@gmail.com
+#!/bin/bash
+echo "$@: Done" | mailx -A gmail ron.asimi@gmail.com

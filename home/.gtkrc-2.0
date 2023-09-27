@@ -4,7 +4,7 @@
 include "/home/ron/.gtkrc-2.0.mine"
 gtk-theme-name="Materia-dark-compact"
 gtk-icon-theme-name="Papirus-Dark"
-gtk-font-name="SF Pro Display 10.5"
+gtk-font-name="Inter 10.5"
 gtk-cursor-theme-name="OpenZone_White_Slim"
 gtk-cursor-theme-size=24
 gtk-toolbar-style=GTK_TOOLBAR_ICONS

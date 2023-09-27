@@ -2,11 +2,11 @@
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 24, // Waybar height (to be removed for auto height)
+    //"width": 1896, // Waybar width
     "mod": "dock",
     "exclusive": true,
     "passtrough": false,
     "gtk-layer-shell": true,
-    //"width": 1896, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     "fixed-center": "true",
     // Choose the order of the modules
@@ -40,14 +40,14 @@
              "9": "󰎼",
              "urgent": "",
              "focused": "",
-             "default": ""
+             "default": "",
         },
 	"on-scroll-up": "hyprctl dispatch workspace e-1",
 	"on-scroll-down": "hyprctl dispatch workspace e+1"
     },
-    //"hyprland/window": {
-    //    "rotate": 90
-    //},
+//    "hyprland/window": {
+//       "rotate": 90
+//    },
     "tray": {
         // "icon-size": 21,
         "spacing": 6,
@@ -56,7 +56,7 @@
     "clock": {
         // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
+        "format-alt": "{:%Y-%m-%d}"        
     },
     "backlight": {
         // "device": "acpi_video1",

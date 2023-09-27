@@ -46,7 +46,8 @@
 	"on-scroll-down": "hyprctl dispatch workspace e+1"
     },
 //    "hyprland/window": {
-//       "rotate": 90
+//        "icon": true,
+//       "format": "{}"
 //    },
     "tray": {
         // "icon-size": 21,

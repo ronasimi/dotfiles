@@ -1,20 +1,14 @@
-directory: /mnt/storage/music
-library: /mnt/storage/music/musiclibrary.db
+directory: ~/Music
+library: ~/Music/musiclibrary.db
 
 import:
     move: yes
 
-plugins: fetchart lastgenre embedart acousticbrainz
+plugins: embedart fetchart fromfilename
 
 fetchart:
-    auto:  yes
-
-lastgenre:
     auto:  yes
 
 embedart:
     auto:  yes
     remove_art_file:  yes
-
-acousticbrainz:
-    auto:  yes

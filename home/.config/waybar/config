@@ -3,7 +3,7 @@
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 24, // Waybar height (to be removed for auto height)
     //"width": 1896, // Waybar width
-    "mod": "dock",
+    "mode": "dock",
     "exclusive": true,
     "passtrough": false,
     "gtk-layer-shell": true,

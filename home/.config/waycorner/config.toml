@@ -1,0 +1,7 @@
+[waybar]
+enter_command = ["pkill", "-SIGUSR1", "waybar"]
+exit_command = ["pkill", "-SIGUSR1", "waybar"]
+locations = ["top"]
+size = 24
+margin = 0
+timeout_ms = 50

@@ -4,7 +4,7 @@
     "height": 24, // Waybar height (to be removed for auto height)
     //"width": 1896, // Waybar width
     "exclusive": true,
-    "passtrough": false,
+    "passthrough": false,
     "gtk-layer-shell": true,
     "spacing": 4, // Gaps between modules (4px)
     "fixed-center": "true",

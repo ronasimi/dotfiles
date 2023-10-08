@@ -69,6 +69,7 @@ tooltip {
     padding: 0 6px;
     background-color: transparent;
     color: #5d5d5d;
+    font-size: 14px;
 }
 
 #workspaces button:hover {
@@ -215,6 +216,7 @@ label:focus {
     padding: 0 0px;
     margin: 0 6px;
     min-width: 12px;
+    font-size: 10px;
 }
 
 #keyboard-state > label {

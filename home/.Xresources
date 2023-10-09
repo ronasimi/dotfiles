@@ -3,7 +3,9 @@ Xft.dpi:        96
 Xft.antialias:  true
 Xft.rgba:       rgb
 Xft.hinting:    true
-Xft.hintstyle:  hintfull
+Xft.autohint:	false
+Xft.hintstyle:  hintslight
+Xft.lcdfilter:	lcddefault
 
 Xcursor.theme:	OpenZone_White_Slim
 Xcursor.size:	16

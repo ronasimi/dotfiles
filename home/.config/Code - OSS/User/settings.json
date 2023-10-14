@@ -14,14 +14,18 @@
         "list.activeSelectionForeground": "#e2e4e8",
         "list.hoverBackground": "#2f2f2f",
         "list.hoverForeground": "#e2e4e8",
+
         "sideBar.background": "#272727",
         "sideBar.foreground": "#c3c3c3",
+        "sideBarSectionHeader.background": "#272727",
+        "sideBarSectionHeader.foreground": "#c3c3c3",
+        "sideBar.border": "#2f2f2f",
+
         "editor.background": "#272727",
         "editor.foreground": "#c3c3c3",
         "editor.selectionBackground": "#51637f",
         "editor.selectionForeground": "#e2e4e8",
-        "sideBarSectionHeader.background": "#272727",
-        "sideBarSectionHeader.foreground": "#c3c3c3",
+        
         "activityBar.border": "#FFFFFF",
         "statusBar.background": "#272727",
         "editorGroupHeader.noTabsBackground": "#272727",
@@ -31,7 +35,7 @@
         "tab.activeBorder": "#2f2f2f",
         "tab.inactiveBackground": "#272727",
         "tab.hoverBackground": "#2f2f2f",
-        "tab.border": "#202124",
+        "tab.border": "#2f2f2f",
         "breadcrumb.background": "#272727",
 
         "terminal.background":"#272727",

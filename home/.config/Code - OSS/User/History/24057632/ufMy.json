@@ -1,8 +1,0 @@
-{
-    "window.menuBarVisibility": "toggle",
-    "workbench.activityBar.visible": false,
-    "security.workspace.trust.untrustedFiles": "open",
-    "git.openRepositoryInParentFolders": "always",
-    "workbench.colorTheme": "Material Theme Darker",
-    "editor.fontFamily": "Liga Source Code Pro, Material Design Icons"
-}

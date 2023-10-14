@@ -30,6 +30,7 @@
         "tab.activeForeground": "#c3c3c3",
         "tab.activeBorder": "#2f2f2f",
         "tab.inactiveBackground": "#272727",
+        "tab.hoverBackground": "#2f2f2f",
         "tab.border": "#202124",
         "breadcrumb.background": "#272727",
 

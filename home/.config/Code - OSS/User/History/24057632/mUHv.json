@@ -1,7 +1,0 @@
-{
-    "window.menuBarVisibility": "compact",
-    "workbench.activityBar.visible": false,
-    "security.workspace.trust.untrustedFiles": "open",
-    "git.openRepositoryInParentFolders": "always",
-    "workbench.colorTheme": "Material Theme Darker"
-}

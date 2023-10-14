@@ -24,7 +24,7 @@
         "sideBarSectionHeader.foreground": "#c3c3c3",
         "activityBar.border": "#FFFFFF",
         "statusBar.background": "#272727",
-        "editorGroupHeader.noTabsBackground": "#272727",
+        "editorGroupHeader.noTabsBackground": "#ff0000",
         "editorGroupHeader.tabsBackground": "#272727",
         "tab.activeBackground": "#2f2f2f",
         "tab.activeForeground": "#c3c3c3",

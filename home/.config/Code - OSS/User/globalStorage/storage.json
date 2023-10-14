@@ -484,7 +484,8 @@
                                 },
                                 {
                                     "id": "workbench.action.toggleSidebarVisibility",
-                                    "label": "&&Primary Side Bar"
+                                    "label": "&&Primary Side Bar",
+                                    "checked": true
                                 },
                                 {
                                     "id": "workbench.action.toggleAuxiliaryBar",
@@ -1629,18 +1630,18 @@
         "openedWindows": []
     },
     "theme": "vs-dark",
-    "themeBackground": "#212121",
+    "themeBackground": "#272727",
     "windowSplash": {
         "zoomLevel": 0,
         "baseTheme": "vs-dark",
         "colorInfo": {
-            "foreground": "#eeffff",
-            "background": "#212121",
-            "editorBackground": "#212121",
+            "foreground": "#cccccc",
+            "background": "#272727",
+            "editorBackground": "#272727",
             "titleBarBackground": "#212121",
             "activityBarBackground": "#212121",
-            "sideBarBackground": "#212121",
-            "statusBarBackground": "#212121",
+            "sideBarBackground": "#272727",
+            "statusBarBackground": "#272727",
             "statusBarNoFolderBackground": "#212121"
         },
         "layoutInfo": {
@@ -1648,7 +1649,7 @@
             "editorPartMinWidth": 220,
             "titleBarHeight": 0,
             "activityBarWidth": 0,
-            "sideBarWidth": 0,
+            "sideBarWidth": 234,
             "statusBarHeight": 22,
             "windowBorder": false
         }

@@ -1,0 +1,6 @@
+{
+    "window.menuBarVisibility": "compact",
+    "workbench.activityBar.visible": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "git.openRepositoryInParentFolders": "always"
+}

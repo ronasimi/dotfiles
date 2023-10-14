@@ -7,6 +7,7 @@
     "editor.fontFamily": "Liga Source Code Pro, Material Design Icons",
     "terminal.integrated.fontFamily": "SauceCodePro Nerd Font",
     "terminal.integrated.fontWeight": "normal",
+    "editor.occurrencesHighlight": true,
     "workbench.colorCustomizations": {
         "list.inactiveSelectionBackground": "#51637f",
         "list.inactiveSelectionForeground": "#e2e4e8",
@@ -25,7 +26,7 @@
         "editor.foreground": "#c3c3c3",
         "editor.selectionBackground": "#51637f",
         "editor.selectionForeground": "#e2e4e8",
-        
+
         "activityBar.border": "#FFFFFF",
         "statusBar.background": "#272727",
         "editorGroupHeader.noTabsBackground": "#272727",

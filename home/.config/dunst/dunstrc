@@ -112,7 +112,11 @@
     ### Text ###
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     font = SF Pro Display 10.5
+=======
+    font = SF Pro 10.5
+>>>>>>> Stashed changes
 =======
     font = SF Pro 10.5
 >>>>>>> Stashed changes

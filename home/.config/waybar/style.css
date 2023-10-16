@@ -1,6 +1,10 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
+<<<<<<< Updated upstream
     font-family: SF Pro Display, Material Design Icons;
+=======
+    font-family: SF Pro, Material Design Icons;
+>>>>>>> Stashed changes
     font-size: 14px;
 }
 
@@ -139,6 +143,10 @@ tooltip {
 
 #clock {
     color: #c3c3c3;
+<<<<<<< Updated upstream
+=======
+    font-family: SF Mono;
+>>>>>>> Stashed changes
     font-weight: bold;
 }
 

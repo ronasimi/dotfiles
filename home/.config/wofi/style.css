@@ -33,7 +33,11 @@
 }
 
 #entry {
+<<<<<<< Updated upstream
 	font-family: SF Pro Display;
+=======
+	font-family: SF Pro;
+>>>>>>> Stashed changes
     font-size: 14px;
 	border-radius: 7px;
 	margin: 5px;

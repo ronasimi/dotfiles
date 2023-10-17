@@ -69,4 +69,7 @@
     "workbench.iconTheme": "eq-material-theme-icons-darker",
     "window.autoDetectColorScheme": true,
     "materialTheme.accent": "Graphite",
+    "editor.scrollbar.horizontalScrollbarSize": 6,
+    "editor.scrollbar.verticalScrollbarSize": 6,
+    "workbench.list.smoothScrolling": true,
 }

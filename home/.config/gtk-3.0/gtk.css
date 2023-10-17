@@ -6,7 +6,7 @@
   padding-bottom: 6px;
   padding-left: 8px;
   padding-right: 8px;
-  background-color: #2e2e2e; }
+  background-color: #272727; }
 
 /*buttons in toolbar*/
 
@@ -24,7 +24,7 @@ scrolledwindow.sidebar treeview.view {
 /*path-bar of thunar*/
 window.thunar toolbar#location-toolbar > toolitem > widget > widget.linked.path-bar > button.toggle.path-bar-button:checked {
 color: #c3c3c3;
-background: #2e2e2e;
+background: #272727;
 border-radius: 20px 20px 20px 20px;
 
 text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
@@ -41,7 +41,7 @@ box-shadow: none;
 
 window.thunar paned > scrolledwindow treeview.view:selected {
 text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-background: #2e2e2e;
+background: #272727;
 -gtk-secondary-caret-color: #8ab4f8;
 }
 
@@ -52,7 +52,7 @@ background: #2e2e2e;
 /*thunar background*/
 
 .thunar .standard-view {
-   background-color: #2e2e2e;
+   background-color: #272727;
    }
 
 /*thunar mouse selection*/
@@ -65,5 +65,5 @@ background: #2e2e2e;
   /*thunar status bar*/
 
 .thunar statusbar {
-  background-color: #2e2e2e;
+  background-color: #272727;
   }

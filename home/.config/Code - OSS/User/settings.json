@@ -66,7 +66,6 @@
     "workbench.preferredHighContrastColorTheme": "Community Material Theme Darker",
     "workbench.preferredHighContrastLightColorTheme": "Community Material Theme Lighter High Contrast",
     "workbench.preferredLightColorTheme": "Community Material Theme Lighter",
-    "workbench.iconTheme": "eq-material-theme-icons-darker",
     "window.autoDetectColorScheme": true,
     "materialTheme.accent": "Graphite",
     "editor.scrollbar.horizontalScrollbarSize": 6,

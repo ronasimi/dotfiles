@@ -27,6 +27,7 @@
         "editor.selectionBackground": "#51637f",
         "editor.selectionForeground": "#c3c3c3",
         "editor.wordHighlightBackground": "#3c3c3c",
+        "editorWidget.background": "#272727",
 
         "activityBar.border": "#FFFFFF",
         "statusBar.background": "#2e2e2e",

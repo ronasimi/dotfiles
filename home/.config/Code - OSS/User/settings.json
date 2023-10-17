@@ -16,6 +16,8 @@
         "list.hoverBackground": "#2f2f2f",
         "list.hoverForeground": "#e2e4e8",
 
+        "selection.background": "#51637f",
+
         "sideBar.background": "#2e2e2e",
         "sideBar.foreground": "#c3c3c3",
         "sideBarSectionHeader.background": "#2e2e2e",
@@ -62,7 +64,9 @@
     },
     "workbench.preferredDarkColorTheme": "Community Material Theme Darker",
     "workbench.preferredHighContrastColorTheme": "Community Material Theme Darker",
-    "workbench.preferredHighContrastLightColorTheme": "Community Material Theme Lighter",
+    "workbench.preferredHighContrastLightColorTheme": "Community Material Theme Lighter High Contrast",
     "workbench.preferredLightColorTheme": "Community Material Theme Lighter",
-    "window.autoDetectColorScheme": true
+    "workbench.iconTheme": "eq-material-theme-icons-darker",
+    "window.autoDetectColorScheme": true,
+    "materialTheme.accent": "Graphite",
 }

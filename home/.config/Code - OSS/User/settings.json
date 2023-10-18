@@ -5,7 +5,7 @@
     "git.openRepositoryInParentFolders": "always",
     "workbench.colorTheme": "Community Material Theme Darker",
     "editor.fontFamily": "LigaSauceCodePro Nerd Font, Material Design Icons",
-    "terminal.integrated.fontFamily": "SauceCodePro Nerd Font",
+    "terminal.integrated.fontFamily": "LigaSauceCodePro Nerd Font",
     "terminal.integrated.fontWeight": "normal",
     "editor.occurrencesHighlight": true,
     "workbench.colorCustomizations": {

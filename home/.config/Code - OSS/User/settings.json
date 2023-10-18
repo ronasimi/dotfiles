@@ -71,4 +71,5 @@
     "editor.scrollbar.horizontalScrollbarSize": 6,
     "editor.scrollbar.verticalScrollbarSize": 6,
     "workbench.list.smoothScrolling": true,
+    "editor.fontLigatures": true,
 }

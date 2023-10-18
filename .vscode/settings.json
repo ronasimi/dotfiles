@@ -1,0 +1,9 @@
+{
+    "workbench.preferredHighContrastLightColorTheme": "Community Material Theme Lighter High Contrast",
+    "workbench.preferredLightColorTheme": "Community Material Theme Lighter",
+    "workbench.preferredHighContrastColorTheme": "Community Material Theme Darker High Contrast",
+    "workbench.preferredDarkColorTheme": "Community Material Theme Darker",
+    "workbench.colorTheme": "Community Material Theme Darker",
+    "materialTheme.accent": "Graphite",
+    "window.autoDetectColorScheme": true
+}

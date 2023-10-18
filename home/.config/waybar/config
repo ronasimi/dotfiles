@@ -98,7 +98,7 @@
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰈂",
         "format-alt": "{essid} ({signalStrength}%)",
-        "on-click-right": "alacritty --class nmtui -e nmtui"
+        "on-click-right": "kitty -1 --class 'nmtui' -e nmtui"
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system

@@ -14,3 +14,5 @@ help
 open_with 
 open_with gimp
 
+open_with zathura
+shell 

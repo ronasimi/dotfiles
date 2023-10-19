@@ -1,0 +1,10 @@
+set default-bg		"#272727"
+set statusbar-bg	"#272727"
+set statusbar-fg	"#c3c3c3"
+
+set font		"Source Code Pro 10.5"
+
+set window-width 	773
+set window-height 	1000
+
+set adjust-open 	width

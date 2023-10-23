@@ -86,4 +86,7 @@
     "editor.scrollbar.verticalScrollbarSize": 6,
     "workbench.list.smoothScrolling": true,
     "editor.fontLigatures": true,
+    "editor.mouseWheelScrollSensitivity": 2,
+    "terminal.integrated.mouseWheelScrollSensitivity": 2,
+    "workbench.list.mouseWheelScrollSensitivity": 2,
 }

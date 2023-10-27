@@ -24,6 +24,9 @@ export GLFW_IM_MODULE=ibus
 # Set Libreoffice to use GTK for wayland
 export SAL_USE_VCLPLUGIN=gtk3
 
+# Set Firefox to use wayland
+export MOZ_ENABLE_WAYLAND=1
+
 # Testing using .xinitrc syntax
 eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK

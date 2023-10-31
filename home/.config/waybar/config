@@ -15,11 +15,11 @@
 
     // Modules configuration
     "keyboard-state": {
-        "numlock": true,
+        "numlock": false,
         "capslock": true,
         "format": {
             "numlock": "󰎠",
-            "capslock": "󰪛"                                                                                                                                                       
+            "capslock": "󰪛"
         }
     },
     "hyprland/workspaces": {

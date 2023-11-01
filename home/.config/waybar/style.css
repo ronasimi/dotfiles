@@ -105,7 +105,7 @@ tooltip {
 }
 
 #clock {
-    padding: 0 6px;
+    padding: 0 0px;
 }
 
 #battery,
@@ -129,7 +129,7 @@ tooltip {
 
 /* If workspaces is the rightmost module, omit right margin */
 .modules-right > widget:last-child > #workspaces {
-    margin-right: 6;
+    margin-right: 0;
 }
 
 #window {
@@ -139,7 +139,7 @@ tooltip {
 
 #clock {
     color: #c3c3c3;
-    margin: 0 6px;
+    margin-right: 6px;
     font-weight: 600;
 }
 

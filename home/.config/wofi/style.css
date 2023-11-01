@@ -18,7 +18,7 @@
     margin-bottom: 20px;
 
     box-shadow: none;
-    background-color: #272727;
+    background-color: rgba(39, 39, 39, 0.15);
 }
 
 #input:focus {
@@ -29,7 +29,7 @@
     margin-bottom: 20px;
 
     box-shadow: none;
-    background-color: #272727;
+    background-color: rgba(39, 39, 39, 0.15);
 }
 
 #entry {

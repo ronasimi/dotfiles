@@ -85,7 +85,9 @@
         "format-alt": "{capacity}%",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
-        "format-icons": ["󰁺", "󰁼", "󰁾", "󰂁", "󰂄"]
+        "format-icons": ["󰁺", "󰁼", "󰁾", "󰂁", "󰂄"],
+        "tooltip-format": "Current charge: {capacity}%\nTime to empty: {time}",
+        "tooltip-format-charging": "Current charge: {capacity}%\nTime to charge: {time}"
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface

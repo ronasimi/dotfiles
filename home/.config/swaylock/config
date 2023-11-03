@@ -3,7 +3,8 @@ indicator-caps-lock
 effect-blur=6x3
 effect-compose=/home/ron/.config/swaylock/lock.png
 
-font='Source Sans Pro 48'
+font='Noto Sans Condensed'
+font-size=96
 text-color=c3c3c3
 text-caps-lock-color=ac4142
 text-ver-color=00000000

@@ -69,34 +69,34 @@ tooltip {
     padding: 0 6px;
     background-color: transparent;
     color: #5d5d5d;
-    font-size: 22px;
+    font-size: 36px;
 }
 
 #workspaces button:hover {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 9px;
-    font-size: 22px;
+    font-size: 36px;
 }
 
 #workspaces button.focused {
     background-color: transparent;
     color: #8ab458;
     box-shadow: inset 0 -3px transparent;
-    font-size: 22px;
+    font-size: 36px;
 }
 
 #workspaces button.active {
     background-color: transparent;
     color: #8ab4f8;
     box-shadow: inset 0 -3px transparent;
-    font-size: 22px;
+    font-size: 36px;
 }
 
 #workspaces button.urgent {
     background-color: transparent;
     color: #ac4142;
     border-radius: 9px;
-    font-size: 22px;
+    font-size: 36px;
 }
 
 #mode {

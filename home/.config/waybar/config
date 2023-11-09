@@ -1,7 +1,7 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 24, // Waybar height (to be removed for auto height)
+    "height": 36, // Waybar height (to be removed for auto height)
     //"width": 1896, // Waybar width
     "exclusive": true,
     "passthrough": false,
@@ -28,10 +28,10 @@
          "on-click": "activate",
          "format": "{icon}",
          "format-icons": {
-             "1": "󰊯",
+             "1": "󰖟",
              "2": "󰆍",
              "3": "󱋣",
-             "4": "󰨞",
+             "4": "󰊢",
              "5": "󱇣",
              "6": "󰷈",
              "7": "󰎶",

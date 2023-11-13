@@ -1,6 +1,5 @@
 {
     "window.menuBarVisibility": "toggle",
-    "workbench.activityBar.visible": false,
     "security.workspace.trust.untrustedFiles": "open",
     "git.openRepositoryInParentFolders": "always",
     "workbench.colorTheme": "Community Material Theme Darker",
@@ -89,4 +88,5 @@
     "editor.mouseWheelScrollSensitivity": 2,
     "terminal.integrated.mouseWheelScrollSensitivity": 2,
     "workbench.list.mouseWheelScrollSensitivity": 2,
+    "workbench.activityBar.location": "hidden",
 }

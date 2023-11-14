@@ -131,8 +131,8 @@
         },
        "on-click": "pavucontrol",
        "max-volume": "100",
-       "on-scroll-up": "pactl set-sink-mute 0 false ; pamixer -d 1",
-       "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 1",
+       "on-scroll-up": "pactl set-sink-mute 0 false ; pamixer -d 5",
+       "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 5",
        "tooltip-format": "Volume: {volume}%"
     },
     "custom/updates": {

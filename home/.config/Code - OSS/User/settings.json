@@ -6,7 +6,7 @@
     "editor.fontFamily": "LigaSauceCodePro Nerd Font, Material Design Icons",
     "terminal.integrated.fontFamily": "LigaSauceCodePro Nerd Font",
     "terminal.integrated.fontWeight": "normal",
-    "editor.occurrencesHighlight": true,
+    "editor.occurrencesHighlight": "singleFile",
     "workbench.colorCustomizations": {
         "list.inactiveSelectionBackground": "#556988",
         "list.activeSelectionBackground": "#556988",
@@ -90,4 +90,5 @@
     "workbench.list.mouseWheelScrollSensitivity": 5,
     "workbench.startupEditor": "none",
     "workbench.activityBar.location": "hidden",
+    "git.confirmSync": false,
 }

@@ -91,4 +91,10 @@
     "workbench.startupEditor": "none",
     "workbench.activityBar.location": "hidden",
     "git.confirmSync": false,
+    "[css]": {
+        "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "mblode.pretty-formatter"
+    },
 }

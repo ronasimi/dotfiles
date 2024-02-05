@@ -10,7 +10,7 @@
 
 #input {
     color: #c3c3c3;
-    border-radius: 9px; 
+    border-radius: 9px;
 
     margin-left: 100px;
     margin-right: 100px;
@@ -33,13 +33,13 @@
 }
 
 #entry {
-	font-family: Source Sans Variable;
+    font-family: Source Sans Variable;
     font-size: 14px;
-	border-radius: 9px;
-	margin: 6px;
-	margin-right: 18px;
-	margin-left: 18px;
-	padding-left: 12px;
+    border-radius: 9px;
+    margin: 6px;
+    margin-right: 18px;
+    margin-left: 18px;
+    padding-left: 12px;
 }
 
 #entry:focus {

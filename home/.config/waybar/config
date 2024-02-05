@@ -1,8 +1,9 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 36, // Waybar height (to be removed for auto height)
-    //"width": 1896, // Waybar width
+    "height": 36,
+    // Waybar height (to be removed for auto height)
+    // "width": 1896, // Waybar width
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
@@ -11,7 +12,16 @@
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["custom/updates", "pulseaudio", "backlight", "network", "bluetooth", "battery", "tray", "clock"],
+    "modules-right": [
+        "custom/updates",
+        "pulseaudio",
+        "backlight",
+        "network",
+        "bluetooth",
+        "battery",
+        "tray",
+        "clock"
+    ],
 
     // Modules configuration
     "keyboard-state": {
@@ -23,59 +33,65 @@
         }
     },
     "hyprland/workspaces": {
-         "disable-scroll": false,
-         "all-outputs": true,
-         "on-click": "activate",
-         "format": "{icon}",
-         "format-icons": {
-             "1": "󰊯",
-             "2": "󰆍",
-             "3": "󱋣",
-             "4": "󰨞",
-             "5": "󰖳",
-             "6": "󱇣",
-             "7": "󰷈",
-             "8": "󰆦",
-             "9": "󰎼",
-             "10": "󰽽",
-             "urgent": "󱈸",
+        "disable-scroll": false,
+        "all-outputs": true,
+        "on-click": "activate",
+        "format": "{icon}",
+        "format-icons": {
+            "1": "󰊯",
+            "2": "󰆍",
+            "3": "󱋣",
+            "4": "󰨞",
+            "5": "󰖳",
+            "6": "󱇣",
+            "7": "󰷈",
+            "8": "󰆦",
+            "9": "󰎼",
+            "10": "󰽽",
+            "urgent": "󱈸"
         },
-	"on-scroll-up": "hyprctl dispatch workspace e-1",
-	"on-scroll-down": "hyprctl dispatch workspace e+1"
+        "on-scroll-up": "hyprctl dispatch workspace e-1",
+        "on-scroll-down": "hyprctl dispatch workspace e+1"
     },
-//    "hyprland/window": {
-//        "icon": true,
-//       "format": "{}"
-//    },
-//    "wlr/taskbar": {
-//	    "format": "{icon}",
-//	    "icon-size": 16,
-//	    "tooltip-format": "{title}",
-//	    "on-click": "activate",
-//	    "on-click-middle": "close",
-//        "sort-by-app-id": true,
-//	}
-//}
-    "tray": {
-        // "icon-size": 21,
+    //    "hyprland/window": {
+    //        "icon": true,
+    //       "format": "{}"
+    //    },
+    //    "wlr/taskbar": {
+    // "format": "{icon}",
+    // "icon-size": 16,
+    // "tooltip-format": "{title}",
+    // "on-click": "activate",
+    // "on-click-middle": "close",
+    //        "sort-by-app-id": true,
+    // }
+    // }
+    "tray": { // "icon-size": 21,
         "spacing": 6,
         "icon-size": 14
     },
-    "clock": {
-        // "timezone": "America/New_York",
+    "clock": { // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"        
+        "format-alt": "{:%Y-%m-%d}"
     },
-    "backlight": {
-        // "device": "acpi_video1",
+    "backlight": { // "device": "acpi_video1",
         "format": "{icon}",
-        "format-icons": ["󰃚", "󰃛", "󰃜", "󰃜", "󰃜", "󰃝", "󰃞", "󰃟", "󰃠"],
+        "format-icons": [
+            "󰃚",
+            "󰃛",
+            "󰃜",
+            "󰃜",
+            "󰃜",
+            "󰃝",
+            "󰃞",
+            "󰃟",
+            "󰃠"
+        ],
         "reverse-scrolling": true,
         "tooltip-format": "Brightness: {percent}%"
     },
     "battery": {
-        "states": {
-            // "good": 95,
+        "states": { // "good": 95,
             "warning": 30,
             "critical": 15
         },
@@ -85,7 +101,13 @@
         "format-alt": "{capacity}%",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
-        "format-icons": ["󰁺", "󰁼", "󰁾", "󰂁", "󰂄"],
+        "format-icons": [
+            "󰁺",
+            "󰁼",
+            "󰁾",
+            "󰂁",
+            "󰂄"
+        ],
         "tooltip-format": "Current charge: {capacity}%\nTime to empty: {time}",
         "tooltip-format-charging": "Current charge: {capacity}%\nTime to charge: {time}"
     },
@@ -129,12 +151,12 @@
             "car": "",
             "default": ["󰕿", "󰖀", "󰕾"]
         },
-       "on-click": "pavucontrol",
-       "on-click-right": "pactl set-sink-mute 0 toggle",
-       "max-volume": "100",
-       "on-scroll-up": "pactl set-sink-mute 0 false ; pamixer -d 5",
-       "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 5",
-       "tooltip-format": "Volume: {volume}%"
+        "on-click": "pavucontrol",
+        "on-click-right": "pactl set-sink-mute 0 toggle",
+        "max-volume": "100",
+        "on-scroll-up": "pactl set-sink-mute 0 false ; pamixer -d 5",
+        "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 5",
+        "tooltip-format": "Volume: {volume}%"
     },
     "custom/updates": {
         "format": "{icon}",
@@ -146,6 +168,5 @@
         "exec-if": "which waybar-module-pacman-updates",
         "exec": "waybar-module-pacman-updates"
     }
-    
-}
 
+}

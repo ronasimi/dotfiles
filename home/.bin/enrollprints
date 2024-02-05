@@ -1,0 +1,9 @@
+!#/bin/bash
+
+# Delete existing enrollment data
+fprintd-delete "$USER"
+
+# Enroll fingers, one at a time
+for finger in {left,right}-{thumb,{index,middle,ring,little}-finger}; do fprintd-enroll -f "$finger" "$USER"; done
+
+echo "Completed enrollment"

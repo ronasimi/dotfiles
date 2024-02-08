@@ -2,6 +2,7 @@
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: Source Sans Variable, Material Design Icons;
     font-size: 14px;
+    font-weight: 600;
 }
 
 window#waybar {
@@ -59,8 +60,7 @@ tooltip {
     color: #272727;
     background-color: #c3c3c3;
     text-shadow: none;
-    font-weight: 600;
-}
+    }
 
 tooltip * {
     color: #272727;
@@ -136,14 +136,12 @@ tooltip * {
 
 #window {
     color: #c3c3c3;
-    font-weight: 600;
-}
+    }
 
 #clock {
     color: #c3c3c3;
     margin-right: 12px;
-    font-weight: 600;
-}
+    }
 
 #battery {
     color: #90a959;

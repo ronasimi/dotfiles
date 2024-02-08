@@ -97,4 +97,6 @@
     "[json]": {
         "editor.defaultFormatter": "mblode.pretty-formatter"
     },
+    "editor.smoothScrolling": true,
+    "terminal.integrated.smoothScrolling": true,
 }

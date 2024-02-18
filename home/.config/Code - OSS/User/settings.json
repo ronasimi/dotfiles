@@ -3,8 +3,8 @@
     "security.workspace.trust.untrustedFiles": "open",
     "git.openRepositoryInParentFolders": "always",
     "workbench.colorTheme": "Community Material Theme Darker",
-    "editor.fontFamily": "LigaSauceCodePro Nerd Font, Material Design Icons",
-    "terminal.integrated.fontFamily": "LigaSauceCodePro Nerd Font",
+    "editor.fontFamily": "DejaVu Sans Code, Material Design Icons",
+    "terminal.integrated.fontFamily": "DejaVus Sans Code",
     "terminal.integrated.fontWeight": "normal",
     "editor.occurrencesHighlight": "singleFile",
     "workbench.colorCustomizations": {

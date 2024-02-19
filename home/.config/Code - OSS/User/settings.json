@@ -4,7 +4,7 @@
     "git.openRepositoryInParentFolders": "always",
     "workbench.colorTheme": "Community Material Theme Darker",
     "editor.fontFamily": "CommitMono, Material Design Icons",
-    "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss05', 'cv02', 'cv04', 'cv05', 'cv10', 'cv11'",
+    "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'cv02', 'cv04', 'cv05', 'cv10', 'cv11'",
     "terminal.integrated.fontFamily": "CommitMono Nerd Font",
     "terminal.integrated.fontWeight": "normal",
     "editor.occurrencesHighlight": "singleFile",

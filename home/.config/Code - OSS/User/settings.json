@@ -3,9 +3,9 @@
     "security.workspace.trust.untrustedFiles": "open",
     "git.openRepositoryInParentFolders": "always",
     "workbench.colorTheme": "Community Material Theme Darker",
-    "editor.fontFamily": "Input Ligaturized, Material Design Icons",
+    "editor.fontFamily": "LigaSauceCodePro Nerd Font, Material Design Icons",
     "editor.fontLigatures": "true",
-    "terminal.integrated.fontFamily": "Input Nerd Font Mono",
+    "terminal.integrated.fontFamily": "LigaSauceCodePro Nerd Font",
     "terminal.integrated.fontWeight": "normal",
     "editor.occurrencesHighlight": "singleFile",
     "workbench.colorCustomizations": {

@@ -8,8 +8,6 @@
 window#waybar {
     background-color: rgba(39, 39, 39, 0.80);
     color: #c3c3c3;
-    border-bottom-left-radius: 9px;
-    border-bottom-right-radius: 9px;
 }
 
 /*

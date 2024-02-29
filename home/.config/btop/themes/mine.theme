@@ -1,0 +1,81 @@
+    1 # Theme: mine
+    2 # By: Ron Asimi
+    3 
+    4 # Main bg
+    5 theme[main_bg]="#272727"
+    6 
+    7 # Main text color
+    8 theme[main_fg]="#c3c3c3"
+    9 
+   10 # Title color for boxes
+   11 theme[title]="#c3c3c3"
+   12 
+   13 # Higlight color for keyboard shortcuts
+   14 theme[hi_fg]="#ac4142"
+   15 
+   16 # Background color of selected item in processes box
+   17 theme[selected_bg]="#414868"
+   18 
+   19 # Foreground color of selected item in processes box
+   20 theme[selected_fg]="#c3c3c3"
+   21 
+   22 # Color of inactive/disabled text
+   23 theme[inactive_fg]="#5d5d5d"
+   24 
+   25 # Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+   26 theme[proc_misc]="#7dcfff"
+   27 
+   28 # Cpu box outline color
+   29 theme[cpu_box]="#5d5d5d"
+   30 
+   31 # Memory/disks box outline color
+   32 theme[mem_box]="#5d5d5d"
+   33 
+   34 # Net up/down box outline color
+   35 theme[net_box]="#5d5d5d"
+   36 
+   37 # Processes box outline color
+   38 theme[proc_box]="#5d5d5d"
+   39 
+   40 # Box divider line and small boxes line color
+   41 theme[div_line]="#5d5d5d"
+   42 
+   43 # Temperature graph colors
+   44 theme[temp_start]="#90a959"
+   45 theme[temp_mid]="#8ab4f8"
+   46 theme[temp_end]="#ac4142"
+   47 
+   48 # CPU graph colors
+   49 theme[cpu_start]="#90a959"
+   50 theme[cpu_mid]="#8ab4f8"
+   51 theme[cpu_end]="#ac4142"
+   52 
+   53 # Mem/Disk free meter
+   54 theme[free_start]="#90a959"
+   55 theme[free_mid]="#8ab4f8"
+   56 theme[free_end]="#ac4142"
+   57 
+   58 # Mem/Disk cached meter
+   59 theme[cached_start]="#90a959"
+   60 theme[cached_mid]="#8ab4f8"
+   61 theme[cached_end]="#ac4142"
+   62 
+   63 # Mem/Disk available meter
+   64 theme[available_start]="#90a959"
+   65 theme[available_mid]="#8ab4f8"
+   66 theme[available_end]="#ac4142"
+   67 
+   68 # Mem/Disk used meter
+   69 theme[used_start]="#90a959"
+   70 theme[used_mid]="#8ab4f8"
+   71 theme[used_end]="#ac4142"
+   72 
+   73 # Download graph colors
+   74 theme[download_start]="#90a959"
+   75 theme[download_mid]="#8ab4f8"
+   76 theme[download_end]="#ac4142"
+   77 
+   78 # Upload graph colors
+   79 theme[upload_start]="#90a959"
+   80 theme[upload_mid]="#8ab4f8"
+   81 theme[upload_end]="#ac4142"

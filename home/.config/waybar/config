@@ -3,6 +3,7 @@
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 36,
     // Waybar height (to be removed for auto height)
+    
     // "width": 1896, // Waybar width
     "exclusive": true,
     "passthrough": false,
@@ -38,7 +39,7 @@
         "on-click": "activate",
         "format": "{icon}",
         "format-icons": {
-            "1": "󰖟",
+            "1": "󰊯",
             "2": "󰆍",
             "3": "󱋣",
             "4": "󰨞",
@@ -132,7 +133,7 @@
         "tooltip-format": "{controller_alias}\t{controller_address}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "on-click": "blueman-manager"
+        "on-click": "blueberry"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float

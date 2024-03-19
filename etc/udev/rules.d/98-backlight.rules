@@ -1,5 +1,5 @@
 # Adjust screen brightness according to power state
 # 1st rule for when on AC
-ACTION=="change", SUBSYSTEM=="power_supply", ATTR{online}=="1", RUN+="/usr/bin/light -S 100"
+ACTION=="change", SUBSYSTEM=="power_supply", ATTR{online}=="1", RUN+="/usr/bin/brightnessctl -s set 100%"
 # 2nd rule for when on battery
-ACTION=="change", SUBSYSTEM=="power_supply", ATTR{online}=="0", RUN+="/usr/bin/light -S 50"
+ACTION=="change", SUBSYSTEM=="power_supply", ATTR{online}=="0", RUN+="/usr/bin/brightnessctl -s set 50%"

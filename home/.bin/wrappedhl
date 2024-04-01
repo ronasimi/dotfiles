@@ -21,6 +21,9 @@ export GLFW_IM_MODULE=ibus
 # Set GTK backend
 #export GDK_BACKEND=wayland
 
+# Set QT theme
+export QT_QPA_PLATFORMTHEME=qt6ct
+
 # Set Libreoffice to use GTK for wayland
 export SAL_USE_VCLPLUGIN=gtk3
 

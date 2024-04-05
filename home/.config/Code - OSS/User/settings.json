@@ -4,7 +4,7 @@
     "git.openRepositoryInParentFolders": "always",
     "workbench.colorTheme": "Community Material Theme Darker",
     "editor.fontFamily": "Ligalex Mono, Material Design Icons",
-    "editor.fontLigatures": "true",
+    "editor.fontLigatures": "'zero'",
     "terminal.integrated.fontFamily": "Ligalex Mono",
     "terminal.integrated.fontWeight": "normal",
     "editor.occurrencesHighlight": "singleFile",

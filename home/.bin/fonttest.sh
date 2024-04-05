@@ -1,1 +1,1 @@
-echo -e "->> <<- && || != << >> => -> == <=\n\e[1mthe quick brown fox jumped over the lazy dog\e[0m\n\e[3mthe quick brown fox jumped over the lazy dog\e[0m\n\e[4mthe quick brown fox jumped over the lazy dog\e[0m\n\e[9mthe quick brown fox jumped over the lazy dog\e[0m"
+echo -e "->> <<- && || != << >> => -> == <=\n\e[1mthe quick brown fox jumps over the lazy dog\e[0m\n\e[3mthe quick brown fox jumps over the lazy dog\e[0m\n\e[4mthe quick brown fox jumps over the lazy dog\e[0m\n\e[9mthe quick brown fox jumps over the lazy dog\e[0m\n\e[0m0 1 2 3 4 5 6 7 8 9\e[0m"

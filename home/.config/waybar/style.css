@@ -91,14 +91,12 @@ tooltip * {
     background-color: transparent;
     color: #8ab4f8;
     box-shadow: inset 0 -3px transparent;
-    font-size: 24px;
 }
 
 #workspaces button.urgent {
     background-color: transparent;
     color: #ac4142;
     border-radius: 9px;
-    font-size: 36px;
 }
 
 #mode {

@@ -3,9 +3,9 @@
     "security.workspace.trust.untrustedFiles": "open",
     "git.openRepositoryInParentFolders": "always",
     "workbench.colorTheme": "Community Material Theme Darker",
-    "editor.fontFamily": "Maple Mono, Material Design Icons",
-    "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'cv01', 'cv03', 'cv04'",
-    "terminal.integrated.fontFamily": "Maple Mono NF",
+    "editor.fontFamily": "Ligalex Mono, Material Design Icons",
+    "editor.fontLigatures": "'zero'",
+    "terminal.integrated.fontFamily": "Ligalex Mono",
     "terminal.integrated.fontWeight": "normal",
     "editor.occurrencesHighlight": "singleFile",
     "workbench.colorCustomizations": {

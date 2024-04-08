@@ -88,6 +88,7 @@
     "workbench.list.smoothScrolling": true,
     "editor.mouseWheelScrollSensitivity": 5,
     "terminal.integrated.mouseWheelScrollSensitivity": 5,
+    "terminal.integrated.minimumContrastRatio": 1
     "workbench.list.mouseWheelScrollSensitivity": 5,
     "workbench.startupEditor": "none",
     "workbench.activityBar.location": "hidden",

@@ -10,17 +10,6 @@ window#waybar {
     color: #c3c3c3;
 }
 
-/*
-window > box {
-	margin-top: 6px;
-    margin-left: 12px;
-    margin-right: 12px;
-    background: rgba(39, 39, 39, 0.80);
-    color: #c3c3c3;
-    border-radius: 0px;
-    min-height: 24px;
-}
-*/
 window#waybar.hidden {
     opacity: 0;
 }
@@ -72,6 +61,7 @@ tooltip * {
     background-color: transparent;
     color: #5d5d5d;
     font-size: 36px;
+    padding: 6px;
 }
 
 #workspaces button:hover {
@@ -105,7 +95,7 @@ tooltip * {
 }
 
 #clock {
-    padding: 0 0px;
+    padding: 18 0px;
 }
 
 #battery,
@@ -120,36 +110,44 @@ tooltip * {
 
 #workspaces {
     margin: 0 4px;
+    padding: 6px;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left>widget:first-child>#workspaces {
-    margin-left: 6;
+    margin-top: 0;
+    padding: 12 0px;
 }
 
 /* If workspaces is the rightmost module, omit right margin */
 .modules-right>widget:last-child>#workspaces {
     margin-right: 0;
+    padding: 18 0px;
 }
 
 #window {
     color: #c3c3c3;
+    margin-left: 12px;
+    margin-right: 12px;
     }
 
 #clock {
     color: #c3c3c3;
+    margin-left: 12px;
     margin-right: 12px;
     }
 
 #battery {
     color: #90a959;
     border-radius: 9px;
+    padding: 6px;
 }
 
 #battery.charging,
 #battery.plugged {
     color: #c3c3c3;
     background-color: transparent;
+    padding: 6px;
 }
 
 @keyframes blink {
@@ -175,11 +173,13 @@ label:focus {
 #backlight {
     background-color: transparent;
     color: #c3c3c3;
+    padding: 6px;
 }
 
 #network {
     background-color: transparent;
     color: #c3c3c3;
+    padding: 6px;
 }
 
 #network.disconnected {
@@ -190,11 +190,13 @@ label:focus {
 #bluetooth {
     background-color: transparent;
     color: #c3c3c3;
+    padding: 6px;
 }
 
 #pulseaudio {
     background-color: transparent;
     color: #c3c3c3;
+    padding: 6px;
 }
 
 #pulseaudio.muted {
@@ -204,6 +206,7 @@ label:focus {
 
 #tray {
     background-color: transparent;
+    padding: 6px;
 }
 
 #tray>.passive {
@@ -235,4 +238,5 @@ label:focus {
 
 #custom-updates {
     color: #1793d0;
+    padding: 6px;
 }

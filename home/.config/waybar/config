@@ -1,7 +1,8 @@
 {
     "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 36,
+    "position": "left", // Waybar position (top|bottom|left|right)
+    "width": 36,
+    "height": 1044,
     // Waybar height (to be removed for auto height)
     
     // "width": 1896, // Waybar width
@@ -54,25 +55,16 @@
         "on-scroll-up": "hyprctl dispatch workspace e-1",
         "on-scroll-down": "hyprctl dispatch workspace e+1"
     },
-    //    "hyprland/window": {
-    //        "icon": true,
-    //       "format": "{}"
-    //    },
-    //    "wlr/taskbar": {
-    // "format": "{icon}",
-    // "icon-size": 16,
-    // "tooltip-format": "{title}",
-    // "on-click": "activate",
-    // "on-click-middle": "close",
-    //        "sort-by-app-id": true,
-    // }
-    // }
+    "hyprland/window": {
+        "rotate": 270,
+    },
     "tray": { // "icon-size": 21,
         "spacing": 6,
         "icon-size": 14
     },
     "clock": { // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "rotate": 270,
         "format-alt": "{:%Y-%m-%d}"
     },
     "backlight": { // "device": "acpi_video1",

@@ -41,7 +41,7 @@
    41 theme[div_line]="#5d5d5d"
    42 
    43 # Temperature graph colors
-   44 theme[temp_start]="8ab458"
+   44 theme[temp_start]="#8ab458"
    45 theme[temp_mid]="#f4bf75"
    46 theme[temp_end]="#ac4142"
    47 
@@ -52,11 +52,11 @@
    52 
    53 # Mem/Disk free meter
    54 theme[free_start]="#8ab4f8"
-   55 theme[free_mid]="$f4bf75"
+   55 theme[free_mid]="#f4bf75"
    56 theme[free_end]="#ac4142"
    57 
    58 # Mem/Disk cached meter
-   59 theme[cached_start]="$8ab4f8"
+   59 theme[cached_start]="#8ab4f8"
    60 theme[cached_mid]="#f4bf75"
    61 theme[cached_end]="#ac4142"
    62 

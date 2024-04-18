@@ -2,7 +2,7 @@
     "layer": "top", // Waybar at top layer
     "position": "left", // Waybar position (top|bottom|left|right)
     "width": 36,
-    "height": 1044,
+    "height": 1080,
     // Waybar height (to be removed for auto height)
     
     // "width": 1896, // Waybar width

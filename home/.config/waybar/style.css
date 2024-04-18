@@ -1,6 +1,6 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: SF Pro Text, Material Design Icons;
+    font-family: SF Pro Text;
     font-size: 14px;
     font-weight: 600;
 }
@@ -73,6 +73,7 @@ tooltip * {
     background-color: transparent;
     color: #5d5d5d;
     border-radius: 6px;
+    font-family: Material Design Icons;
     font-size: 28px;
 }
 

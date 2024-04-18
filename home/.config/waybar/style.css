@@ -134,17 +134,19 @@ tooltip * {
 
 #window {
     color: #c3c3c3;
+    padding: 6px;
     }
 
 #clock {
     color: #c3c3c3;
     margin-right: 12px;
-    font-family: SF Mono
+    padding: 6px;
+    font-family: SF Mono;
     }
 
 #battery {
     color: #90a959;
-    border-radius: 6px;
+    padding: 6px;
 }
 
 #battery.charging,
@@ -176,11 +178,13 @@ label:focus {
 #backlight {
     background-color: transparent;
     color: #c3c3c3;
+    padding: 6px;
 }
 
 #network {
     background-color: transparent;
     color: #c3c3c3;
+    padding: 6px;
 }
 
 #network.disconnected {
@@ -191,11 +195,13 @@ label:focus {
 #bluetooth {
     background-color: transparent;
     color: #c3c3c3;
+    padding: 6px;
 }
 
 #pulseaudio {
     background-color: transparent;
     color: #c3c3c3;
+    padding: 6px;
 }
 
 #pulseaudio.muted {
@@ -205,6 +211,8 @@ label:focus {
 
 #tray {
     background-color: transparent;
+    padding: 6px;
+
 }
 
 #tray>.passive {
@@ -236,4 +244,5 @@ label:focus {
 
 #custom-updates {
     color: #1793d0;
+    padding: 6px;
 }

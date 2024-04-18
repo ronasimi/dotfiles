@@ -60,6 +60,7 @@ tooltip {
     color: #272727;
     background-color: #c3c3c3;
     text-shadow: none;
+    font-weight: 400;
     }
 
 tooltip * {
@@ -71,20 +72,18 @@ tooltip * {
     padding: 0 6px;
     background-color: transparent;
     color: #5d5d5d;
-    font-size: 36px;
+    border-radius: 6px;
+    font-size: 28px;
 }
 
 #workspaces button:hover {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 9px;
-    font-size: 36px;
 }
 
 #workspaces button.focused {
     background-color: transparent;
     color: #8ab458;
     box-shadow: inset 0 -3px transparent;
-    font-size: 36px;
 }
 
 #workspaces button.active {
@@ -119,7 +118,7 @@ tooltip * {
 }
 
 #workspaces {
-    margin: 0 4px;
+    margin: 0 3px;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -129,7 +128,7 @@ tooltip * {
 
 /* If workspaces is the rightmost module, omit right margin */
 .modules-right>widget:last-child>#workspaces {
-    margin-right: 0;
+    margin-right: 6;
 }
 
 #window {
@@ -143,7 +142,7 @@ tooltip * {
 
 #battery {
     color: #90a959;
-    border-radius: 9px;
+    border-radius: 6px;
 }
 
 #battery.charging,

@@ -10,7 +10,7 @@
     "passthrough": false,
     "gtk-layer-shell": true,
     "spacing": 4, // Gaps between modules (4px)
-    "fixed-center": "true",
+    "fixed-center": "false",
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["hyprland/window"],

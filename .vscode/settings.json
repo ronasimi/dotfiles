@@ -1,9 +1,10 @@
 {
-    "workbench.preferredHighContrastLightColorTheme": "Community Material Theme Lighter High Contrast",
-    "workbench.preferredLightColorTheme": "Community Material Theme Lighter",
-    "workbench.preferredHighContrastColorTheme": "Community Material Theme Darker High Contrast",
-    "workbench.preferredDarkColorTheme": "Community Material Theme Darker",
-    "workbench.colorTheme": "Community Material Theme Darker",
+    "workbench.preferredHighContrastLightColorTheme": "Material Theme Darker",
+    "workbench.preferredLightColorTheme": "Material Theme Darker",
+    "workbench.preferredHighContrastColorTheme": "Material Theme Darker",
+    "workbench.preferredDarkColorTheme": "Material Theme Darker",
+    "workbench.colorTheme": "Material Theme Darker",
     "materialTheme.accent": "Graphite",
-    "window.autoDetectColorScheme": true
+    "window.autoDetectColorScheme": true,
+    "workbench.iconTheme": "eq-material-theme-icons-darker"
 }

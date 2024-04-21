@@ -99,4 +99,5 @@
     "editor.smoothScrolling": true,
     "terminal.integrated.smoothScrolling": true,
     "materialTheme.accent": "Graphite",
+    "telemetry.telemetryLevel": "off",
 }

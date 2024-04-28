@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+/usr/bin/paccache -rk1 -c /home/ron/.cache/pikaur/pkg

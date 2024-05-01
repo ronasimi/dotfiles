@@ -1,7 +1,6 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: SF Pro Text;
-    font-size: 14px;
     font-weight: 600;
 }
 
@@ -74,7 +73,7 @@ tooltip * {
     color: #5d5d5d;
     border-radius: 6px;
     font-family: Material Design Icons;
-    font-size: 28px;
+    font-size: 18px;
 }
 
 #workspaces button:hover {
@@ -135,6 +134,7 @@ tooltip * {
 #window {
     color: #c3c3c3;
     padding: 6px;
+    font-size: 14px;
     }
 
 #clock {
@@ -142,11 +142,13 @@ tooltip * {
     margin-right: 12px;
     padding: 6px;
     font-family: SF Mono;
+    font-size: 14px;
     }
 
 #battery {
     color: #90a959;
     padding: 6px;
+    font-size: 18px;
 }
 
 #battery.charging,
@@ -179,12 +181,14 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
+    font-size: 18px;
 }
 
 #network {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
+    font-size: 18px;
 }
 
 #network.disconnected {
@@ -196,12 +200,14 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
+    font-size: 18px;
 }
 
 #pulseaudio {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
+    font-size: 18px;
 }
 
 #pulseaudio.muted {
@@ -212,7 +218,7 @@ label:focus {
 #tray {
     background-color: transparent;
     padding: 6px;
-
+    font-size: 18px;
 }
 
 #tray>.passive {
@@ -229,7 +235,7 @@ label:focus {
     padding: 0 0px;
     margin: 0 6px;
     min-width: 12px;
-    font-size: 10px;
+    font-size: 18px;
 }
 
 #keyboard-state>label {
@@ -245,4 +251,5 @@ label:focus {
 #custom-updates {
     color: #1793d0;
     padding: 6px;
+    font-size: 18px;
 }

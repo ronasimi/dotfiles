@@ -17,7 +17,7 @@ window > box {
     background: rgba(39, 39, 39, 0.80);
     color: #c3c3c3;
     border-radius: 0px;
-    min-height: 24px;
+    min-height: 22px;
 }
 */
 window#waybar.hidden {
@@ -73,7 +73,7 @@ tooltip * {
     color: #5d5d5d;
     border-radius: 6px;
     font-family: Material Design Icons;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 #workspaces button:hover {
@@ -142,13 +142,14 @@ tooltip * {
     margin-right: 12px;
     padding: 6px;
     font-family: SF Mono;
+    font-weight: 800;
     font-size: 14px;
     }
 
 #battery {
     color: #90a959;
     padding: 6px;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 #battery.charging,
@@ -181,14 +182,14 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 #network {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 #network.disconnected {
@@ -200,14 +201,14 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 #pulseaudio {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 #pulseaudio.muted {
@@ -218,7 +219,7 @@ label:focus {
 #tray {
     background-color: transparent;
     padding: 6px;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 #tray>.passive {
@@ -235,7 +236,7 @@ label:focus {
     padding: 0 0px;
     margin: 0 6px;
     min-width: 12px;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 #keyboard-state>label {
@@ -251,5 +252,5 @@ label:focus {
 #custom-updates {
     color: #1793d0;
     padding: 6px;
-    font-size: 18px;
+    font-size: 22px;
 }

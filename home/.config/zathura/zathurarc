@@ -8,3 +8,5 @@ set window-width 	773
 set window-height 	1000
 
 set adjust-open 	width
+
+set selection-clipboard clipboard

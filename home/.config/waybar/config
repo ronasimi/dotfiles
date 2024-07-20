@@ -52,7 +52,8 @@
             "urgent": "󱈸"
         },
         "on-scroll-up": "hyprctl dispatch workspace e-1",
-        "on-scroll-down": "hyprctl dispatch workspace e+1"
+        "on-scroll-down": "hyprctl dispatch workspace e+1",
+        "cursor": false
     },
     //    "hyprland/window": {
     //        "icon": true,
@@ -69,11 +70,13 @@
     // }
     "tray": { // "icon-size": 21,
         "spacing": 6,
-        "icon-size": 14
+        "icon-size": 14,
+        "cursor": false
     },
     "clock": { // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
+        "format-alt": "{:%Y-%m-%d}",
+        "cursor": false
     },
     "backlight": { // "device": "acpi_video1",
         "format": "{icon}",
@@ -89,7 +92,8 @@
             "󰃠"
         ],
         "reverse-scrolling": true,
-        "tooltip-format": "Brightness: {percent}%"
+        "tooltip-format": "Brightness: {percent}%",
+        "cursor": false
     },
     "battery": {
         "states": { // "good": 95,
@@ -110,7 +114,8 @@
             "󰂄"
         ],
         "tooltip-format": "Current charge: {capacity}%\nTime to empty: {time}",
-        "tooltip-format-charging": "Current charge: {capacity}%\nTime to charge: {time}"
+        "tooltip-format-charging": "Current charge: {capacity}%\nTime to charge: {time}",
+        "cursor": false
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
@@ -123,7 +128,8 @@
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰈂",
         "format-alt": "{essid} ({signalStrength}%)",
-        "on-click-right": "kitty -1 --class 'nmtui' -e nmtui"
+        "on-click-right": "kitty -1 --class 'nmtui' -e nmtui",
+        "cursor": false
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
@@ -133,7 +139,8 @@
         "tooltip-format": "{controller_alias}\t{controller_address}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "on-click": "blueberry"
+        "on-click": "blueberry",
+        "cursor": false
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
@@ -158,7 +165,8 @@
         "on-scroll-up": "pactl set-sink-mute 0 false ; pamixer -d 5",
         "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 5",
         "smooth-scrolling-threshold": "0",
-        "tooltip-format": "Volume: {volume}%"
+        "tooltip-format": "Volume: {volume}%",
+        "cursor": false
     },
     "custom/updates": {
         "format": "{icon}",
@@ -168,7 +176,8 @@
             "updated": ""
         },
         "exec-if": "which waybar-module-pacman-updates",
-        "exec": "waybar-module-pacman-updates"
+        "exec": "waybar-module-pacman-updates",
+        "cursor": false
     }
 
 }

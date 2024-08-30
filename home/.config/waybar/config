@@ -126,7 +126,7 @@
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰈂",
         "format-alt": "{essid} ({signalStrength}%)",
-        "on-click-right": "kitty -1 --class 'nmtui' -e nmtui",
+        "on-click-right": "nm-connection-editor",
         "cursor": false
     },
     "bluetooth": {

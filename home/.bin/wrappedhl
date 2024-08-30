@@ -5,6 +5,13 @@ cd ~ || return
 # Log WLR errors and logs to the hyprland log. Recommended
 export HYPRLAND_LOG_WLR=1
 
+# Disable HiDPI scaling
+#export WINIT_HIDPI_FACTOR=1.0
+#export WINIT_X11_SCALE_FACTOR=1.0
+
+# Enable trash-cli for electron apps
+export ELECTRON_TRASH=trash-cli
+
 # Tell XWayland to use a cursor theme
 export XCURSOR_THEME=OpenZone_White_Slim
 
@@ -27,7 +34,10 @@ export QT_QPA_PLATFORMTHEME=qt6ct
 # Set Libreoffice to use GTK for wayland
 export SAL_USE_VCLPLUGIN=gtk3
 
-# Set Firefox to use wayland
+# Firefox flags
+#export MOZ_DISABLE_RDD_SANDBOX=1
+#export MOZ_X11_EGL=1
+export MOZ_USE_XINPUT2=1
 export MOZ_ENABLE_WAYLAND=1
 
 # Testing using .xinitrc syntax

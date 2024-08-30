@@ -126,7 +126,7 @@
         "tooltip-format-disconnected": "Disconnected",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰈂",
-        "on-click": "nm-connection-editor",
+        "on-click": "kitty -1 --class 'nmtui' -e nmtui",
         "cursor": false
     },
     "bluetooth": {

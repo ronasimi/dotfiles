@@ -125,8 +125,7 @@
         "tooltip-format-disconnected": "Disconnected",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰈂",
-        "format-alt": "{essid} ({signalStrength}%)",
-        "on-click-right": "nm-connection-editor",
+        "on-click": "nm-connection-editor",
         "cursor": false
     },
     "bluetooth": {

@@ -91,7 +91,8 @@
         ],
         "reverse-scrolling": true,
         "tooltip-format": "Brightness: {percent}%",
-        "cursor": false
+        "cursor": false,
+        "on-click": "nwg-displays"
     },
     "battery": {
         "states": { // "good": 95,

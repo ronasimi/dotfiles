@@ -74,7 +74,8 @@
     "clock": { // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}",
-        "cursor": false
+        "cursor": false,
+        "timezone": "America/Toronto"
     },
     "backlight": { // "device": "acpi_video1",
         "format": "{icon}",

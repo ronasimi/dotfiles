@@ -323,7 +323,7 @@ export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
     done
   xdg-open "http://www.google.com/search?q=$search"
 }
-
+# SETUP PERL ENV
 PATH="/home/ron/.perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/ron/.perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/ron/.perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;

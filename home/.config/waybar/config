@@ -75,7 +75,12 @@
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}",
         "cursor": false,
-        "timezone": "America/Toronto"
+        "timezone": "America/Toronto",
+        "calendar": {
+            "format": {
+                "today": "<span color='#ac4142'><b><u>{}</u></b></span>",
+            },
+        }
     },
     "backlight": { // "device": "acpi_video1",
         "format": "{icon}",

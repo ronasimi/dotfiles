@@ -172,7 +172,7 @@
         "tooltip-format": "Volume: {volume}%",
         "cursor": false
     },
-    "custom/pacman": {
+    "custom/updates": {
         "format": "{icon}",
         "return-type": "json",
         "format-icons": {

@@ -254,3 +254,6 @@
 2024/04/18 (06:45:20) | ERROR: Invalid RGB decimal value: "$8ab4f8"
 2024/04/18 (06:45:20) | ERROR: Invalid RGB decimal value: "$f4bf75"
 2024/04/18 (06:45:26) | ERROR: Stall in Runner thread, restarting!
+
+2024/09/24 (11:15:57) | ===> btop++ v.1.4.0
+2024/09/24 (11:15:57) | WARNING: Intel GPU: Failed to initialize PMU

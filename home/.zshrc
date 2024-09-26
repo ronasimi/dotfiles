@@ -21,6 +21,9 @@ if [ "$TERM" = "linux" ]; then
   prompt walters
 else
   # POWERLEVEL10K
+  if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+  fi
   source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
   # POWERLINE STYLE SUDO
   export SUDO_PROMPT="$(tput setaf 1)*sudo*$(tput setaf 0) password for %p: $(tput sgr0)"

@@ -21,9 +21,10 @@
         "sideBar.border": "#2f2f2f",
         "editor.background": "#272727",
         "editor.foreground": "#c3c3c3",
-        "editor.selectionBackground": "#556988",
+        "editor.selectionBackground": "#000000",
         "editor.selectionForeground": "#c3c3c3",
         "editor.wordHighlightBackground": "#3c3c3c40",
+        "editorLineNumber.foreground": "#5d5d5d",
         "editorWidget.background": "#272727",
         "activityBar.border": "#FFFFFF",
         "statusBar.background": "#272727",
@@ -69,7 +70,7 @@
         "terminal.ansiGreen": "#90a959",
         "terminal.ansiMagenta": "#aa759f",
         "terminal.ansiRed": "#ac4142",
-        "terminal.ansiWhite": "#bdbdbd",
+        "terminal.ansiWhite": "#c3c3c3",
         "terminal.ansiYellow": "#f4bf75"
     },
     "editor.tokenColorCustomizations": {

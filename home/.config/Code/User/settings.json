@@ -21,7 +21,7 @@
         "sideBar.border": "#2f2f2f",
         "editor.background": "#272727",
         "editor.foreground": "#c3c3c3",
-        "editor.selectionBackground": "#000000",
+        "editor.selectionBackground": "#5d5d5d",
         "editor.selectionForeground": "#c3c3c3",
         "editor.wordHighlightBackground": "#3c3c3c40",
         "editorLineNumber.foreground": "#5d5d5d",
@@ -101,4 +101,7 @@
     "terminal.integrated.smoothScrolling": true,
     "materialTheme.accent": "Graphite",
     "telemetry.telemetryLevel": "off",
+    "workbench.settings.applyToAllProfiles": [
+        
+    ],
 }

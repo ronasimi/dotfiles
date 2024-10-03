@@ -85,13 +85,9 @@
     "backlight": { // "device": "acpi_video1",
         "format": "{icon}",
         "format-icons": [
-            "󰃚",
-            "󰃛",
-            "󰃜",
-            "󰃜",
-            "󰃜",
-            "󰃝",
             "󰃞",
+            "󰃟",
+            "󰃝",
             "󰃟",
             "󰃠"
         ],
@@ -124,7 +120,7 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "󰤨",
+        "format-wifi": "{icon}",
         "format-ethernet": "󰈁",
         "tooltip-format": "{ifname}",
         "tooltip-format-wifi": "Network {essid}\nGateway {gwaddr}\nIP {ipaddr}\nFrequency {frequency} GHz\nSignal {signaldBm} dBm ({signalStrength}%)",
@@ -132,6 +128,13 @@
         "tooltip-format-disconnected": "Disconnected",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰈂",
+        "format-icons": [
+            "󰤯",
+            "󰤟",
+            "󰤢",
+            "󰤥",
+            "󰤨"
+        ],
         "on-click": "kitty -1 --class 'nmtui' -e nmtui",
         "cursor": false
     },

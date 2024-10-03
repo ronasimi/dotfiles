@@ -141,7 +141,7 @@ tooltip * {
     color: #c3c3c3;
     margin-right: 12px;
     padding: 6px;
-    font-family: SF Mono;
+    /* font-family: SF Mono; */
     font-weight: 800;
     font-size: 14px;
     }

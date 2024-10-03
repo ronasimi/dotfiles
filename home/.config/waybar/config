@@ -185,5 +185,4 @@
         "exec": "waybar-module-pacman-updates",
         "cursor": false
     }
-
 }

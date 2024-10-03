@@ -147,9 +147,9 @@ tooltip * {
     }
 
 #battery {
-    color: #c3c3c3;
+    color: #90a959;
     padding: 6px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 #battery.charging,
@@ -201,7 +201,7 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 #pulseaudio {

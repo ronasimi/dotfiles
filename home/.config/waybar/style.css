@@ -59,6 +59,7 @@ tooltip {
     color: #272727;
     background-color: #c3c3c3;
     text-shadow: none;
+    font-size: 14px;
     font-weight: 400;
     }
 
@@ -189,7 +190,7 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 #network.disconnected {

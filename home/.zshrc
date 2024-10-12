@@ -236,6 +236,7 @@ setopt pushd_to_home            # `pushd` = `pushd $HOME`
 # AUTOCOLOR
 #alias ls='ls --color=auto'
 alias ls='eza --group-directories-first --git --header'
+alias cd='z'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
@@ -313,6 +314,9 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_so=$'\E[38;33;246m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[04;38;5;146m'
+
+# ZOXIDE
+eval "$(zoxide init zsh)"
 
 # AIRCRACK-NG
 export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng

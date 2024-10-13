@@ -11,9 +11,9 @@ set preview_images_method kitty
 search storage
 search help
 help
-open_with 
 open_with gimp
 
 open_with zathura
 shell 
 h
+open_with 

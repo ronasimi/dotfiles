@@ -292,14 +292,14 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be SF Pro Textpreted as a comment.
-    background = "#8ab4f8"
+    background = "#c3c3c3"
     foreground = "#272727"
     timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#8ab4f8"
+    background = "#c3c3c3"
     foreground = "#272727"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable

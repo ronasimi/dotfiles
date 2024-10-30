@@ -111,7 +111,7 @@
             "󰁼",
             "󰁾",
             "󰂁",
-            "󰂌"
+            "󰁹"
         ],
         "tooltip-format": "Current charge: {capacity}%\nTime to empty: {time}",
         "tooltip-format-charging": "Current charge: {capacity}%\nTime to charge: {time}",

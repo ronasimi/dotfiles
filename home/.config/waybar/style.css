@@ -190,6 +190,14 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
+    font-size: 18px;
+}
+
+#network.ethernet {
+    font-size: 18px;
+}
+
+#network.wifi {
     font-size: 22px;
 }
 

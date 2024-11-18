@@ -7,4 +7,4 @@ file:///home/ron/repos
 file:///home/ron/temp
 file:///home/ron/Downloads/torrents
 file:///home/ron/.dotfiles
-smb://sambashare@arachne/archive/
+smb://sambashare@arachne/archive/ /archive/

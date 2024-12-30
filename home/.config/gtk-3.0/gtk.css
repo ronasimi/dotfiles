@@ -1,18 +1,19 @@
 /*thunar*/
 
-.thunar toolbar{
+.thunar toolbar {
   margin-top: 0px;
- /* margin-top: 0px;*/
+  /* margin-top: 0px;*/
   padding-bottom: 6px;
   padding-left: 8px;
   padding-right: 8px;
-  background-color: #272727; }
+  background-color: #272727;
+}
 
 /*buttons in toolbar*/
 
 .thunar toolbar.horizontal button image {
-  
-  -gtk-icon-transform:scale(0.72);
+
+  -gtk-icon-transform: scale(0.72);
 }
 
 scrolledwindow.sidebar treeview.view {
@@ -22,48 +23,59 @@ scrolledwindow.sidebar treeview.view {
 }
 
 /*path-bar of thunar*/
-window.thunar toolbar#location-toolbar > toolitem > widget > widget.linked.path-bar > button.toggle.path-bar-button:checked {
-color: #c3c3c3;
-background: #272727;
-border-radius: 20px 20px 20px 20px;
+window.thunar toolbar#location-toolbar>toolitem>widget>widget.linked.path-bar>button.toggle.path-bar-button:checked {
+  color: #c3c3c3;
+  background: #272727;
+  border-radius: 20px 20px 20px 20px;
 
-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-window.thunar toolbar#location-toolbar > toolitem > widget > widget.linked.path-bar > button.path-bar-button {
-background: none;
-outline: none;
-border: none;
-box-shadow: none;
+window.thunar toolbar#location-toolbar>toolitem>widget>widget.linked.path-bar>button.path-bar-button {
+  background: none;
+  outline: none;
+  border: none;
+  box-shadow: none;
 }
 
 /*thunar sidepane*/
 
-window.thunar paned > scrolledwindow treeview.view:selected {
-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-background: #272727;
--gtk-secondary-caret-color: #8ab4f8;
+window.thunar paned>scrolledwindow treeview.view:selected {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  background: #272727;
+  -gtk-secondary-caret-color: #8ab4f8;
 }
 
 .thunar .shortcuts-pane .view:selected {
-  background-color: rgba (138,180,248,0.5)
-  }
+  background-color: rgba (138, 180, 248, 0.5)
+}
 
 /*thunar background*/
 
 .thunar .standard-view {
-   background-color: #272727;
-   }
+  .thunar .view:selected {
+    background-color: yellow;
+    color: blue;
+  }
+
+  background-color: #272727;
+}
 
 /*thunar mouse selection*/
 
 .thunar .rubberband {
-  background-color: rgba (138,180,248,0.2);
+  background-color: rgba (138, 180, 248, 0.2);
   border-width: 0px;
-  }
+}
 
-  /*thunar status bar*/
+/*thunar status bar*/
 
 .thunar statusbar {
   background-color: #272727;
-  }
+}
+
+/*thunar selection background*/
+.thunar .view:selected {
+  color: #272727;
+  background-color: #8ab4f8;
+}

@@ -1,5 +1,4 @@
 {
-    "window.menuBarVisibility": "toggle",
     "security.workspace.trust.untrustedFiles": "open",
     "git.openRepositoryInParentFolders": "always",
     "workbench.colorTheme": "Material Theme Darker",
@@ -89,7 +88,6 @@
     "terminal.integrated.minimumContrastRatio": 1,
     "workbench.list.mouseWheelScrollSensitivity": 5,
     "workbench.startupEditor": "none",
-    "workbench.activityBar.location": "hidden",
     "git.confirmSync": false,
     "[css]": {
         "editor.defaultFormatter": "HookyQR.beautify"
@@ -126,4 +124,8 @@
             "html"
         ]
     },
+    "workbench.activityBar.location": "hidden",
+    "window.customTitleBarVisibility": "never",
+    "window.titleBarStyle": "native",
+    "window.menuBarVisibility": "toggle",
 }

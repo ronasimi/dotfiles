@@ -77,5 +77,5 @@ window.thunar paned>scrolledwindow treeview.view:selected {
 /*thunar selection background*/
 .thunar .view:selected {
   color: #272727;
-  background-color: #8ab4f8;
+  background-color: #8ab4f8CC;
 }

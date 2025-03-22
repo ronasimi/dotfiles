@@ -183,22 +183,22 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 #network {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 #network.ethernet {
-    font-size: 18px;
+    font-size: 20px;
 }
 
 #network.wifi {
-    font-size: 22px;
+    font-size: 24px;
 }
 
 #network.disconnected {
@@ -217,7 +217,7 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #pulseaudio.muted {
@@ -228,7 +228,7 @@ label:focus {
 #tray {
     background-color: transparent;
     padding: 6px;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 #tray>.passive {
@@ -245,7 +245,7 @@ label:focus {
     padding: 0 0px;
     margin: 0 6px;
     min-width: 12px;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 #keyboard-state>label {
@@ -261,5 +261,5 @@ label:focus {
 #custom-updates {
     color: #1793d0;
     padding: 6px;
-    font-size: 20px;
+    font-size: 22px;
 }

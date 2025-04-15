@@ -2,12 +2,20 @@
 
 cd ~ || return
 
+env = XDG_CURRENT_DESKTOP,Hyprland
+
 # Disable HiDPI scaling
 #export WINIT_HIDPI_FACTOR=1.0
 #export WINIT_X11_SCALE_FACTOR=1.0
 
 # Enable trash-cli for electron apps
 export ELECTRON_TRASH=trash-cli
+
+# Tell XWayland to use a cursor theme
+export XCURSOR_THEME=OpenZone_White_Slim
+
+# Set a cursor size
+export XCURSOR_SIZE=24
 
 # Example IME Support: fcitx
 export GTK_IM_MODULE=fcitx

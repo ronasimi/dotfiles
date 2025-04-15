@@ -4,9 +4,6 @@ cd ~ || return
 
 env = XDG_CURRENT_DESKTOP,Hyprland
 
-# Log WLR errors and logs to the hyprland log. Recommended
-export HYPRLAND_LOG_WLR=1
-
 # Disable HiDPI scaling
 #export WINIT_HIDPI_FACTOR=1.0
 #export WINIT_X11_SCALE_FACTOR=1.0

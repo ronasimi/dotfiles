@@ -18,7 +18,7 @@ export ELECTRON_TRASH=trash-cli
 export XCURSOR_THEME=OpenZone_White_Slim
 
 # Set a cursor size
-export XCURSOR_SIZE=16
+export XCURSOR_SIZE=24
 
 # Example IME Support: fcitx
 export GTK_IM_MODULE=fcitx
@@ -45,8 +45,6 @@ export MOZ_ENABLE_WAYLAND=1
 # Testing using .xinitrc syntax
 eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-systemctl --user import-environment DISPLAY &
 gsettings set org.gnome.desktop.interface gtk-theme 'Materia-dark-compact' &
 gsettings set org.gnome.desktop.interface gtk-application-prefer-dark-theme 'true' &
 

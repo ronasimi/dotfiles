@@ -72,13 +72,14 @@
         "cursor": false
     },
     "clock": { // "timezone": "America/New_York",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "tooltip-format": "<tt>{calendar}</tt>",
         "format-alt": "{:%Y-%m-%d}",
         "cursor": false,
         "timezone": "America/Toronto",
         "calendar": {
             "format": {
-                "today": "<span color='#ac4142'><b><u>{}</u></b></span>",
+                "months": "<big>{}</big>",
+                "today": "<span color='#ac4142'><b>{}</b></span>",
             },
         }
     },

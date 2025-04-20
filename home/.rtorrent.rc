@@ -107,12 +107,30 @@ protocol.pex.set = yes
 
 
 
-# UI/VIEW: Colors
-#
-color_inactive_fg = 4
-color_dead_fg = 1
-color_active_fg = 3
-color_finished_fg = 2
+# Sets the title color
+ui.color.title.set = "bold black on bright blue"
+# Sets the footer color
+ui.color.footer.set = "bold black on blue"
+# Sets the focus color. The other color settings take precedence over this, so normally it's just an attribute
+ui.color.focus.set = "reverse"
+# The default label color
+ui.color.label.set = ""
+# If the torrent is complete, active and not uploading data
+ui.color.complete.set = "green"
+# If the torrent is complete, active and uploading data
+ui.color.seeding.set = "blue"
+# If the torrent is complete and not active
+ui.color.stopped.set = "red"
+# If the torrent is incomplete, active and not downloading data
+ui.color.queued.set = "dim yellow"
+# If the torrent is incomplete, active and downloading data
+ui.color.leeching.set = "bright yellow"
+# If the torrent is incomplete and not active
+ui.color.incomplete.set = "bright red"
+# Colors the odd rows
+ui.color.odd.set = "bold"
+# Colors the even rows
+ui.color.even.set = ""
 
 # Send text for each completed torrent
 #

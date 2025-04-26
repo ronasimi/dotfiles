@@ -108,9 +108,9 @@ protocol.pex.set = yes
 
 
 # Sets the title color
-ui.color.title.set = "bold black on bright blue"
+ui.color.title.set = "bold black on bright white"
 # Sets the footer color
-ui.color.footer.set = "bold black on blue"
+ui.color.footer.set = "bold black on white"
 # Sets the focus color. The other color settings take precedence over this, so normally it's just an attribute
 ui.color.focus.set = "reverse"
 # The default label color

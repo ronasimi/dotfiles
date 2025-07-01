@@ -47,7 +47,7 @@ window.thunar paned>scrolledwindow treeview.view:selected {
 }
 
 .thunar .shortcuts-pane .view:selected {
-  background-color: rgba (138, 180, 248, 0.5)
+  background-color: rgba (138, 180, 248, 0.5);
 }
 
 /*thunar background*/
@@ -77,5 +77,5 @@ window.thunar paned>scrolledwindow treeview.view:selected {
 /*thunar selection background*/
 .thunar .view:selected {
   color: #272727;
-  background-color: #8ab4f8CC;
+  background-color: #8ab4f8;
 }

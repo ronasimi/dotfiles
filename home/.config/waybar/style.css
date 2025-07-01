@@ -74,7 +74,7 @@ tooltip * {
     color: #5d5d5d;
     border-radius: 6px;
     font-family: Material Design Icons;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 #workspaces button:hover {
@@ -150,7 +150,7 @@ tooltip * {
 #battery {
     color: #90a959;
     padding: 6px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #battery.charging,
@@ -183,22 +183,22 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 #network {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 #network.ethernet {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 #network.wifi {
-    font-size: 24px;
+    font-size: 18px;
 }
 
 #network.disconnected {
@@ -228,7 +228,7 @@ label:focus {
 #tray {
     background-color: transparent;
     padding: 6px;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 #tray>.passive {
@@ -245,7 +245,7 @@ label:focus {
     padding: 0 0px;
     margin: 0 6px;
     min-width: 12px;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 #keyboard-state>label {
@@ -261,5 +261,5 @@ label:focus {
 #custom-updates {
     color: #1793d0;
     padding: 6px;
-    font-size: 22px;
+    font-size: 18px;
 }

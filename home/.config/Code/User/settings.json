@@ -96,6 +96,7 @@
         "editor.defaultFormatter": "mblode.pretty-formatter"
     },
     "editor.smoothScrolling": true,
+    "editor.inertialScroll": true,
     "terminal.integrated.smoothScrolling": true,
     "materialTheme.accent": "Graphite",
     "telemetry.telemetryLevel": "off",

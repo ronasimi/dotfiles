@@ -183,7 +183,7 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     padding: 6px;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 #network {
@@ -198,7 +198,7 @@ label:focus {
 }
 
 #network.wifi {
-    font-size: 20px;
+    font-size: 24px;
 }
 
 #network.disconnected {

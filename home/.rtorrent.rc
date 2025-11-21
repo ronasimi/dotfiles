@@ -14,7 +14,7 @@ max_peers_seed = 50
 #max_uploads = 10
 
 # Maximum number of simultaneous downloads
-max_downloads_global = 5
+max_downloads_global = 3
 # Maximum number of simultaneous uploads
 max_uploads_global = 3
 

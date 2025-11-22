@@ -68,7 +68,7 @@ schedule = low_diskspace,5,60,close_low_diskspace=100M
 network.port_range.set = 49459-49459
 
 # Start opening ports at a random position within the port range.
-port_random = no
+port_random = yes
 
 # Check hash for finished torrents. Might be usefull until the bug is
 # fixed that causes lack of diskspace not to be properly reported.
@@ -99,7 +99,7 @@ dht.mode.set = auto
 
 # UDP port to use for DHT.
 #
-dht_port = 6881
+#dht_port = 6881
 
 # Enable peer exchange (for torrents not marked private)
 #

@@ -52,24 +52,24 @@ window.thunar paned>scrolledwindow treeview.view:selected {
 }
 
 .thunar .shortcuts-pane .view:selected {
-  background-color: rgba (138, 180, 248, 0.5);
+  background-color: rgba(138, 180, 248, 0.5);
 }
 
 /*thunar background*/
 
 .thunar .standard-view {
-  .thunar .view:selected {
-    background-color: yellow;
-    color: blue;
-  }
-
   background-color: #272727;
+}
+
+.thunar .standard-view .view:selected {
+  background-color: yellow;
+  color: blue;
 }
 
 /*thunar mouse selection*/
 
 .thunar .rubberband {
-  background-color: rgba (138, 180, 248, 0.2);
+  background-color: rgba(138, 180, 248, 0.2);
   border-width: 0px;
 }
 

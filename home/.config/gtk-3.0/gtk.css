@@ -5,6 +5,11 @@
 
 /*thunar*/
 
+.thunar .view:selected {
+  background-color: #8a8a8a;
+  color: #000000;
+}
+
 .thunar toolbar {
   margin-top: 0px;
   /* margin-top: 0px;*/

@@ -5,11 +5,6 @@
 
 /*thunar*/
 
-.thunar .view:selected {
-  background-color: #8a8a8a;
-  color: #000000;
-}
-
 .thunar toolbar {
   margin-top: 0px;
   /* margin-top: 0px;*/
@@ -66,9 +61,9 @@ window.thunar paned>scrolledwindow treeview.view:selected {
   background-color: #272727;
 }
 
-.thunar .standard-view .view:selected {
-  background-color: yellow;
-  color: blue;
+.thunar .view:selected {
+  background-color: #8ab4f8;
+  color: #000000;
 }
 
 /*thunar mouse selection*/

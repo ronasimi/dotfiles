@@ -10,8 +10,11 @@ fi
 # Muy manual pero ya buscaré una manera mas sofisticada
 
 echo '' > $(echo $HYPRPAPER_CONFIG)
-echo "preload = $1" >> $(echo $HYPRPAPER_CONFIG)
-echo "wallpaper =,$1" >> $(echo $HYPRPAPER_CONFIG)
+echo "wallpaper {" >> $(echo $HYPRPAPER_CONFIG)
+echo -e "\tmonitor = eDP-1" >> $(echo $HYPRPAPER_CONFIG)
+echo -e "\tpath =$1" >> $(echo $HYPRPAPER_CONFIG)
+echo -e "\tfit_mode = cover" >> $(echo $HYPRPAPER_CONFIG)
+echo "}" >> $(echo $HYPRPAPER_CONFIG)
 echo "splash = false" >> $(echo $HYPRPAPER_CONFIG)
 echo "ipc = off" >> $(echo $HYPRPAPER_CONFIG)
 

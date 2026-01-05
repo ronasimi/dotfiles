@@ -54,20 +54,8 @@
         "on-scroll-down": "hyprctl dispatch workspace e+1",
         "cursor": false
     },
-    //    "hyprland/window": {
-    //        "icon": true,
-    //       "format": "{}"
-    //    },
-    //    "wlr/taskbar": {
-    // "format": "{icon}",
-    // "icon-size": 16,
-    // "tooltip-format": "{title}",
-    // "on-click": "activate",
-    // "on-click-middle": "close",
-    //        "sort-by-app-id": true,
-    // }
-    // }
-    "tray": { // "icon-size": 21,
+
+        "tray": { // "icon-size": 21,
         "spacing": 6,
         "icon-size": 12,
         "cursor": false

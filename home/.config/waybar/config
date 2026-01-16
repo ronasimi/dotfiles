@@ -10,7 +10,10 @@
     "fixed-center": true,
     "reload_style_on_change": true,
     // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces"],
+    "modules-left": [
+        "custom/menu",
+        "hyprland/workspaces"
+    ],
     "modules-center": ["hyprland/window"],
     "modules-right": [
         "custom/updates",
@@ -172,6 +175,18 @@
         },
         "exec-if": "which waybar-module-pacman-updates",
         "exec": "waybar-module-pacman-updates",
+        "cursor": false
+    },
+    "custom/home": {
+        "format": "󰋜",
+        "tooltip-format": "Open your home directory",
+        "on-click": "thunar $HOME",
+        "cursor": false
+    },
+        "custom/menu": {
+        "format": "󰍜",
+        "tooltip-format": "Application launcher",
+        "on-click": "pkill wofi || wofi -f --show drun -G -p 'Type to search' -H 1056 -W 512 -x 0 -y 0 -b -i",
         "cursor": false
     }
 }

@@ -264,3 +264,15 @@ label:focus {
     padding: 6px;
     font-size: 20px;
 }
+
+#custom-menu {
+    color: #c3c3c3;
+    padding: 6px;
+    font-size: 20px;
+}
+
+#custom-home {
+    color: #c3c3c3;
+    padding: 6px;
+    font-size: 20px;
+}

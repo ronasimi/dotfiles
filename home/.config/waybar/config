@@ -1,7 +1,7 @@
 {
     "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 36,  // Waybar height (to be removed for auto height)
+    "position": "left", // Waybar position (top|bottom|left|right)
+    "width": 36,  // Waybar height (to be removed for auto height)
     // "width": 1896, // Waybar width
     "exclusive": true,
     "passthrough": false,
@@ -58,6 +58,9 @@
         "on-scroll-down": "hyprctl dispatch workspace e+1",
         "cursor": false
     },
+    "hyprland/window": {
+        "rotate": 90,
+    },
 
         "tray": { // "icon-size": 21,
         "spacing": 6,
@@ -66,6 +69,7 @@
     },
     "clock": { // "timezone": "America/New_York",
         "tooltip-format": "<tt>{calendar}</tt>",
+        "format": "{:%H\n%M}",
         "format-alt": "{:%Y-%m-%d}",
         "cursor": false,
         "timezone": "America/Toronto",

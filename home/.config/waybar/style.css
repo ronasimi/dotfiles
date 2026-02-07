@@ -123,7 +123,7 @@ tooltip * {
 
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left>widget:first-child>#workspaces {
-    margin-top: 0px;
+    margin-top: 3px;
 }
 
 /* If clock is the rightmost module, omit right margin */

@@ -54,8 +54,8 @@
             "10": "󰽽",
             "urgent": "󱈸"
         },
-        "on-scroll-up": "hyprctl dispatch workspace e-1",
-        "on-scroll-down": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
         "cursor": false
     },
     "hyprland/window": {
@@ -68,9 +68,8 @@
         "cursor": false
     },
     "clock": { // "timezone": "America/New_York",
-        "tooltip-format": "<tt>{calendar}</tt>",
+        "tooltip-format": "{:%A %b %d %Y}\n\n<tt>{calendar}</tt>",
         "format": "{:%H\n%M}",
-        "format-alt": "{:%Y-%m-%d}",
         "cursor": false,
         "timezone": "America/Toronto",
         "calendar": {
@@ -102,7 +101,6 @@
         "format": "{icon}",
         "format-charging": "󰂄",
         "format-plugged": "󰚥",
-        "format-alt": "{capacity}%",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": [
@@ -154,6 +152,7 @@
         "format-muted": "󰝟",
         "format-source": "󰍬",
         "format-source-muted": "󰍭",
+        "format-alt": "{capacity}%",
         "format-icons": {
             "headphone": "󰋋",
             "hands-free": "󰋎",

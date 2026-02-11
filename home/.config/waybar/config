@@ -60,6 +60,7 @@
     },
     "hyprland/window": {
         "rotate": 90,
+        "max-length": 66,
     },
 
         "tray": { // "icon-size": 21,

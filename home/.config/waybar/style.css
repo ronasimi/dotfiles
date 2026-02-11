@@ -52,6 +52,7 @@ tooltip * {
 #workspaces button {
     background-color: transparent;
     color: #5d5d5d;
+    box-shadow: inset 0 -3px transparent;
     font-family: Material Design Icons;
     font-size: 20px;
 }
@@ -75,6 +76,7 @@ tooltip * {
 #workspaces button.urgent {
     background-color: transparent;
     color: #ac4142;
+    box-shadow: inset 0 -3px transparent;
     border-radius: 6px;
 }
 
@@ -84,7 +86,7 @@ tooltip * {
 }
 
 #clock {
-    margin: 0px;
+    margin: 3px 0;
 }
 
 #battery,
@@ -94,10 +96,6 @@ tooltip * {
 #tray {
     color: #c3c3c3;
     background-color: transparent;
-}
-
-#workspaces {
-    margin: 3px 0px;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -112,20 +110,18 @@ tooltip * {
 
 #window {
     color: #c3c3c3;
-    
     font-size: 14px;
     }
 
 #clock {
     color: #c3c3c3;
-    margin: 3px 0px;
     font-weight: 800;
     font-size: 14px;
+    box-shadow: inset 0 -3px transparent;
     }
 
 #battery {
     color: #90a959;
-    margin: 3px 0px;
     font-size: 20px;
 }
 
@@ -158,14 +154,12 @@ label:focus {
 #backlight {
     background-color: transparent;
     color: #c3c3c3;
-    margin: 3px 0px;
     font-size: 20px;
 }
 
 #network {
     background-color: transparent;
     color: #c3c3c3;
-    margin: 3px 0px;
     font-size: 20px;
 }
 
@@ -185,14 +179,12 @@ label:focus {
 #bluetooth {
     background-color: transparent;
     color: #c3c3c3;
-    margin: 3px 0px;    
     font-size: 20px;
 }
 
 #pulseaudio {
     background-color: transparent;
     color: #c3c3c3;
-    margin: 3px 0px;    
     font-size: 20px;
 }
 
@@ -203,7 +195,6 @@ label:focus {
 
 #tray {
     background-color: transparent;
-    margin: 3px 0px;    
     font-size: 20px;
 }
 
@@ -219,7 +210,7 @@ label:focus {
 #keyboard-state {
     color: #5d5d5d;
     padding: 0 0px;
-    margin: 0 6px;
+    margin: 3px 0;
     min-width: 12px;
     font-size: 20px;
 }
@@ -236,7 +227,6 @@ label:focus {
 
 #custom-updates {
     color: #1793d0;
-    margin: 3px 0px;        
     font-size: 20px;
 }
 

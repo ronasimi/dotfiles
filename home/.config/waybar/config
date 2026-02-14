@@ -57,7 +57,7 @@
     },
     "hyprland/window": {
         "rotate": 90,
-        "max-length": 66
+        "max-length": 65
     },
 
         "tray": {

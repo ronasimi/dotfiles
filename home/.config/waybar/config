@@ -1,15 +1,13 @@
 {
-    "layer": "top", // Waybar at top layer
-    "position": "left", // Waybar position (top|bottom|left|right)
-    "width": 36,  // Waybar height (to be removed for auto height)
-    // "width": 1896, // Waybar width
+    "layer": "top",
+    "position": "left",
+    "width": 36,
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
-    "spacing": 6, // Gaps between modules (4px)
+    "spacing": 6,
     "fixed-center": true,
     "reload_style_on_change": true,
-    // Choose the order of the modules
     "modules-left": [
         "hyprland/workspaces"
     ],
@@ -27,7 +25,6 @@
         "clock"
     ],
 
-    // Modules configuration
     "keyboard-state": {
         "numlock": false,
         "capslock": true,
@@ -60,15 +57,15 @@
     },
     "hyprland/window": {
         "rotate": 90,
-        "max-length": 66,
+        "max-length": 66
     },
 
-        "tray": { // "icon-size": 21,
+        "tray": {
         "spacing": 6,
         "icon-size": 12,
         "cursor": false
     },
-    "clock": { // "timezone": "America/New_York",
+    "clock": {
         "tooltip-format": "{:%A %b %d %Y}\n\n<tt>{calendar}</tt>",
         "format": "{:%H\n%M}",
         "cursor": false,
@@ -76,11 +73,11 @@
         "calendar": {
             "format": {
                 "months": "<big>{}</big>",
-                "today": "<span color='#ac4142'><b>{}</b></span>",
-            },
+                "today": "<span color='#ac4142'><b>{}</b></span>"
+            }
         }
     },
-    "backlight": { // "device": "acpi_video1",
+    "backlight": {
         "format": "{icon}",
         "format-icons": [
             "󰃞",
@@ -92,18 +89,16 @@
         "tooltip-format": "Brightness: {percent}%",
         "cursor": false,
         "on-click": "brightnessctl set 100%",
-        "on-click-right": "nwg-displays",
+        "on-click-right": "nwg-displays"
     },
     "battery": {
-        "states": { // "good": 95,
+        "states": {
             "warning": 30,
             "critical": 15
         },
         "format": "{icon}",
         "format-charging": "󰂄",
         "format-plugged": "󰚥",
-        // "format-good": "", // An empty format will hide the module
-        // "format-full": "",
         "format-icons": [
             "󰁺",
             "󰁼",
@@ -116,7 +111,6 @@
         "cursor": false
     },
     "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{icon}",
         "format-ethernet": "󰈁",
         "tooltip-format": "{ifname}",
@@ -136,9 +130,8 @@
         "cursor": false
     },
     "bluetooth": {
-        // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
         "format": "󰂯",
-        "format-disabled": "", // an empty format will hide the module
+        "format-disabled": "",
         "tooltip-format": "{controller_alias}\t{controller_address}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
@@ -146,7 +139,6 @@
         "cursor": false
     },
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
         "format": "{icon}",
         "format-bluetooth": "󰗾",
         "format-bluetooth-muted": "󰗿",

@@ -129,4 +129,5 @@
     "window.customTitleBarVisibility": "never",
     "window.titleBarStyle": "native",
     "window.menuBarVisibility": "toggle",
+    "chat.viewSessions.orientation": "stacked",
 }

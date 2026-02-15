@@ -1,7 +1,7 @@
 {
     "layer": "top",
-    "position": "left",
-    "width": 36,
+    "position": "top",
+    "height": 36,
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
@@ -55,19 +55,15 @@
         "on-scroll-down": "hyprctl dispatch workspace e-1",
         "cursor": false
     },
-    "hyprland/window": {
-        "rotate": 90,
-        "max-length": 65
-    },
-
-        "tray": {
+    "tray": {
         "spacing": 6,
         "icon-size": 12,
         "cursor": false
     },
     "clock": {
-        "tooltip-format": "{:%A %b %d %Y}\n\n<tt>{calendar}</tt>",
-        "format": "{:%H\n%M}",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "format": "{:%H:%M}",
+        "format-alt": "{:%A %b %d %Y}",
         "cursor": false,
         "timezone": "America/Toronto",
         "calendar": {
@@ -97,6 +93,7 @@
             "critical": 15
         },
         "format": "{icon}",
+        "format-alt": "{capacity}%",
         "format-charging": "󰂄",
         "format-plugged": "󰚥",
         "format-icons": [
@@ -126,6 +123,7 @@
             "󰤥",
             "󰤨"
         ],
+        "format-alt": "{essid} {signalStrength}%",
         "on-click-right": "kitty -1 --class 'nmtui' -e nmtui",
         "cursor": false
     },

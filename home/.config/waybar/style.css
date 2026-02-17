@@ -37,15 +37,15 @@ button:hover {
 }
 
 tooltip {
-    color: #272727;
-    background-color: #c3c3c3;
+    color: #c3c3c3;
+    background-color: #272727;
     text-shadow: none;
     font-size: 14px;
     font-weight: 400;
     }
 
 tooltip * {
-    color: #272727;
+    color: #c3c3c3;
     text-shadow: none;
 }
 

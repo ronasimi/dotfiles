@@ -128,10 +128,10 @@
     },
     "bluetooth": {
         "format": "󰂯",
-        "format-disabled": "",
+        "format-disabled": "󰂲",
         "tooltip-format": "{controller_alias}\t{controller_address}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_battery_percentage}%",
         "on-click-right": "blueberry",
         "cursor": false
     },

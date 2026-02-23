@@ -86,7 +86,7 @@ tooltip * {
 }
 
 #clock {
-    margin: 0 6px;
+    margin: 3px;
 }
 
 #battery,
@@ -100,12 +100,12 @@ tooltip * {
 
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left>widget:first-child>#workspaces {
-    margin-left: 6px;
+    margin-top: 3px;
 }
 
 /* If clock is the rightmost module, omit right margin */
-.modules-right>widget:last-child>#clock {
-    margin-right: 6px;
+.modules-bottom>widget:last-child>#clock {
+    margin-bottom: 9px;
 }
 
 #window {
@@ -118,13 +118,13 @@ tooltip * {
     font-weight: 800;
     font-size: 14px;
     box-shadow: inset 0 -3px transparent;
-    margin: 0 6px;
+    margin: 3px;
     }
 
 #battery {
     color: #90a959;
     font-size: 20px;
-    margin: 0 6px;
+    margin: 3px;
 }
 
 #battery.charging,
@@ -157,14 +157,14 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     font-size: 20px;
-    margin: 0 6px;
+    margin: 3px;
 }
 
 #network {
     background-color: transparent;
     color: #c3c3c3;
     font-size: 20px;
-    margin: 0 6px;
+    margin: 3px;
 }
 
 #network.ethernet {
@@ -184,38 +184,38 @@ label:focus {
     background-color: transparent;
     color: #c3c3c3;
     font-size: 20px;
-    margin: 0 6px;
+    margin: 3px;
 }
 
 #bluetooth.disabled {
     background-color: transparent;
     color: #5d5d5d;
-    margin: 0 6px;
+    margin: 3px;
 }
 
 #bluetooth.off {
     background-color: transparent;
     color: #5d5d5d;
-    margin: 0 6px;
+    margin: 3px;
 }
 
 #bluetooth.connected {
     background-color: transparent;
     color: #90a959;
-    margin: 0 6px;
+    margin: 3px;
 }
 
 #pulseaudio {
     background-color: transparent;
     color: #c3c3c3;
     font-size: 20px;
-    margin: 0 6px;
+    margin: 3px;
 }
 
 #pulseaudio.muted {
     background-color: transparent;
     color: #ac4142;
-    margin: 0 6px;
+    margin: 3px;
 }
 
 #tray {
@@ -253,17 +253,17 @@ label:focus {
 #custom-updates {
     color: #1793d0;
     font-size: 20px;
-    margin: 0 6px;
+    margin: 3px;
 }
 
 #custom-menu {
     color: #c3c3c3;
     font-size: 20px;
-    margin: 0 6px;
+    margin: 6px;
 }
 
 #custom-home {
     color: #c3c3c3;
     font-size: 20px;
-    margin: 0 6px;
+    margin: 6px;
 }

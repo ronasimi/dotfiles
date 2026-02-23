@@ -1,7 +1,7 @@
 {
-    "layer": "top",
-    "position": "top",
-    "height": 36,
+    "layer": "overlay",
+    "position": "left",
+    "width": 36,
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
@@ -33,6 +33,7 @@
             "capslock": "󰪛"
         }
     },
+
     "hyprland/workspaces": {
         "disable-scroll": false,
         "all-outputs": true,
@@ -55,15 +56,20 @@
         "on-scroll-down": "hyprctl dispatch workspace e-1",
         "cursor": false
     },
+    
+    "hyprland/window": {
+        "max-length": 60,
+        "rotate": 90
+    },
+
     "tray": {
         "spacing": 6,
         "icon-size": 12,
         "cursor": false
     },
     "clock": {
-        "tooltip-format": "<tt>{calendar}</tt>",
-        "format": "{:%H:%M}",
-        "format-alt": "{:%A %b %d %Y}",
+        "tooltip-format": "<big>{:%A %b %d %Y}</big>\n\n<tt>{calendar}</tt>",
+        "format": "<big>{:%H\n%M}</big>",
         "cursor": false,
         "timezone": "America/Toronto",
         "calendar": {

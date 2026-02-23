@@ -71,6 +71,7 @@
         "tooltip-format": "<big>{:%A %b %d %Y}</big>\n\n<tt>{calendar}</tt>",
         "format": "<big>{:%H\n%M}</big>",
         "cursor": false,
+        "on-click": "xdg-open https://calendar.google.com/",
         "timezone": "America/Toronto",
         "calendar": {
             "format": {
@@ -99,7 +100,7 @@
             "critical": 15
         },
         "format": "{icon}",
-        "format-alt": "{capacity}%",
+        "format-alt": "<tt>{capacity}</tt>",
         "format-charging": "󰂄",
         "format-plugged": "󰚥",
         "format-icons": [

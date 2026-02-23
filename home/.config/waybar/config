@@ -1,7 +1,7 @@
 {
     "layer": "top",
-    "position": "right",
-    "width": 36,
+    "position": "top",
+    "height": 36,
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
@@ -58,8 +58,6 @@
     },
     
     "hyprland/window": {
-        "max-length": 60,
-        "rotate": 270
     },
 
     "tray": {
@@ -69,7 +67,7 @@
     },
     "clock": {
         "tooltip-format": "<big>{:%A %b %d %Y}</big>\n\n<tt>{calendar}</tt>",
-        "format": "<big>{:%H\n%M}</big>",
+        "format": "{:%H:%M}",
         "cursor": false,
         "on-click-right": "xdg-open https://calendar.google.com/",
         "timezone": "America/Toronto",

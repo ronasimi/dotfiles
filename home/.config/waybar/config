@@ -20,7 +20,6 @@
         "pulseaudio",
         "backlight",
         "custom/separator",
-        "bluetooth",
         "battery",
         "tray",
         "clock"

@@ -267,3 +267,8 @@ label:focus {
     font-size: 20px;
     margin: 6px;
 }
+
+#custom-separator {
+  color: #5d5d5d;
+  margin: 0 6px;
+}

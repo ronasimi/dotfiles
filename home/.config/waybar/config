@@ -19,7 +19,7 @@
         "custom/updates",
         "pulseaudio",
         "backlight",
-        "network",
+        "custom/separator",
         "bluetooth",
         "battery",
         "tray",
@@ -63,7 +63,7 @@
 
     "tray": {
         "spacing": 6,
-        "icon-size": 12,
+        "icon-size": 20,
         "cursor": false
     },
     "clock": {
@@ -188,5 +188,10 @@
         "tooltip-format": "Application launcher",
         "on-click": "pkill wofi || wofi -f --show drun -G -p 'Type to search' -H 1056 -W 512 -x 0 -y 0 -b -i",
         "cursor": false
-    }
+    },
+        "custom/separator": {
+            "format": "",
+            "interval": "once",
+            "tooltip": false
+        }
 }

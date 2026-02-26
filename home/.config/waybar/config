@@ -19,7 +19,8 @@
         "custom/updates",
         "pulseaudio",
         "backlight",
-        "custom/separator",
+        "network",
+        "bluetooth",
         "battery",
         "tray",
         "clock"
@@ -137,7 +138,7 @@
         "tooltip-format": "{controller_alias}",
         "tooltip-format-connected": "{controller_alias}\t\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_battery_percentage}%",
-        "on-click-right": "blueberry",
+        "on-click-right": "adw-bluetooth",
         "cursor": false
     },
     "pulseaudio": {

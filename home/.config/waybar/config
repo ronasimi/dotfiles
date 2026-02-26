@@ -88,7 +88,7 @@
             "󰃠"
         ],
         "reverse-scrolling": true,
-        "tooltip-format": "Brightness: {percent}%",
+        "tooltip-format": "Backlight {percent}%",
         "cursor": false,
         "on-click": "brightnessctl set 100%",
         "on-click-right": "nwg-displays"
@@ -99,7 +99,7 @@
             "critical": 15
         },
         "format": "{icon}",
-        "format-alt": "<tt>{capacity}</tt>",
+        "format-alt": "<small>{capacity}%</small>",
         "format-charging": "󰂄",
         "format-plugged": "󰚥",
         "format-icons": [
@@ -109,8 +109,8 @@
             "󰂁",
             "󰁹"
         ],
-        "tooltip-format": "Current charge: {capacity}%\nTime to empty: {time}",
-        "tooltip-format-charging": "Current charge: {capacity}%\nTime to charge: {time}",
+        "tooltip-format": "Battery remaining {capacity}%\nTime remaining {time}",
+        "tooltip-format-charging": "Battery level {capacity}%\nTime until charged {time}",
         "cursor": false
     },
     "network": {

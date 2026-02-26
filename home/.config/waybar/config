@@ -117,7 +117,7 @@
         "format-wifi": "{icon}",
         "format-ethernet": "󰈁",
         "tooltip-format": "{ifname}",
-        "tooltip-format-wifi": "<b>󰀃 {essid}</b>\n<small>IP {ipaddr}\nGateway {gwaddr}\n󰥛 {frequency} GHz\n󰤨 {signaldBm} dBm ({signalStrength}%)</small>",
+        "tooltip-format-wifi": "<b>{essid}</b>\nIP {ipaddr}\nGateway {gwaddr}\n{frequency} GHz\n{signaldBm} dBm ({signalStrength}%)",
         "tooltip-format-ethernet": "{ifname}",
         "tooltip-format-disconnected": "Disconnected",
         "format-linked": "{ifname} (No IP) ",

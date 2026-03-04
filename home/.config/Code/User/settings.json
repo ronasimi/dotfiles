@@ -27,12 +27,13 @@
         "editorWidget.background": "#272727",
         "activityBar.border": "#FFFFFF",
         "statusBar.background": "#272727",
-        "editorGroupHeader.noTabsBackground": "#1f2020",
-        "editorGroupHeader.tabsBackground": "#1f2020",
+        "editorGroupHeader.noTabsBackground": "#1d1d1d",
+        "editorGroupHeader.tabsBackground": "#1d1d1d",
         "tab.activeBackground": "#272727",
         "tab.activeForeground": "#c3c3c3",
         "tab.activeBorder": "#2f2f2f",
-        "tab.inactiveBackground": "#1f2020",
+        "tab.inactiveBackground": "#1d1d1d",
+        "tab.inactiveForeground": "#5d5d5d",
         "tab.hoverBackground": "#272727",
         "tab.border": "#2f2f2f",
         "breadcrumb.background": "#272727",
@@ -100,9 +101,7 @@
     "terminal.integrated.smoothScrolling": true,
     "materialTheme.accent": "Graphite",
     "telemetry.telemetryLevel": "off",
-    "workbench.settings.applyToAllProfiles": [
-        
-    ],
+    "workbench.settings.applyToAllProfiles": [],
     "beautify.language": {
         "js": {
             "type": [
@@ -126,8 +125,8 @@
         ]
     },
     "workbench.activityBar.location": "hidden",
-    "window.customTitleBarVisibility": "never",
     "window.titleBarStyle": "native",
     "window.menuBarVisibility": "toggle",
     "chat.viewSessions.orientation": "stacked",
+    "window.customTitleBarVisibility": "never",
 }

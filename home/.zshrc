@@ -161,7 +161,7 @@ autoload -Uz run-help-svn
 
 # AUTOCOMPLETION
 autoload -Uz compinit
-compinit
+compinit -C
 zmodload -i zsh/complist
 setopt hash_list_all            # hash everything before completion
 setopt completealiases          # complete aliases
@@ -297,6 +297,7 @@ export PATH=/home/ron/.bin:$PATH
 
 # EDITOR
 export EDITOR="nano"
+export VISUAL=$EDITOR
 
 # CCACHE
 export USE_CCACHE=1

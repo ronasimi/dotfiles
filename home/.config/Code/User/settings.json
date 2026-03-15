@@ -129,4 +129,5 @@
     "window.menuBarVisibility": "toggle",
     "chat.viewSessions.orientation": "stacked",
     "window.customTitleBarVisibility": "never",
+    "docker.extension.enableComposeLanguageServer": false,
 }

@@ -1,4 +1,5 @@
 {
+    "window.menuBarVisibility": "toggle",
     "security.workspace.trust.untrustedFiles": "open",
     "git.openRepositoryInParentFolders": "always",
     "workbench.colorTheme": "Material Theme Darker",
@@ -124,10 +125,11 @@
             "html"
         ]
     },
-    "workbench.activityBar.location": "hidden",
     "window.titleBarStyle": "native",
-    "window.menuBarVisibility": "toggle",
     "chat.viewSessions.orientation": "stacked",
     "window.customTitleBarVisibility": "never",
     "docker.extension.enableComposeLanguageServer": false,
+    "geminicodeassist.project": "encouraging-xerocopy-sf9kn",
+    "workbench.activityBar.location": "hidden",
+    "diffEditor.codeLens": true,
 }

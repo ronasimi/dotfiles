@@ -1,9 +1,8 @@
 {
     "layer": "top",
-    "mode": "dock",
     "position": "top",
     "height": 36,
-    "exclusive": false,
+    "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": false,
     "spacing": 6,

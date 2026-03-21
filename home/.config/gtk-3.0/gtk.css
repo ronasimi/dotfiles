@@ -1,5 +1,5 @@
   .view text selection {
-  background-color: #8ab4f8;
+  background-color: rgba(138, 180, 248, 0.8);
   color: #000000;
 }
 
@@ -48,7 +48,7 @@ window.thunar toolbar#location-toolbar>toolitem>widget>widget.linked.path-bar>bu
 window.thunar paned>scrolledwindow treeview.view:selected {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   background: #272727;
-  -gtk-secondary-caret-color: #8ab4f8;
+  -gtk-secondary-caret-color: rgba(138, 180, 248, 0.8);
 }
 
 .thunar .shortcuts-pane .view:selected {
@@ -62,7 +62,7 @@ window.thunar paned>scrolledwindow treeview.view:selected {
 }
 
 .thunar .view:selected {
-  background-color: #8ab4f8;
+  background-color: rgba(138, 180, 248, 0.8);
   color: #000000;
 }
 
@@ -77,10 +77,4 @@ window.thunar paned>scrolledwindow treeview.view:selected {
 
 .thunar statusbar {
   background-color: #272727;
-}
-
-/*thunar selection background*/
-.thunar .view:selected {
-  color: #272727;
-  background-color: #8ab4f8;
 }

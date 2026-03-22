@@ -180,6 +180,15 @@ label:focus {
     color: #5d5d5d;
 }
 
+#network.linked {
+    color: #ac4142;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
 #bluetooth {
     background-color: transparent;
     color: #c3c3c3;

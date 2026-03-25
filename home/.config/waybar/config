@@ -210,5 +210,25 @@
         "format": "",
         "interval": "once",
         "tooltip": false
-    }
+    },
+
+    "wlr/taskbar": { 
+        "disable-scroll": false,
+        "all-outputs": true,
+        "icon-theme": "Papirus-Dark",
+        "icon-size": 22,
+        "format": "{icon}",
+        "format-focused": "{icon} {title}",
+        "format-icons": {
+            "floating": "󰕾",
+            "maximized": "󰕿",
+            "pinned": "󰖀"
+        },
+        "on-click": "activate",
+        "on-click-middle": "toggle",
+        "on-click-right": "close",
+        "on-scroll-up": "hyprctl dispatch window e+1",
+        "on-scroll-down": "hyprctl dispatch window e-1",
+        "cursor": false
+        }
 }

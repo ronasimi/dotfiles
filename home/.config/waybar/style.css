@@ -10,6 +10,11 @@ window#waybar {
  /*   border-radius: 0px 0px 9px 9px; */
 }
 
+waybar>box {
+    border: none;
+    background: transparent;
+}
+
 window#waybar.hidden {
     opacity: 0;
 }
@@ -272,6 +277,12 @@ label:focus {
 }
 
 #custom-home {
+    color: #c3c3c3;
+    font-size: 20px;
+    margin: 6px;
+}
+
+#custom-overview {
     color: #c3c3c3;
     font-size: 20px;
     margin: 6px;

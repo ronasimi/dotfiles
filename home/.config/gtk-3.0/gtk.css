@@ -6,7 +6,6 @@
 /* Styling the tooltip container */
 tooltip {
     background-color: rgba(29, 29, 29, 0.80);
-    #272727; /* Dark background color */
     color: #8ab4f8;            /* Light text color */
     border-radius: 9px;        /* Optional: rounded corners */
     padding: 14px 14px;         /* Optional: some padding */

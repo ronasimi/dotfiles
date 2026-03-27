@@ -62,6 +62,15 @@
             "10": "󰽽",
             "urgent": "󱈸"
         },
+        "format-window-separator": "",
+        "workspace-taskbar": {
+            "enable": false,
+            "update-active-window": true,
+            "format": "{icon}",
+            "format-separator": " ",
+            "icon-theme": "Papirus-Dark"
+        },
+        "tooltip-format": "Workspace {name}\n{windows} windows",
         "on-scroll-up": "hyprctl dispatch workspace e+1",
         "on-scroll-down": "hyprctl dispatch workspace e-1",
         "cursor": false
@@ -204,6 +213,13 @@
         "format": "󰍜",
         "tooltip-format": "Application launcher",
         "on-click": "pkill wofi || wofi -f --show drun -G -p 'Type to search' -H 1056 -W 512 -x 0 -y 0 -b -i",
+        "cursor": false
+    },
+
+    "custom/overview": {
+        "format": "󰀻",
+        "tooltip-format": "Show open windows on all workspaces",
+        "on-click": "hyprctl dispatch hymission:toggle",
         "cursor": false
     },
 

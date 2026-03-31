@@ -2,8 +2,6 @@
     "mode": "dock",
     "position": "top",
     "height": 36,
-    "passthrough": false,
-    "gtk-layer-shell": true,
     "spacing": 6,
     "fixed-center": true,
     "reload_style_on_change": true,

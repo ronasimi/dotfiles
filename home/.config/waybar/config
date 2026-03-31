@@ -1,11 +1,9 @@
 {
-    "layer": "top",
+    "mode": "dock",
     "position": "top",
     "height": 36,
-    "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
-    "mode": "dock",
     "spacing": 6,
     "fixed-center": true,
     "reload_style_on_change": true,

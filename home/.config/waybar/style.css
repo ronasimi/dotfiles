@@ -10,11 +10,6 @@ window#waybar {
  /*   border-radius: 0px 0px 9px 9px; */
 }
 
-waybar>box {
-    border: none;
-    background: transparent;
-}
-
 window#waybar.hidden {
     opacity: 0;
 }

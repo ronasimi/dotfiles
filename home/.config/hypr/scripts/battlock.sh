@@ -20,10 +20,16 @@ battery_icon=${battery_icons[icon_index]}
 
 # Check if the battery is charging
 if [ "$battery_status" = "Charging" ]; then
-	battery_icon="$charging_icon"
+	icon="$charging_icon"
+elif [ "$battery_status" = "Discharging" ]; then
+	icon="${battery_icon}"
+elif [ "$battery_status" = "Full" ]; then
+	icon="󰚥"
+elif [ "$battery_status" = "Not charging" ]; then
+	icon="󰚥"
 else 
-	battery_icon="${battery_icon}"
+	icon="${battery_icon}"
 fi
 
 # Output the battery percentage and icon
-echo "$battery_icon $battery_percentage%"
+echo "$icon $battery_percentage%"

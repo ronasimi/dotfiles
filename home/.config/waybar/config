@@ -243,5 +243,5 @@
         "on-scroll-up": "hyprctl dispatch window e+1",
         "on-scroll-down": "hyprctl dispatch window e-1",
         "cursor": false
-        }
+    }
 }

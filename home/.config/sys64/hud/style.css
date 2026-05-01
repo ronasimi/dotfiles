@@ -15,6 +15,7 @@
 }
 #syshud label {
 	color: @theme_fg_color;
+	font-size: 12px;
 }
 
 /* Scale */

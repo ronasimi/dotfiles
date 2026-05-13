@@ -128,8 +128,15 @@
     "window.titleBarStyle": "native",
     "chat.viewSessions.orientation": "stacked",
     "window.customTitleBarVisibility": "never",
-    "docker.extension.enableComposeLanguageServer": false,
     "geminicodeassist.project": "encouraging-xerocopy-sf9kn",
     "workbench.activityBar.location": "hidden",
     "diffEditor.codeLens": true,
+    "docker.extension.enableComposeLanguageServer": false,
+
+    "Lua.workspace.library": [
+        "/usr/share/hypr/stubs"
+    ],
+    "Lua.diagnostics.globals": [
+        "hl"
+    ],
 }

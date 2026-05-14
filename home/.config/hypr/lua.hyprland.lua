@@ -9,18 +9,14 @@
 -- Create your files separately and then require them like this:
 -- require("myColors")
 
-
-------------------
----- MONITORS ----
-------------------
-
--- See https://wiki.hypr.land/Configuring/Basics/Monitors/
-hl.monitor({
-    output   = "eDP-1",
-    mode     = "preferred",
-    position = "auto",
-    scale    = "1",
-})
+local modules = {
+    "monitors",
+    "workspaces",
+    "env",
+    "windowrules",
+    "plugins",
+    "autostart",
+}
 
 
 ---------------------
@@ -32,55 +28,6 @@ local terminal    = "kitty"
 local fileManager = "thunar"
 local menu        = "wofi"
 
-
--------------------
----- AUTOSTART ----
--------------------
-
--- See https://wiki.hypr.land/Configuring/Basics/Autostart/
-
--- Autostart necessary processes (like notifications daemons, status bars, etc.)
--- Or execute your favorite apps at launch like this:
---
-hl.on("hyprland.start", function () 
-  hl.exec_cmd("dbus-update-activation-environment --systemd --all")
-  hl.exec_cmd("systemctl --user import-environment QT_QPA_PLATFORMTHEME")
-  hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
-  hl.exec_cmd("eval '$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)'")
-  hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
-  hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme 'OpenZone_White_Slim'")
-  hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-size 24")
-  hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'Materia-dark-compact'")
-  hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-application-prefer-dark-theme 'true'")
-  hl.exec_cmd("hyprpm reload")
-  hl.exec_cmd("dunst")
-  hl.exec_cmd("wl-clip-persist --clipboard regular")
-  hl.exec_cmd("wl-paste --watch cliphist store")
-  hl.exec_cmd("thunar --daemon")
-  hl.exec_cmd("hyprpaper")
-  hl.exec_cmd("~/.config/waybar/waybar.sh")
-  hl.exec_cmd("syshud")
-end)
-
-
--------------------------------
----- ENVIRONMENT VARIABLES ----
--------------------------------
-
--- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
-
-hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
-hl.env("XCURSOR_THEME", "OpenZone_White_Slim")
-hl.env("QT_CURSOR_THEME", "OpenZone_White_Slim")
-hl.env("HYPRCURSOR_THEME", "OpenZone_White_Slim")
-hl.env("QT_CURSOR_SIZE", "24")
-hl.env("ELECTRON_TRASH", "trash-cli")
-hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
-hl.env("SAL_USE_VCLPLUGIN", "gtk3")
-hl.env("MOZ_USE_XINPUT2", "1")
-hl.env("MOZ_ENABLE_WAYLAND", "1")
 
 -----------------------
 ----- PERMISSIONS -----
@@ -379,53 +326,3 @@ hl.bind(mainMod .. " + F7", hl.dsp.exec_cmd("libreoffice --writer"))
 hl.bind(mainMod .. " + F8",  hl.dsp.focus({ workspace = 8}))
 hl.bind(mainMod .. " + F8", hl.dsp.exec_cmd("GTK_THEME=Adwaita:dark prusa-slicer"))
 
-
---------------------------------
----- WINDOWS AND WORKSPACES ----
---------------------------------
-
--- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
--- and https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
-
--- Example window rules that are useful
-
-local suppressMaximizeRule = hl.window_rule({
-    -- Ignore maximize requests from all apps. You'll probably like this.
-    name  = "suppress-maximize-events",
-    match = { class = ".*" },
-
-    suppress_event = "maximize",
-})
--- suppressMaximizeRule:set_enabled(false)
-
-hl.window_rule({
-    -- Fix some dragging issues with XWayland
-    name  = "fix-xwayland-drags",
-    match = {
-        class      = "^$",
-        title      = "^$",
-        xwayland   = true,
-        float      = true,
-        fullscreen = false,
-        pin        = false,
-    },
-
-    no_focus = true,
-})
-
--- Layer rules also return a handle.
--- local overlayLayerRule = hl.layer_rule({
---     name  = "no-anim-overlay",
---     match = { namespace = "^my-overlay$" },
---     no_anim = true,
--- })
--- overlayLayerRule:set_enabled(false)
-
--- Hyprland-run windowrule
-hl.window_rule({
-    name  = "move-hyprland-run",
-    match = { class = "hyprland-run" },
-
-    move  = "20 monitor_h-120",
-    float = true,
-})

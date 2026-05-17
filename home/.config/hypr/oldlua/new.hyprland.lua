@@ -9,14 +9,12 @@
 -- Create your files separately and then require them like this:
 -- require("myColors")
 
-local modules = {
-    "monitors",
-    "workspaces",
-    "env",
-    "windowrules",
-    "plugins",
-    "autostart",
-}
+require("monitors")
+require("workspaces")
+require("env")
+require("windowrules")
+-- require("plugins")
+require("autostart")
 
 
 ---------------------
@@ -241,6 +239,14 @@ hl.gesture(
 -- })
 
 
+-- Handle lid switch
+-- Trigger when the switch is toggled.
+-- hl.bind("switch:[Lid Switch]", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"), { locked = true })
+-- Trigger when the switch is turning on.
+hl.bind("switch:on:[Lid Switch]", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"), { locked = true })
+-- Trigger when the switch is turning off.
+hl.bind("switch:off:[Lid Switch]", hl.dsp.exec_cmd("hyprctl dispatch dpms on"), { locked = true })
+
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
@@ -248,7 +254,6 @@ hl.gesture(
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 local closeWindowBind = hl.bind(mainMod .. " + X", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
@@ -300,7 +305,7 @@ hl.bind("XF86Display",          hl.dsp.exec_cmd("nwg-displays"))
 hl.bind("XF86Tools",            hl.dsp.exec_cmd("kitty --class 'btop' -e 'btop'"))
 hl.bind("XF86LaunchA",          hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
 
-hl.bind("XF86ScreenSaver",      hl.dsp.exec_cmd("pidof hyprlock || hyprlock --grace 0"))
+hl.bind("XF86ScreenSaver",      hl.dsp.exec_cmd("pidof hyprlock || hyprlock --grace 0 --immediate-render"))
 
 -- Lid switch
 
@@ -309,20 +314,48 @@ hl.bind(mainMod .. " + S",  hl.dsp.window.pin({ action = "toggle" }))
 
 
 -- Application binds
-hl.bind(mainMod .. " + F1",  hl.dsp.focus({ workspace = 1}))
-hl.bind(mainMod .. " + F1", hl.dsp.exec_cmd("google-chrome-stable"))
-hl.bind(mainMod .. " + F2",  hl.dsp.focus({ workspace = 2}))
-hl.bind(mainMod .. " + F2", hl.dsp.exec_cmd("kitty -1"))
-hl.bind(mainMod .. " + F3",  hl.dsp.focus({ workspace = 3}))
-hl.bind(mainMod .. " + F3", hl.dsp.exec_cmd("thunar"))
-hl.bind(mainMod .. " + F4",  hl.dsp.focus({ workspace = 4}))
-hl.bind(mainMod .. " + F4", hl.dsp.exec_cmd("code"))
-hl.bind(mainMod .. " + F5",  hl.dsp.focus({ workspace = 5}))
-hl.bind(mainMod .. " + F5", hl.dsp.exec_cmd("gimp"))
-hl.bind(mainMod .. " + F6",  hl.dsp.focus({ workspace = 6}))
-hl.bind(mainMod .. " + F6", hl.dsp.exec_cmd("vmware"))
-hl.bind(mainMod .. " + F7",  hl.dsp.focus({ workspace = 7}))
-hl.bind(mainMod .. " + F7", hl.dsp.exec_cmd("libreoffice --writer"))
-hl.bind(mainMod .. " + F8",  hl.dsp.focus({ workspace = 8}))
-hl.bind(mainMod .. " + F8", hl.dsp.exec_cmd("GTK_THEME=Adwaita:dark prusa-slicer"))
+hl.bind(mainMod .. " + F1", function()
+    hl.dispatch(hl.dsp.focus({ workspace = 1 }))
+    hl.dispatch(hl.dsp.exec_cmd("google-chrome-stable")) 
+end)
+hl.bind(mainMod .. " + F2", function()
+    hl.dispatch(hl.dsp.focus({ workspace = 2 }))
+    hl.dispatch(hl.dsp.exec_cmd("kitty -1"))
+end)
+hl.bind(mainMod .. " + F3", function()
+    hl.dispatch(hl.dsp.focus({ workspace = 3 }))
+    hl.dispatch(hl.dsp.exec_cmd("thunar"))
+end)
+hl.bind(mainMod .. " + F4", function()
+    hl.dispatch(hl.dsp.focus({ workspace = 4 }))
+    hl.dispatch(hl.dsp.exec_cmd("code"))
+end)
+hl.bind(mainMod .. " + F5", function()
+    hl.dispatch(hl.dsp.focus({ workspace = 5 }))
+    hl.dispatch(hl.dsp.exec_cmd("gimp"))
+end)
+hl.bind(mainMod .. " + F6", function()
+    hl.dispatch(hl.dsp.focus({ workspace = 6 }))
+    hl.dispatch(hl.dsp.exec_cmd("vmware"))
+end)
+hl.bind(mainMod .. " + F7", function()
+    hl.dispatch(hl.dsp.focus({ workspace = 7 }))
+    hl.dispatch(hl.dsp.exec_cmd("libreoffice --writer"))
+end)
+hl.bind(mainMod .. " + F8", function()
+    hl.dispatch(hl.dsp.focus({ workspace = 8 }))
+    hl.dispatch(hl.dsp.exec_cmd("GTK_THEME=Adwaita:dark prusa-slicer"))
+end)
+
+-- Open a terminal
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("kitty --class 'super-enter'"))
+hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("kitty"))
+
+-- Screenshots
+hl.bind("PRINT", hl.dsp.exec_cmd("grimblast save screen"))
+hl.bind("ALT + PRINT", hl.dsp.exec_cmd("grimblast save active"))
+hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy screen"))
+hl.bind("ALT + SHIFT + PRINT ", hl.dsp.exec_cmd("grimblast copy active"))
+hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd("grimblast save area"))
+hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy area"))
 

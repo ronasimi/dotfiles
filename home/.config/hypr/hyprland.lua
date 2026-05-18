@@ -383,4 +383,7 @@ hl.bind(mainMod .. " + F8", function()
 end)
 
 -- rtorrent
-hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("/home/ron/.bin/startrt && kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chkrt'", { workspace = "special:scratchpad" }))
+hl.bind(mainMod .. " + T", function()
+    hl.dispatch(hl.dsp.focus({ workspace = "special:scratchpad" }))
+    hl.dispatch(hl.dsp.exec_cmd("/home/ron/.bin/startrt && kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chkrt'"))
+end)

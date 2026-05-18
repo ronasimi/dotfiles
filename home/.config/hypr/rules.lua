@@ -38,12 +38,14 @@ local wofiLayerRule = hl.layer_rule({
     name  = "wofi-slide",
     match = { namespace = "wofi" },
     animation = "slide",
+    blur = true,
 })
 
 local waybarLayerRule = hl.layer_rule({
     name  = "waybar-slide",
     match = { namespace = "waybar" },
     animation = "slide",
+    blur = true,
 })
 
 

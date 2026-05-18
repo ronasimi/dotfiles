@@ -39,7 +39,7 @@ require("permissions") -- Layouts configuration
 require("env")      -- Environment variables
 require("rules") -- Window and workspace rules
 require("autostart") -- Autostart applications and commands
-
+require("plugins") -- Hyprland plugins configuration
 
 ---------------------
 ---- MY PROGRAMS ----

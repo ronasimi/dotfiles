@@ -1,13 +1,7 @@
--------------------
----- AUTOSTART ----
--------------------
+-- Autostart applications and commands for Hyprland
+-- See https://wiki.hypr.land/Configuring/Basics/Autostart/ for more details.
 
--- See https://wiki.hypr.land/Configuring/Basics/Autostart/
-
--- Autostart necessary processes (like notifications daemons, status bars, etc.)
--- Or execute your favorite apps at launch like this:
---
-hl.on("hyprland.start", function () 
+hl.on("hyprland.start", function ()
   hl.exec_cmd("dbus-update-activation-environment --systemd --all")
   hl.exec_cmd("systemctl --user import-environment QT_QPA_PLATFORMTHEME")
   hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
@@ -17,7 +11,8 @@ hl.on("hyprland.start", function ()
   hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-size 24")
   hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'Materia-dark-compact'")
   hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-application-prefer-dark-theme 'true'")
-  hl.exec_cmd("hyprpm reload")
+--  hl.exec_cmd("hyprpm reload")
+  hl.exec_cmd("hypridle")
   hl.exec_cmd("dunst")
   hl.exec_cmd("wl-clip-persist --clipboard regular")
   hl.exec_cmd("wl-paste --watch cliphist store")

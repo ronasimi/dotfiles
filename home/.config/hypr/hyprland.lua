@@ -9,12 +9,11 @@
 -- Create your files separately and then require them like this:
 -- require("myColors")
 
-require("monitors")
-require("workspaces")
-require("env")
-require("windowrules")
--- require("plugins")
-require("autostart")
+require("monitors") -- Monitor configuration
+require("workspaces")    -- Workspaces configuration
+require("env")      -- Environment variables
+require("rules") -- Window and workspace rules
+require("autostart") -- Autostart applications and commands
 
 
 ---------------------
@@ -22,9 +21,9 @@ require("autostart")
 ---------------------
 
 -- Set programs that you use
-local terminal    = "kitty"
+local terminal    = "kitty --class 'super-enter'"
 local fileManager = "thunar"
-local menu        = "wofi"
+local menu        = "pkill wofi || wofi -f --show drun -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i"
 
 
 -----------------------
@@ -65,6 +64,7 @@ hl.config({
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
         resize_on_border = true,
+        hover_icon_on_border = true,
 
         -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
         allow_tearing = false,
@@ -82,9 +82,12 @@ hl.config({
 
         shadow = {
             enabled      = true,
+            sharp        = false,
             range        = 18,
+            scale        = 3,
             render_power = 4,
-            color        = "rgba(020d1f80)",
+            color        = 0x80010d1f,
+            color_inactive = 0x00000000,
         },
 
         blur = {
@@ -93,7 +96,7 @@ hl.config({
             passes    = 3,
             noise     = 0.0234,
             popups    = true,
-            special   = false,
+            special   = false
         },
     },
 
@@ -114,20 +117,21 @@ hl.curve("easy",           { type = "spring", mass = 1, stiffness = 71.2633, dam
 
 hl.animation({ leaf = "global",        enabled = true,  speed = 10,   bezier = "default" })
 hl.animation({ leaf = "border",        enabled = true,  speed = 5.39, bezier = "easeOutQuint" })
-hl.animation({ leaf = "windows",       enabled = true,  speed = 4.79, spring = "easy" })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 4.1,  spring = "easy",         style = "popin 87%" })
-hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 1.49, bezier = "linear",       style = "popin 87%" })
-hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 1.73, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 1.46, bezier = "almostLinear" })
+--hl.animation({ leaf = "windows",       enabled = true,  speed = 4.79, spring = "easy" })
+hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 4.1,  bezier = "almostLinear", style = "popin" })
+hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 4.1, bezier = "almostLinear",       style = "popin" })
+hl.animation({ leaf = "windowsMove",    enabled = true,  speed = 1, bezier = "almostLinear",       style = "popin" })
+--hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 1.73, bezier = "almostLinear" })
+--hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 1.46, bezier = "almostLinear" })
 hl.animation({ leaf = "fade",          enabled = true,  speed = 3.03, bezier = "quick" })
-hl.animation({ leaf = "layers",        enabled = true,  speed = 3.81, bezier = "easeOutQuint" })
-hl.animation({ leaf = "layersIn",      enabled = true,  speed = 4,    bezier = "easeOutQuint", style = "fade" })
-hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.5,  bezier = "linear",       style = "fade" })
-hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 1.79, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.39, bezier = "almostLinear" })
-hl.animation({ leaf = "workspaces",    enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
+--hl.animation({ leaf = "layers",        enabled = true,  speed = 3.81, bezier = "easeOutQuint" })
+--hl.animation({ leaf = "layersIn",      enabled = true,  speed = 4,    bezier = "easeOutQuint", style = "fade" })
+--hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.5,  bezier = "linear",       style = "fade" })
+--hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 1.79, bezier = "almostLinear" })
+--hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.39, bezier = "almostLinear" })
+hl.animation({ leaf = "workspaces",    enabled = true,  speed = 1.94, bezier = "almostLinear", style = "slide" })
+--hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "almostLinear", style = "slide" })
+--hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "slide" })
 hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "quick" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
@@ -152,7 +156,7 @@ hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "
 hl.config({
     dwindle = {
         preserve_split = true, -- You probably want this
-        force_split   = 2,
+        force_split = 2,      -- 0 = no force, 1 = always respect the layout's split ratio, 2 = always split in half
     },
 })
 
@@ -160,7 +164,6 @@ hl.config({
 hl.config({
     master = {
         new_status = "master",
-        mfact = 0.60,
     },
 })
 
@@ -179,12 +182,6 @@ hl.config({
     misc = {
         force_default_wallpaper = 0,    -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = true, -- If true disables the random hyprland logo / anime girl background. :(
-        disable_splash_rendering = true, -- If true disables the splash screen rendering. This means you won't see the Hyprland logo when you start Hyprland, but it also means you won't see a black screen if you have a very fast startup.
-        focus_on_activate = true,
-        animate_manual_resizes = false,
-        animate_mouse_windowdragging = false,
-        enable_anr_dialog = false,
-        font_family = "SF Pro",
     },
 })
 
@@ -207,7 +204,7 @@ hl.config({
 
         touchpad = {
             natural_scroll = true,
-            drag_lock      = false,
+            drag_lock      = 0,
             scroll_factor  = 1.0,
         },
 
@@ -217,35 +214,25 @@ hl.config({
     },
 })
 
-hl.gesture(
-    {
-        fingers = 3,
-        direction = "horizontal",
-        action = "workspace"
-    },
-    {
-        fingers = 3,
-        direction = "down",
-        action = "dispatcher",
-        dispatcher = "togglespecialworkspace",
-    }
-)
+hl.gesture({
+    fingers = 3,
+    direction = "horizontal",
+    action = "workspace"
+})
+
+hl.gesture({
+    fingers = 3,
+    direction = "down",
+    action = "special"
+})
 
 -- Example per-device config
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Devices/ for more
--- hl.device({
---     name        = "epic-mouse-v1",
---     sensitivity = -0.5,
--- })
+hl.device({
+    name        = "epic-mouse-v1",
+    sensitivity = -0.5,
+})
 
-
--- Handle lid switch
--- Trigger when the switch is toggled.
--- hl.bind("switch:[Lid Switch]", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"), { locked = true })
--- Trigger when the switch is turning on.
-hl.bind("switch:on:[Lid Switch]", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"), { locked = true })
--- Trigger when the switch is turning off.
-hl.bind("switch:off:[Lid Switch]", hl.dsp.exec_cmd("hyprctl dispatch dpms on"), { locked = true })
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -254,12 +241,13 @@ hl.bind("switch:off:[Lid Switch]", hl.dsp.exec_cmd("hyprctl dispatch dpms on"), 
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 local closeWindowBind = hl.bind(mainMod .. " + X", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 
@@ -278,84 +266,121 @@ for i = 1, 10 do
 end
 
 -- Example special workspace (scratchpad)
-hl.bind(mainMod .. " + TAB",            hl.dsp.workspace.toggle_special)
-hl.bind(mainMod .. " + SHIFT + DELETE", hl.dsp.window.move({ workspace = "special" }))
+hl.bind(mainMod .. " + TAB",         hl.dsp.workspace.toggle_special("scratchpad"))
+hl.bind(mainMod .. " + SHIFT + TAB", hl.dsp.window.move({ workspace = "special:scratchpad" }))
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
-
--- Scroll workspaces with page up/down
-hl.bind(mainMod .. " + page_up",   hl.dsp.focus({ workspace = "e-1" }))
-hl.bind(mainMod .. " + page_down", hl.dsp.focus({ workspace = "e+1" }))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Laptop multimedia keys for volume and LCD brightness
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer -i 5"),                    { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pamixer -d 5"),                    { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pamixer -t"),                      { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("pactl set-source-mute 0 toggle"),  { locked = true, repeating = true })
-
-hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),   { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer -d 5"),                        { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pamixer -i 5"),                        { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pamixer -t"),                          { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("pactl set-source-mute 0 toggle"),      { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),       { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),       { locked = true, repeating = true })
 hl.bind("XF86Display",          hl.dsp.exec_cmd("nwg-displays"))
 hl.bind("XF86Tools",            hl.dsp.exec_cmd("kitty --class 'btop' -e 'btop'"))
 hl.bind("XF86LaunchA",          hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
+hl.bind("XF86Favorites",        hl.dsp.exec_cmd("warpinator"))
 
-hl.bind("XF86ScreenSaver",      hl.dsp.exec_cmd("pidof hyprlock || hyprlock --grace 0 --immediate-render"))
 
--- Lid switch
+-- Lid switch (laptop)
 
--- Pin current window to all workspaces (sticky)
-hl.bind(mainMod .. " + S",  hl.dsp.window.pin({ action = "toggle" }))
+-- Trigger when the switch is turning on.
+hl.bind("switch:on:[Lid Switch]", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"), { locked = true })
+
+-- Trigger when the switch is turning off.
+hl.bind("switch:off:[Lid Switch]", hl.dsp.exec_cmd("hyprctl dispatch dpms on"), { locked = true })
+
+
+-- Screenshots
+
+-- Printscreen saves full screen screenshot
+hl.bind("PRINT", hl.dsp.exec_cmd("grimblast save screen"))
+
+-- Alt + Printscreen saves a screenshot of the currently focused window
+hl.bind("ALT + PRINT", hl.dsp.exec_cmd("grimblast save active"))
+
+-- Shift + Printscreen copies fullscreen to clipboard
+hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy screen"))
+
+-- Alt + Shift + Printscreen copies focused window to clipboard
+hl.bind("ALT + SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy active"))
+
+-- Super + Printscreen allows you to select an area to screenshot and saves it
+hl.bind("SUPER + PRINT", hl.dsp.exec_cmd("grimblast save area"))
+
+-- Super + Shift + Printscreen allows you to select an area to screenshot and copies it to clipboard
+hl.bind("SUPER + SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy area"))
+
+
+-- Open a tiled terminal
+hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("kitty"))
+
+
+-- dunst history
+hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("dunstctl history-pop"))
+
+
+-- show/hide waybar
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
 
 
 -- Application binds
+
+-- Google Chrome
 hl.bind(mainMod .. " + F1", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 1 }))
-    hl.dispatch(hl.dsp.exec_cmd("google-chrome-stable")) 
+    hl.dispatch(hl.dsp.focus({ workspace = 1}))
+    hl.dispatch(hl.dsp.exec_cmd("google-chrome-stable"))
 end)
+hl.bind(mainMod .. " + ALT + F1", function()
+    hl.dispatch(hl.dsp.exec_cmd("google-chrome-stable --incognito"))
+end)
+
+-- Kitty terminal
 hl.bind(mainMod .. " + F2", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 2 }))
+    hl.dispatch(hl.dsp.focus({ workspace = 2}))
     hl.dispatch(hl.dsp.exec_cmd("kitty -1"))
 end)
+
+-- Thunar file manager
 hl.bind(mainMod .. " + F3", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 3 }))
+    hl.dispatch(hl.dsp.focus({ workspace = 3}))
     hl.dispatch(hl.dsp.exec_cmd("thunar"))
 end)
+
+-- VSCode
 hl.bind(mainMod .. " + F4", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 4 }))
+    hl.dispatch(hl.dsp.focus({ workspace = 4}))
     hl.dispatch(hl.dsp.exec_cmd("code"))
 end)
+
+-- GIMP
 hl.bind(mainMod .. " + F5", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 5 }))
+    hl.dispatch(hl.dsp.focus({ workspace = 5}))
     hl.dispatch(hl.dsp.exec_cmd("gimp"))
 end)
+
+-- VMware
 hl.bind(mainMod .. " + F6", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 6 }))
+    hl.dispatch(hl.dsp.focus({ workspace = 6}))
     hl.dispatch(hl.dsp.exec_cmd("vmware"))
 end)
+
+-- LibreOffice Writer
 hl.bind(mainMod .. " + F7", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 7 }))
+    hl.dispatch(hl.dsp.focus({ workspace = 7}))
     hl.dispatch(hl.dsp.exec_cmd("libreoffice --writer"))
 end)
+
+-- PrusaSlicer
 hl.bind(mainMod .. " + F8", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 8 }))
+    hl.dispatch(hl.dsp.focus({ workspace = 8}))
     hl.dispatch(hl.dsp.exec_cmd("GTK_THEME=Adwaita:dark prusa-slicer"))
 end)
-
--- Open a terminal
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("kitty --class 'super-enter'"))
-hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("kitty"))
-
--- Screenshots
-hl.bind("PRINT", hl.dsp.exec_cmd("grimblast save screen"))
-hl.bind("ALT + PRINT", hl.dsp.exec_cmd("grimblast save active"))
-hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy screen"))
-hl.bind("ALT + SHIFT + PRINT ", hl.dsp.exec_cmd("grimblast copy active"))
-hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd("grimblast save area"))
-hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy area"))
-

@@ -1,4 +1,28 @@
--- This is an example Hyprland Lua config file.
+--          _____                _____                    _____                    _____                    _____            _____                    _____                    _____
+--         /\    \              |\    \                  /\    \                  /\    \                  /\    \          /\    \                  /\    \                  /\    \
+--        /::\____\             |:\____\                /::\    \                /::\    \                /::\____\        /::\    \                /::\____\                /::\    \
+--       /:::/    /             |::|   |               /::::\    \              /::::\    \              /:::/    /       /::::\    \              /::::|   |               /::::\    \
+--      /:::/    /              |::|   |              /::::::\    \            /::::::\    \            /:::/    /       /::::::\    \            /:::::|   |              /::::::\    \
+--     /:::/    /               |::|   |             /:::/\:::\    \          /:::/\:::\    \          /:::/    /       /:::/\:::\    \          /::::::|   |             /:::/\:::\    \
+--    /:::/____/                |::|   |            /:::/__\:::\    \        /:::/__\:::\    \        /:::/    /       /:::/__\:::\    \        /:::/|::|   |            /:::/  \:::\    \
+--   /::::\    \                |::|   |           /::::\   \:::\    \      /::::\   \:::\    \      /:::/    /       /::::\   \:::\    \      /:::/ |::|   |           /:::/    \:::\    \
+--  /::::::\    \   _____       |::|___|______    /::::::\   \:::\    \    /::::::\   \:::\    \    /:::/    /       /::::::\   \:::\    \    /:::/  |::|   | _____    /:::/    / \:::\    \
+-- /:::/\:::\    \ /\    \      /::::::::\    \  /:::/\:::\   \:::\____\  /:::/\:::\   \:::\____\  /:::/    /       /:::/\:::\   \:::\    \  /:::/   |::|   |/\    \  /:::/    /   \:::\ ___\
+--/:::/  \:::\    /::\____\    /::::::::::\____\/:::/  \:::\   \:::|    |/:::/  \:::\   \:::|    |/:::/____/       /:::/  \:::\   \:::\____\/:: /    |::|   /::\____\/:::/____/     \:::|    |
+--\::/    \:::\  /:::/    /   /:::/~~~~/~~      \::/    \:::\  /:::|____|\::/   |::::\  /:::|____|\:::\    \       \::/    \:::\  /:::/    /\::/    /|::|  /:::/    /\:::\    \     /:::|____|
+-- \/____/ \:::\/:::/    /   /:::/    /          \/_____/\:::\/:::/    /  \/____|:::::\/:::/    /  \:::\    \       \/____/ \:::\/:::/    /  \/____/ |::| /:::/    /  \:::\    \   /:::/    /
+--          \::::::/    /   /:::/    /                    \::::::/    /         |:::::::::/    /    \:::\    \               \::::::/    /           |::|/:::/    /    \:::\    \ /:::/    /
+--           \::::/    /   /:::/    /                      \::::/    /          |::|\::::/    /      \:::\    \               \::::/    /            |::::::/    /      \:::\    /:::/    /
+--           /:::/    /    \::/    /                        \::/____/           |::| \::/____/        \:::\    \              /:::/    /             |:::::/    /        \:::\  /:::/    /
+--          /:::/    /      \/____/                          ~~                 |::|  ~|               \:::\    \            /:::/    /              |::::/    /          \:::\/:::/    /
+--         /:::/    /                                                           |::|   |                \:::\    \          /:::/    /               /:::/    /            \::::::/    /
+--        /:::/    /                                                            \::|   |                 \:::\____\        /:::/    /               /:::/    /              \::::/    /
+--        \::/    /                                                              \:|   |                  \::/    /        \::/    /                \::/    /                \::/____/
+--         \/____/                                                                \|___|                   \/____/          \/____/                  \/____/                  ~~
+--
+
+
+-- This is a Hyprland Lua config file.
 -- Refer to the wiki for more information.
 -- https://wiki.hypr.land/Configuring/Start/
 
@@ -11,6 +35,7 @@
 
 require("monitors") -- Monitor configuration
 require("workspaces")    -- Workspaces configuration
+require("permissions") -- Layouts configuration
 require("env")      -- Environment variables
 require("rules") -- Window and workspace rules
 require("autostart") -- Autostart applications and commands
@@ -26,23 +51,7 @@ local fileManager = "thunar"
 local menu        = "pkill wofi || wofi -f --show drun -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i"
 
 
------------------------
------ PERMISSIONS -----
------------------------
 
--- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Permissions/
--- Please note permission changes here require a Hyprland restart and are not applied on-the-fly
--- for security reasons
-
--- hl.config({
---   ecosystem = {
---     enforce_permissions = true,
---   },
--- })
-
--- hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
--- hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
--- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
 
 
 -----------------------
@@ -118,24 +127,25 @@ hl.curve("easy",           { type = "spring", mass = 1, stiffness = 71.2633, dam
 hl.animation({ leaf = "global",        enabled = true,  speed = 10,   bezier = "default" })
 hl.animation({ leaf = "border",        enabled = true,  speed = 5.39, bezier = "easeOutQuint" })
 --hl.animation({ leaf = "windows",       enabled = true,  speed = 4.79, spring = "easy" })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 4.1,  bezier = "almostLinear", style = "popin" })
-hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 4.1, bezier = "almostLinear",       style = "popin" })
-hl.animation({ leaf = "windowsMove",    enabled = true,  speed = 1, bezier = "almostLinear",       style = "popin" })
+hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 3,  bezier = "almostLinear", style = "popin" })
+hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 3, bezier = "almostLinear",       style = "popin" })
+hl.animation({ leaf = "windowsMove",    enabled = true,  speed = 3, bezier = "almostLinear",       style = "slide" })
 --hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 1.73, bezier = "almostLinear" })
 --hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 1.46, bezier = "almostLinear" })
-hl.animation({ leaf = "fade",          enabled = true,  speed = 3.03, bezier = "quick" })
+hl.animation({ leaf = "fade",          enabled = true,  speed = 3, bezier = "quick" })
 --hl.animation({ leaf = "layers",        enabled = true,  speed = 3.81, bezier = "easeOutQuint" })
 --hl.animation({ leaf = "layersIn",      enabled = true,  speed = 4,    bezier = "easeOutQuint", style = "fade" })
 --hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.5,  bezier = "linear",       style = "fade" })
 --hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 1.79, bezier = "almostLinear" })
 --hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.39, bezier = "almostLinear" })
-hl.animation({ leaf = "workspaces",    enabled = true,  speed = 1.94, bezier = "almostLinear", style = "slide" })
+hl.animation({ leaf = "workspaces",    enabled = true,  speed = 2, bezier = "quick", style = "slide" })
 --hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "almostLinear", style = "slide" })
 --hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "slide" })
+hl.animation({ leaf = "specialWorkspace",    enabled = true,  speed = 2, bezier = "quick", style = "slide top" })
 hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "quick" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
--- "Smart gaps" / "No gaps when only"
+-- "Smart gaps" / "No gaps when only"l", style = 
 -- uncomment all if you wish to use that.
 -- hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 0, gaps_in = 0 })
 -- hl.workspace_rule({ workspace = "f[1]",   gaps_out = 0, gaps_in = 0 })
@@ -223,7 +233,7 @@ hl.gesture({
 hl.gesture({
     fingers = 3,
     direction = "down",
-    action = "special"
+    action = "special", workspace_name = "scratchpad"
 })
 
 -- Example per-device config
@@ -289,33 +299,27 @@ hl.bind("XF86Tools",            hl.dsp.exec_cmd("kitty --class 'btop' -e 'btop'"
 hl.bind("XF86LaunchA",          hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
 hl.bind("XF86Favorites",        hl.dsp.exec_cmd("warpinator"))
 
+-- Lock screen
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"), { locked = true })
 
 -- Lid switch (laptop)
-
 -- Trigger when the switch is turning on.
-hl.bind("switch:on:[Lid Switch]", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"), { locked = true })
-
+hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"), { locked = true })
 -- Trigger when the switch is turning off.
-hl.bind("switch:off:[Lid Switch]", hl.dsp.exec_cmd("hyprctl dispatch dpms on"), { locked = true })
+hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("hyprctl dispatch dpms on"), { locked = true })
 
 
 -- Screenshots
-
 -- Printscreen saves full screen screenshot
 hl.bind("PRINT", hl.dsp.exec_cmd("grimblast save screen"))
-
 -- Alt + Printscreen saves a screenshot of the currently focused window
 hl.bind("ALT + PRINT", hl.dsp.exec_cmd("grimblast save active"))
-
 -- Shift + Printscreen copies fullscreen to clipboard
 hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy screen"))
-
 -- Alt + Shift + Printscreen copies focused window to clipboard
 hl.bind("ALT + SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy active"))
-
 -- Super + Printscreen allows you to select an area to screenshot and saves it
 hl.bind("SUPER + PRINT", hl.dsp.exec_cmd("grimblast save area"))
-
 -- Super + Shift + Printscreen allows you to select an area to screenshot and copies it to clipboard
 hl.bind("SUPER + SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy area"))
 
@@ -333,7 +337,6 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
 
 
 -- Application binds
-
 -- Google Chrome
 hl.bind(mainMod .. " + F1", function()
     hl.dispatch(hl.dsp.focus({ workspace = 1}))
@@ -342,45 +345,41 @@ end)
 hl.bind(mainMod .. " + ALT + F1", function()
     hl.dispatch(hl.dsp.exec_cmd("google-chrome-stable --incognito"))
 end)
-
 -- Kitty terminal
 hl.bind(mainMod .. " + F2", function()
     hl.dispatch(hl.dsp.focus({ workspace = 2}))
     hl.dispatch(hl.dsp.exec_cmd("kitty -1"))
 end)
-
 -- Thunar file manager
 hl.bind(mainMod .. " + F3", function()
     hl.dispatch(hl.dsp.focus({ workspace = 3}))
     hl.dispatch(hl.dsp.exec_cmd("thunar"))
 end)
-
 -- VSCode
 hl.bind(mainMod .. " + F4", function()
     hl.dispatch(hl.dsp.focus({ workspace = 4}))
     hl.dispatch(hl.dsp.exec_cmd("code"))
 end)
-
 -- GIMP
 hl.bind(mainMod .. " + F5", function()
     hl.dispatch(hl.dsp.focus({ workspace = 5}))
     hl.dispatch(hl.dsp.exec_cmd("gimp"))
 end)
-
 -- VMware
 hl.bind(mainMod .. " + F6", function()
     hl.dispatch(hl.dsp.focus({ workspace = 6}))
     hl.dispatch(hl.dsp.exec_cmd("vmware"))
 end)
-
 -- LibreOffice Writer
 hl.bind(mainMod .. " + F7", function()
     hl.dispatch(hl.dsp.focus({ workspace = 7}))
     hl.dispatch(hl.dsp.exec_cmd("libreoffice --writer"))
 end)
-
 -- PrusaSlicer
 hl.bind(mainMod .. " + F8", function()
     hl.dispatch(hl.dsp.focus({ workspace = 8}))
     hl.dispatch(hl.dsp.exec_cmd("GTK_THEME=Adwaita:dark prusa-slicer"))
 end)
+
+-- rtorrent
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("/home/ron/.bin/startrt && kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chkrt'", { workspace = "special:scratchpad" }))

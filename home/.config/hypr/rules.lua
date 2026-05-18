@@ -245,7 +245,7 @@ hl.window_rule({
 hl.window_rule({
     name  = "scratchpad-special",
     match = { class = " ^(scratchpad)$" },
-    workspace = "special",
+    workspace = "special:scratchpad",
 })
 
 hl.window_rule({

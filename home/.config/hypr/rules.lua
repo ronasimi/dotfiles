@@ -107,7 +107,6 @@ hl.window_rule({
     match = { class = "^(super-enter)$" },
     float = true,
     pin = true,
-    workspace = "4",
 })
 
 hl.window_rule({

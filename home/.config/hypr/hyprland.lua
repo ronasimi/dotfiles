@@ -91,11 +91,11 @@ hl.config({
 
         shadow = {
             enabled      = true,
-            sharp        = false,
-            range        = 18,
-            scale        = 3,
-            render_power = 4,
-            color        = 0x80010d1f,
+            -- sharp        = false,
+            range        = 9,
+            scale        = 1,
+            render_power = 2,
+            color        = 0xee101010,
             color_inactive = 0x00000000,
         },
 

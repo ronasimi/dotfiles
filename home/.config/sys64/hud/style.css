@@ -5,7 +5,7 @@
 #syshud .box_layout {
 	background: alpha(@theme_bg_color, 0.5);
 	border-radius: 9px;
-	border: 1px solid @borders;
+	border: 0px solid @borders;
 	margin: 10px;
 }
 
@@ -32,7 +32,7 @@
 	padding: 0px;
 }
 #syshud scale.horizontal highlight {
-	border-radius: 3px;
+	border-radius: 0px;
 	min-height: 5px;
 	min-width: 5px;
 	background: alpha(@theme_fg_color, 0.75);

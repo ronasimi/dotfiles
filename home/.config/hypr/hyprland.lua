@@ -87,7 +87,7 @@ hl.config({
 
         -- Change transparency of focused and unfocused windows
         active_opacity   = 1.0,
-        inactive_opacity = 0.8,
+        inactive_opacity = 0.85,
 
         shadow = {
             enabled      = true,
@@ -95,7 +95,7 @@ hl.config({
             range        = 9,
             scale        = 1,
             render_power = 2,
-            color        = 0xee101010,
+            color        = 0xd91d1d1d,
             color_inactive = 0x00000000,
         },
 
@@ -124,25 +124,25 @@ hl.curve("quick",          { type = "bezier", points = { {0.15, 0},    {0.1, 1} 
 -- Default springs
 hl.curve("easy",           { type = "spring", mass = 1, stiffness = 71.2633, dampening = 15.8273644 })
 
-hl.animation({ leaf = "global",        enabled = true,  speed = 10,   bezier = "default" })
-hl.animation({ leaf = "border",        enabled = true,  speed = 5.39, bezier = "easeOutQuint" })
+hl.animation({ leaf = "global",         enabled = true,  speed = 10,   bezier = "default" })
+hl.animation({ leaf = "border",         enabled = true,  speed = 5.39, bezier = "easeOutQuint" })
 --hl.animation({ leaf = "windows",       enabled = true,  speed = 4.79, spring = "easy" })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 3,  bezier = "almostLinear", style = "popin" })
-hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 3, bezier = "almostLinear",       style = "popin" })
+hl.animation({ leaf = "windowsIn",      enabled = true,  speed = 3,  bezier = "almostLinear", style = "popin" })
+hl.animation({ leaf = "windowsOut",     enabled = true,  speed = 3, bezier = "almostLinear",       style = "popin" })
 hl.animation({ leaf = "windowsMove",    enabled = true,  speed = 3, bezier = "almostLinear",       style = "slide" })
 --hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 1.73, bezier = "almostLinear" })
 --hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 1.46, bezier = "almostLinear" })
-hl.animation({ leaf = "fade",          enabled = true,  speed = 3, bezier = "quick" })
+hl.animation({ leaf = "fade",           enabled = true,  speed = 3, bezier = "quick" })
 --hl.animation({ leaf = "layers",        enabled = true,  speed = 3.81, bezier = "easeOutQuint" })
 --hl.animation({ leaf = "layersIn",      enabled = true,  speed = 4,    bezier = "easeOutQuint", style = "fade" })
 --hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.5,  bezier = "linear",       style = "fade" })
 --hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 1.79, bezier = "almostLinear" })
 --hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.39, bezier = "almostLinear" })
-hl.animation({ leaf = "workspaces",    enabled = true,  speed = 2, bezier = "quick", style = "slide" })
+hl.animation({ leaf = "workspaces",     enabled = true,  speed = 3, bezier = "quick", style = "slide" })
 --hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "almostLinear", style = "slide" })
 --hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "slide" })
-hl.animation({ leaf = "specialWorkspace",    enabled = true,  speed = 2, bezier = "quick", style = "slide top" })
-hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "quick" })
+hl.animation({ leaf = "specialWorkspace",enabled = true,  speed = 3, bezier = "easeInOutCubic", style = "slide top" })
+hl.animation({ leaf = "zoomFactor",     enabled = true,  speed = 7,    bezier = "quick" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"l", style = 
@@ -328,6 +328,11 @@ hl.bind("SUPER + PRINT", hl.dsp.exec_cmd("grimblast save area"))
 -- Super + Shift + Printscreen allows you to select an area to screenshot and copies it to clipboard
 hl.bind("SUPER + SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy area"))
 
+
+
+-- wofi binds - clipboard history, run dialog
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("pkill wofi || cliphist list | wofi -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540-b -i --dmenu --pre-display-cmd \"echo '%s' | cut -f 2\" | cliphist decode | wl-copy"))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill wofi || wofi -f --show run -G -y 0 -x 0 -H 216 -W 512"))
 
 -- Open a tiled terminal
 hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("kitty"))

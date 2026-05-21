@@ -203,31 +203,31 @@ hl.window_rule({
 
 hl.window_rule({
     name  = "thunar-dialogs-floating",
-    match = { class = "^(thunar)$", title = "^(File|Rename|Create|Attention|Copy|Move|Delete)$" },
+    match = { class = "^(thunar)$", title = "^(File.*|Rename.*|Create.*|Attention.*|Copy.*|Move.*|Delete.*)$" },
     float = true,
 })
 
 hl.window_rule({
     name  = "chrome-dialogs-floating",
-    match = { class = "^(google-chrome)$", title = "^(Open|Save|Downloads|Print)$" },
+    match = { class = "^(google-chrome)$", title = "^(Open.*|Save.*|Downloads.*|Print.*)$" },
     float = true,
 })
 
 hl.window_rule({
     name  = "electron-dialogs-floating",
-    match = { class = "^(electron)$", title = "^(Open|Save|Downloads|Print)$" },
+    match = { class = "^(electron)$", title = "^(Open.*|Save.*|Downloads.*|Print.*)$" },
     float = true,
 })
 
 hl.window_rule({
     name  = "code-dialogs-floating",
-    match = { class = "^(code)$", title = "^(Open|Save|Print)$" },
+    match = { class = "^(code)$", title = "^(Open.*|Save.*|Print.*)$" },
     float = true,
 })
 
 hl.window_rule({
     name  = "gimp-dialogs-floating",
-    match = { class = "^(gimp)$", title = "^(Open|Save|Export|Quit|Scale|Set|Print)$" },
+    match = { class = "^(gimp)$", title = "^(Open.*|Save.*|Export.*|Quit.*|Scale.*|Set.*|Print.*)$" },
     float = true,
 })
 
@@ -239,7 +239,7 @@ hl.window_rule({
 
 hl.window_rule({
     name  = "xarchive-dialogs-floating",
-    match = { class = "^(xarchiver)", title = "^(Extract|Add|Delete|Properties|Please)$" },
+    match = { class = "^(xarchiver)", title = "^(Extract.*|Add.*|Delete.*|Properties.*|Please.*)$" },
     float = true,
 })
 
@@ -257,7 +257,7 @@ hl.window_rule({
 
 hl.window_rule({
     name  = "vmware-dialogs-floating",
-    match = { class = "^(Vmware)$", title = "^(Open|Save|Progress)$" },
+    match = { class = "^(Vmware)$", title = "^(Open.*|Save.*|Progress.*|Quit.*)$" },
     float = true,
 })
 

@@ -313,11 +313,11 @@ hl.bind("XF86LaunchA",          hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
 hl.bind("XF86Favorites",        hl.dsp.exec_cmd("warpinator"))
 
 -- Lock screen
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"), { locked = true })
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"))
 
 -- Lid switch (laptop)
 -- Trigger when the switch is turning on.
-hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"), { locked = true })
+hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"))
 -- Trigger when the switch is turning off.
 hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("hyprctl dispatch dpms on"), { locked = true })
 

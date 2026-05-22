@@ -26,19 +26,15 @@
 -- Refer to the wiki for more information.
 -- https://wiki.hypr.land/Configuring/Start/
 
--- Please note not all available settings / options are set here.
--- For a full list, see the wiki
-
--- You can (and should!!) split this configuration into multiple files
--- Create your files separately and then require them like this:
--- require("myColors")
-
-require("monitors") -- Monitor configuration
-require("workspaces")    -- Workspaces configuration
-require("permissions") -- Layouts configuration
-require("env")      -- Environment variables
-require("rules") -- Window and workspace rules
-require("autostart") -- Autostart applications and commands
+---------------------
+----   IMPORTS   ----
+---------------------
+require("monitors")    -- Monitor configuration
+require("workspaces")  -- Workspaces configuration
+require("permissions") -- Permissions configuration
+require("env")         -- Environment variables
+require("rules")       -- Window and workspace rules
+require("autostart")   -- Autostart applications and commands
 require("plugins") -- Hyprland plugins configuration
 
 ---------------------
@@ -49,10 +45,6 @@ require("plugins") -- Hyprland plugins configuration
 local terminal    = "kitty --class 'super-enter'"
 local fileManager = "thunar"
 local menu        = "pkill wofi || wofi -f --show drun -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i"
-
-
-
-
 
 -----------------------
 ---- LOOK AND FEEL ----
@@ -127,9 +119,9 @@ hl.curve("easy",           { type = "spring", mass = 1, stiffness = 71.2633, dam
 hl.animation({ leaf = "global",         enabled = true,  speed = 10,   bezier = "default" })
 hl.animation({ leaf = "border",         enabled = true,  speed = 5.39, bezier = "easeOutQuint" })
 --hl.animation({ leaf = "windows",       enabled = true,  speed = 4.79, spring = "easy" })
-hl.animation({ leaf = "windowsIn",      enabled = true,  speed = 3.33,  bezier = "almostLinear", style = "popin" })
-hl.animation({ leaf = "windowsOut",     enabled = true,  speed = 3.33, bezier = "almostLinear",       style = "popin" })
-hl.animation({ leaf = "windowsMove",    enabled = true,  speed = 3.33, bezier = "quick",       style = "slide" })
+hl.animation({ leaf = "windowsIn",      enabled = true,  speed = 3.33, bezier = "almostLinear", style = "popin" })
+hl.animation({ leaf = "windowsOut",     enabled = true,  speed = 3.33, bezier = "almostLinear", style = "popin" })
+hl.animation({ leaf = "windowsMove",    enabled = true,  speed = 3.33, bezier = "quick",        style = "slide" })
 --hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 1.73, bezier = "almostLinear" })
 --hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 1.46, bezier = "almostLinear" })
 hl.animation({ leaf = "fade",           enabled = true,  speed = 3.33, bezier = "quick" })
@@ -141,7 +133,7 @@ hl.animation({ leaf = "fade",           enabled = true,  speed = 3.33, bezier = 
 hl.animation({ leaf = "workspaces",     enabled = true,  speed = 3.33, bezier = "quick", style = "slide" })
 --hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "almostLinear", style = "slide" })
 --hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "slide" })
-hl.animation({ leaf = "specialWorkspace",enabled = true,  speed = 3.33, bezier = "quick", style = "slide top" })
+hl.animation({ leaf = "specialWorkspace",enabled = true, speed = 3.33, bezier = "quick", style = "slide top" })
 hl.animation({ leaf = "zoomFactor",     enabled = true,  speed = 7,    bezier = "quick" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
@@ -276,8 +268,8 @@ hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
-    hl.bind(mainMod .. " + " .. key,             hl.dsp.focus({ workspace = i}))
-    hl.bind(mainMod .. " + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }))
+    hl.bind(mainMod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
+    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
 -- Example special workspace (scratchpad)
@@ -349,7 +341,7 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
 -- Application binds
 -- Google Chrome
 hl.bind(mainMod .. " + F1", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 1}))
+    hl.dispatch(hl.dsp.focus({ workspace = 1 }))
     hl.dispatch(hl.dsp.exec_cmd("google-chrome-stable"))
 end)
 hl.bind(mainMod .. " + ALT + F1", function()
@@ -357,37 +349,37 @@ hl.bind(mainMod .. " + ALT + F1", function()
 end)
 -- Kitty terminal
 hl.bind(mainMod .. " + F2", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 2}))
+    hl.dispatch(hl.dsp.focus({ workspace = 2 }))
     hl.dispatch(hl.dsp.exec_cmd("kitty -1"))
 end)
 -- Thunar file manager
 hl.bind(mainMod .. " + F3", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 3}))
+    hl.dispatch(hl.dsp.focus({ workspace = 3 }))
     hl.dispatch(hl.dsp.exec_cmd("thunar"))
 end)
 -- VSCode
 hl.bind(mainMod .. " + F4", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 4}))
+    hl.dispatch(hl.dsp.focus({ workspace = 4 }))
     hl.dispatch(hl.dsp.exec_cmd("code"))
 end)
 -- GIMP
 hl.bind(mainMod .. " + F5", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 5}))
+    hl.dispatch(hl.dsp.focus({ workspace = 5 }))
     hl.dispatch(hl.dsp.exec_cmd("gimp"))
 end)
 -- VMware
 hl.bind(mainMod .. " + F6", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 6}))
+    hl.dispatch(hl.dsp.focus({ workspace = 6 }))
     hl.dispatch(hl.dsp.exec_cmd("vmware"))
 end)
 -- LibreOffice Writer
 hl.bind(mainMod .. " + F7", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 7}))
+    hl.dispatch(hl.dsp.focus({ workspace = 7 }))
     hl.dispatch(hl.dsp.exec_cmd("libreoffice --writer"))
 end)
 -- PrusaSlicer
 hl.bind(mainMod .. " + F8", function()
-    hl.dispatch(hl.dsp.focus({ workspace = 8}))
+    hl.dispatch(hl.dsp.focus({ workspace = 8 }))
     hl.dispatch(hl.dsp.exec_cmd("GTK_THEME=Adwaita:dark prusa-slicer"))
 end)
 

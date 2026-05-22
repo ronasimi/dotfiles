@@ -171,7 +171,9 @@ hl.window_rule({
 hl.window_rule({
     name  = "xdg-desktop-portal-gtk-floating",
     match = { class = "^(xdg-desktop-portal-gtk)$" },
+    size = {942, 504},
     float = true,
+    center = true,
 })
 
 hl.window_rule({

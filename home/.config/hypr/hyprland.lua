@@ -99,6 +99,8 @@ hl.config({
             popups    = true,
             special   = false
         },
+
+        dim_special = 0.15
     },
 
     animations = {

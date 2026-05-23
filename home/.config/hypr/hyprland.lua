@@ -308,8 +308,9 @@ hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("pactl set-source-mute 0 toggle"
 hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),       { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),       { locked = true, repeating = true })
 hl.bind("XF86Display",          hl.dsp.exec_cmd("nwg-displays"))
-hl.bind("XF86Tools",            hl.dsp.exec_cmd("kitty --class 'btop' -e 'btop'"))
-hl.bind("XF86LaunchA",          hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
+-- XF86NotificationCenter
+-- XF86PickupPhone
+-- XF86HangupPhone
 hl.bind("XF86Favorites",        hl.dsp.exec_cmd("warpinator"))
 
 -- Lock screen

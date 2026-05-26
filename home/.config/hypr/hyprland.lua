@@ -35,7 +35,7 @@ require("permissions") -- Permissions configuration
 require("env")         -- Environment variables
 require("rules")       -- Window and workspace rules
 require("autostart")   -- Autostart applications and commands
-require("plugins") -- Hyprland plugins configuration
+require("plugins")     -- Hyprland plugins configuration
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -305,8 +305,8 @@ hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer -i 5"),                
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pamixer -d 5"),                        { locked = true, repeating = true })
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pamixer -t"),                          { locked = true, repeating = true })
 hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("pactl set-source-mute 0 toggle"),      { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),       { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),       { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl set 5%+"),               { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl set 5%-"),               { locked = true, repeating = true })
 hl.bind("XF86Display",          hl.dsp.exec_cmd("nwg-displays"))
 -- XF86NotificationCenter
 -- XF86PickupPhone

@@ -84,10 +84,6 @@ tooltip * {
     border-bottom: 3px solid #ffffff;
 }
 
-#clock {
-    margin: 6px;
-}
-
 #battery,
 #backlight,
 #network,
@@ -115,6 +111,7 @@ tooltip * {
 
 #clock {
     color: #c3c3c3;
+    font-family: SF Mono;
     font-weight: 800;
     font-size: 14px;
     box-shadow: inset 0 -3px transparent;

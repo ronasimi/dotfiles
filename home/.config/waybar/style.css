@@ -53,11 +53,11 @@ tooltip * {
     color: #5d5d5d;
     box-shadow: inset 0 -3px transparent;
     font-family: Material Design Icons;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 #workspaces button:hover {
-    background: rgba(0, 0, 0, 0.20);
+    background: rgba(0, 0, 0, 0.50);
 }
 
 #workspaces button.focused {
@@ -120,7 +120,7 @@ tooltip * {
 
 #battery {
     color: #90a959;
-    font-size: 20px;
+    font-size: 16px;
     margin: 6px;
 }
 
@@ -153,23 +153,23 @@ label:focus {
 #backlight {
     background-color: transparent;
     color: #c3c3c3;
-    font-size: 20px;
+    font-size: 16px;
     margin: 6px;
 }
 
 #network {
     background-color: transparent;
     color: #c3c3c3;
-    font-size: 20px;
+    font-size: 16px;
     margin: 6px;
 }
 
 #network.ethernet {
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #network.wifi {
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #network.disconnected {
@@ -189,7 +189,7 @@ label:focus {
 #bluetooth {
     background-color: transparent;
     color: #c3c3c3;
-    font-size: 20px;
+    font-size: 16px;
     margin: 6px;
 }
 
@@ -214,7 +214,7 @@ label:focus {
 #pulseaudio {
     background-color: transparent;
     color: #c3c3c3;
-    font-size: 20px;
+    font-size: 16px;
     margin: 6px;
 }
 
@@ -226,7 +226,7 @@ label:focus {
 
 #tray {
     background-color: transparent;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #tray>.passive {
@@ -243,7 +243,7 @@ label:focus {
     padding: 0 0px;
     margin: 3px 0;
     min-width: 12px;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #keyboard-state>label {
@@ -258,25 +258,25 @@ label:focus {
 
 #custom-updates {
     color: #1793d0;
-    font-size: 20px;
+    font-size: 16px;
     margin: 6px;
 }
 
 #custom-menu {
     color: #c3c3c3;
-    font-size: 20px;
+    font-size: 16px;
     margin: 6px;
 }
 
 #custom-home {
     color: #c3c3c3;
-    font-size: 20px;
+    font-size: 16px;
     margin: 6px;
 }
 
 #custom-overview {
     color: #c3c3c3;
-    font-size: 20px;
+    font-size: 16px;
     margin: 6px;
 }
 

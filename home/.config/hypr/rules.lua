@@ -131,10 +131,10 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name  = "adw-bluetooth-floating",
-    match = { class = "^(com.ezratweaver.AdwBluetooth)$" },
-    size = {500, 400},
-    move  = {1411, 45},
+    name  = "overskride-floating",
+    match = { class = "^(io.github.kaii_lb.Overskride)$" },
+    size = {942, 616},
+    move  = {969, 45},
     float = true,
 })
 

@@ -136,6 +136,7 @@ hl.window_rule({
     size = {942, 616},
     move  = {969, 45},
     float = true,
+    pin = true,
 })
 
 hl.window_rule({
@@ -144,6 +145,7 @@ hl.window_rule({
     size = {600, 566},
     move  = {1311, 45},
     float = true,
+    pin = true,
 })
 
 hl.window_rule({

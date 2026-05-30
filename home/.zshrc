@@ -340,3 +340,6 @@ PERL_MM_OPT="INSTALL_BASE=/home/ron/.perl5"; export PERL_MM_OPT;
 
 # ORPHANS
 alias orphans='[[ -n $(pacman -Qdt) ]] && sudo pacman -Rs $(pacman -Qdtq) || echo "no orphans to remove"'
+
+# SUDO PATH
+alias sudo='sudo env PATH=$PATH'

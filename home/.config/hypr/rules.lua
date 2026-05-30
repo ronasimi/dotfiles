@@ -9,8 +9,8 @@
 
 local suppressMaximizeRule = hl.window_rule({
     -- Ignore maximize requests from all apps. You'll probably like this.
-    name  = "suppress-maximize-events",
-    match = { class = ".*" },
+    name           = "suppress-maximize-events",
+    match          = { class = ".*" },
 
     suppress_event = "maximize",
 })
@@ -18,8 +18,8 @@ local suppressMaximizeRule = hl.window_rule({
 
 hl.window_rule({
     -- Fix some dragging issues with XWayland
-    name  = "fix-xwayland-drags",
-    match = {
+    name     = "fix-xwayland-drags",
+    match    = {
         class      = "^$",
         title      = "^$",
         xwayland   = true,
@@ -35,17 +35,17 @@ hl.window_rule({
 -- Layer rules also return a handle.
 
 local wofiLayerRule = hl.layer_rule({
-    name  = "wofi-slide",
-    match = { namespace = "wofi" },
+    name      = "wofi-slide",
+    match     = { namespace = "wofi" },
     animation = "slide",
-    blur = true,
+    blur      = true,
 })
 
 local waybarLayerRule = hl.layer_rule({
-    name  = "waybar-slide",
-    match = { namespace = "waybar" },
+    name      = "waybar-slide",
+    match     = { namespace = "waybar" },
     animation = "slide",
-    blur = true,
+    blur      = true,
 })
 
 
@@ -61,38 +61,38 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name  = "code-workspace-4",
-    match = { class = "^(code)$" },
+    name      = "code-workspace-4",
+    match     = { class = "^(code)$" },
     workspace = "4",
 })
 
 hl.window_rule({
-    name  = "meld-workspace-4",
-    match = { class = "^(org.gnome.Meld)$" },
+    name      = "meld-workspace-4",
+    match     = { class = "^(org.gnome.Meld)$" },
     workspace = "4",
 })
 
 hl.window_rule({
-    name  = "gimp-workspace-5",
-    match = { class = "^(gimp|gimp-3.0)$" },
+    name      = "gimp-workspace-5",
+    match     = { class = "^(gimp|gimp-3.0)$" },
     workspace = "5",
 })
 
 hl.window_rule({
-    name  = "vmware-workspace-6",
-    match = { class = "^(Vmware)$" },
+    name      = "vmware-workspace-6",
+    match     = { class = "^(Vmware)$" },
     workspace = "6",
 })
 
 hl.window_rule({
-    name  = "libreoffice-workspace-7",
-    match = { class = "^(libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice)$" },
+    name      = "libreoffice-workspace-7",
+    match     = { class = "^(libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice)$" },
     workspace = "7",
 })
 
 hl.window_rule({
-    name  = "prusa slicer-workspace-8",
-    match = { class = "^(PrusaSlicer)$" },
+    name      = "prusa slicer-workspace-8",
+    match     = { class = "^(PrusaSlicer)$" },
     workspace = "8",
 })
 
@@ -106,7 +106,7 @@ hl.window_rule({
     name  = "super-enter",
     match = { class = "^(super-enter)$" },
     float = true,
-    pin = true,
+    pin   = true,
 })
 
 hl.window_rule({
@@ -118,10 +118,10 @@ hl.window_rule({
 hl.window_rule({
     name  = "nmtui-floating",
     match = { class = "^(nmtui)$" },
-    size = {600, 566},
-    move  = {1311, 45},
+    size  = { 600, 566 },
+    move  = { 1311, 45 },
     float = true,
-    pin = true,
+    pin   = true,
 })
 
 hl.window_rule({
@@ -133,19 +133,19 @@ hl.window_rule({
 hl.window_rule({
     name  = "overskride-floating",
     match = { class = "^(io.github.kaii_lb.Overskride)$" },
-    size = {942, 616},
-    move  = {969, 45},
+    size  = { 942, 616 },
+    move  = { 969, 45 },
     float = true,
-    pin = true,
+    pin   = true,
 })
 
 hl.window_rule({
     name  = "pavucontrol-floating",
     match = { class = "^(org.pulseaudio.pavucontrol)$" },
-    size = {600, 566},
-    move  = {1311, 45},
+    size  = { 600, 566 },
+    move  = { 1311, 45 },
     float = true,
-    pin = true,
+    pin   = true,
 })
 
 hl.window_rule({
@@ -155,26 +155,26 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name  = "mpv",
-    match = { class = "^(mpv)$" },
-    float = true,
-    opaque = true,
+    name              = "mpv",
+    match             = { class = "^(mpv)$" },
+    float             = true,
+    opaque            = true,
     keep_aspect_ratio = true,
 })
 
 hl.window_rule({
-    name  = "imv",
-    match = { class = "^(imv)$" },
-    float = true,
-    opaque = true,
+    name              = "imv",
+    match             = { class = "^(imv)$" },
+    float             = true,
+    opaque            = true,
     keep_aspect_ratio = true,
 })
 
 hl.window_rule({
-    name  = "xdg-desktop-portal-gtk-floating",
-    match = { class = "^(xdg-desktop-portal-gtk)$" },
-    size = {942, 504},
-    float = true,
+    name   = "xdg-desktop-portal-gtk-floating",
+    match  = { class = "^(xdg-desktop-portal-gtk)$" },
+    size   = { 942, 504 },
+    float  = true,
     center = true,
 })
 
@@ -187,16 +187,16 @@ hl.window_rule({
 hl.window_rule({
     name  = "nwg-displays-floating",
     match = { class = "^(nwg-displays)$" },
-    size  = {916, 472},
-    move  = {995, 45},
+    size  = { 916, 472 },
+    move  = { 995, 45 },
     float = true,
-    pin = true,
+    pin   = true,
 })
 
 hl.window_rule({
     name  = "catfish-floating",
     match = { class = "^(catfish)$" },
-    size = {936, 523},
+    size  = { 936, 523 },
     float = true,
 })
 
@@ -249,8 +249,8 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name  = "scratchpad-special",
-    match = { class = " ^(scratchpad)$" },
+    name      = "scratchpad-special",
+    match     = { class = " ^(scratchpad)$" },
     workspace = "special:scratchpad",
 })
 
@@ -265,4 +265,3 @@ hl.window_rule({
     match = { class = "^(Vmware)$", title = "^(Open.*|Save.*|Progress.*|Quit.*)$" },
     float = true,
 })
-

@@ -21,16 +21,13 @@
         "tray",
         "clock"
     ],
-
-    "custom/link-speed"
-    : {
+    "custom/link-speed": {
         "format": "<small>{}</small>",
         "exec": "iw dev wlp0s20f3 link | awk -F '[ ]' '/tx bitrate:/{print $3,$4}'",
         "interval": 30,
         "tooltip-format": "PHY speed",
         "cursor": false
     },
-
     "keyboard-state": {
         "numlock": false,
         "capslock": true,
@@ -39,7 +36,6 @@
             "capslock": "󰪛"
         }
     },
-
     "hyprland/workspaces": {
         "disable-scroll": false,
         "all-outputs": true,
@@ -71,10 +67,7 @@
         "on-scroll-down": "hyprctl dispatch workspace e-1",
         "cursor": false
     },
-    
-    "hyprland/window": {
-    },
-
+    "hyprland/window": {},
     "tray": {
         "spacing": 6,
         "icon-size": 18,
@@ -127,7 +120,6 @@
         "tooltip-format-charging": "Battery level {capacity}%\nTime until charged {time}",
         "cursor": false
     },
-
     "network": {
         "interval": 30,
         "format": "<small>{ifname}</small>",
@@ -149,7 +141,6 @@
         "on-click-right": "kitty -1 --class 'nmtui' -e nmtui",
         "cursor": false
     },
-
     "bluetooth": {
         "format": "󰂯",
         "format-disabled": "󰂲",
@@ -159,7 +150,6 @@
         "on-click-right": "overskride",
         "cursor": false
     },
-
     "pulseaudio": {
         "format": "{icon}",
         "format-bluetooth": "󰗾",
@@ -174,7 +164,11 @@
             "phone": "󰏲",
             "portable": "",
             "car": "",
-            "default": ["󰕿", "󰖀", "󰕾"]
+            "default": [
+                "󰕿",
+                "󰖀",
+                "󰕾"
+            ]
         },
         "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
         "on-click-right": "pavucontrol",
@@ -185,7 +179,6 @@
         "tooltip-format": "Volume: {volume}%",
         "cursor": false
     },
-
     "custom/updates": {
         "format": "{icon}",
         "return-type": "json",
@@ -197,35 +190,30 @@
         "exec": "waybar-module-pacman-updates",
         "cursor": false
     },
-
     "custom/home": {
         "format": "󰋜",
         "tooltip-format": "Open your home directory",
         "on-click": "thunar $HOME",
         "cursor": false
     },
-
     "custom/menu": {
         "format": "󰍜",
         "tooltip-format": "Application launcher",
         "on-click": "pkill wofi || wofi -f --show drun -G -p 'Type to search' -H 1056 -W 512 -x 0 -y 0 -b -i",
         "cursor": false
     },
-
     "custom/overview": {
         "format": "󰀻",
         "tooltip-format": "Show open windows on all workspaces",
         "on-click": "hyprctl dispatch hymission:toggle",
         "cursor": false
     },
-
     "custom/separator": {
         "format": "",
         "interval": "once",
         "tooltip": false
     },
-
-    "wlr/taskbar": { 
+    "wlr/taskbar": {
         "disable-scroll": false,
         "all-outputs": true,
         "icon-theme": "Papirus-Dark",

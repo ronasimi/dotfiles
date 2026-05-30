@@ -8,6 +8,8 @@
     "terminal.integrated.fontFamily": "Liga SFMono Nerd Font",
     "terminal.integrated.fontWeight": "normal",
     "editor.occurrencesHighlight": "singleFile",
+    "workbench.editor.decorations.colors": true,
+    "workbench.editor.decorations.badges": true
     "workbench.colorCustomizations": {
         "list.inactiveSelectionBackground": "#556988",
         "list.activeSelectionBackground": "#556988",
@@ -92,10 +94,10 @@
     "workbench.startupEditor": "none",
     "git.confirmSync": false,
     "[css]": {
-        "editor.defaultFormatter": "HookyQR.beautify"
+        "editor.defaultFormatter": "vscode.css-language-features"
     },
     "[json]": {
-        "editor.defaultFormatter": "mblode.pretty-formatter"
+        "editor.defaultFormatter": "vscode.json-language-features"
     },
     "editor.smoothScrolling": true,
     "editor.inertialScroll": true,
@@ -132,7 +134,6 @@
     "workbench.activityBar.location": "hidden",
     "diffEditor.codeLens": true,
     "docker.extension.enableComposeLanguageServer": false,
-
     "Lua.workspace.library": [
         "/usr/share/hypr/stubs"
     ],

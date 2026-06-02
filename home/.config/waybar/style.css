@@ -40,7 +40,7 @@ tooltip {
     color: #8ab4f8;
     background-color: rgba(19, 19, 19, 0.50);
     text-shadow: none;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 tooltip * {

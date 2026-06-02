@@ -92,3 +92,9 @@ window.thunar paned>scrolledwindow treeview.view:selected {
 .thunar statusbar {
   background-color: #272727;
 }
+
+/*thunar main pane icon size*/
+/* Scale main file view area icons */
+thunar-standard-view image {
+    -gtk-icon-transform: scale(1.5);
+}

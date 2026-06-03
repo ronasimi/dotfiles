@@ -9,6 +9,9 @@
 # vi mode
 bindkey -v
 
+# Exit early for non-interactive shells to avoid unnecessary startup work
+[[ $- != *i* ]] && return
+
 # SET TTY COLORS AND LOAD PROMPTS DEPENDING ON WHERE WE ARE
 if [ "$TERM" = "linux" ]; then
     _SEDCMD='s/.*\*color\([0-9]\{1,\}\).*#\([0-9a-fA-F]\{6\}\).*/\1 \2/p'
@@ -24,7 +27,9 @@ else
   if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
   fi
-  source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+  if [[ -f /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]]; then
+    source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+  fi
   # POWERLINE STYLE SUDO
   export SUDO_PROMPT="$(tput setaf 1)*sudo*$(tput setaf 0) password for %p: $(tput sgr0)"
   POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
@@ -81,8 +86,12 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
 # FZF
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
+  source /usr/share/fzf/key-bindings.zsh
+fi
+if [[ -f /usr/share/fzf/completion.zsh ]]; then
+  source /usr/share/fzf/completion.zsh
+fi
 
 # FOR URXVT
 #bindkey "^[[A" up-line-or-beginning-search # Up
@@ -252,11 +261,15 @@ function zshalias()
   grep "^alias" ~/.zshrc > ~/.zshenv
 }
 
-# THE FUCK
-eval "$(thefuck --alias)"
+# THE FUCK (guarded)
+if command -v thefuck >/dev/null 2>&1; then
+  eval "$(thefuck --alias)"
+fi
 
-# SYNTAX HIGHLIGHTING
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# SYNTAX HIGHLIGHTING (guarded)
+if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 # Modified dark color scheme
 # ------------------------------------
@@ -287,9 +300,11 @@ fi
 
 }
 
-# Autosuggestions
-export ZSH_AUTOSUGGEST_USE_ASYNC=1
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Autosuggestions (guarded)
+if [[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+  export ZSH_AUTOSUGGEST_USE_ASYNC=1
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
 # PATHS
 export PATH=/usr/local/bin:$PATH
@@ -304,8 +319,10 @@ export USE_CCACHE=1
 export CCACHE_DIR=/home/ron/.ccache
 export CCACHE_SLOPPINESS=include_file_mtime
 
-#PKGFILE HOOK
-source /usr/share/doc/pkgfile/command-not-found.zsh
+# PKGFILE HOOK (guarded)
+if [[ -f /usr/share/doc/pkgfile/command-not-found.zsh ]]; then
+  source /usr/share/doc/pkgfile/command-not-found.zsh
+fi
 
 # COLORED MAN PAGES
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -316,8 +333,10 @@ export LESS_TERMCAP_so=$'\E[38;33;246m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
-# ZOXIDE
-eval "$(zoxide init zsh)"
+# ZOXIDE (guarded)
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
 
 # AIRCRACK-NG
 export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng

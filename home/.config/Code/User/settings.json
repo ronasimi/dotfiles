@@ -9,7 +9,7 @@
     "terminal.integrated.fontWeight": "normal",
     "editor.occurrencesHighlight": "singleFile",
     "workbench.editor.decorations.colors": true,
-    "workbench.editor.decorations.badges": true
+    "workbench.editor.decorations.badges": true,
     "workbench.colorCustomizations": {
         "list.inactiveSelectionBackground": "#556988",
         "list.activeSelectionBackground": "#556988",

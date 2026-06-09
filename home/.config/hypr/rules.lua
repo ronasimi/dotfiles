@@ -239,8 +239,8 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name  = "warpinator-floating",
-    match = { class = "^(warpinator-launch.py)$" },
+    name  = "localsend-floating",
+    match = { class = "^(localsend)$" },
     float = true,
 })
 

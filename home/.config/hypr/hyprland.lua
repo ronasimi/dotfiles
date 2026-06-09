@@ -318,7 +318,7 @@ hl.bind("XF86Display", hl.dsp.exec_cmd("nwg-displays"))
 -- XF86NotificationCenter
 -- XF86PickupPhone
 -- XF86HangupPhone
-hl.bind("XF86Favorites", hl.dsp.exec_cmd("warpinator"))
+hl.bind("XF86Favorites", hl.dsp.exec_cmd("localsend"))
 
 -- Lock screen
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"))

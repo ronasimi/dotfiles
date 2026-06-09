@@ -1,13 +1,21 @@
-#window {
-    background-color: rgba(19, 19, 19, 0.40);
+/* =========================================================================
+   1. MAIN BASE LAYER (Compensated for GTK3 rendering)
+   ========================================================================= */
+window {
+    /* Lowered from 0.50 to 0.38 so it visually matches Waybar perfectly */
+    background-color: rgba(19, 19, 19, 0.35);
 }
 
-/*
-#outer-box {
-    background-color: rgba(20, 20,20, 0.7);
-    border: 1px solid rgba(255, 0, 0, 0.5);
-}*/
+/* =========================================================================
+   2. GTK CONTAINER FIXES (Prevents extra dark layers from stacking)
+   ========================================================================= */
+#outer-box, #scroll, #text, #inner-box {
+    background-color: transparent !important;
+}
 
+/* =========================================================================
+   3. INPUT BOX & TYPING AREA
+   ========================================================================= */
 #input {
     color: #c3c3c3;
     border-radius: 9px;
@@ -18,7 +26,7 @@
     margin-bottom: 18px;
 
     box-shadow: none;
-    background-color: rgba(19, 19, 19, 0.50);
+    background-color: rgba(19, 19, 19, 0.1);
 }
 
 #input:focus {
@@ -29,10 +37,14 @@
     margin-bottom: 18px;
 
     box-shadow: none;
-    background-color: rgba(19, 19, 19, 0.50);
+    background-color: rgba(19, 19, 19, 0.1);
 }
 
+/* =========================================================================
+   4. MENU ITEMS & LIST ENTRIES
+   ========================================================================= */
 #entry {
+    background-color: transparent !important;
     font-family: SF Pro Text;
     font-size: 14px;
     border-radius: 9px;

@@ -44,7 +44,7 @@ require("plugins")     -- Hyprland plugins configuration
 -- Set programs that you use
 local terminal    = "kitty --class 'super-enter'"
 local fileManager = "thunar"
-local menu        = "pkill wofi || wofi -f --show drun -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i"
+local menu        = "pkill wofi || wofi -f --show drun -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i" 
 
 -----------------------
 ---- LOOK AND FEEL ----

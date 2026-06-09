@@ -39,6 +39,7 @@ local wofiLayerRule = hl.layer_rule({
     match     = { namespace = "wofi" },
     animation = "slide",
     blur      = true,
+    ignore_alpha= 0.1,
 })
 
 local waybarLayerRule = hl.layer_rule({
@@ -46,6 +47,7 @@ local waybarLayerRule = hl.layer_rule({
     match     = { namespace = "waybar" },
     animation = "slide",
     blur      = true,
+    ignore_alpha= 0.1,
 })
 
 

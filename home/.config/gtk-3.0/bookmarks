@@ -9,4 +9,4 @@ file:///home/ron/Projects
 file:///home/ron/Videos
 file:///home/ron/temp
 file:///home/ron/.dotfiles
-smb://sambashare@arachne/archive/ /archive/
+smb://arachne.local/archive/ archive

@@ -35,19 +35,19 @@ hl.window_rule({
 -- Layer rules also return a handle.
 
 local wofiLayerRule = hl.layer_rule({
-    name      = "wofi-slide",
-    match     = { namespace = "wofi" },
-    animation = "slide",
-    blur      = true,
-    ignore_alpha= 0.1,
+    name         = "wofi-slide",
+    match        = { namespace = "wofi" },
+    animation    = "slide",
+    blur         = true,
+    ignore_alpha = 0.1,
 })
 
 local waybarLayerRule = hl.layer_rule({
-    name      = "waybar-slide",
-    match     = { namespace = "waybar" },
-    animation = "slide",
-    blur      = true,
-    ignore_alpha= 0.1,
+    name         = "waybar-slide",
+    match        = { namespace = "waybar" },
+    animation    = "slide",
+    blur         = true,
+    ignore_alpha = 0.1,
 })
 
 

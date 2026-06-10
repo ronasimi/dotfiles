@@ -43,7 +43,8 @@ require("plugins")     -- Hyprland plugins configuration
 -- Set programs that you use
 local terminal    = "uwsm app -- kitty --class 'super-enter'"
 local fileManager = "uwsm app -- thunar"
-local menu        = "pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i | xargs -I {} zsh -c 'uwsm app -- \"$1\" &' _ {}"
+local menu        =
+"pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i | xargs -I {} zsh -c 'uwsm app -- \"$1\" &' _ {}"
 
 -----------------------
 ---- LOOK AND FEEL ----
@@ -65,7 +66,7 @@ hl.config({
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
         resize_on_border     = true,
         hover_icon_on_border = true,
-        snap = {
+        snap                 = {
             enabled = true,
             window_gap = 9,
             monitor_gap = 9
@@ -192,8 +193,8 @@ hl.config({
         sync_gsettings_theme = true,
     },
     misc = {
-        force_default_wallpaper = 0,  -- Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo = true, -- If true disables the random hyprland logo / anime girl background. :(
+        force_default_wallpaper = 0,     -- Set to 0 or 1 to disable the anime mascot wallpapers
+        disable_hyprland_logo = true,    -- If true disables the random hyprland logo / anime girl background. :(
         disable_splash_rendering = true, -- If true disables the splash screen rendering
         focus_on_activate = true,
         font_family = "SF Pro",
@@ -261,9 +262,12 @@ local closeWindowBind = hl.bind(mainMod .. " + X", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 
 -- UWSM Clean session exit handling
-hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Restarting System...' --post-cmd 'systemctl reboot']]))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Powering Off...' --post-cmd 'systemctl poweroff']]))
+hl.bind(mainMod .. " + SHIFT + X",
+    hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
+hl.bind(mainMod .. " + SHIFT + R",
+    hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Restarting System...' --post-cmd 'systemctl reboot']]))
+hl.bind(mainMod .. " + SHIFT + S",
+    hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Powering Off...' --post-cmd 'systemctl poweroff']]))
 
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SPACE", hl.dsp.window.float({ action = "toggle" }))
@@ -342,15 +346,19 @@ hl.bind("PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast save screen"))
 hl.bind("ALT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast save active"))
 hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast copy screen"))
 hl.bind("ALT + SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast copy active"))
-hl.bind("SUPER + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast save area"))
-hl.bind("SUPER + SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast copy area"))
+hl.bind("XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast save area"))
+hl.bind("SHIFT + XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast copy area"))
 
 
 
 
 -- wofi binds - clipboard history, run dialog
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd([[pkill wofi || sh -c "cliphist list | uwsm app -- wofi -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu --pre-display-cmd \"echo '%s' | cut -f 2\" | cliphist decode | wl-copy"]]))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} zsh -c 'uwsm app -- \"$1\" &' _ {}"))
+hl.bind(mainMod .. " + C",
+    hl.dsp.exec_cmd(
+    [[pkill wofi || sh -c "cliphist list | uwsm app -- wofi -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu --pre-display-cmd \"echo '%s' | cut -f 2\" | cliphist decode | wl-copy"]]))
+hl.bind(mainMod .. " + R",
+    hl.dsp.exec_cmd(
+    "pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} zsh -c 'uwsm app -- \"$1\" &' _ {}"))
 
 -- Open a tiled terminal
 hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))
@@ -412,5 +420,6 @@ end)
 -- rtorrent
 hl.bind(mainMod .. " + T", function()
     hl.dispatch(hl.dsp.focus({ workspace = "special:scratchpad" }))
-    hl.dispatch(hl.dsp.exec_cmd("/home/ron/.bin/startrt && uwsm app -- kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chkrt'"))
+    hl.dispatch(hl.dsp.exec_cmd(
+    "/home/ron/.bin/startrt && uwsm app -- kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chkrt'"))
 end)

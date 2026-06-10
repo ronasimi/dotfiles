@@ -1,23 +1,25 @@
 #!/usr/bin/env bash
 
-HYPRPAPER_CONFIG=$HOME/.config/hypr/hyprpaper.conf
+HYPRPAPER_CONFIG="$HOME/.config/hypr/hyprpaper.conf"
 
+# Check if a file path was given
 if [ -z "$1" ]; then
-  echo "Error: Invalid path \$1."
+  echo "Error: Invalid path."
   exit 1
 fi
 
-# Muy manual pero ya buscaré una manera mas sofisticada
+# Rewrite the config file cleanly (handles spaces safely)
+cat << EOF > "$HYPRPAPER_CONFIG"
+wallpaper {
+	monitor = eDP-1
+	path = $1
+	fit_mode = cover
+}
+splash = false
+ipc = off
+EOF
 
-echo '' > $(echo $HYPRPAPER_CONFIG)
-echo "wallpaper {" >> $(echo $HYPRPAPER_CONFIG)
-echo -e "\tmonitor = eDP-1" >> $(echo $HYPRPAPER_CONFIG)
-echo -e "\tpath =$1" >> $(echo $HYPRPAPER_CONFIG)
-echo -e "\tfit_mode = cover" >> $(echo $HYPRPAPER_CONFIG)
-echo "}" >> $(echo $HYPRPAPER_CONFIG)
-echo "splash = false" >> $(echo $HYPRPAPER_CONFIG)
-echo "ipc = off" >> $(echo $HYPRPAPER_CONFIG)
-
-pkill hyprpaper || sleep 1 && hyprpaper & disown
+# Safely restart the systemd service
+systemctl --user restart hyprpaper.service
 
 exit 0

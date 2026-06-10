@@ -43,7 +43,7 @@ require("plugins")     -- Hyprland plugins configuration
 -- Set programs that you use
 local terminal    = "uwsm app -- kitty --class 'super-enter'"
 local fileManager = "uwsm app -- thunar"
-local menu        = "pkill wofi || uwsm app -- wofi -f --show drun -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i" 
+local menu        = "pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i | xargs -I {} zsh -c 'uwsm app -- \"$1\" &' _ {}"
 
 -----------------------
 ---- LOOK AND FEEL ----
@@ -261,8 +261,8 @@ local closeWindowBind = hl.bind(mainMod .. " + X", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 
 -- UWSM Clean session exit handling
-hl.bind(mainMod .. " + SHIFT + X",
-    hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
+hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Restarting System...' --post-cmd 'systemctl reboot']]))
 
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SPACE", hl.dsp.window.float({ action = "toggle" }))
@@ -348,10 +348,8 @@ hl.bind("SUPER + SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast copy are
 
 
 -- wofi binds - clipboard history, run dialog
-hl.bind(mainMod .. " + C",
-    hl.dsp.exec_cmd(
-    "pkill wofi || uwsm app -- sh -c \"cliphist list | wofi -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu --pre-display-cmd \\\"echo '%s' | cut -f 2\\\" | cliphist decode | wl-copy\""))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill wofi || uwsm app -- wofi -f --show run -G -y 0 -x 0 -H 216 -W 512"))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd([[pkill wofi || sh -c "cliphist list | uwsm app -- wofi -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu --pre-display-cmd \"echo '%s' | cut -f 2\" | cliphist decode | wl-copy"]]))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} zsh -c 'uwsm app -- \"$1\" &' _ {}"))
 
 -- Open a tiled terminal
 hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))

@@ -32,7 +32,6 @@
 require("monitors")    -- Monitor configuration
 require("workspaces")  -- Workspaces configuration
 require("permissions") -- Permissions configuration
-require("env")         -- Environment variables
 require("rules")       -- Window and workspace rules
 require("autostart")   -- Autostart applications and commands
 require("plugins")     -- Hyprland plugins configuration

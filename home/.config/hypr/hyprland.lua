@@ -42,9 +42,9 @@ require("plugins")     -- Hyprland plugins configuration
 ---------------------
 
 -- Set programs that you use
-local terminal    = "kitty --class 'super-enter'"
-local fileManager = "thunar"
-local menu        = "pkill wofi || wofi -f --show drun -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i" 
+local terminal    = "uwsm app -- kitty --class 'super-enter'"
+local fileManager = "uwsm app -- thunar"
+local menu        = "pkill wofi || uwsm app -- wofi -f --show drun -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i" 
 
 -----------------------
 ---- LOOK AND FEEL ----
@@ -195,6 +195,7 @@ hl.config({
     misc = {
         force_default_wallpaper = 0,  -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo = true, -- If true disables the random hyprland logo / anime girl background. :(
+        disable_splash_rendering = true, -- If true disables the splash screen rendering
         focus_on_activate = true,
         font_family = "SF Pro",
     }
@@ -259,8 +260,11 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 local closeWindowBind = hl.bind(mainMod .. " + X", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
+
+-- UWSM Clean session exit handling
 hl.bind(mainMod .. " + SHIFT + X",
-    hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+    hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
+
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SPACE", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
@@ -277,17 +281,17 @@ hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
--- Cycle through windowws with ALT + TAB
+-- Cycle through windows with ALT + TAB
 hl.bind("ALT + TAB", hl.dsp.window.cycle_next())
 hl.bind("ALT + SHIFT + TAB", hl.dsp.window.cycle_next({ next = false }))
 
---move windows with mainMod + SHIFT + arrow keys
+-- Move windows with mainMod + SHIFT + arrow keys
 hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
 
--- Move windows with mainMod + mouse dragging
+-- Move windows with mainMod + mouse dragging (hyprctl flags don't use wrapper)
 hl.bind(mainMod .. " + mouse:272", hl.dsp.exec_cmd("hyprctl keyword dwindle:smart split 1"), { mouse = true })
 hl.bind(mainMod .. " + mouse:272", hl.dsp.exec_cmd("hyprctl keyword dwindle:smart split 0"), { release = true })
 
@@ -318,46 +322,40 @@ hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pamixer -t"), { locked = true, repeati
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("pactl set-source-mute 0 toggle"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { locked = true, repeating = true })
-hl.bind("XF86Display", hl.dsp.exec_cmd("nwg-displays"))
+hl.bind("XF86Display", hl.dsp.exec_cmd("uwsm app -- nwg-displays"))
+
 -- XF86NotificationCenter
 -- XF86PickupPhone
 -- XF86HangupPhone
-hl.bind("XF86Favorites", hl.dsp.exec_cmd("localsend"))
+hl.bind("XF86Favorites", hl.dsp.exec_cmd("uwsm app -- localsend"))
 
--- Lock screen
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"))
+-- Lock screen (hyprlock has native systemd handles, but calling binary directly needs unit wrapper)
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || uwsm app -- hyprlock -grace 0 --immediate-render"))
 
 -- Lid switch (laptop)
--- Trigger when the switch is turning on.
-hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -grace 0 --immediate-render"))
--- Trigger when the switch is turning off.
+hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || uwsm app -- hyprlock -grace 0 --immediate-render"))
 hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("hyprctl dispatch dpms on"), { locked = true })
 
 
 -- Screenshots
--- Printscreen saves full screen screenshot
-hl.bind("PRINT", hl.dsp.exec_cmd("grimblast save screen"))
--- Alt + Printscreen saves a screenshot of the currently focused window
-hl.bind("ALT + PRINT", hl.dsp.exec_cmd("grimblast save active"))
--- Shift + Printscreen copies fullscreen to clipboard
-hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy screen"))
--- Alt + Shift + Printscreen copies focused window to clipboard
-hl.bind("ALT + SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy active"))
--- Super + Printscreen allows you to select an area to screenshot and saves it
-hl.bind("SUPER + PRINT", hl.dsp.exec_cmd("grimblast save area"))
--- Super + Shift + Printscreen allows you to select an area to screenshot and copies it to clipboard
-hl.bind("SUPER + SHIFT + PRINT", hl.dsp.exec_cmd("grimblast copy area"))
+hl.bind("PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast save screen"))
+hl.bind("ALT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast save active"))
+hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast copy screen"))
+hl.bind("ALT + SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast copy active"))
+hl.bind("SUPER + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast save area"))
+hl.bind("SUPER + SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast copy area"))
+
 
 
 
 -- wofi binds - clipboard history, run dialog
 hl.bind(mainMod .. " + C",
     hl.dsp.exec_cmd(
-    "pkill wofi || cliphist list | wofi -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540-b -i --dmenu --pre-display-cmd \"echo '%s' | cut -f 2\" | cliphist decode | wl-copy"))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill wofi || wofi -f --show run -G -y 0 -x 0 -H 216 -W 512"))
+    "pkill wofi || uwsm app -- sh -c \"cliphist list | wofi -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu --pre-display-cmd \\\"echo '%s' | cut -f 2\\\" | cliphist decode | wl-copy\""))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill wofi || uwsm app -- wofi -f --show run -G -y 0 -x 0 -H 216 -W 512"))
 
 -- Open a tiled terminal
-hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("kitty"))
+hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))
 
 
 -- dunst history
@@ -372,49 +370,49 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
 -- Google Chrome
 hl.bind(mainMod .. " + F1", function()
     hl.dispatch(hl.dsp.focus({ workspace = 1 }))
-    hl.dispatch(hl.dsp.exec_cmd("google-chrome-stable"))
+    hl.dispatch(hl.dsp.exec_cmd("uwsm app -- google-chrome-stable"))
 end)
 hl.bind(mainMod .. " + ALT + F1", function()
-    hl.dispatch(hl.dsp.exec_cmd("google-chrome-stable --incognito"))
+    hl.dispatch(hl.dsp.exec_cmd("uwsm app -- google-chrome-stable --incognito"))
 end)
 -- Kitty terminal
 hl.bind(mainMod .. " + F2", function()
     hl.dispatch(hl.dsp.focus({ workspace = 2 }))
-    hl.dispatch(hl.dsp.exec_cmd("kitty -1"))
+    hl.dispatch(hl.dsp.exec_cmd("uwsm app -- kitty -1"))
 end)
 -- Thunar file manager
 hl.bind(mainMod .. " + F3", function()
     hl.dispatch(hl.dsp.focus({ workspace = 3 }))
-    hl.dispatch(hl.dsp.exec_cmd("thunar"))
+    hl.dispatch(hl.dsp.exec_cmd("uwsm app -- thunar"))
 end)
 -- VSCode
 hl.bind(mainMod .. " + F4", function()
     hl.dispatch(hl.dsp.focus({ workspace = 4 }))
-    hl.dispatch(hl.dsp.exec_cmd("code"))
+    hl.dispatch(hl.dsp.exec_cmd("uwsm app -- code"))
 end)
 -- GIMP
 hl.bind(mainMod .. " + F5", function()
     hl.dispatch(hl.dsp.focus({ workspace = 5 }))
-    hl.dispatch(hl.dsp.exec_cmd("gimp"))
+    hl.dispatch(hl.dsp.exec_cmd("uwsm app -- gimp"))
 end)
 -- VMware
 hl.bind(mainMod .. " + F6", function()
     hl.dispatch(hl.dsp.focus({ workspace = 6 }))
-    hl.dispatch(hl.dsp.exec_cmd("vmware"))
+    hl.dispatch(hl.dsp.exec_cmd("uwsm app -- vmware"))
 end)
 -- LibreOffice Writer
 hl.bind(mainMod .. " + F7", function()
     hl.dispatch(hl.dsp.focus({ workspace = 7 }))
-    hl.dispatch(hl.dsp.exec_cmd("libreoffice --writer"))
+    hl.dispatch(hl.dsp.exec_cmd("uwsm app -- libreoffice --writer"))
 end)
 -- PrusaSlicer
 hl.bind(mainMod .. " + F8", function()
     hl.dispatch(hl.dsp.focus({ workspace = 8 }))
-    hl.dispatch(hl.dsp.exec_cmd("GTK_THEME=Adwaita:dark prusa-slicer"))
+    hl.dispatch(hl.dsp.exec_cmd("uwsm app -- env GTK_THEME=Adwaita:dark prusa-slicer"))
 end)
 
 -- rtorrent
 hl.bind(mainMod .. " + T", function()
     hl.dispatch(hl.dsp.focus({ workspace = "special:scratchpad" }))
-    hl.dispatch(hl.dsp.exec_cmd("/home/ron/.bin/startrt && kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chkrt'"))
+    hl.dispatch(hl.dsp.exec_cmd("/home/ron/.bin/startrt && uwsm app -- kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chkrt'"))
 end)

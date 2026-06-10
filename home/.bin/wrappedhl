@@ -1,3 +1,7 @@
-#!/bin/sh
-cd ~ || return
+#!/usr/bin/env bash
+
+systemctl --user stop graphical-session.target graphical-session-pre.target 2>/dev/null
+
 exec start-hyprland
+
+systemctl --user stop graphical-session.target graphical-session-pre.target

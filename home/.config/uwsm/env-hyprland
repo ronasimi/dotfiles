@@ -1,0 +1,5 @@
+# ~/.config/uwsm/env-hyprland
+# Compositor specific variables
+
+export HYPRCURSOR_SIZE=24
+export HYPRCURSOR_THEME="OpenZone_White_Slim"

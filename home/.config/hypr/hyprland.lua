@@ -44,7 +44,7 @@ require("plugins")     -- Hyprland plugins configuration
 local terminal    = "uwsm app -- kitty --class 'super-enter'"
 local fileManager = "uwsm app -- thunar"
 local menu        =
-"pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i | xargs -I {} zsh -c 'uwsm app -- \"$1\" &' _ {}"
+"pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"
 
 -----------------------
 ---- LOOK AND FEEL ----
@@ -336,10 +336,10 @@ hl.bind("XF86Display", hl.dsp.exec_cmd("uwsm app -- nwg-displays"))
 hl.bind("XF86Favorites", hl.dsp.exec_cmd("uwsm app -- localsend"))
 
 -- Lock screen (hyprlock has native systemd handles, but calling binary directly needs unit wrapper)
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || uwsm app -- hyprlock -grace 0 --immediate-render"))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
 
 -- Lid switch (laptop)
-hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || uwsm app -- hyprlock -grace 0 --immediate-render"))
+hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("hyprctl dispatch dpms off && loginctl lock-session"), { locked = true })
 hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("hyprctl dispatch dpms on"), { locked = true })
 
 
@@ -360,7 +360,7 @@ hl.bind(mainMod .. " + C",
         [[pkill wofi || sh -c "cliphist list | uwsm app -- wofi -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu --pre-display-cmd \"echo '%s' | cut -f 2\" | cliphist decode | wl-copy"]]))
 hl.bind(mainMod .. " + R",
     hl.dsp.exec_cmd(
-        "pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} zsh -c 'uwsm app -- \"$1\" &' _ {}"))
+        "pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"))
 
 -- Open a tiled terminal
 hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))

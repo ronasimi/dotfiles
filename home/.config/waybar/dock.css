@@ -1,0 +1,43 @@
+* {
+    border: none;
+    font-family: "SF Pro", "Liga SFMono Nerd Font";
+}
+
+/* 1. Make the main Waybar window completely transparent */
+window#waybar {
+    background: transparent;
+}
+
+/* 2. Apply the background, borders, and rounding strictly to the taskbar container */
+#taskbar {
+    background: rgba(39, 39, 39, 0.85); /* #272727 */
+    border: 1px solid rgba(195, 195, 195, 0.15); /* #c3c3c3 */
+    border-radius: 18px;
+    padding: 2px 8px; /* Adds a small gap between the first/last icons and the edge */
+}
+
+#taskbar button {
+    padding: 6px 12px;
+    margin: 4px 2px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+/* Hovering over an inactive app */
+#taskbar button:hover {
+    background: rgba(144, 169, 89, 0.4); /* #90a959 Green */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* The currently focused app */
+#taskbar button.active {
+    background: rgba(138, 180, 248, 0.2); /* #8ab4f8 Blue */
+    border-bottom: 3px solid #8ab4f8;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+/* Apps that are running but minimized/unfocused */
+#taskbar button.minimized {
+    opacity: 0.6;
+}

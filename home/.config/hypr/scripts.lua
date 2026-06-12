@@ -17,3 +17,19 @@ local waybar_hover_timer = hl.timer(function()
         end
     end
 end, { timeout = 100, type = "repeat" })
+
+-- Toggle layout without invoking grep or subshells
+local current_layout = "dwindle" -- Set this to your default startup layout
+
+local function toggle_layout()
+    if current_layout == "master" then
+        hl.exec_cmd("hyprctl keyword general:layout dwindle")
+        current_layout = "dwindle"
+    else
+        hl.exec_cmd("hyprctl keyword general:layout master")
+        current_layout = "master"
+    end
+end
+
+-- You can then bind this function directly in your hyprland.lua:
+-- hl.bind("SUPER + ALT + L", toggle_layout)

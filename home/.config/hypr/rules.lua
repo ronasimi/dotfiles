@@ -5,265 +5,88 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 -- and https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 
--- Example window rules that are useful
-
+-- Ignore maximize requests from all apps.
 local suppressMaximizeRule = hl.window_rule({
-    -- Ignore maximize requests from all apps. You'll probably like this.
     name           = "suppress-maximize-events",
     match          = { class = ".*" },
-
     suppress_event = "maximize",
 })
 -- suppressMaximizeRule:set_enabled(false)
 
+-- Fix dragging issues with XWayland
 hl.window_rule({
-    -- Fix some dragging issues with XWayland
     name     = "fix-xwayland-drags",
-    match    = {
-        class      = "^$",
-        title      = "^$",
-        xwayland   = true,
-        float      = true,
-        fullscreen = false,
-        pin        = false,
-    },
-
+    match    = { class = "^$", title = "^$", xwayland = true, float = true, fullscreen = false, pin = false },
     no_focus = true,
 })
 
+-- Layer Rules (Includes tooltips/popups for waybar and dunst/notifications)
+local blur_layers = { "wofi", "waybar", "notifications" }
+for _, layer in ipairs(blur_layers) do
+    hl.layer_rule({
+        name         = layer .. "-slide",
+        match        = { namespace = layer },
+        animation    = "slide",
+        blur         = true,
+        blur_popups  = true,
+        ignore_alpha = 0.2,
+    })
+end
 
--- Layer rules also return a handle.
+-- Workspace Assignments
+local workspace_rules = {
+    { ws = "4", classes = { "^(code)$", "^(org.gnome.Meld)$" } },
+    { ws = "5", classes = { "^(gimp|gimp-3.0)$" } },
+    { ws = "6", classes = { "^(Vmware)$" } },
+    { ws = "7", classes = { "^(libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice)$" } },
+    { ws = "8", classes = { "^(PrusaSlicer)$" } },
+    { ws = "special:scratchpad", classes = { "^(scratchpad)$" } }
+}
 
-local wofiLayerRule = hl.layer_rule({
-    name         = "wofi-slide",
-    match        = { namespace = "wofi" },
-    animation    = "slide",
-    blur         = true,
-    ignore_alpha = 0.1,
-})
+for _, rule in ipairs(workspace_rules) do
+    for _, class in ipairs(rule.classes) do
+        hl.window_rule({ match = { class = class }, workspace = rule.ws })
+    end
+end
 
-local waybarLayerRule = hl.layer_rule({
-    name         = "waybar-slide",
-    match        = { namespace = "waybar" },
-    animation    = "slide",
-    blur         = true,
-    ignore_alpha = 0.1,
-})
+-- Simple Floating Apps
+local floating_classes = {
+    "^(dunst)$", "^(btop)$", "^(galculator)$", "^(nwg-look)$",
+    "^(catfish)$", "^(org.pwmt.zathura)$", "^(localsend)$", "^(nm-connection-editor)$"
+}
+for _, class in ipairs(floating_classes) do
+    hl.window_rule({ match = { class = class }, float = true })
+end
 
+-- Complex Floating Apps (Pins, Specific Sizes, and Positioning)
+hl.window_rule({ match = { class = "hyprland-run" }, move = "20 monitor_h-120", float = true })
+hl.window_rule({ match = { class = "^(super-enter)$" }, float = true, pin = true })
+hl.window_rule({ match = { class = "^(nmtui)$" }, size = { 600, 566 }, move = { 1311, 45 }, float = true, pin = true })
+hl.window_rule({ match = { class = "^(io.github.kaii_lb.Overskride)$" }, size = { 942, 616 }, move = { 969, 45 }, float = true, pin = true })
+hl.window_rule({ match = { class = "^(org.pulseaudio.pavucontrol)$" }, size = { 600, 566 }, move = { 1311, 45 }, float = true, pin = true })
+hl.window_rule({ match = { class = "^(xdg-desktop-portal-gtk)$" }, size = { 942, 504 }, float = true, center = true })
+hl.window_rule({ match = { class = "^(nwg-displays)$" }, size = { 916, 472 }, move = { 995, 45 }, float = true, pin = true })
 
--- Window rules
+-- Media Players (Opaque & Aspect Ratio)
+local media_players = { "^(mpv)$", "^(imv)$" }
+for _, class in ipairs(media_players) do
+    hl.window_rule({ match = { class = class }, float = true, opaque = true, keep_aspect_ratio = true })
+end
 
--- Hyprland-run windowrule
-hl.window_rule({
-    name  = "move-hyprland-run",
-    match = { class = "hyprland-run" },
+-- Modal Catch-all
+hl.window_rule({ match = { modal = true }, float = true })
 
-    move  = "20 monitor_h-120",
-    float = true,
-})
+-- Dialog Popups (Regex matches for Open/Save/Print dialogs)
+local dialog_rules = {
+    { class = "^(thunar)$", title = "^(File.*|Rename.*|Create.*|Attention.*|Copy.*|Move.*|Delete.*)$" },
+    { class = "^(google-chrome)$", title = "^(Open.*|Save.*|Downloads.*|Print.*)$" },
+    { class = "^(electron)$", title = "^(Open.*|Save.*|Downloads.*|Print.*)$" },
+    { class = "^(code)$", title = "^(Open.*|Save.*|Print.*)$" },
+    { class = "^(gimp)$", title = "^(Open.*|Save.*|Export.*|Quit.*|Scale.*|Set.*|Print.*)$" },
+    { class = "^(xarchiver)", title = "^(Extract.*|Add.*|Delete.*|Properties.*|Please.*)$" },
+    { class = "^(Vmware)$", title = "^(Open.*|Save.*|Progress.*|Quit.*)$" }
+}
 
-hl.window_rule({
-    name      = "code-workspace-4",
-    match     = { class = "^(code)$" },
-    workspace = "4",
-})
-
-hl.window_rule({
-    name      = "meld-workspace-4",
-    match     = { class = "^(org.gnome.Meld)$" },
-    workspace = "4",
-})
-
-hl.window_rule({
-    name      = "gimp-workspace-5",
-    match     = { class = "^(gimp|gimp-3.0)$" },
-    workspace = "5",
-})
-
-hl.window_rule({
-    name      = "vmware-workspace-6",
-    match     = { class = "^(Vmware)$" },
-    workspace = "6",
-})
-
-hl.window_rule({
-    name      = "libreoffice-workspace-7",
-    match     = { class = "^(libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice)$" },
-    workspace = "7",
-})
-
-hl.window_rule({
-    name      = "prusa slicer-workspace-8",
-    match     = { class = "^(PrusaSlicer)$" },
-    workspace = "8",
-})
-
-hl.window_rule({
-    name  = "dunst-floating",
-    match = { class = "^(dunst)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "super-enter",
-    match = { class = "^(super-enter)$" },
-    float = true,
-    pin   = true,
-})
-
-hl.window_rule({
-    name  = "nm-connection-editor-floating",
-    match = { class = "^(nm-connection-editor)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "nmtui-floating",
-    match = { class = "^(nmtui)$" },
-    size  = { 600, 566 },
-    move  = { 1311, 45 },
-    float = true,
-    pin   = true,
-})
-
-hl.window_rule({
-    name  = "btop-floating",
-    match = { class = "^(btop)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "overskride-floating",
-    match = { class = "^(io.github.kaii_lb.Overskride)$" },
-    size  = { 942, 616 },
-    move  = { 969, 45 },
-    float = true,
-    pin   = true,
-})
-
-hl.window_rule({
-    name  = "pavucontrol-floating",
-    match = { class = "^(org.pulseaudio.pavucontrol)$" },
-    size  = { 600, 566 },
-    move  = { 1311, 45 },
-    float = true,
-    pin   = true,
-})
-
-hl.window_rule({
-    name  = "galculator-floating",
-    match = { class = "^(galculator)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name              = "mpv",
-    match             = { class = "^(mpv)$" },
-    float             = true,
-    opaque            = true,
-    keep_aspect_ratio = true,
-})
-
-hl.window_rule({
-    name              = "imv",
-    match             = { class = "^(imv)$" },
-    float             = true,
-    opaque            = true,
-    keep_aspect_ratio = true,
-})
-
-hl.window_rule({
-    name   = "xdg-desktop-portal-gtk-floating",
-    match  = { class = "^(xdg-desktop-portal-gtk)$" },
-    size   = { 942, 504 },
-    float  = true,
-    center = true,
-})
-
-hl.window_rule({
-    name  = "nwg-look-floating",
-    match = { class = "^(nwg-look)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "nwg-displays-floating",
-    match = { class = "^(nwg-displays)$" },
-    size  = { 916, 472 },
-    move  = { 995, 45 },
-    float = true,
-    pin   = true,
-})
-
-hl.window_rule({
-    name  = "catfish-floating",
-    match = { class = "^(catfish)$" },
-    size  = { 936, 523 },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "zathura-floating",
-    match = { class = "^(org.pwmt.zathura)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "thunar-dialogs-floating",
-    match = { class = "^(thunar)$", title = "^(File.*|Rename.*|Create.*|Attention.*|Copy.*|Move.*|Delete.*)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "chrome-dialogs-floating",
-    match = { class = "^(google-chrome)$", title = "^(Open.*|Save.*|Downloads.*|Print.*)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "electron-dialogs-floating",
-    match = { class = "^(electron)$", title = "^(Open.*|Save.*|Downloads.*|Print.*)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "code-dialogs-floating",
-    match = { class = "^(code)$", title = "^(Open.*|Save.*|Print.*)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "gimp-dialogs-floating",
-    match = { class = "^(gimp)$", title = "^(Open.*|Save.*|Export.*|Quit.*|Scale.*|Set.*|Print.*)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "localsend-floating",
-    match = { class = "^(localsend)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "xarchive-dialogs-floating",
-    match = { class = "^(xarchiver)", title = "^(Extract.*|Add.*|Delete.*|Properties.*|Please.*)$" },
-    float = true,
-})
-
-hl.window_rule({
-    name      = "scratchpad-special",
-    match     = { class = " ^(scratchpad)$" },
-    workspace = "special:scratchpad",
-})
-
-hl.window_rule({
-    name  = "modal-floating",
-    match = { modal = true },
-    float = true,
-})
-
-hl.window_rule({
-    name  = "vmware-dialogs-floating",
-    match = { class = "^(Vmware)$", title = "^(Open.*|Save.*|Progress.*|Quit.*)$" },
-    float = true,
-})
+for _, rule in ipairs(dialog_rules) do
+    hl.window_rule({ match = { class = rule.class, title = rule.title }, float = true })
+end

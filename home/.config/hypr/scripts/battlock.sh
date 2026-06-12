@@ -1,35 +1,30 @@
-#!/bin/bash
+#!/usr/bin/env dash
 
-# Get the current battery percentage
-battery_percentage=$(cat /sys/class/power_supply/BAT0/capacity)
+# Read directly from sysfs using built-ins
+read -r battery_percentage < /sys/class/power_supply/BAT0/capacity
+read -r battery_status < /sys/class/power_supply/BAT0/status
 
-# Get the battery status (Charging or Discharging)
-battery_status=$(cat /sys/class/power_supply/BAT0/status)
+# Evaluate status and assign icons
+case "$battery_status" in
+    "Charging") 
+        icon="󰂄" 
+        ;;
+    "Full"|"Not charging") 
+        icon="󰚥" 
+        ;;
+    *) # Discharging or Unknown state
+        if [ "$battery_percentage" -ge 90 ]; then icon="󰁹"
+        elif [ "$battery_percentage" -ge 80 ]; then icon="󰂁"
+        elif [ "$battery_percentage" -ge 70 ]; then icon="󰂀"
+        elif [ "$battery_percentage" -ge 60 ]; then icon="󰁿"
+        elif [ "$battery_percentage" -ge 50 ]; then icon="󰁾"
+        elif [ "$battery_percentage" -ge 40 ]; then icon="󰁽"
+        elif [ "$battery_percentage" -ge 30 ]; then icon="󰁼"
+        elif [ "$battery_percentage" -ge 20 ]; then icon="󰁻"
+        elif [ "$battery_percentage" -ge 10 ]; then icon="󰁺"
+        else icon="󰂃"; fi
+        ;;
+esac
 
-# Define the battery icons for each 10% segment
-battery_icons=("󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰁹")
-
-# Define the charging icon
-charging_icon="󰂄"
-
-# Calculate the index for the icon array
-icon_index=$((battery_percentage / 10))
-
-# Get the corresponding icon
-battery_icon=${battery_icons[icon_index]}
-
-# Check if the battery is charging
-if [ "$battery_status" = "Charging" ]; then
-	icon="$charging_icon"
-elif [ "$battery_status" = "Discharging" ]; then
-	icon="${battery_icon}"
-elif [ "$battery_status" = "Full" ]; then
-	icon="󰚥"
-elif [ "$battery_status" = "Not charging" ]; then
-	icon="󰚥"
-else 
-	icon="${battery_icon}"
-fi
-
-# Output the battery percentage and icon
-echo "$icon $battery_percentage%"
+# Output formatted string
+printf "%s %s%%\n" "$icon" "$battery_percentage"

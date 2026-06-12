@@ -140,4 +140,32 @@
     "Lua.diagnostics.globals": [
         "hl"
     ],
+    "chat.tools.urls.autoApprove": {
+        "https://code.visualstudio.com": true,
+        "https://github.com/microsoft/vscode/wiki/*": true,
+        "https://wiki.hyprland.org/Plugins": true,
+        "https://wiki.hyprland.org": true,
+        "https://*.hyprland.org": true,
+        "https://wiki.hyprland.org/Developing-a-Plugin": true,
+        "https://github.com/hyprwm/hyprland/tree/main/src/plugins": true,
+        "https://github.com/hyprwm/hyprland/tree/main/src": true,
+        "https://github.com/hyprwm/hyprland/tree/main": true,
+        "https://github.com/hyprwm/hyprland/tree": true,
+        "https://github.com/hyprwm/hyprland": true,
+        "https://github.com/hyprwm": true,
+        "https://github.com": true,
+        "https://wiki.hypr.land/Developing-a-Plugin": true,
+        "https://wiki.hypr.land": true,
+        "https://*.hypr.land": true,
+        "https://wiki.hypr.land/Plugins": true,
+        "https://github.com/hyprwm/hyprland-plugins/tree/main": true,
+        "https://github.com/hyprwm/hyprland-plugins/tree": true,
+        "https://github.com/hyprwm/hyprland-plugins": true,
+        "https://raw.githubusercontent.com/hyprwm/hyprland-plugins/main/README.md": true,
+        "https://raw.githubusercontent.com/hyprwm/hyprland-plugins/main": true,
+        "https://raw.githubusercontent.com/hyprwm/hyprland-plugins": true,
+        "https://raw.githubusercontent.com/hyprwm": true,
+        "https://raw.githubusercontent.com": true,
+        "https://*.githubusercontent.com": true
+    },
 }

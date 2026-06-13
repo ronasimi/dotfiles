@@ -37,7 +37,7 @@ require("scripts")  -- Native Lua scripts
 ---------------------
 local terminal    = "uwsm app -- kitty --class 'super-enter'"
 local fileManager = "uwsm app -- thunar"
-local menu        = "pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1044 -W 512 -x 0 -y 0 -b -i | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"
+local menu        = "pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1080 -W 512 -x 0 -y 0 -b -i | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"
 
 -----------------------
 ---- LOOK AND FEEL ----
@@ -67,13 +67,14 @@ hl.config({
         rounding_power   = 2,
         active_opacity   = 1.0,
         inactive_opacity = 0.75,
-        shadow           = {
+shadow = {
             enabled        = true,
-            range          = 12,
-            scale          = 3,
-            render_power   = 2,
-            color          = 0x54000000,
-            color_inactive = 0x00000000,
+            range          = 30,
+            scale          = 1.0,
+            render_power   = 3,
+            color          = 0x66000000,
+            color_inactive = 0x22000000,
+            offset         = "0 8",
         },
         blur             = {
             enabled = true,

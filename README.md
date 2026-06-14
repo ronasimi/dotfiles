@@ -96,5 +96,6 @@ Ensure all custom scripts (e.g., ~/.config/hypr/scripts/battlock.sh) are marked 
 
 ```bash
 chmod +x ~/.config/hypr/scripts/*.sh
-Log out and start your Hyprland session (preferably using uwsm).
 ```
+
+Log out and start your Hyprland session (preferably using uwsm).

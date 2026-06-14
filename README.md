@@ -77,11 +77,13 @@ You can install the majority of these packages using the official Arch repositor
 **1. Install Official Repository Packages:**
 ```bash
 sudo pacman -S hyprland xdg-desktop-portal-hyprland xdg-desktop-portal-gtk polkit-gnome gnome-keyring hypridle hyprlock hyprpaper waybar wofi dunst qt6ct wl-clipboard cliphist pamixer libpulse pavucontrol brightnessctl playerctl wireless_tools kitty thunar catfish xarchiver trash-cli dash btop galculator networkmanager jq gimp prusa-slicer libreoffice-fresh mpv imv zathura meld
+```
 
 **2. Install AUR Packages:**
 
-Bash
+```bash
 yay -S uwsm nwg-displays nwg-look grimblast-git wl-clip-persist overskride hyprshutdown syshud google-chrome visual-studio-code-bin vmware-workstation localsend-bin
+```
 
 **⚙️ Applying the Configuration**
 Clone this repository to your local machine.

@@ -94,6 +94,7 @@ Copy the contents of this repository into your ~/.config/hypr/ directory.
 
 Ensure all custom scripts (e.g., ~/.config/hypr/scripts/battlock.sh) are marked as executable:
 
-Bash
+```bash
 chmod +x ~/.config/hypr/scripts/*.sh
 Log out and start your Hyprland session (preferably using uwsm).
+```

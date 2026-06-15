@@ -98,49 +98,40 @@ hl.config({
 -----------------------
 ----  ANIMATIONS   ----
 -----------------------
--- Flowy but weighted curves
-hl.curve("fluentEase",   { type = "bezier", points = { { 0.25, 1 }, { 0.5, 1 } } })
-hl.curve("quickSnap",    { type = "bezier", points = { { 0.15, 0 }, { 0.1, 1 } } })
+-- Fluent curves: extremely aggressive initial acceleration, long smooth tail
+hl.curve("fluentDecel", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.0 } } })
+hl.curve("fluentAccel", { type = "bezier", points = { { 0.3, 0.0 }, { 0.8, 0.15 } } })
 
--- Spring physics for "Bouncy but Unobtrusive" scratchpad/window interactions
-hl.curve("springPop",    { type = "spring", mass = 1, stiffness = 180, dampening = 18 })
-hl.curve("springSlide",  { type = "spring", mass = 1, stiffness = 140, dampening = 20 })
+-- Slightly softened spring: allows the motion to be seen a fraction longer
+hl.curve("fluentSpring", { type = "spring", mass = 1, stiffness = 250, dampening = 30 })
 
 -- Global fallback
-hl.animation({ leaf = "global", enabled = true, speed = 3, spring = "springSlide" })
-
--- Borders and Layers (Smooth, non-bouncy glide)
-hl.animation({ leaf = "border", enabled = true, speed = 3, bezier = "fluentEase" })
-hl.animation({ leaf = "layersIn", enabled = true, speed = 3, bezier = "fluentEase", style = "fade" })
-hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "quickSnap", style = "fade" })
+hl.animation({ leaf = "global", enabled = true, speed = 3.5, bezier = "fluentDecel" })
 
 -- Window Mechanics
--- Popin is bouncy (springPop), close is snappy (quickSnap)
-hl.animation({ leaf = "windows", enabled = true, speed = 3, spring = "springPop" })
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 3, spring = "springPop", style = "popin 90%" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 2, bezier = "quickSnap", style = "popin 90%" })
-hl.animation({ leaf = "windowsMove", enabled = true, speed = 3, spring = "springSlide", style = "slide" })
+-- In: 350ms, giving the pop-in a smooth, visible expansion
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 3.5, bezier = "fluentDecel", style = "popin 85%" })
+-- Out: 300ms, still slightly faster than the entrance to keep the UI feeling responsive
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "fluentAccel", style = "popin 85%" })
+-- Move: 350ms, a highly perceptible, smooth glide across the screen
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 3.5, bezier = "fluentDecel" })
 
--- Scratchpad: Slide in from top, out to bottom
--- We set the spring to be a bit more dampened so it doesn't wobble excessively
-hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 3, spring = "springSlide", style = "slide top" })
-hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3, spring = "springSlide", style = "slide bottom" })
+-- Workspaces
+-- 450ms: Full-screen transitions benefit from a longer duration to prevent spatial disorientation
+hl.animation({ leaf = "workspaces", enabled = true, speed = 4.5, bezier = "fluentDecel", style = "slide" })
 
--- Fades
-hl.animation({ leaf = "fade", enabled = true, speed = 3, bezier = "fluentEase" })
+-- Scratchpad
+hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 4, spring = "fluentSpring", style = "slide top" })
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3.5, bezier = "fluentAccel", style = "slide bottom" })
 
--- Workspace transitions
-hl.animation({ leaf = "workspaces", enabled = true, speed = 4, spring = "springSlide", style = "slide" })
+-- Fades 
+hl.animation({ leaf = "fadeIn", enabled = true, speed = 3, bezier = "fluentDecel" })
+hl.animation({ leaf = "fadeOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
 
------------------------
-----  LAYER ANIMATIONS ----
------------------------
--- We apply the same springSlide physics to layers that we used for the scratchpad
--- to ensure they share the same physical 'friction' and 'bounce'.
-
--- Slide In from Top, Slide Out to Bottom
-hl.animation({ leaf = "layersIn", enabled = true, speed = 3, spring = "springSlide", style = "slide top" })
-hl.animation({ leaf = "layersOut", enabled = true, speed = 3, spring = "springSlide", style = "slide bottom" })
+-- Borders and Layers
+hl.animation({ leaf = "border", enabled = true, speed = 4, bezier = "fluentDecel" })
+hl.animation({ leaf = "layersIn", enabled = true, speed = 3.5, bezier = "fluentDecel", style = "fade" })
+hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "fluentAccel", style = "fade" })
 
 -------------------
 ---- GESTURES  ----

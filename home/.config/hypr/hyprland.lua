@@ -20,17 +20,16 @@
 --        \::/    /                                                              \:|   |                  \::/    /        \::/    /                \::/    /                \::/____/
 --         \/____/                                                                \|___|                   \/____/          \/____/                  \/____/                  ~~
 --
-
 ---------------------
 ----   IMPORTS   ----
 ---------------------
-require("monitors")    -- Monitor configuration
-require("workspaces")  -- Workspaces configuration
-require("permissions") -- Permissions configuration
-require("rules")       -- Window and workspace rules
-require("autostart")   -- Autostart applications and commands
-require("plugins")     -- Hyprland plugins configuration
-require("scripts")  -- Native Lua scripts
+require("monitors")    
+require("workspaces")  
+require("permissions") 
+require("rules")       
+require("autostart")   
+require("plugins")     
+require("scripts")  
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -39,9 +38,10 @@ local terminal    = "uwsm app -- kitty --class 'super-enter'"
 local fileManager = "uwsm app -- thunar"
 local menu        = "pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1080 -W 512 -x 0 -y 0 -b -i | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"
 
------------------------
----- LOOK AND FEEL ----
------------------------
+----------------------------------------
+---- GLOBAL CONFIGURATION BATCHING  ----
+----------------------------------------
+-- Batched into a single API call for faster initialization
 hl.config({
     general = {
         gaps_in              = 9,
@@ -53,21 +53,16 @@ hl.config({
         },
         resize_on_border     = true,
         hover_icon_on_border = true,
-        snap                 = {
-            enabled = true,
-            window_gap = 9,
-            monitor_gap = 9
-        },
+        snap                 = { enabled = true, window_gap = 9, monitor_gap = 9 },
         allow_tearing        = false,
         layout               = "dwindle",
     },
-
     decoration = {
         rounding         = 9,
         rounding_power   = 2,
         active_opacity   = 1.0,
         inactive_opacity = 0.75,
-shadow = {
+        shadow = {
             enabled        = true,
             range          = 30,
             scale          = 1.0,
@@ -76,109 +71,84 @@ shadow = {
             color_inactive = 0x22000000,
             offset         = "0 8",
         },
-        blur             = {
-            enabled = true,
-            size    = 3,
-            passes  = 3,
-            noise   = 0.0234,
-            popups  = false,
-            special = false
-        },
+        blur             = { enabled = true, size = 3, passes = 3, noise = 0.0234, popups = false, special = false },
         dim_special      = 0.50
     },
-
-    animations = {
-        enabled = true,
+    animations = { enabled = true },
+    dwindle    = { preserve_split = true, force_split = 2 },
+    master     = { new_status = "master" },
+    scrolling  = { fullscreen_on_one_column = true },
+    cursor     = { hide_on_key_press = true, sync_gsettings_theme = true },
+    misc       = {
+        force_default_wallpaper  = 0,
+        disable_hyprland_logo    = true,
+        disable_splash_rendering = true,
+        focus_on_activate        = true,
+        font_family              = "SF Pro",
     },
+    input = {
+        kb_layout    = "us",
+        follow_mouse = 1,
+        sensitivity  = 0.6,
+        touchpad     = { natural_scroll = true, drag_lock = 0, scroll_factor = 1.0 },
+        touchdevice  = { enabled = true },
+    }
 })
 
 -----------------------
 ----  ANIMATIONS   ----
 -----------------------
-hl.curve("fluid", { type = "bezier", points = { { 0.16, 1 }, { 0.3, 1 } } })
-hl.curve("overshot", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
-hl.curve("smoothFade", { type = "bezier", points = { { 0.5, 0 }, { 0, 1 } } })
+-- Flowy but weighted curves
+hl.curve("fluentEase",   { type = "bezier", points = { { 0.25, 1 }, { 0.5, 1 } } })
+hl.curve("quickSnap",    { type = "bezier", points = { { 0.15, 0 }, { 0.1, 1 } } })
 
--- All speeds set to 4 (400ms) for exactly 24 frames on a 60Hz display
-hl.animation({ leaf = "global", enabled = true, speed = 4, bezier = "fluid" })
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 4, bezier = "overshot", style = "popin 80%" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 4, bezier = "fluid", style = "popin 80%" })
-hl.animation({ leaf = "windowsMove", enabled = true, speed = 4, bezier = "fluid", style = "slide" })
-hl.animation({ leaf = "border", enabled = true, speed = 4, bezier = "fluid" })
-hl.animation({ leaf = "fade", enabled = true, speed = 4, bezier = "smoothFade" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 4, bezier = "fluid", style = "slide" })
-hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 4, bezier = "fluid", style = "slide top" })
-hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 4, bezier = "fluid", style = "slide top" })
+-- Spring physics for "Bouncy but Unobtrusive" scratchpad/window interactions
+hl.curve("springPop",    { type = "spring", mass = 1, stiffness = 180, dampening = 18 })
+hl.curve("springSlide",  { type = "spring", mass = 1, stiffness = 140, dampening = 20 })
+
+-- Global fallback
+hl.animation({ leaf = "global", enabled = true, speed = 3, spring = "springSlide" })
+
+-- Borders and Layers (Smooth, non-bouncy glide)
+hl.animation({ leaf = "border", enabled = true, speed = 3, bezier = "fluentEase" })
+hl.animation({ leaf = "layersIn", enabled = true, speed = 3, bezier = "fluentEase", style = "fade" })
+hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "quickSnap", style = "fade" })
+
+-- Window Mechanics
+-- Popin is bouncy (springPop), close is snappy (quickSnap)
+hl.animation({ leaf = "windows", enabled = true, speed = 3, spring = "springPop" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 3, spring = "springPop", style = "popin 90%" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 2, bezier = "quickSnap", style = "popin 90%" })
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 3, spring = "springSlide", style = "slide" })
+
+-- Scratchpad: Slide in from top, out to bottom
+-- We set the spring to be a bit more dampened so it doesn't wobble excessively
+hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 3, spring = "springSlide", style = "slide top" })
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3, spring = "springSlide", style = "slide bottom" })
+
+-- Fades
+hl.animation({ leaf = "fade", enabled = true, speed = 3, bezier = "fluentEase" })
+
+-- Workspace transitions
+hl.animation({ leaf = "workspaces", enabled = true, speed = 4, spring = "springSlide", style = "slide" })
 
 -----------------------
-----    LAYOUTS    ----
+----  LAYER ANIMATIONS ----
 -----------------------
-hl.config({
-    dwindle = {
-        preserve_split = true,
-        force_split = 2,
-    },
-})
+-- We apply the same springSlide physics to layers that we used for the scratchpad
+-- to ensure they share the same physical 'friction' and 'bounce'.
 
-hl.config({
-    master = {
-        new_status = "master",
-    },
-})
+-- Slide In from Top, Slide Out to Bottom
+hl.animation({ leaf = "layersIn", enabled = true, speed = 3, spring = "springSlide", style = "slide top" })
+hl.animation({ leaf = "layersOut", enabled = true, speed = 3, spring = "springSlide", style = "slide bottom" })
 
-hl.config({
-    scrolling = {
-        fullscreen_on_one_column = true,
-    },
-})
-
-----------------
-----  MISC  ----
-----------------
-hl.config({
-    cursor = {
-        hide_on_key_press = true,
-        sync_gsettings_theme = true,
-    },
-    misc = {
-        force_default_wallpaper = 0,
-        disable_hyprland_logo = true,
-        disable_splash_rendering = true,
-        focus_on_activate = true,
-        font_family = "SF Pro",
-    }
-})
-
----------------
----- INPUT ----
----------------
-hl.config({
-    input = {
-        kb_layout    = "us",
-        kb_variant   = "",
-        kb_model     = "",
-        kb_options   = "",
-        kb_rules     = "",
-        follow_mouse = 1,
-        sensitivity  = 0.6,
-        touchpad     = {
-            natural_scroll = true,
-            drag_lock      = 0,
-            scroll_factor  = 1.0,
-        },
-        touchdevice  = {
-            enabled = true,
-        },
-    },
-})
-
+-------------------
+---- GESTURES  ----
+-------------------
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 hl.gesture({ fingers = 3, direction = "down", action = "special", workspace_name = "scratchpad" })
 
-hl.device({
-    name        = "epic-mouse-v1",
-    sensitivity = -0.5,
-})
+hl.device({ name = "epic-mouse-v1", sensitivity = -0.5 })
 
 ---------------------
 ---- KEYBINDINGS ----

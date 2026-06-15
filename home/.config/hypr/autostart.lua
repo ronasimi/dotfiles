@@ -2,8 +2,10 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/ for more details.
 
 hl.on("hyprland.start", function()
-  -- Always wrap manual launches inside the UWSM app helper
+  -- Grouped execution
   hl.exec_cmd("uwsm app -- ~/.bin/hyprlogin.sh")
-  hl.exec_cmd("uwsm app -- thunar --daemon", { workspace = "3 silent" })
   hl.exec_cmd("uwsm app -- syshud")
+  
+  -- Daemon launched with workspace context
+  hl.exec_cmd("uwsm app -- thunar --daemon", { workspace = "3 silent" })
 end)

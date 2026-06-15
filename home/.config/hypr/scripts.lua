@@ -3,10 +3,14 @@
 -----------------------------
 
 -- Waybar Top-Edge Hover Autohide
-local is_waybar_visible = false -- Set to true because Waybar launches visible
+local is_waybar_visible = false
 
+-- Increased timeout to 150ms. 
+-- 150ms is visually imperceptible for hover intents, but saves CPU cycles over 100ms.
 local waybar_hover_timer = hl.timer(function()
     local pos = hl.get_cursor_pos()
+    
+    -- Safety guard: only execute logic if cursor position is successfully polled
     if pos then
         if pos.y <= 18 and not is_waybar_visible then
             hl.exec_cmd("pkill -SIGUSR1 '^waybar$'")
@@ -16,20 +20,34 @@ local waybar_hover_timer = hl.timer(function()
             is_waybar_visible = false
         end
     end
-end, { timeout = 100, type = "repeat" })
+end, { timeout = 150, type = "repeat" })
 
--- Toggle layout without invoking grep or subshells
-local current_layout = "dwindle" -- Set this to your default startup layout
+
+-- Toggle layout (Optimized string assignment to avoid redundant subshells)
+local current_layout = "dwindle" 
 
 local function toggle_layout()
-    if current_layout == "master" then
-        hl.exec_cmd("hyprctl keyword general:layout dwindle")
-        current_layout = "dwindle"
-    else
-        hl.exec_cmd("hyprctl keyword general:layout master")
-        current_layout = "master"
-    end
+    -- Inline ternary logic
+    current_layout = (current_layout == "master") and "dwindle" or "master"
+    hl.exec_cmd("hyprctl keyword general:layout " .. current_layout)
 end
 
--- You can then bind this function directly in your hyprland.lua:
+-- Uncomment to bind:
 -- hl.bind("SUPER + ALT + L", toggle_layout)
+
+-- 1. Narrow the scope: Only target windows with the class 'scratchpad'
+local workspace_rules = {
+    { class_regex = "scratchpad", ws = "special:scratchpad" }
+}
+
+-- 2. Apply the rules correctly
+for _, rule in ipairs(workspace_rules) do
+    hl.window_rule({ 
+        match = { class = rule.class_regex }, 
+        workspace = rule.ws,
+        animation = "slide top" -- You can combine these now
+    })
+end
+
+-- 3. Remove the hl.config({ windowrulev2 = ... }) block 
+-- It is redundant if you define the animation within the window_rule call above.

@@ -122,7 +122,7 @@ hl.animation({ leaf = "workspaces", enabled = true, speed = 4.5, bezier = "fluen
 
 -- Scratchpad
 hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 4, spring = "fluentSpring", style = "slide top" })
-hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3.5, bezier = "fluentAccel", style = "slide bottom" })
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3.5, bezier = "fluentAccel", style = "slide top" })
 
 -- Fades 
 hl.animation({ leaf = "fadeIn", enabled = true, speed = 3, bezier = "fluentDecel" })

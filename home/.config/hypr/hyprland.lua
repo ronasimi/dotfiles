@@ -98,30 +98,33 @@ hl.config({
 -----------------------
 ----  ANIMATIONS   ----
 -----------------------
--- Fluent curves: extremely aggressive initial acceleration, long smooth tail
+-- Coherent, bounce-free curves
+-- Fluent Decel: extremely aggressive initial acceleration, long smooth tail (for entering/moving)
 hl.curve("fluentDecel", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.0 } } })
+-- Fluent Accel: smooth start, fast finish (for exiting)
 hl.curve("fluentAccel", { type = "bezier", points = { { 0.3, 0.0 }, { 0.8, 0.15 } } })
-
--- Slightly softened spring: allows the motion to be seen a fraction longer
-hl.curve("fluentSpring", { type = "spring", mass = 1, stiffness = 250, dampening = 30 })
 
 -- Global fallback
 hl.animation({ leaf = "global", enabled = true, speed = 3.5, bezier = "fluentDecel" })
 
 -- Window Mechanics
--- In: 350ms, giving the pop-in a smooth, visible expansion
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 3.5, bezier = "fluentDecel", style = "popin 85%" })
--- Out: 300ms, still slightly faster than the entrance to keep the UI feeling responsive
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "fluentAccel", style = "popin 85%" })
--- Move: 350ms, a highly perceptible, smooth glide across the screen
-hl.animation({ leaf = "windowsMove", enabled = true, speed = 3.5, bezier = "fluentDecel" })
+-- In: Glides to 100% over 400ms
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 4, bezier = "fluentDecel", style = "popin 85%" })
+
+-- Out: Fast exit over 400ms
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 4, bezier = "fluentAccel", style = "popin 85%" })
+
+-- Move: Sped up to 250ms (speed = 2.5). 
+-- This forces the existing windows to get out of the way before the new window fully pops in.
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 2.5, bezier = "fluentDecel" })
 
 -- Workspaces
 -- 450ms: Full-screen transitions benefit from a longer duration to prevent spatial disorientation
 hl.animation({ leaf = "workspaces", enabled = true, speed = 4.5, bezier = "fluentDecel", style = "slide" })
 
 -- Scratchpad
-hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 4, spring = "fluentSpring", style = "slide top" })
+-- Switched away from springs to maintain the strict, coherent bezier feel
+hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 4, bezier = "fluentDecel", style = "slide top" })
 hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3.5, bezier = "fluentAccel", style = "slide top" })
 
 -- Fades 

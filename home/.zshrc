@@ -266,6 +266,12 @@ if command -v thefuck >/dev/null 2>&1; then
   eval "$(thefuck --alias)"
 fi
 
+# Autosuggestions (guarded)
+if [[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+  export ZSH_AUTOSUGGEST_USE_ASYNC=1
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
 # SYNTAX HIGHLIGHTING (guarded)
 if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
   source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -299,12 +305,6 @@ function color
 fi
 
 }
-
-# Autosuggestions (guarded)
-if [[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
-  export ZSH_AUTOSUGGEST_USE_ASYNC=1
-  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
 
 # PATHS
 export PATH=/usr/local/bin:$PATH

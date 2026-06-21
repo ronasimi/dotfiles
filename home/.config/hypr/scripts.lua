@@ -12,7 +12,7 @@ local waybar_hover_timer = hl.timer(function()
         if pos.y <= 18 and not is_waybar_visible then
             is_waybar_visible = true
             hl.exec_cmd("pkill -SIGUSR1 '^waybar$'")
-        elseif pos.y > 36 and is_waybar_visible then
+        elseif pos.y > 45 and is_waybar_visible then
             is_waybar_visible = false
             hl.exec_cmd("pkill -SIGUSR1 '^waybar$'")
         end
@@ -36,3 +36,4 @@ for _, rule in ipairs(workspace_rules) do
         animation = "slide top"
     })
 end
+

@@ -4,7 +4,9 @@
     "start_hidden": true,
     "position": "top",
     "height": 36,
+    "width": 1848,
     "spacing": 6,
+    "margin": 9,
     "fixed-center": true,
     "reload_style_on_change": true,
     "modules-left": [

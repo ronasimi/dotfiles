@@ -1,0 +1,30 @@
+/* Import the base theme to keep colors/transparency */
+@import url("style.css");
+
+/* 1. RESET: Remove the massive margins from the main launcher */
+#input, #input:focus, #outer-box, #scroll, #inner-box {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
+/* 2. DECORATION: Add a small, clean cushion for the window list */
+window {
+    padding: 10px;
+    background-color: rgba(29, 29, 29, 0.50);
+    border: none;
+    border-radius: 12px;
+}
+
+/* 3. LIST ENTRIES: Clean up the entry spacing */
+#entry {
+    padding: 10px 15px;
+    margin: 2px 0;
+    border-radius: 6px;
+}
+
+#entry:selected {
+    background-color: #8ab4f8;
+    color: #1d1d1d;
+}

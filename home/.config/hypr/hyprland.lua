@@ -138,8 +138,8 @@ hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "fluentAc
 -------------------
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 hl.gesture({ fingers = 3, direction = "down", action = "special", workspace_name = "scratchpad" })
-
-hl.device({ name = "epic-mouse-v1", sensitivity = -0.5 })
+-- Wofi Window Switcher
+hl.gesture({ fingers = 3, direction = "up", action = function() hl.exec_cmd("python ~/.config/hypr/scripts/wofi-switcher.py &") end })
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -214,7 +214,7 @@ hl.bind("XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast save a
 hl.bind("SHIFT + XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast copy area"))
 
 -- Utilities
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd([[pkill wofi || dash -c "cliphist list | uwsm app -- wofi -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu --pre-display-cmd \"echo '%s' | cut -f 2\" | cliphist decode | wl-copy"]]))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd([[pkill wofi || dash -c "cliphist list | sed 's/^[0-9]*\t//' | uwsm app -- wofi --style ~/.config/wofi/style-clipboard.css -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu | cliphist decode | wl-copy"]]))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"))
 hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))
 hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("dunstctl history-pop"))

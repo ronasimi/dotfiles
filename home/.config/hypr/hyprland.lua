@@ -23,27 +23,28 @@
 ---------------------
 ----   IMPORTS   ----
 ---------------------
-require("monitors")    
-require("workspaces")  
-require("permissions") 
-require("rules")       
-require("autostart")   
-require("plugins")     
-require("scripts")  
+require("monitors")
+require("workspaces")
+require("permissions")
+require("rules")
+require("autostart")
+require("plugins")
+require("scripts")
 
 ---------------------
 ---- MY PROGRAMS ----
 ---------------------
 local terminal    = "uwsm app -- kitty --class 'super-enter'"
 local fileManager = "uwsm app -- thunar"
-local menu        = "pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1080 -W 512 -x 0 -y 0 -b -i | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"
+local menu        =
+"pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1080 -W 512 -x 0 -y 0 -b -i | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"
 
 ----------------------------------------
 ---- GLOBAL CONFIGURATION BATCHING  ----
 ----------------------------------------
 -- Batched into a single API call for faster initialization
 hl.config({
-    general = {
+    general    = {
         gaps_in              = 9,
         gaps_out             = 18,
         border_size          = 0,
@@ -62,7 +63,7 @@ hl.config({
         rounding_power   = 2,
         active_opacity   = 1.0,
         inactive_opacity = 0.85,
-        shadow = {
+        shadow           = {
             enabled        = true,
             range          = 30,
             scale          = 1.0,
@@ -86,7 +87,7 @@ hl.config({
         focus_on_activate        = true,
         font_family              = "SF Pro",
     },
-    input = {
+    input      = {
         kb_layout    = "us",
         follow_mouse = 1,
         sensitivity  = 0.6,
@@ -124,7 +125,7 @@ hl.animation({ leaf = "workspaces", enabled = true, speed = 4.5, bezier = "fluen
 hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 4, spring = "fluentSpring", style = "slide top" })
 hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3.5, bezier = "fluentAccel", style = "slide top" })
 
--- Fades 
+-- Fades
 hl.animation({ leaf = "fadeIn", enabled = true, speed = 3, bezier = "fluentDecel" })
 hl.animation({ leaf = "fadeOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
 
@@ -139,7 +140,8 @@ hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "fluentAc
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 hl.gesture({ fingers = 3, direction = "down", action = "special", workspace_name = "scratchpad" })
 -- Wofi Window Switcher
-hl.gesture({ fingers = 3, direction = "up", action = function() hl.exec_cmd("python ~/.config/hypr/scripts/wofi-switcher.py &") end })
+hl.gesture({ fingers = 3, direction = "up", action = function() hl.exec_cmd(
+    "python ~/.config/hypr/scripts/wofi-switcher.py &") end })
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -149,9 +151,12 @@ local mainMod = "SUPER"
 -- Core
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + X", hl.dsp.window.close())
-hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Restarting System...' --post-cmd 'systemctl reboot']]))
-hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Powering Off...' --post-cmd 'systemctl poweroff']]))
+hl.bind(mainMod .. " + SHIFT + X",
+    hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
+hl.bind(mainMod .. " + SHIFT + R",
+    hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Restarting System...' --post-cmd 'systemctl reboot']]))
+hl.bind(mainMod .. " + SHIFT + P",
+    hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Powering Off...' --post-cmd 'systemctl poweroff']]))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("systemctl suspend"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SPACE", hl.dsp.window.float({ action = "toggle" }))
@@ -213,8 +218,12 @@ hl.bind("XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast save a
 hl.bind("SHIFT + XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast copy area"))
 
 -- Utilities
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd([[pkill wofi || dash -c "cliphist list | sed 's/^[0-9]*\t//' | uwsm app -- wofi --style ~/.config/wofi/style-clipboard.css -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu | cliphist decode | wl-copy"]]))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"))
+hl.bind(mainMod .. " + C",
+    hl.dsp.exec_cmd(
+    [[pkill wofi || dash -c "cliphist list | sed 's/^[0-9]*\t//' | uwsm app -- wofi --style ~/.config/wofi/style-clipboard.css -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu | cliphist decode | wl-copy"]]))
+hl.bind(mainMod .. " + R",
+    hl.dsp.exec_cmd(
+    "pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"))
 hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))
 hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("dunstctl history-pop"))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
@@ -240,5 +249,6 @@ hl.bind(mainMod .. " + F7", run_in_ws(7, "libreoffice --writer"))
 hl.bind(mainMod .. " + F8", run_in_ws(8, "env GTK_THEME=Adwaita:dark prusa-slicer"))
 hl.bind(mainMod .. " + T", function()
     hl.dispatch(hl.dsp.focus({ workspace = "special:scratchpad" }))
-    hl.dispatch(hl.dsp.exec_cmd("/home/ron/.bin/startrt && uwsm app -- kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chkrt'"))
+    hl.dispatch(hl.dsp.exec_cmd(
+    "/home/ron/.bin/startrt && uwsm app -- kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chkrt'"))
 end)

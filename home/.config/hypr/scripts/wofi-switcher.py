@@ -11,16 +11,20 @@ def check_toggle():
         sys.exit(0)
 
 def get_windows():
-    """Fetches windows and maps icons with strict priority matching."""
+    """Fetches windows, sorts by workspace, and creates a map with icon-formatting."""
     try:
         output = subprocess.check_output(['/usr/bin/hyprctl', 'clients', '-j'], encoding='utf-8')
         clients = json.loads(output)
     except Exception:
-        return {}
+        return []
 
-    window_map = {}
+    # Sort clients by workspace ID
+    sorted_clients = sorted([c for c in clients if c.get('mapped') and c.get('class')], 
+                            key=lambda x: x['workspace']['id'])
+
+    windows_list = []
+    current_ws = -1
     
-    # Priority icon names (exact matches for your apps)
     priority_map = {
         'code': ['com.visualstudio.code', 'vscode', 'code-oss'],
         'thunar': ['thunar', 'org.xfce.thunar']
@@ -32,27 +36,29 @@ def get_windows():
         '/usr/share/pixmaps'
     ]
 
-    for w in [c for c in clients if c.get('mapped') and c.get('class')]:
+    for w in sorted_clients:
+        ws_id = w['workspace']['id']
+        if ws_id != current_ws:
+            # Clean header label (No dashes)
+            windows_list.append((f"Workspace {ws_id}", None))
+            current_ws = ws_id
+
         w_class = w['class'].lower()
         w_title = w['title'].replace('\n', ' ')[:65]
         
+        # Icon Lookup
         icon_path = ""
-        # 1. Check priority map for exact icon names
         names_to_try = priority_map.get(w_class, [w_class])
-        
         for name in names_to_try:
             for d in search_dirs:
                 if os.path.exists(d):
-                    # Check for exact file match first
                     for ext in ['.png', '.svg']:
                         target = os.path.join(d, name + ext)
-                        if os.path.exists(target):
-                            icon_path = target
-                            break
+                        if os.path.exists(target): icon_path = target; break
                 if icon_path: break
             if icon_path: break
 
-        # 2. Fallback to fuzzy match only if priority check fails
+        # Fuzzy Fallback
         if not icon_path:
             for d in search_dirs:
                 if os.path.exists(d):
@@ -63,29 +69,21 @@ def get_windows():
                 if icon_path: break
 
         label = f"{w['class']} - {w_title}"
-        if label in window_map:
-            count = 1
-            while f"{label} ({count})" in window_map: count += 1
-            label = f"{label} ({count})"
+        display_label = f"img:{icon_path}:text: {label}" if icon_path else label
+        
+        windows_list.append((display_label, w['address']))
             
-# Map icon-formatted label to raw address
-        if icon_path:
-            # Added a space here: 'text: ' + label
-            window_map[f"img:{icon_path}:text: {label}"] = w['address']
-        else:
-            window_map[label] = w['address']
-            
-    return window_map
+    return windows_list
 
-def wofi(options):
-    """Pipes options to wofi and returns the selection."""
+def wofi(labels):
+    """Pipes labels to wofi."""
     try:
         return subprocess.check_output(
             ['wofi', '--show', 'dmenu', '--allow-images', 
              '--style', os.path.expanduser('~/.config/wofi/style-switcher.css'),
              '--prompt', 'Windows', '--location', 'bottom', 
              '--yoffset', '0', '--cache-file', '/dev/null'],
-            input='\n'.join(options),
+            input='\n'.join(labels),
             encoding='utf-8',
             stderr=subprocess.DEVNULL
         ).strip()
@@ -93,7 +91,7 @@ def wofi(options):
         return None
 
 def focus_window(address):
-    """Brute-forces the wrapper's API to ensure the window successfully focuses."""
+    """Focuses window using the best available strategy."""
     strategies = [
         ['/usr/bin/hyprctl', '--batch', f'dispatch focuswindow address:{address}'],
         ['/usr/bin/hyprctl', 'dispatch', f'hl.dsp.native("focuswindow", "address:{address}")'],
@@ -113,14 +111,18 @@ def focus_window(address):
 
 def main():
     check_toggle()
-    window_map = get_windows()
-    if not window_map:
+    windows_data = get_windows()
+    if not windows_data:
         sys.exit(0)
         
-    selected = wofi(list(window_map.keys()))
+    labels = [item[0] for item in windows_data]
+    selected = wofi(labels)
     
-    if selected and selected in window_map:
-        focus_window(window_map[selected])
+    if selected:
+        for label, address in windows_data:
+            if label == selected and address is not None:
+                focus_window(address)
+                break
 
 if __name__ == '__main__':
     main()

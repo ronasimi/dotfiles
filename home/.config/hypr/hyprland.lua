@@ -141,7 +141,7 @@ hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 hl.gesture({ fingers = 3, direction = "down", action = "special", workspace_name = "scratchpad" })
 -- Wofi Window Switcher
 hl.gesture({ fingers = 3, direction = "up", action = function() hl.exec_cmd(
-    "python ~/.config/hypr/scripts/wofi-switcher.py &") end })
+    "pkill -SIGUSR1 hyprexpose &") end })
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -171,7 +171,7 @@ hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
-hl.bind("ALT + TAB", function() hl.exec_cmd("python ~/.config/hypr/scripts/wofi-switcher.py &") end)
+hl.bind("ALT + TAB", hl.dsp.exec_cmd( "pkill -SIGUSR1 hyprexpose &" ))
 hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }))

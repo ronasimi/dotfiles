@@ -3,7 +3,8 @@
    ========================================================================= */
 window {
     /* Lowered from 0.50 to 0.38 so it visually matches Waybar perfectly */
-    background-color: rgba(29, 29, 29, 0.50);
+    background-color: rgba(29, 29, 29, 0.75);
+    border-radius: 0 10px 10px 0;
 }
 
 /* =========================================================================

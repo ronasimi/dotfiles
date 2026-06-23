@@ -24,10 +24,10 @@ max_card_width  = 480.0
 max_card_height = 320.0
 
 # Height reserved for the workspace label at the top of each card (px).
-label_height = 32.0
+label_height = 18.0
 
 # Padding between a card's edge and the window thumbnail area (px).
-thumb_padding = 8.0
+thumb_padding = 9.0
 
 # Width of the selection highlight border drawn around the active card (px).
 select_border = 1
@@ -41,22 +41,22 @@ select_border = 1
 [colors]
 
 # Full-screen dim overlay drawn behind all workspace cards.
-background = "#000000bf"       # black at ~75% opacity
+background = "#0000008cc"       # black at ~75% opacity
 
 # Workspace card background fill.
-card = "#1d1d1d80"
+card = "#8ab4f880"
 
 # Border drawn around the currently selected card.
 selection = "#c3c3c380"
 
 # Workspace number / name label text.
-label = "#8ab4f8ff"
+label = "#c3c3c3ff"
 
 # "(empty)" text shown in workspaces with no windows.
 empty_label = "#80808094"      # grey, semi-transparent
 
 # Window class / title text drawn over thumbnails or placeholder rects.
-window_label = "#ffffffe6"
+window_label = "#8ab4f880"
 
 # Coloured border drawn around the window that will be moved when you press 'm'.
 # Set the alpha to 00 to disable the indicator entirely.

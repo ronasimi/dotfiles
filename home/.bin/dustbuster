@@ -1,0 +1,19 @@
+# Define cache directories
+USER_CACHE="${HOME}/.cache"
+
+# Remove orphaned packages (dependencies no longer required by any installed software)
+ORPHANS=$(pacman -Qtdq)
+if [ -n "${ORPHANS}" ]; then
+    sudo pacman -Rns ${ORPHANS}
+else
+    echo "No orphaned packages to remove."
+fi
+
+# Clear the pacman package cache (removes uninstalled packages and unused sync databases)
+sudo pacman -Sc
+
+# Vacuum systemd journal logs to retain only the last two weeks of data
+sudo journalctl --vacuum-time=2weeks
+
+# Optional: Clear out the thumbnail cache for your user
+rm -rf "${USER_CACHE}/thumbnails/*"

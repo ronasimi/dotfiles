@@ -10,9 +10,9 @@ window#waybar, button, label {
    2. MAIN BASE LAYER
    ========================================================================= */
 window#waybar {
-    background-color: rgba(29, 29, 29, 0.75);
+    background-color: rgba(29, 29, 29, 0.25);
     color: #c3c3c3;
-    border-radius: 0px;
+    border-radius: 9px;
 }
 
 /* Force module groups to stay clear so Hyprland blurs the bar smoothly */
@@ -53,7 +53,7 @@ button:hover {
    ========================================================================= */
 tooltip {
     color: #8ab4f8;
-    background-color: rgba(29, 29, 29, 0.35);
+    background-color: rgba(29, 29, 29, 0.25);
     text-shadow: none;
     font-size: 14px;
 }
@@ -71,7 +71,7 @@ tooltip * {
     color: #5d5d5d;
     box-shadow: inset 0 -3px transparent;
     font-family: Material Design Icons;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 #workspaces button:hover {

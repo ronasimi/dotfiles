@@ -167,5 +167,5 @@
         "https://raw.githubusercontent.com/hyprwm": true,
         "https://raw.githubusercontent.com": true,
         "https://*.githubusercontent.com": true
-    },
+    }
 }

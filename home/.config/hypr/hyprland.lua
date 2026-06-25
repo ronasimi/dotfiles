@@ -72,7 +72,7 @@ hl.config({
             color_inactive = 0x22000000,
             offset         = "0 8",
         },
-        blur             = { enabled = true, size = 3, passes = 3, noise = 0.0234, popups = false, special = false },
+        blur             = { enabled = true, size = 3, passes = 3, noise = 0.0234, popups = true, special = false },
         dim_special      = 0.50
     },
     animations = { enabled = true },

@@ -3,10 +3,10 @@
 }
 
 #syshud .box_layout {
-	background: alpha(@theme_bg_color, 0.5);
+	background: alpha(@theme_bg_color, 0.25);
 	border-radius: 9px;
 	border: 0px solid @borders;
-	margin: 10px;
+	margin: 9px;
 }
 
 #syshud scale {
@@ -15,7 +15,7 @@
 }
 #syshud label {
 	color: @theme_fg_color;
-	font-size: 12px;
+	font-size: 14px;
 }
 
 /* Scale */
@@ -49,6 +49,8 @@
 
 /* Levels */
 #syshud .muted {
+	color: #5d5d5d;
+	font-size: 14px;
 }
 #syshud .low {
 }

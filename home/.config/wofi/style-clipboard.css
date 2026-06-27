@@ -19,7 +19,7 @@
 
 /* 3. Ensure the window container doesn't clip the taller entries */
 window {
-    background-color: rgba(29, 29, 29, 0.25);
+    background-color: rgba(29, 29, 29, 0.50);
     border: none;
     border-radius: 10px 10px 0 0;
     padding: 9x;

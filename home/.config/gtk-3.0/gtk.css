@@ -36,7 +36,8 @@ window.thunar .dialog-vbox {
 .thunar .standard-view {
   background-color: #2e2e2e; 
   border-radius: 9px;       
-  margin: 6px;               
+  /* TRBL: 6px top, 9px right, 6px bottom, 6px left */
+  margin: 3px 9px 3px 0px;               
   border: 1px solid rgba(0, 0, 0, 0.2); 
 }
 
@@ -96,21 +97,31 @@ window.thunar toolbar#location-toolbar > toolitem > widget > widget.linked.path-
 }
 
 /* --- Sidebar --- */
-.thunar paned > scrolledwindow.sidebar,
-.thunar paned > scrolledwindow.sidebar treeview.view {
+.thunar paned > scrolledwindow.sidebar {
+  background-color: transparent;
+  border: none;
+}
+
+/* Apply the margin explicitly to the inner view components to bypass GTK constraints */
+.thunar paned > scrolledwindow.sidebar treeview.view,
+.thunar .shortcuts-pane .view {
   background-color: transparent;
   border: none;
   color: #c3c3c3;
+  margin-left: 6px; /* Forces the text and highlights 6px away from the left window border */
 }
 
-/* --- Selections & Highlights --- */
-/* Sidebar selection */
-window.thunar paned > scrolledwindow treeview.view:selected {
+/* Sidebar selection (Unified Treeview and Places/Shortcuts Pane) */
+window.thunar paned > scrolledwindow treeview.view:selected,
+.thunar .shortcuts-pane .view:selected {
   text-shadow: none;
   background-color: rgba(138, 180, 248, 0.8);
   background-image: none;
   color: #000000;
   -gtk-secondary-caret-color: rgba(138, 180, 248, 0.8);
+  
+  /* Force the highlight bar itself to stop 6px short of the left window edge */
+  margin-left: 6px; 
 }
 
 /* Main view selection (Unified) */

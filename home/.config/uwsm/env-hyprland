@@ -3,3 +3,6 @@
 
 export HYPRCURSOR_SIZE=24
 export HYPRCURSOR_THEME="OpenZone_White_Slim"
+
+# Theme nmtui/libnewt apps to match your dark grey, blue, and orange style
+export NEWT_COLORS=root=,default:window=,default:border=blue,default:title=black,default:shadow=black,default:button=default,blue:actbutton=black,yellow:listbox=black,default:actlistbox=black,yellow:label=black,default:entry=black,lightgray:checkbox=black,default:actcheckbox=black,yellow:textbox=black,default:acttextbox=black,yellow

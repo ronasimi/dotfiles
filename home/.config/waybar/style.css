@@ -2,7 +2,7 @@
    1. GLOBAL & FONTS (Prevents container layout bugs)
    ========================================================================= */
 window#waybar, button, label {
-    font-family: SF Pro Text;
+    font-family: SF Pro;
     font-weight: 600;
 }
 
@@ -131,7 +131,7 @@ tooltip * {
 
 #clock {
     color: #c3c3c3;
-    font-family: SF Pro Text;
+    font-family: SF Pro;
     font-weight: 800;
     font-size: 14px;
     box-shadow: inset 0 -3px transparent;

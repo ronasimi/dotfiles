@@ -108,7 +108,6 @@ window.thunar toolbar#location-toolbar > toolitem > widget > widget.linked.path-
   background-color: transparent;
   border: none;
   color: #c3c3c3;
-  margin-left: 6px; /* Forces the text and highlights 6px away from the left window border */
 }
 
 /* Sidebar selection (Unified Treeview and Places/Shortcuts Pane) */
@@ -120,8 +119,6 @@ window.thunar paned > scrolledwindow treeview.view:selected,
   color: #000000;
   -gtk-secondary-caret-color: rgba(138, 180, 248, 0.8);
   
-  /* Force the highlight bar itself to stop 6px short of the left window edge */
-  margin-left: 6px; 
 }
 
 /* Main view selection (Unified) */

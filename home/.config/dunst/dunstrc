@@ -7,7 +7,7 @@
     monitor = 0
 
     # Display notification on focused monitor.  Possible modes are:
-    #   mouse: follow mouse poSF Pro Text
+    #   mouse: follow mouse pointer
     #   keyboard: follow window with keyboard focus
     #   none: don't follow anything
     #

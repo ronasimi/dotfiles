@@ -37,7 +37,7 @@ require("scripts")
 local terminal    = "uwsm app -- kitty --class 'super-enter'"
 local fileManager = "uwsm app -- thunar"
 local menu        =
-"pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1026 -W 512 -x 0 -y 9 -b -i | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"
+"pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1026 -W 512 -x 0 -y 5 -b -i | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"
 
 ----------------------------------------
 ---- GLOBAL CONFIGURATION BATCHING  ----
@@ -220,7 +220,7 @@ hl.bind("SHIFT + XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblas
 -- Utilities
 hl.bind(mainMod .. " + C",
     hl.dsp.exec_cmd(
-    [[pkill wofi || dash -c "cliphist list | sed 's/^[0-9]*\t//' | uwsm app -- wofi --style ~/.config/wofi/style-clipboard.css -G -p 'Clipboard history' -H 540 -W 1902 -x 9 -y 540 -b -i --dmenu | cliphist decode | wl-copy"]]))
+    [[pkill wofi || dash -c "cliphist list | sed 's/^[0-9]*\t//' | uwsm app -- wofi --style ~/.config/wofi/clipboard.css -G -p 'Clipboard history' -H 540 -W 1902 -x 9 -y 540 -b -i --dmenu | cliphist decode | wl-copy"]]))
 hl.bind(mainMod .. " + R",
     hl.dsp.exec_cmd(
     "pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"))

@@ -53,6 +53,7 @@ window {
     margin-right: 18px;
     margin-left: 18px;
     padding-left: 12px;
+    white-space: normal;
 }
 
 #entry:focus {

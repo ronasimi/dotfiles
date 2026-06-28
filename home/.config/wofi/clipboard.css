@@ -1,21 +1,12 @@
-/* =========================================================================
-   CLIPBOARD.CSS (Consolidated - No Import Required)
-   ========================================================================= */
 window {
-    background-color: rgba(39, 39, 39, 0.45);
+    background-color: rgba(29, 29, 29, 0.50);
     border-radius: 10px;
-    padding: 9px;
-    border: none;
 }
 
 #outer-box, #scroll, #text, #inner-box {
     background-color: transparent !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
 }
 
-/* INPUT BOX */
 #input {
     color: #c3c3c3;
     border-radius: 9px;
@@ -31,29 +22,18 @@ window {
     background-color: rgba(29, 29, 29, 0.1);
 }
 
-/* MULTI-LINE ENTRIES */
 #entry {
     background-color: transparent !important;
     font-family: "SF Pro Text";
     font-size: 14px;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 4px 10px;
-    min-height: 60px;
-    
-    /* These three lines are the key to forcing wrap in Wofi */
-    white-space: normal !important;
-    word-wrap: break-word !important;
-    overflow: visible !important;
-}
-
-/* Ensure the label inside the entry also obeys the wrap */
-#entry label {
-    white-space: normal !important;
-    word-wrap: break-word !important;
+    border-radius: 9px;
+    margin: 6px 18px;
+    padding-left: 12px;
+    /* Force 3-line height: (14px * 1.5 line height * 3) + padding */
+    min-height: 70px;
 }
 
 #entry:selected {
-    color: #1d1d1d;
-    background-color: #8ab4f8;
+    color: #272727;
+    background: #8ab4f8;
 }

@@ -29,7 +29,7 @@ require("permissions")
 require("rules")
 require("autostart")
 require("plugins")
-require("scripts")
+require("functions")
 
 ---------------------
 ---- MY PROGRAMS ----

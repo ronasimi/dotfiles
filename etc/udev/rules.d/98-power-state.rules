@@ -1,0 +1,5 @@
+# 1st rule: Actions when plugged into AC power (Enable all 12 threads + Max Brightness)
+ACTION=="change", SUBSYSTEM=="power_supply", ATTR{online}=="1", RUN+="/usr/bin/brightnessctl -s set 100%", RUN+="/bin/dash -c 'i=4; while [ $i -le 11 ]; do echo 1 > /sys/devices/system/cpu/cpu$i/online; i=$((i+1)); done'"
+
+# 2nd rule: Actions when running on Battery (Disable cores 4-11 + 50% Brightness)
+ACTION=="change", SUBSYSTEM=="power_supply", ATTR{online}=="0", RUN+="/usr/bin/brightnessctl -s set 50%", RUN+="/bin/dash -c 'i=8; while [ $i -le 11 ]; do echo 0 > /sys/devices/system/cpu/cpu$i/online; i=$((i+1)); done'"

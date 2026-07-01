@@ -1,9 +1,8 @@
 -----------------------------
----- NATIVE LUA SCRIPTS  ----
+---- HYPRLAND FUNCTIONS  ----
 -----------------------------
 
 local is_waybar_visible = false
-
 local waybar_hover_timer = hl.timer(function()
     local pos = hl.get_cursor_pos() 
     if pos then
@@ -28,11 +27,4 @@ local workspace_rules = {
     { class_regex = "scratchpad", ws = "special:scratchpad" }
 }
 
-for _, rule in ipairs(workspace_rules) do
-    hl.window_rule({ 
-        match = { class = rule.class_regex }, 
-        workspace = rule.ws,
-        animation = "slide top"
-    })
-end
 

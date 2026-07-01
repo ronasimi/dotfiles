@@ -1,6 +1,6 @@
 window {
     background-color: rgba(29, 29, 29, 0.50);
-    border-radius: 10px;
+    border-radius: 9px 9px 0 0;
 }
 
 #outer-box, #scroll, #text, #inner-box {

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Define the services required for VMware
+VM_SERVICES=(
+    "vmware-networks.service"
+    "vmware-usbarbitrator.service"
+)
+
+case "$1" in
+    up|start)
+        echo "Starting VMware services..."
+        sudo systemctl start "${VM_SERVICES[@]}"
+        echo "VMware is ready."
+        ;;
+    down|stop)
+        echo "Stopping VMware services..."
+        sudo systemctl stop "${VM_SERVICES[@]}"
+        echo "VMware services stopped."
+        ;;
+    status)
+        systemctl status "${VM_SERVICES[@]}"
+        ;;
+    *)
+        echo "Usage: $(basename "$0") {up|down|status}"
+        exit 1
+        ;;
+esac

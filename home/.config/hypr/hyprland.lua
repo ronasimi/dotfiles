@@ -46,7 +46,7 @@ local menu        =
 hl.config({
     general    = {
         gaps_in              = 9,
-        gaps_out             =  {top = 9, left = 18, right = 18, bottom = 18},
+        gaps_out             =  {top = 18, left = 18, right = 18, bottom = 18},
         border_size          = 0,
         col                  = {
             active_border   = { colors = { "rgba(f4bf75cc)", "rgba(8ab4f8cc)" }, angle = 45 },

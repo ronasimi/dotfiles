@@ -1,12 +1,10 @@
 {
     "layer": "top",
-    "exclusive": true,
-    "start_hidden": false,
+    "exclusive": false,
+    "start_hidden": true,
     "position": "top",
     "height": 36,
-    "width": 1902,
     "spacing": 6,
-    "margin-top": 9,
     "fixed-center": true,
     "reload_style_on_change": true,
     "modules-left": [

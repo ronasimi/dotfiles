@@ -1,7 +1,7 @@
 {
     "layer": "top",
-    "exclusive": false,
-    "start_hidden": true,
+    "exclusive": true,
+    "start_hidden": false,
     "position": "top",
     "height": 36,
     "spacing": 6,

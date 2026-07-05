@@ -244,7 +244,7 @@ setopt pushd_to_home            # `pushd` = `pushd $HOME`
 
 # AUTOCOLOR
 #alias ls='ls --color=auto'
-alias ls='eza --group-directories-first --git --header --icons=auto'
+alias ls='eza --group-directories-first --git --header --icons=never'
 alias cd='z'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'

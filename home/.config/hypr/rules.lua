@@ -49,10 +49,10 @@ hl.window_rule({
 -- Complex Floating Apps (Pins, Specific Sizes, and Positioning)
 hl.window_rule({ match = { class = "hyprland-run" }, move = "20 monitor_h-120", float = true })
 hl.window_rule({ match = { class = "^(super-enter)$" }, float = true, pin = true })
-hl.window_rule({ match = { class = "^(nmtui|org\\.pulseaudio\\.pavucontrol)$" }, size = { 600, 566 }, move = { 1311, 9 }, float = true, pin = true })
-hl.window_rule({ match = { class = "^(io\\.github\\.kaii_lb\\.Overskride)$" }, size = { 942, 616 }, move = { 969, 9 }, float = true, pin = true })
+hl.window_rule({ match = { class = "^(nmtui|org\\.pulseaudio\\.pavucontrol)$" }, size = { 600, 566 }, move = { 1311, 45 }, float = true, pin = true })
+hl.window_rule({ match = { class = "^(io\\.github\\.kaii_lb\\.Overskride)$" }, size = { 942, 616 }, move = { 969, 45 }, float = true, pin = true })
 hl.window_rule({ match = { class = "^(xdg-desktop-portal-gtk)$" }, size = { 942, 504 }, float = true })
-hl.window_rule({ match = { class = "^(nwg-displays)$" }, size = { 916, 472 }, move = { 995, 9 }, float = true, pin = true })
+hl.window_rule({ match = { class = "^(nwg-displays)$" }, size = { 916, 472 }, move = { 995, 45 }, float = true, pin = true })
 
 -- Media Players (Consolidated opaque & aspect ratio)
 hl.window_rule({ 

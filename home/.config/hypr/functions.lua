@@ -2,7 +2,7 @@
 ---- HYPRLAND FUNCTIONS  ----
 -----------------------------
 
-local is_waybar_visible = false
+--[[ local is_waybar_visible = false
 local waybar_hover_timer = hl.timer(function()
     local pos = hl.get_cursor_pos() 
     if pos then
@@ -15,16 +15,10 @@ local waybar_hover_timer = hl.timer(function()
             hl.exec_cmd("pkill -SIGUSR1 '^waybar$'")
         end
     end
-end, { timeout = 150, type = "repeat" })
+end, { timeout = 150, type = "repeat" }) ]]
 
 local current_layout = "dwindle" 
 local function toggle_layout()
     current_layout = (current_layout == "master") and "dwindle" or "master"
     hl.exec_cmd("hyprctl keyword general:layout " .. current_layout)
 end
-
-local workspace_rules = {
-    { class_regex = "scratchpad", ws = "special:scratchpad" }
-}
-
-

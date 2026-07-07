@@ -42,7 +42,7 @@ end
 
 -- Simple Floating Apps (Consolidated to one regex rule)
 hl.window_rule({ 
-    match = { class = "^(dunst|btop|galculator|nwg-look|catfish|org\\.pwmt\\.zathura|localsend|nm-connection-editor)$" }, 
+    match = { class = "^(dunst|btop|galculator|nwg-look|catfish|org\\.pwmt\\.zathura|localsend|nm-connection-editor|com.moonlight_stream.Moonlight)$" }, 
     float = true 
 })
 

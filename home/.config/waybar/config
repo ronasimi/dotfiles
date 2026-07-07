@@ -43,6 +43,19 @@
         "all-outputs": true,
         "on-click": "activate",
         "format": "{icon}",
+        "format-window-separator": " ",
+        "window-rewrite-default": "",
+        "window-rewrite": {
+            "class<google-chrome>": "󰊯",
+            "class<chromium>": "󰊯",
+            "class<[Cc]ode.*>": "󰨞",
+            "class<gimp.*>": "󰏘",
+            "class<firefox>": "",
+            "class<kitty|super-enter>": "󰆍",
+            "class<thunar>": "󰉋",
+            "class<discord>": "",
+            "title<.*youtube.*>": ""
+        },
         "format-icons": {
             "1": "󰊯",
             "2": "󰆍",
@@ -56,7 +69,6 @@
             "10": "󰽽",
             "urgent": "󱈸"
         },
-        "format-window-separator": "",
         "workspace-taskbar": {
             "enable": false,
             "update-active-window": true,
@@ -64,7 +76,11 @@
             "format-separator": " ",
             "icon-theme": "Papirus-Dark"
         },
-        "tooltip-format": "Workspace {name}\n{windows} windows",
+        "tooltip": true,
+        "tooltips": {
+            "default": "{windows}",
+            "empty": ""
+        },
         "on-scroll-up": "hyprctl dispatch workspace e+1",
         "on-scroll-down": "hyprctl dispatch workspace e-1",
         "cursor": false

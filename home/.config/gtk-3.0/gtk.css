@@ -1,63 +1,79 @@
   .view text selection {
-  background-color: rgba(138, 180, 248, 0.8);;
-  color: #000000;
-}
+    background-color: rgba(138, 180, 248, 0.8);
+    ;
+    color: #000000;
+  }
 
-/* Styling the tooltip container */
-tooltip {
+  /* Styling the tooltip container */
+  tooltip {
     background-color: rgba(29, 29, 29, 0.25);
-    color: #8ab4f8;            /* Light text color */
-    border-radius: 9px;        /* Optional: rounded corners */
-    padding: 14px 14px;         /* Optional: some padding */
-}
+    color: #8ab4f8;
+    /* Light text color */
+    border-radius: 9px;
+    /* Optional: rounded corners */
+    padding: 14px 14px;
+    /* Optional: some padding */
+  }
 
-/* Styling the label inside the tooltip */
-tooltip label {
-    font-size: 14px;           /* Optional: font size adjustment */
-}
+  /* Styling the label inside the tooltip */
+  tooltip label {
+    font-size: 14px;
+    /* Optional: font size adjustment */
+  }
 
-/* ==========================================================================
+  /* ==========================================================================
    THUNAR CUSTOM CSS
    ========================================================================== */
 
-/* --- General Text Selection --- */
-.view text selection {
-  background-color: rgba(138, 180, 248, 0.8);
-  color: #000000;
-}
+  /* --- General Text Selection --- */
+  .view text selection {
+    background-color: rgba(138, 180, 248, 0.8);
+    color: #000000;
+  }
 
-/* --- Base Window Transparency --- */
-window.thunar,
-window.thunar .dialog-vbox {
-  background-color: rgba(39, 39, 39, 0.90); 
-}
+  /* --- Base Window Transparency --- */
+  window.thunar,
+  window.thunar .dialog-vbox {
+    background-color: rgba(39, 39, 39, 0.90);
+  }
 
-/* --- Main View --- */
-.thunar .standard-view {
-  background-color: #2e2e2e; 
-  border-radius: 9px;       
-  /* TRBL: 6px top, 9px right, 6px bottom, 6px left */
-  margin: 3px 9px 3px 0px;               
-  border: 1px solid rgba(0, 0, 0, 0.2); 
-}
+  /* --- Main View --- */
+  .thunar .standard-view {
+    background-color: #2e2e2e;
+    border-radius: 9px;
+    /* TRBL: 6px top, 9px right, 6px bottom, 6px left */
+    margin: 3px 9px 3px 0px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
 
-thunar-standard-view image {
-  -gtk-icon-transform: scale(1.5);
-}
+  thunar-standard-view image {
+    -gtk-icon-transform: scale(1.5);
+  }
 
-/* --- Menus & Menubar --- */
-.thunar menubar {
-  background-color: transparent;
-}
+  /* --- Menus & Menubar --- */
+  .thunar menubar {
+    background-color: transparent;
+  }
 
-menu {
-  background-color: rgba(39, 39, 39, 0.90); 
-  border: 1px solid #454545; 
-}
+  menu {
+    background-color: rgba(39, 39, 39, 0.90);
+    border: 1px solid #454545;
+  }
+
+  menu separator {
+    min-height: 0px;
+    min-width: 0px;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    background-image: none;
+  }
 
 /* --- Tooltips --- */
 tooltip {
-  background-color: rgba(29, 29, 29, 0.25);
+  background-color: rgba(29, 29, 29, 0.45);
+  border: 1px solid #454545;
   color: #8ab4f8;            
   border-radius: 9px;        
   padding: 14px;         
@@ -67,108 +83,108 @@ tooltip label {
   font-size: 14px;           
 }
 
-/* --- Toolbars & Path Bar --- */
-.thunar toolbar,
-.thunar toolbar#location-toolbar {
-  background-color: transparent; 
-  margin-top: 0px;
-  padding-bottom: 6px;
-  padding-left: 8px;
-  padding-right: 8px;
-}
+  /* --- Toolbars & Path Bar --- */
+  .thunar toolbar,
+  .thunar toolbar#location-toolbar {
+    background-color: transparent;
+    margin-top: 0px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 
-.thunar toolbar.horizontal button image {
-  -gtk-icon-transform: scale(0.72);
-}
+  .thunar toolbar.horizontal button image {
+    -gtk-icon-transform: scale(0.72);
+  }
 
-/* Path bar breadcrumbs */
-window.thunar toolbar#location-toolbar > toolitem > widget > widget.linked.path-bar > button.toggle.path-bar-button:checked {
-  color: #c3c3c3;
-  background: #2e2e2e; 
-  border-radius: 20px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
+  /* Path bar breadcrumbs */
+  window.thunar toolbar#location-toolbar>toolitem>widget>widget.linked.path-bar>button.toggle.path-bar-button:checked {
+    color: #c3c3c3;
+    background: #2e2e2e;
+    border-radius: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
 
-window.thunar toolbar#location-toolbar > toolitem > widget > widget.linked.path-bar > button.path-bar-button {
-  background: none;
-  outline: none;
-  border: none;
-  box-shadow: none;
-}
+  window.thunar toolbar#location-toolbar>toolitem>widget>widget.linked.path-bar>button.path-bar-button {
+    background: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
 
-/* --- Sidebar --- */
-.thunar paned > scrolledwindow.sidebar {
-  background-color: transparent;
-  border: none;
-}
+  /* --- Sidebar --- */
+  .thunar paned>scrolledwindow.sidebar {
+    background-color: transparent;
+    border: none;
+  }
 
-/* Apply the margin explicitly to the inner view components to bypass GTK constraints */
-.thunar paned > scrolledwindow.sidebar treeview.view,
-.thunar .shortcuts-pane .view {
-  background-color: transparent;
-  border: none;
-  color: #c3c3c3;
-}
+  /* Apply the margin explicitly to the inner view components to bypass GTK constraints */
+  .thunar paned>scrolledwindow.sidebar treeview.view,
+  .thunar .shortcuts-pane .view {
+    background-color: transparent;
+    border: none;
+    color: #c3c3c3;
+  }
 
-/* Sidebar selection (Unified Treeview and Places/Shortcuts Pane) */
-window.thunar paned > scrolledwindow treeview.view:selected,
-.thunar .shortcuts-pane .view:selected {
-  text-shadow: none;
-  background-color: rgba(138, 180, 248, 0.8);
-  background-image: none;
-  color: #000000;
-  -gtk-secondary-caret-color: rgba(138, 180, 248, 0.8);
-  
-}
+  /* Sidebar selection (Unified Treeview and Places/Shortcuts Pane) */
+  window.thunar paned>scrolledwindow treeview.view:selected,
+  .thunar .shortcuts-pane .view:selected {
+    text-shadow: none;
+    background-color: rgba(138, 180, 248, 0.8);
+    background-image: none;
+    color: #000000;
+    -gtk-secondary-caret-color: rgba(138, 180, 248, 0.8);
 
-/* Main view selection (Unified) */
-.thunar .shortcuts-pane .view:selected,
-.thunar .standard-view .view:selected,
-.thunar .standard-view iconview:selected,
-.thunar .standard-view treeview:selected {
-  background-color: rgba(138, 180, 248, 0.8);
-  background-image: none;
-  color: #000000;
-}
+  }
 
-/* --- Rubberband (Mouse Drag Selection Box) --- */
-.thunar .rubberband {
-  background-color: rgba(138, 180, 248, 0.2);
-  border: 1px solid rgba(138, 180, 248, 0.5); 
-}
+  /* Main view selection (Unified) */
+  .thunar .shortcuts-pane .view:selected,
+  .thunar .standard-view .view:selected,
+  .thunar .standard-view iconview:selected,
+  .thunar .standard-view treeview:selected {
+    background-color: rgba(138, 180, 248, 0.8);
+    background-image: none;
+    color: #000000;
+  }
 
-/* --- Remove Structural Borders & Separators (Aggressive) --- */
-/* Obliterate the paned separator between sidebar and main view */
-window.thunar paned > separator,
-.thunar paned separator {
-  background-color: transparent;
-  background-image: none; 
-  border: none;
-  box-shadow: none;
-  min-width: 0px; 
-}
+  /* --- Rubberband (Mouse Drag Selection Box) --- */
+  .thunar .rubberband {
+    background-color: rgba(138, 180, 248, 0.2);
+    border: 1px solid rgba(138, 180, 248, 0.5);
+  }
 
-/* Ensure the sidebar container itself isn't drawing a right border */
-window.thunar paned > scrolledwindow.sidebar {
-  border-right: none;
-  border: none;
-  box-shadow: none;
-}
+  /* --- Remove Structural Borders & Separators (Aggressive) --- */
+  /* Obliterate the paned separator between sidebar and main view */
+  window.thunar paned>separator,
+  .thunar paned separator {
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+    min-width: 0px;
+  }
 
-/* Removes the outer border around the main viewing area */
-.thunar paned > scrolledwindow {
-  border: none;
-  box-shadow: none;
-}
+  /* Ensure the sidebar container itself isn't drawing a right border */
+  window.thunar paned>scrolledwindow.sidebar {
+    border-right: none;
+    border: none;
+    box-shadow: none;
+  }
 
-/* Removes any default frame borders Thunar draws around main views */
-.thunar frame {
-  border: none;
-}
+  /* Removes the outer border around the main viewing area */
+  .thunar paned>scrolledwindow {
+    border: none;
+    box-shadow: none;
+  }
 
-/* Ensure the status bar has no top border or shadow */
-.thunar statusbar {
-  border: none;
-  box-shadow: none;
-  background-color: transparent; 
-}
+  /* Removes any default frame borders Thunar draws around main views */
+  .thunar frame {
+    border: none;
+  }
+
+  /* Ensure the status bar has no top border or shadow */
+  .thunar statusbar {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+  }

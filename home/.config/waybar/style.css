@@ -48,11 +48,13 @@ button:hover {
 }
 
 /* =========================================================================
-   4. POP-UP TOOLTIPS
+   4. POP-UP TOOLTIPS & MENUS
    ========================================================================= */
 tooltip {
     color: #8ab4f8;
-    background-color: rgba(29, 29, 29, 0.35);
+    background-color: rgba(29, 29, 29, 0.45);
+    border: 1px solid #454545;
+    border-radius: 9px;
     text-shadow: none;
     font-size: 14px;
 }
@@ -60,6 +62,13 @@ tooltip {
 tooltip * {
     color: #8ab4f8;
     text-shadow: none;
+}
+
+/* Style context menus (like right-clicking tray icons) to match */
+menu {
+    background-color: rgba(29, 29, 29, 0.45);
+    border: 1px solid #454545;
+    border-radius: 9px;
 }
 
 /* =========================================================================

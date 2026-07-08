@@ -55,6 +55,7 @@ tooltip {
     background-color: rgba(29, 29, 29, 0.45);
     border: 1px solid #454545;
     border-radius: 9px;
+    margin: 9px;
     text-shadow: none;
     font-size: 14px;
 }

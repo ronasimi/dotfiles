@@ -73,7 +73,10 @@
     # Draw a line of "separator_height" pixel height between two
     # notifications.
     # Set to 0 to disable.
-    separator_height = 9
+    separator_height = 0
+
+    # Size of gap to display between notifications
+    gap_size = 8
 
     # Padding between text and separator.
     padding = 14
@@ -445,5 +448,12 @@ history_ignore = yes
 [wifi-history-ignore]
 appname = clickWifi
 history_ignore = yes
+
+[google-chrome]
+appname = "Google Chrome"
+urgency = normal
+override_dbus_timeout = 10
+background = "#1d1d1d73"
+foreground = "#8ab4f8"
 
 # vim: ft=cfg

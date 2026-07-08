@@ -42,7 +42,7 @@
     background-color: #2e2e2e;
     border-radius: 9px;
     /* TRBL: 6px top, 9px right, 6px bottom, 6px left */
-    margin: 3px 9px 3px 0px;
+    margin: 3px 0px 3px 0px;
     border: 1px solid rgba(0, 0, 0, 0.2);
   }
 

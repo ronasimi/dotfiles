@@ -1,285 +1,97 @@
 /* =========================================================================
-   1. GLOBAL & FONTS (Prevents container layout bugs)
+   1. GLOBAL & FONTS
    ========================================================================= */
 window#waybar, button, label {
     font-family: SF Pro;
     font-weight: 600;
 }
 
-/* =========================================================================
-   2. MAIN BASE LAYER
-   ========================================================================= */
 window#waybar {
     background-color: rgba(29, 29, 29, 0.45);
     color: #c3c3c3;
 }
 
-/* Force module groups to stay clear so Hyprland blurs the bar smoothly */
-.modules-left, .modules-center, .modules-right {
-    background-color: transparent;
-}
-
-window#waybar.hidden {
-    opacity: 0;
-}
-
-window#waybar.termite {
-    background-color: #3F3F3F;
-}
-
-window#waybar.chromium {
-    background-color: #000000;
-    border: none;
-}
-
 /* =========================================================================
-   3. GENERAL BUTTONS & HOVERS
+   2. BUTTONS, MENUS & TOOLTIPS
    ========================================================================= */
-button {
-    box-shadow: inset 0 -3px transparent;
-    border: none;
-    border-radius: 9px;
-    background-color: transparent;
-}
-
-/* Clear hover layout to stop color multiplication */
-button:hover {
+button, .modules-left, .modules-center, .modules-right {
     background: transparent;
+    border: none;
 }
 
-/* =========================================================================
-   4. POP-UP TOOLTIPS & MENUS
-   ========================================================================= */
-tooltip {
-    color: #8ab4f8;
+button {
+    border-radius: 9px;
+    box-shadow: none;
+}
+
+tooltip, menu {
     background-color: rgba(29, 29, 29, 0.45);
     border: 1px solid #454545;
     border-radius: 9px;
-    margin: 9px;
-    text-shadow: none;
+}
+
+tooltip {
+    margin-top: 9px;
+    padding-top: 9px;
+}
+
+tooltip label {
+    padding: 6px;
+    color: #8ab4f8;
     font-size: 14px;
 }
 
-tooltip * {
-    color: #8ab4f8;
-    text-shadow: none;
-}
-
-/* Style context menus (like right-clicking tray icons) to match */
-menu {
-    background-color: rgba(29, 29, 29, 0.45);
-    border: 1px solid #454545;
-    border-radius: 9px;
-}
-
 /* =========================================================================
-   5. WORKSPACES MODULE
+   3. WORKSPACES
    ========================================================================= */
 #workspaces button {
-    background-color: transparent;
     color: #5d5d5d;
-    box-shadow: inset 0 -3px transparent;
     font-family: Material Design Icons;
-    font-size: 16px;
+    font-size: 18px;
 }
 
-#workspaces button:hover {
-    background: #00000080;
-}
+#workspaces button:hover { background: #00000080; }
+#workspaces button.active, #workspaces button.focused { color: #8ab4f8; }
+#workspaces button.urgent { color: #ac4142; border-radius: 6px; }
 
-#workspaces button.focused {
-    background-color: transparent;
-    color: #8ab4f8;
-    box-shadow: inset 0 -3px transparent;
-}
-
-#workspaces button.active {
-    background-color: transparent;
-    color: #8ab4f8;
-    box-shadow: inset 0 -3px transparent;
-}
-
-#workspaces button.urgent {
-    background-color: transparent;
-    color: #ac4142;
-    box-shadow: inset 0 -3px transparent;
-    border-radius: 6px;
-}
-
-#mode {
-    background-color: #64727D;
-    border-bottom: 3px solid #ffffff;
-}
+#mode { background: #64727D; border-bottom: 3px solid #fff; }
 
 /* =========================================================================
-   6. HARDWARE & STATUS MODULES
+   4. HARDWARE & STATUS MODULES
    ========================================================================= */
-#battery,
-#backlight,
-#network,
-#pulseaudio,
-#tray {
+.modules-right > widget > * {
+    font-size: 16px;
+    margin: 0 6px;
     color: #c3c3c3;
-    background-color: transparent;
 }
 
-/* Alignment margins */
-.modules-left>widget:first-child>#workspaces {
-    margin-left: 6px;
-}
-
-.modules-right>widget:last-child>#clock {
-    margin-right: 9px;
-}
-
-#window {
-    color: #c3c3c3;
-    margin: 6px;
+#window, #clock {
     font-size: 14px;
-}
-
-#clock {
-    color: #c3c3c3;
-    font-family: SF Pro;
-    font-weight: 800;
-    font-size: 14px;
-    box-shadow: inset 0 -3px transparent;
     margin: 6px;
 }
 
-/* Battery levels & status animations */
-#battery {
-    color: #90a959;
-    font-size: 16px;
-    margin: 6px;
-}
+#clock { font-weight: 800; }
 
-#battery.charging,
-#battery.plugged {
-    color: #c3c3c3;
-    background-color: transparent;
-}
+/* Module Specifics */
+#battery { color: #90a959; }
+#battery.charging, #battery.plugged { color: #c3c3c3; }
+#battery.critical:not(.charging) { color: #ac4142; animation: blink .5s linear infinite alternate; }
 
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: #000000;
-    }
-}
+#network.disconnected { color: #5d5d5d; }
+#network.linked { color: #ac4142; animation: blink .5s linear infinite alternate; }
 
-#battery.critical:not(.charging) {
-    color: #ac4142;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
+#bluetooth { margin: 0 4px 0 8px; }
+#bluetooth.disabled, #bluetooth.off, #pulseaudio.muted { color: #5d5d5d; }
+#bluetooth.connected { color: #90a959; }
 
-label:focus {
-    background-color: #000000;
-}
+#tray > .needs-attention { -gtk-icon-effect: highlight; background: #eb4d4b; }
 
-#backlight, #network {
-    background-color: transparent;
-    color: #c3c3c3;
-    font-size: 16px;
-    margin: 6px;
-}
-
-#network.ethernet, #network.wifi {
-    font-size: 16px;
-}
-
-#network.disconnected {
-    background-color: transparent;
-    color: #5d5d5d;
-}
-
-#network.linked {
-    color: #ac4142;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
-#bluetooth {
-    background-color: transparent;
-    color: #c3c3c3;
-    font-size: 16px;
-    margin: 6px;
-}
-
-#bluetooth.disabled, #bluetooth.off {
-    background-color: transparent;
-    color: #5d5d5d;
-    margin: 6px;
-}
-
-#bluetooth.connected {
-    background-color: transparent;
-    color: #90a959;
-    margin: 6px;
-}
-
-#pulseaudio {
-    background-color: transparent;
-    color: #c3c3c3;
-    font-size: 16px;
-    margin: 6px;
-}
-
-#pulseaudio.muted {
-    background-color: transparent;
-    color: #5d5d5d;
-    margin: 6px;
-}
-
-/* System Tray icon settings */
-#tray {
-    background-color: transparent;
-    font-size: 16px;
-}
-
-#tray>.passive {
-    -gtk-icon-effect: dim;
-}
-
-#tray>.needs-attention {
-    -gtk-icon-effect: highlight;
-    background-color: #eb4d4b;
-}
-
-#keyboard-state {
-    color: #5d5d5d;
-    padding: 0 0px;
-    margin: 3px 0;
-    min-width: 12px;
-    font-size: 16px;
-}
-
-#keyboard-state>label {
-    padding: 0 6px;
-    border-radius: 6px;
-}
-
-#keyboard-state>label.locked {
-    color: #c3c3c3;
-    border-radius: 9px;
-}
-
-/* Custom indicator modules */
-#custom-updates, #custom-menu, #custom-home, #custom-overview {
-    font-size: 16px;
-    margin: 6px;
-}
+#keyboard-state { color: #5d5d5d; min-width: 12px; }
+#keyboard-state > label { padding: 0 6px; border-radius: 6px; }
+#keyboard-state > label.locked { color: #c3c3c3; border-radius: 9px; }
 
 #custom-updates { color: #1793d0; }
-#custom-menu, #custom-home, #custom-overview { color: #c3c3c3; }
 
-#custom-separator {
-    color: #5d5d5d;
-    margin: 0 6px;
+@keyframes blink {
+    to { background: #fff; color: #000; }
 }

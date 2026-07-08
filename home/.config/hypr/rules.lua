@@ -16,10 +16,10 @@ hl.window_rule({
     no_focus = true,
 })
 
--- Layer Rules (Combined using regex for faster evaluation)
+-- Layer Rules
 hl.layer_rule({
     name         = "blur-ui-layers",
-    match        = { namespace = "^(wofi|waybar|notifications|syshud)$" },
+    match        = { namespace = "^(wofi|waybar|notifications|syshud|dunst)$" },
     animation    = "slide",
     blur         = true,
     blur_popups  = true,

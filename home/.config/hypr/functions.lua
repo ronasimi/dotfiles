@@ -4,7 +4,7 @@
 
 local is_waybar_visible = false
 local waybar_hover_timer = hl.timer(function()
-    local pos = hl.get_cursor_pos() 
+    local pos = hl.get_cursor_pos()
     if pos then
         -- Only execute the shell command if the state NEEDS to flip
         if pos.y <= 18 and not is_waybar_visible then
@@ -17,7 +17,7 @@ local waybar_hover_timer = hl.timer(function()
     end
 end, { timeout = 150, type = "repeat" })
 
-local current_layout = "dwindle" 
+local current_layout = "dwindle"
 local function toggle_layout()
     current_layout = (current_layout == "master") and "dwindle" or "master"
     hl.exec_cmd("hyprctl keyword general:layout " .. current_layout)

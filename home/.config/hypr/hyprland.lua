@@ -47,10 +47,10 @@ hl.config({
     general    = {
         gaps_in              = 9,
         gaps_out             = { top = 18, left = 18, right = 18, bottom = 18 },
-        border_size          = 0,
+        border_size          = 0,           -- Set this to 1 globally
         col                  = {
-            active_border   = { colors = { "rgba(f4bf75cc)", "rgba(8ab4f8cc)" }, angle = 45 },
-            inactive_border = "rgba(272727cc)",
+            active_border   = "rgba(00000000)", -- Let functions.lua handle this
+            inactive_border = "rgba(00000000)", -- Keep inactive transparent
         },
         resize_on_border     = true,
         hover_icon_on_border = true,

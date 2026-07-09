@@ -8,6 +8,7 @@ window#waybar, button, label {
 
 window#waybar {
     background-color: rgba(29, 29, 29, 0.45);
+    border: 1px solid #1d1d1d;
     color: #c3c3c3;
 }
 
@@ -26,7 +27,7 @@ button {
 
 tooltip, menu {
     background-color: rgba(29, 29, 29, 0.45);
-    border: 1px solid #454545;
+    border: 1px solid #1d1d1d;
     border-radius: 9px;
 }
 
@@ -47,7 +48,7 @@ tooltip label {
 #workspaces button {
     color: #5d5d5d;
     font-family: Material Design Icons;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 #workspaces button:hover { background: #00000080; }
@@ -61,7 +62,7 @@ tooltip label {
    ========================================================================= */
 .modules-right > widget > * {
     font-size: 16px;
-    margin: 0 6px;
+    margin: 0 9px;
     color: #c3c3c3;
 }
 

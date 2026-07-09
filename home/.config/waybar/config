@@ -1,7 +1,7 @@
 {
     "layer": "top",
-    "exclusive": true,
-    "start_hidden": false,
+    "exclusive": false,
+    "start_hidden": true,
     "position": "top",
     "height": 36,
     "fixed-center": true,

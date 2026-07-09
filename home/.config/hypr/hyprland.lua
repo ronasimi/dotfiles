@@ -37,7 +37,7 @@ require("functions")
 local terminal    = "uwsm app -- kitty --class 'super-enter'"
 local fileManager = "uwsm app -- thunar"
 local menu        =
-"pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1080 -W 512 -x 0 -y 0 -b -i | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"
+"pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1080 -W 480 -x 0 -y 0 -b -i | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"
 
 ----------------------------------------
 ---- GLOBAL CONFIGURATION BATCHING  ----
@@ -46,7 +46,7 @@ local menu        =
 hl.config({
     general    = {
         gaps_in              = 9,
-        gaps_out             =  {top = 18, left = 18, right = 18, bottom = 18},
+        gaps_out             = { top = 18, left = 18, right = 18, bottom = 18 },
         border_size          = 0,
         col                  = {
             active_border   = { colors = { "rgba(f4bf75cc)", "rgba(8ab4f8cc)" }, angle = 45 },
@@ -140,8 +140,14 @@ hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "fluentAc
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 hl.gesture({ fingers = 3, direction = "down", action = "special", workspace_name = "scratchpad" })
 -- Wofi Window Switcher
-hl.gesture({ fingers = 3, direction = "up", action = function() hl.exec_cmd(
-    "pkill -SIGUSR1 hyprexpose &") end })
+hl.gesture({
+    fingers = 3,
+    direction = "up",
+    action = function()
+        hl.exec_cmd(
+            "pkill -SIGUSR1 hyprexpose &")
+    end
+})
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -171,7 +177,7 @@ hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
-hl.bind("ALT + TAB", hl.dsp.exec_cmd( "pkill -SIGUSR1 hyprexpose &" ))
+hl.bind("ALT + TAB", hl.dsp.exec_cmd("pkill -SIGUSR1 hyprexpose &"))
 hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
@@ -220,10 +226,10 @@ hl.bind("SHIFT + XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblas
 -- Utilities
 hl.bind(mainMod .. " + C",
     hl.dsp.exec_cmd(
-    [[pkill wofi || dash -c "cliphist list | sed 's/^[0-9]*\t//' | uwsm app -- wofi --style ~/.config/wofi/clipboard.css -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu | cliphist decode | wl-copy"]]))
+        [[pkill wofi || dash -c "cliphist list | sed 's/^[0-9]*\t//' | uwsm app -- wofi --style ~/.config/wofi/clipboard.css -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu | cliphist decode | wl-copy"]]))
 hl.bind(mainMod .. " + R",
     hl.dsp.exec_cmd(
-    "pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"))
+        "pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"))
 hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))
 hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("dunstctl history-pop"))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
@@ -250,5 +256,5 @@ hl.bind(mainMod .. " + F8", run_in_ws(8, "env GTK_THEME=Adwaita:dark prusa-slice
 hl.bind(mainMod .. " + T", function()
     hl.dispatch(hl.dsp.focus({ workspace = "special:scratchpad" }))
     hl.dispatch(hl.dsp.exec_cmd(
-    "/home/ron/.bin/startrt && uwsm app -- kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chkrt'"))
+        "/home/ron/.bin/startrt && uwsm app -- kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chkrt'"))
 end)

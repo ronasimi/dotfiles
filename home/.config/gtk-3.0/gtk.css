@@ -70,18 +70,18 @@
     background-image: none;
   }
 
-/* --- Tooltips --- */
-tooltip {
-  background-color: rgba(29, 29, 29, 0.45);
-  border: 1px solid #1d1d1d;
-  color: #8ab4f8;            
-  border-radius: 9px;        
-  padding: 14px;         
-}
+  /* --- Tooltips --- */
+  tooltip {
+    background-color: rgba(29, 29, 29, 0.45);
+    border: 1px solid #1d1d1d;
+    color: #8ab4f8;
+    border-radius: 9px;
+    padding: 14px;
+  }
 
-tooltip label {
-  font-size: 14px;           
-}
+  tooltip label {
+    font-size: 14px;
+  }
 
   /* --- Toolbars & Path Bar --- */
   .thunar toolbar,
@@ -124,6 +124,8 @@ tooltip label {
     background-color: transparent;
     border: none;
     color: #c3c3c3;
+    margin-left: 6px;
+    /* Indents the sidebar items to match the right gap */
   }
 
   /* Sidebar selection (Unified Treeview and Places/Shortcuts Pane) */
@@ -161,7 +163,9 @@ tooltip label {
     background-image: none;
     border: none;
     box-shadow: none;
-    min-width: 0px;
+    width: 0px;
+    margin: 0px;
+    padding: 0px;
   }
 
   /* Ensure the sidebar container itself isn't drawing a right border */
@@ -169,12 +173,16 @@ tooltip label {
     border-right: none;
     border: none;
     box-shadow: none;
+    margin-right: -1px;
+    /* Pull the sidebar slightly right */
   }
 
   /* Removes the outer border around the main viewing area */
   .thunar paned>scrolledwindow {
     border: none;
     box-shadow: none;
+    margin-left: -1px;
+    /* Pull the main view slightly left to seamlessly merge */
   }
 
   /* Removes any default frame borders Thunar draws around main views */

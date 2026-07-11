@@ -1,253 +1,196 @@
 {
-    "layer": "overlay",
-    "exclusive": false,
-    "start_hidden": true,
-    "position": "top",
-    "height": 36,
-    "fixed-center": true,
-    "reload_style_on_change": true,
-    "modules-left": [
-        "hyprland/workspaces"
-    ],
-    "modules-center": [
-        "hyprland/window"
-    ],
-    "modules-right": [
-        "custom/updates",
-        "pulseaudio",
-        "backlight",
-        "network",
-        "bluetooth",
-        "battery",
-        "tray",
-        "clock"
-    ],
-    "custom/link-speed": {
-        "format": "<small>{}</small>",
-        "exec": "iw dev wlp0s20f3 link | awk -F '[ ]' '/tx bitrate:/{print $3,$4}'",
-        "interval": 30,
-        "tooltip-format": "PHY speed",
-        "cursor": false
+  "layer": "overlay",
+  "exclusive": false,
+  "start_hidden": true,
+  "position": "top",
+  "height": 36,
+  "fixed-center": true,
+  "reload_style_on_change": true,
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "hyprland/window"
+  ],
+  "modules-right": [
+    "custom/updates",
+    "pulseaudio",
+    "backlight",
+    "network",
+    "bluetooth",
+    "battery",
+    "tray",
+    "clock"
+  ],
+  "hyprland/workspaces": {
+    "disable-scroll": false,
+    "all-outputs": true,
+    "on-click": "activate",
+    "format": "{icon}",
+    "format-window-separator": " ",
+    "window-rewrite-default": "",
+    "window-rewrite": {
+      "class<google-chrome>": "󰊯",
+      "class<chromium>": "󰊯",
+      "class<[Cc]ode.*>": "󰨞",
+      "class<gimp.*>": "󰏘",
+      "class<firefox>": "",
+      "class<kitty|super-enter>": "󰆍",
+      "class<thunar>": "󰉋",
+      "class<discord>": "",
+      "title<.*youtube.*>": ""
     },
-    "keyboard-state": {
-        "numlock": false,
-        "capslock": true,
-        "format": {
-            "numlock": "󰎠",
-            "capslock": "󰪛"
-        }
+    "format-icons": {
+      "1": "󰊯",
+      "2": "󰆍",
+      "3": "󱋣",
+      "4": "󰨞",
+      "5": "󱇣",
+      "6": "󰖳",
+      "7": "󰷈",
+      "8": "󰆦",
+      "9": "󰎼",
+      "10": "󰽽",
+      "urgent": "󱈸"
     },
-    "hyprland/workspaces": {
-        "disable-scroll": false,
-        "all-outputs": true,
-        "on-click": "activate",
-        "format": "{icon}",
-        "format-window-separator": " ",
-        "window-rewrite-default": "",
-        "window-rewrite": {
-            "class<google-chrome>": "󰊯",
-            "class<chromium>": "󰊯",
-            "class<[Cc]ode.*>": "󰨞",
-            "class<gimp.*>": "󰏘",
-            "class<firefox>": "",
-            "class<kitty|super-enter>": "󰆍",
-            "class<thunar>": "󰉋",
-            "class<discord>": "",
-            "title<.*youtube.*>": ""
-        },
-        "format-icons": {
-            "1": "󰊯",
-            "2": "󰆍",
-            "3": "󱋣",
-            "4": "󰨞",
-            "5": "󱇣",
-            "6": "󰖳",
-            "7": "󰷈",
-            "8": "󰆦",
-            "9": "󰎼",
-            "10": "󰽽",
-            "urgent": "󱈸"
-        },
-        "workspace-taskbar": {
-            "enable": false,
-            "update-active-window": true,
-            "format": "{icon}",
-            "format-separator": " ",
-            "icon-theme": "Papirus-Dark"
-        },
-        "tooltip": true,
-        "tooltips": {
-            "default": "{windows}",
-            "empty": ""
-        },
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1",
-        "cursor": false
+    "workspace-taskbar": {
+      "enable": false,
+      "update-active-window": true,
+      "format": "{icon}",
+      "format-separator": " ",
+      "icon-theme": "Papirus-Dark"
     },
-    "hyprland/window": {},
-    "tray": {
-        "spacing": 6,
-        "icon-size": 18,
-        "cursor": false
+    "tooltip": true,
+    "tooltips": {
+      "default": "{windows}",
+      "empty": ""
     },
-    "clock": {
-        "tooltip-format": "<big>{:%A %b %d %Y}</big>\n\n<tt>{calendar}</tt>",
-        "format": "{:%H:%M}",
-        "cursor": false,
-        "on-click-right": "xdg-open https://calendar.google.com/",
-        "timezone": "America/Toronto",
-        "calendar": {
-            "format": {
-                "months": "<big>{}</big>",
-                "today": "<span color='#ac4142'><b>{}</b></span>"
-            }
-        }
-    },
-    "backlight": {
-        "format": "{icon}",
-        "format-icons": [
-            "󰃞",
-            "󰃝",
-            "󰃟",
-            "󰃠"
-        ],
-        "reverse-scrolling": true,
-        "tooltip-format": "Backlight {percent}%",
-        "cursor": false,
-        "on-click": "brightnessctl set 100%",
-        "on-click-right": "nwg-displays"
-    },
-    "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{icon}",
-        "format-alt": "<small>{capacity}%</small>",
-        "format-charging": "󰂄",
-        "format-plugged": "󰚥",
-        "format-icons": [
-            "󰁺",
-            "󰁼",
-            "󰁾",
-            "󰂁",
-            "󰁹"
-        ],
-        "tooltip-format": "Battery remaining {capacity}%\nTime remaining {time}",
-        "tooltip-format-charging": "Battery level {capacity}%\nTime until charged {time}",
-        "cursor": false
-    },
-    "network": {
-        "interval": 30,
-        "format": "<small>{ifname}</small>",
-        "format-wifi": "{icon}",
-        "format-ethernet": "󰈁",
-        "tooltip-format": "{ifname}",
-        "tooltip-format-wifi": "<b>{essid}</b>\nIP {ipaddr}\nGateway {gwaddr}\n{frequency} GHz\n{signaldBm} dBm ({signalStrength}%)",
-        "tooltip-format-ethernet": "{ifname}",
-        "tooltip-format-disconnected": "Disconnected",
-        "format-linked": "󰀨",
-        "format-disconnected": "󰈂",
-        "format-icons": [
-            "󰤯",
-            "󰤟",
-            "󰤢",
-            "󰤥",
-            "󰤨"
-        ],
-        "on-click": "tnywfi",
-        "on-click-right": "uwsm app -- kitty -1 --class 'nmtui' -e nmtui",
-        "cursor": false
-    },
-    "bluetooth": {
-        "format": "󰂯",
-        "format-disabled": "󰂲",
-        "tooltip-format": "{controller_alias}",
-        "tooltip-format-connected": "{controller_alias}\t\n\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}\t{device_battery_percentage}%",
-        "on-click": "uwsm app -- overskride",
-        "cursor": false
-    },
-    "pulseaudio": {
-        "format": "{icon}",
-        "format-bluetooth": "󰗾",
-        "format-bluetooth-muted": "󰗿",
-        "format-muted": "󰖁",
-        "format-source": "󰍬",
-        "format-source-muted": "󰍭",
-        "format-icons": {
-            "headphone": "󰋋",
-            "hands-free": "󰋎",
-            "headset": "󰋎",
-            "phone": "󰏲",
-            "portable": "",
-            "car": "",
-            "default": [
-                "󰕿",
-                "󰖀",
-                "󰕾"
-            ]
-        },
-        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-        "on-click-right": " uwsm app -- pavucontrol",
-        "max-volume": "100",
-        "on-scroll-up": "pactl set-sink-mute 0 false ; pamixer -d 5",
-        "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 5",
-        "smooth-scrolling-threshold": "0",
-        "tooltip-format": "Volume: {volume}%",
-        "cursor": false
-    },
-    "custom/updates": {
-        "format": "{icon}",
-        "return-type": "json",
-        "format-icons": {
-            "has-updates": "󰣇",
-            "updated": ""
-        },
-        "exec-if": "which waybar-module-pacman-updates",
-        "exec": "waybar-module-pacman-updates",
-        "cursor": false
-    },
-    "custom/home": {
-        "format": "󰋜",
-        "tooltip-format": "Open your home directory",
-        "on-click": "thunar $HOME",
-        "cursor": false
-    },
-    "custom/menu": {
-        "format": "󰍜",
-        "tooltip-format": "Application launcher",
-        "on-click": "pkill wofi || wofi -f --show drun -G -p 'Type to search' -H 1056 -W 512 -x 0 -y 0 -b -i",
-        "cursor": false
-    },
-    "custom/overview": {
-        "format": "󰀻",
-        "tooltip-format": "Show open windows on all workspaces",
-        "on-click": "hyprctl dispatch hymission:toggle",
-        "cursor": false
-    },
-    "custom/separator": {
-        "format": "",
-        "interval": "once",
-        "tooltip": false
-    },
-    "wlr/taskbar": {
-        "disable-scroll": false,
-        "all-outputs": true,
-        "icon-theme": "Papirus-Dark",
-        "icon-size": 22,
-        "format": "{icon}",
-        "format-focused": "{icon} {title}",
-        "format-icons": {
-            "floating": "󰕾",
-            "maximized": "󰕿",
-            "pinned": "󰖀"
-        },
-        "on-click": "activate",
-        "on-click-middle": "toggle",
-        "on-click-right": "close",
-        "on-scroll-up": "hyprctl dispatch window e+1",
-        "on-scroll-down": "hyprctl dispatch window e-1",
-        "cursor": false
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "cursor": false
+  },
+  "hyprland/window": {},
+  "tray": {
+    "spacing": 6,
+    "icon-size": 18,
+    "cursor": false
+  },
+  "clock": {
+    "tooltip-format": "<big>{:%A %b %d %Y}</big>\n\n<tt>{calendar}</tt>",
+    "format": "{:%H:%M}",
+    "cursor": false,
+    "on-click-right": "xdg-open https://calendar.google.com/",
+    "timezone": "America/Toronto",
+    "calendar": {
+      "format": {
+        "months": "<big>{}</big>",
+        "today": "<span color='#ac4142'><b>{}</b></span>"
+      }
     }
+  },
+  "backlight": {
+    "format": "{icon}",
+    "format-icons": [
+      "󰃞",
+      "󰃝",
+      "󰃟",
+      "󰃠"
+    ],
+    "reverse-scrolling": true,
+    "tooltip-format": "Backlight {percent}%",
+    "cursor": false,
+    "on-click": "brightnessctl set 100%",
+    "on-click-right": "nwg-displays"
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon}",
+    "format-alt": "<small>{capacity}%</small>",
+    "format-charging": "󰂄",
+    "format-plugged": "󰚥",
+    "format-icons": [
+      "󰁺",
+      "󰁼",
+      "󰁾",
+      "󰂁",
+      "󰁹"
+    ],
+    "tooltip-format": "Battery remaining {capacity}%\nTime remaining {time}",
+    "tooltip-format-charging": "Battery level {capacity}%\nTime until charged {time}",
+    "cursor": false
+  },
+  "network": {
+    "interval": 30,
+    "format": "<small>{ifname}</small>",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰈁",
+    "tooltip-format": "{ifname}",
+    "tooltip-format-wifi": "<b>{essid}</b>\nIP {ipaddr}\nGateway {gwaddr}\n{frequency} GHz\n{signaldBm} dBm ({signalStrength}%)",
+    "tooltip-format-ethernet": "{ifname}",
+    "tooltip-format-disconnected": "Disconnected",
+    "format-linked": "󰀨",
+    "format-disconnected": "󰈂",
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
+    "on-click": "tnywfi",
+    "on-click-right": "uwsm app -- kitty -1 --class 'nmtui' -e nmtui",
+    "cursor": false
+  },
+  "bluetooth": {
+    "format": "󰂯",
+    "format-disabled": "󰂲",
+    "tooltip-format": "{controller_alias}",
+    "tooltip-format-connected": "{controller_alias}\t\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_battery_percentage}%",
+    "on-click": "uwsm app -- overskride",
+    "cursor": false
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-bluetooth": "󰗾",
+    "format-bluetooth-muted": "󰗿",
+    "format-muted": "󰖁",
+    "format-source": "󰍬",
+    "format-source-muted": "󰍭",
+    "format-icons": {
+      "headphone": "󰋋",
+      "hands-free": "󰋎",
+      "headset": "󰋎",
+      "phone": "󰏲",
+      "portable": "",
+      "car": "",
+      "default": [
+        "󰕿",
+        "󰖀",
+        "󰕾"
+      ]
+    },
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-click-right": " uwsm app -- pavucontrol",
+    "max-volume": "100",
+    "on-scroll-up": "pactl set-sink-mute 0 false ; pamixer -d 5",
+    "on-scroll-down": "pactl set-sink-mute 0 false ; pamixer -i 5",
+    "smooth-scrolling-threshold": "0",
+    "tooltip-format": "Volume: {volume}%",
+    "cursor": false
+  },
+  "custom/updates": {
+    "format": "{icon}",
+    "return-type": "json",
+    "format-icons": {
+      "has-updates": "󰣇",
+      "updated": ""
+    },
+    "exec-if": "which waybar-module-pacman-updates",
+    "exec": "waybar-module-pacman-updates",
+    "cursor": false
+  }
 }

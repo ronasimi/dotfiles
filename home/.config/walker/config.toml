@@ -39,7 +39,7 @@ anchor_right = true
 "desktopapplications" = { input = "Launch App", list = "No Applications" }
 "files" = { input = "Browse Files", list = "No Files Found" }
 "calc" = { input = "Calculate", list = "Enter Expression" }
-"runner" = { input = "Run Command", list = "No Commands" }
+"runner" = { input = "Run", list = "No Commands" }
 "websearch" = { input = "󰜏", list = "" }
 "clipboard" = { input = "Clipboard", list = "Clipboard Empty" }
 "symbols" = { input = "Symbol", list = "No Symbols" }

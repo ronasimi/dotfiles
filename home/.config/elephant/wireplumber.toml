@@ -1,0 +1,11 @@
+icon_input = ''
+icon_input_muted = ''
+icon_output = ''
+icon_output_muted = ''
+volume-step-size = 0
+
+[Config]
+hide_from_providerlist = false
+icon = ''
+min_score = 0
+name_pretty = ''

@@ -22,6 +22,15 @@ hl.layer_rule({
     ignore_alpha = 0.2,
 })
 
+-- Walker launcher
+hl.layer_rule({
+    name = "walker-launcher",
+    match = { namespace = "^(walker)$" },
+    animation = "popin 50%",
+    blur = true,
+    ignore_alpha = 0.2,
+})
+
 -- 5. Workspace Assignments
 local workspace_rules = {
     { ws = "4",                  class = "^(code|org\\.gnome\\.Meld)$" },

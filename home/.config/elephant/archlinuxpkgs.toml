@@ -1,0 +1,9 @@
+auto_wrap_with_terminal = true
+command_install = 'sudo pacman -S %VALUE%'
+command_remove = 'sudo pacman -R %VALUE%'
+
+[Config]
+hide_from_providerlist = false
+icon = 'applications-internet'
+min_score = 20
+name_pretty = ''

@@ -1,0 +1,10 @@
+command = 'wl-copy'
+history = true
+history_when_empty = false
+locale = 'en'
+
+[Config]
+hide_from_providerlist = false
+icon = 'face-smile'
+min_score = 50
+name_pretty = ''

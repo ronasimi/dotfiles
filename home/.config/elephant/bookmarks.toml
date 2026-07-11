@@ -1,0 +1,12 @@
+browsers = []
+categories = []
+history = true
+history_when_empty = false
+location = ''
+set_browser_on_import = false
+
+[Config]
+hide_from_providerlist = false
+icon = 'user-bookmarks'
+min_score = 20
+name_pretty = ''

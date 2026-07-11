@@ -1,0 +1,9 @@
+delay = 100
+show_empty_workspaces = false
+show_workspaces = true
+
+[Config]
+hide_from_providerlist = false
+icon = 'view-restore'
+min_score = 20
+name_pretty = ''

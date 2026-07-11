@@ -1,0 +1,11 @@
+command = 'wtype %CONTENT%'
+delay = 100
+preview = true
+preview_as_subtext = true
+snippets = []
+
+[Config]
+hide_from_providerlist = false
+icon = 'insert-text'
+min_score = 50
+name_pretty = ''

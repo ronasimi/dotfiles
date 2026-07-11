@@ -1,0 +1,58 @@
+/* Color definitions */ 
+@define-color window_bg_color #1d1d1d73; 
+@define-color accent_bg_color #8ab4f8; 
+@define-color theme_fg_color #c3c3c3; 
+
+/* Reset */ 
+* { all: unset; } 
+
+/* Force hide and collapse all image widgets and icon text in list items */ 
+.item-image, 
+.item-image-text, 
+.item-box image {   
+  display: none; 
+  -gtk-icon-size: 0px;
+  min-width: 0px;
+  min-height: 0px;
+  margin: 0px !important;
+  padding: 0px !important;
+  opacity: 0;
+} 
+
+/* Window wrapper */ 
+.box-wrapper {   
+  background: @window_bg_color;   
+  padding: 20px;   
+  border-radius: 9px;   
+  border: 1px solid alpha(@window_bg_color, 1.0); 
+  min-width: 480px;  /* Forces a minimum width */
+  max-height: 450px; /* Limits the height */  
+} 
+
+/* Input field */ 
+.input {   
+  caret-color: @accent_bg_color;   
+  background: #27272773;   
+  padding: 9px;   
+  color: @theme_fg_color;   
+  border-radius: 9px; 
+} 
+
+/* List items */ 
+.item-box {   
+  border-radius: 9px;   
+  padding: 9px; 
+} 
+
+child:selected .item-box {   
+  background: alpha(@accent_bg_color, 0.2); 
+} 
+
+.item-text {   
+  font-family: "SF Pro";   
+  font-size: 14px;   
+  color: @theme_fg_color; 
+} 
+
+/* Hide scrollbar for minimalist look */ 
+scrollbar { opacity: 0; }

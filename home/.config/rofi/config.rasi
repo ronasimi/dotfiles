@@ -1,0 +1,15 @@
+configuration {
+    modi: "drun,run,window";
+    terminal: "kitty";
+    font: "SF Pro 14";
+    show-icons: true;
+    icon-theme: "hicolor";
+    display-drun: "Type to search";
+    display-run: "Run";
+    display-window: "Windows";
+    display-clipboard: "Clipboard";
+    drun-display-format: "{name}";
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+}

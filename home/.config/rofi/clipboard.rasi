@@ -1,0 +1,21 @@
+@import "style.rasi"
+
+window {
+    location: bottom;
+    anchor: bottom;
+    width: 100%;
+    height: 50%;
+    background-color: rgba(29, 29, 29, 0.50);
+    border-radius: 9px 9px 0px 0px;
+    border: 0px;
+}
+
+inputbar {
+    border-radius: 9px;
+    margin: 12px 100px 18px 100px;
+}
+
+element {
+    margin: 6px 18px;
+    padding: 12px;
+}

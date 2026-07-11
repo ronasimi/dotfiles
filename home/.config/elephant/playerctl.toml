@@ -1,0 +1,8 @@
+seek_step = 5
+vol_step = 0.1
+
+[Config]
+hide_from_providerlist = false
+icon = ''
+min_score = 0
+name_pretty = ''

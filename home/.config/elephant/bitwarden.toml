@@ -1,0 +1,12 @@
+autotype_command = 'wtype -- %VALUE%'
+autotype_delay = 500
+autotype_support = false
+clear_after = 5
+clear_command = 'wl-copy --clear'
+copy_command = 'wl-copy --sensitive --'
+
+[Config]
+hide_from_providerlist = false
+icon = 'bitwarden'
+min_score = 20
+name_pretty = ''

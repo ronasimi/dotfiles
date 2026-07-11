@@ -1,0 +1,5 @@
+[Config]
+hide_from_providerlist = false
+icon = 'system-software-install'
+min_score = 20
+name_pretty = ''

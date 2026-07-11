@@ -1,0 +1,10 @@
+explicits = []
+generic_text = 'run: '
+history = true
+history_when_empty = false
+
+[Config]
+hide_from_providerlist = false
+icon = 'utilities-terminal'
+min_score = 50
+name_pretty = ''

@@ -1,0 +1,24 @@
+action_min_score = 20
+blacklist = []
+history = true
+history_when_empty = false
+icon_placeholder = 'applications-other'
+ignore_pin_with_window = true
+locale = ''
+only_search_title = false
+score_open_windows = true
+show_actions = false
+show_actions_without_query = false
+show_generic = true
+single_instance_apps = ['discord']
+window_integration = false
+window_integration_ignore_actions = false
+wm_integration = false
+
+[Config]
+hide_from_providerlist = false
+icon = 'applications-other'
+min_score = 30
+name_pretty = ''
+
+[aliases]

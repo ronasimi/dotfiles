@@ -36,9 +36,7 @@ require("functions")
 ---------------------
 local terminal    = "uwsm app -- kitty --class 'super-enter'"
 local fileManager = "uwsm app -- thunar"
-local menu        =
-"pkill wofi || uwsm app -- wofi --show drun --define=drun-print_desktop_file=true --conf /dev/null -G -p 'Type to search' -H 1080 -W 480 -x 0 -y 0 -b -i | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"
-
+local menu = "pkill fuzzel || uwsm app -- walker"
 ----------------------------------------
 ---- GLOBAL CONFIGURATION BATCHING  ----
 ----------------------------------------
@@ -63,6 +61,7 @@ hl.config({
         rounding_power   = 2,
         active_opacity   = 1.0,
         inactive_opacity = 0.90,
+        dim_inactive     = false,
         shadow           = {
             enabled        = true,
             range          = 30,
@@ -70,10 +69,16 @@ hl.config({
             render_power   = 3,
             color          = 0x66000000,
             color_inactive = 0x22000000,
-            offset         = "0 8",
+            offset         = "5 15",
         },
-        blur             = { enabled = true, size = 3, passes = 3, noise = 0.0234, popups = true, special = false },
-        dim_special      = 0.50
+        dim_special      = 0.05,
+        blur = {
+            enabled = true,
+            size = 3,
+            passes = 3,
+            noise = 0.0234,
+            popups = true,
+            special = true },
     },
     animations = { enabled = true },
     dwindle    = { preserve_split = true, force_split = 2 },
@@ -99,47 +104,48 @@ hl.config({
 -----------------------
 ----  ANIMATIONS   ----
 -----------------------
--- Fluent curves: extremely aggressive initial acceleration, long smooth tail
 hl.curve("fluentDecel", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.0 } } })
 hl.curve("fluentAccel", { type = "bezier", points = { { 0.3, 0.0 }, { 0.8, 0.15 } } })
 
--- Slightly softened spring: allows the motion to be seen a fraction longer
-hl.curve("fluentSpring", { type = "spring", mass = 1, stiffness = 250, dampening = 30 })
+-- 1g Constant Acceleration Curve (y = x^2)
+hl.curve("oneGravity", { type = "bezier", points = { { 0.333, 0.0 }, { 0.667, 0.333 } } })
+
+-- Ultra-fast ease-out for magnetic snapping
+hl.curve("snap", { type = "bezier", points = { { 0.1, 1.0 }, { 0.1, 1.0 } } })
 
 -- Global fallback
 hl.animation({ leaf = "global", enabled = true, speed = 3.5, bezier = "fluentDecel" })
 
--- Window Mechanics
--- In: 350ms, giving the pop-in a smooth, visible expansion
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 3.5, bezier = "fluentDecel", style = "popin 85%" })
--- Out: 300ms, still slightly faster than the entrance to keep the UI feeling responsive
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "fluentAccel", style = "popin 85%" })
--- Move: 350ms, a highly perceptible, smooth glide across the screen
-hl.animation({ leaf = "windowsMove", enabled = true, speed = 3.5, bezier = "fluentDecel" })
+-- 1. BACKGROUND LAYER: Workspaces (Horizontal sweeps)
+hl.animation({ leaf = "workspaces", enabled = true, speed = 1.95, bezier = "oneGravity", style = "slide fade" })
 
--- Workspaces
--- 450ms: Full-screen transitions benefit from a longer duration to prevent spatial disorientation
-hl.animation({ leaf = "workspaces", enabled = true, speed = 4.5, bezier = "fluentDecel", style = "slide" })
+-- 2. MIDDLE LAYER: Windows
+-- Snapping windows in and moving them extremely quickly (1.5 = 150ms)
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 1.5, bezier = "snap", style = "popin 85%" })
+-- Pure fade out: Removing the 'style' parameter dissolves the window in place (2.5 = 250ms)
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 1.5, bezier = "snap" })
 
--- Scratchpad
-hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 4, spring = "fluentSpring", style = "slide top" })
-hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3.5, bezier = "fluentAccel", style = "slide top" })
+-- Scratchpad (Vertical drop/lift)
+-- Speed set to exactly 1.89 to match 188.5ms 1g fall time
+hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 1.89, bezier = "oneGravity", style = "slide top fade" })
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 1.89, bezier = "oneGravity", style = "slide top fade" })
 
--- Fades
+-- 3. TOP LAYER: UI Overlays & Borders
+hl.animation({ leaf = "border", enabled = true, speed = 3, bezier = "fluentDecel" })
+
+-- Standard Fades
+hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 3, bezier = "fluentDecel" })
+hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
 hl.animation({ leaf = "fadeIn", enabled = true, speed = 3, bezier = "fluentDecel" })
 hl.animation({ leaf = "fadeOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
-
--- Borders and Layers
-hl.animation({ leaf = "border", enabled = true, speed = 4, bezier = "fluentDecel" })
-hl.animation({ leaf = "layersIn", enabled = true, speed = 3.5, bezier = "fluentDecel", style = "fade" })
-hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "fluentAccel", style = "fade" })
 
 -------------------
 ---- GESTURES  ----
 -------------------
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 hl.gesture({ fingers = 3, direction = "down", action = "special", workspace_name = "scratchpad" })
--- Wofi Window Switcher
+-- Hyprexpose
 hl.gesture({
     fingers = 3,
     direction = "up",
@@ -222,14 +228,6 @@ hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast copy screen"))
 hl.bind("ALT + SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast copy active"))
 hl.bind("XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast save area"))
 hl.bind("SHIFT + XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast copy area"))
-
--- Utilities
-hl.bind(mainMod .. " + C",
-    hl.dsp.exec_cmd(
-        [[pkill wofi || dash -c "cliphist list | sed 's/^[0-9]*\t//' | uwsm app -- wofi --style ~/.config/wofi/clipboard.css -G -p 'Clipboard history' -H 540 -W 1920 -x 0 -y 540 -b -i --dmenu | cliphist decode | wl-copy"]]))
-hl.bind(mainMod .. " + R",
-    hl.dsp.exec_cmd(
-        "pkill wofi || uwsm app -- wofi -f --show run --run-always-parse-args -G -y 0 -x 0 -H 216 -W 512 | xargs -I {} dash -c 'uwsm app -- \"$1\" &' _ {}"))
 hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))
 hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty --class 'super-shift-enter'"))
 hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("dunstctl history-pop"))

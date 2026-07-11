@@ -1,0 +1,14 @@
+fd_flags = ['--ignore-vcs', '--type', 'file', '--type', 'directory']
+ignore_previews = []
+ignore_watching = []
+ignored_dirs = []
+search_dirs = []
+watch = false
+watch_buffer = 2000
+watch_dirs = []
+
+[Config]
+hide_from_providerlist = false
+icon = 'folder'
+min_score = 20
+name_pretty = ''

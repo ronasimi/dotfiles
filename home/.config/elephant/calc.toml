@@ -1,0 +1,13 @@
+async = false
+autosave = false
+command = "wl-copy -n '%VALUE%'"
+max_items = 100
+min_chars = 3
+placeholder = 'calculating...'
+require_number = true
+
+[Config]
+hide_from_providerlist = false
+icon = 'accessories-calculator'
+min_score = 0
+name_pretty = ''

@@ -1,0 +1,16 @@
+categories = []
+duck_player_volumes = true
+location = ''
+show_creation_time = true
+time_format = '02-Jan 15:04'
+urgent_time_frame = 10
+
+[Config]
+hide_from_providerlist = false
+icon = 'checkbox-checked'
+min_score = 20
+name_pretty = ''
+
+[Notification]
+body = '%TASK%'
+title = 'Task Due'

@@ -1,0 +1,16 @@
+@import "style.rasi"
+
+window {
+    location: center;
+    anchor: center;
+    width: 512px;
+    height: 216px;
+    border-radius: 9px;
+    border: 1px solid;
+    border-color: @border-color;
+}
+
+inputbar {
+    border-radius: 9px;
+    margin: 10px;
+}

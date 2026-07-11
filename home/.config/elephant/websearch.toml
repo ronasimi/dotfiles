@@ -1,0 +1,13 @@
+always_show_default = true
+command = 'xdg-open'
+engines_as_actions = false
+entries = []
+history = true
+history_when_empty = false
+text_prefix = 'Search: '
+
+[Config]
+hide_from_providerlist = false
+icon = 'applications-internet'
+min_score = 20
+name_pretty = ''

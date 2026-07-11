@@ -1,5 +1,5 @@
 /* Color definitions */
-@define-color window_bg_color #1d1d1dd9;
+@define-color window_bg_color #1d1d1d73;
 @define-color accent_bg_color #8ab4f8;
 @define-color theme_fg_color #c3c3c3;
 
@@ -26,22 +26,23 @@
       border-radius: 9px;
       border: 1px solid @window_bg_color;
       width: 540px;
-      
-      /* Force the container to ignore internal extra space */
-      min-height: 0px;
-      
-      /* This property tells GTK to shrink to the content */
-      margin: 0px;
+      min-height: 0px; /* Force the container to ignore internal extra space */
+      margin: 0px;     /* Strip outer margins */
 }
 
 /* Input field */
 .input {
       caret-color: @accent_bg_color;
-      background: #272727d9;
+      background: #27272773;
       padding: 9px;
       color: @theme_fg_color;
       border-radius: 9px;
       font-size: 18px;
+      
+      /* Reset internal widget margins and forced height */
+      margin: 0px !important;
+      border: 0px !important;
+      min-height: 0px; 
 }
 
 /* List items */
@@ -71,4 +72,11 @@ scrollbar { opacity: 0; }
 /* Add dynamic gap when items populate */
 #list {
       margin-top: 10px;
+}
+
+/* Override scrolled window geometry to collapse when empty */
+#Scroll {
+      min-height: 0px !important;
+      height: 0px !important;
+      vexpand: false;
 }

@@ -10,48 +10,52 @@
 .item-image, 
 .item-image-text, 
 .item-box image {   
-  display: none; 
-  -gtk-icon-size: 0px;
-  min-width: 0px;
-  min-height: 0px;
-  margin: 0px !important;
-  padding: 0px !important;
-  opacity: 0;
+    display: none; 
+    -gtk-icon-size: 26px;
+    min-width: 0px;
+    min-height: 0px;
+    margin: 0px !important;
+    padding: 0px !important;
+    opacity: 0;
 } 
 
 /* Window wrapper */ 
 .box-wrapper {   
-  background: @window_bg_color;   
-  padding: 20px;   
-  border-radius: 9px;   
-  border: 1px solid alpha(@window_bg_color, 1.0); 
-  min-width: 480px;  /* Forces a minimum width */
-  max-height: 450px; /* Limits the height */  
+    background: @window_bg_color;   
+    padding: 20px;   
+    border-radius: 9px;   
+    border: 1px solid alpha(@window_bg_color, 1.0); 
+    
+    /* Force exact 960x540 dimensions */
+    min-width: 960px;
+    max-width: 960px;
+    min-height: 540px;
+    max-height: 540px;
 } 
 
 /* Input field */ 
 .input {   
-  caret-color: @accent_bg_color;   
-  background: #27272773;   
-  padding: 9px;   
-  color: @theme_fg_color;   
-  border-radius: 9px; 
+    caret-color: @accent_bg_color;   
+    background: #27272773;   
+    padding: 9px;   
+    color: @theme_fg_color;   
+    border-radius: 9px; 
 } 
 
 /* List items */ 
 .item-box {   
-  border-radius: 9px;   
-  padding: 9px; 
+    border-radius: 9px;   
+    padding: 9px; 
 } 
 
 child:selected .item-box {   
-  background: alpha(@accent_bg_color, 0.2); 
+    background: alpha(@accent_bg_color, 0.2); 
 } 
 
 .item-text {   
-  font-family: "SF Pro";   
-  font-size: 14px;   
-  color: @theme_fg_color; 
+    font-family: "SF Pro";   
+    font-size: 14px;   
+    color: @theme_fg_color; 
 } 
 
 /* Hide scrollbar for minimalist look */ 

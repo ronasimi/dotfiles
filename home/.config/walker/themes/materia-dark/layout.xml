@@ -14,9 +14,10 @@
         </style>
         <property name="overflow">hidden</property>
         <property name="orientation">horizontal</property>
-        <property name="valign">center</property>
+        <property name="valign">start</property>
         <property name="halign">center</property>
-        <property name="width-request">600</property>
+        <property name="width-request">540</property>
+        <property name="margin-top">200</property>
         <child>
           <object class="GtkBox" id="Box">
             <style>
@@ -25,7 +26,6 @@
             <property name="orientation">vertical</property>
             <property name="hexpand-set">true</property>
             <property name="hexpand">true</property>
-            <property name="spacing">10</property>
             <child>
               <object class="GtkBox" id="SearchContainer">
                 <style>
@@ -54,17 +54,13 @@
                   <class name="content-container"></class>
                 </style>
                 <property name="orientation">horizontal</property>
-                <property name="spacing">10</property>
                 <child>
                   <object class="GtkLabel" id="ElephantHint">
                     <style>
                       <class name="elephant-hint"></class>
                     </style>
-                    <property name="label">Waiting for elephant...</property>
-                    <property name="hexpand">true</property>
-                    <property name="vexpand">true</property>
+                    <property name="label"></property>
                     <property name="visible">false</property>
-                    <property name="valign">0.5</property>
                   </object>
                 </child>
                 <child>
@@ -72,10 +68,8 @@
                     <style>
                       <class name="placeholder"></class>
                     </style>
-                    <property name="label">No Results</property>
-                    <property name="hexpand">true</property>
-                    <property name="vexpand">true</property>
-                    <property name="valign">0.5</property>
+                    <property name="label"></property>
+                    <property name="visible">false</property>
                   </object>
                 </child>
                 <child>
@@ -86,10 +80,6 @@
                     <property name="can_focus">false</property>
                     <property name="overlay-scrolling">true</property>
                     <property name="hexpand">true</property>
-                    <property name="vexpand">true</property>
-                    <property name="max-content-width">500</property>
-                    <property name="min-content-width">500</property>
-                    <property name="max-content-height">400</property>
                     <property name="propagate-natural-height">true</property>
                     <property name="propagate-natural-width">true</property>
                     <property name="hscrollbar-policy">automatic</property>
@@ -117,14 +107,12 @@
             </child>
             <child>
               <object class="GtkBox" id="Keybinds">
-                <property name="hexpand">true</property>
-                <property name="margin-top">10</property>
+                <property name="visible">false</property>
                 <style>
                   <class name="keybinds"></class>
                 </style>
                 <child>
                   <object class="GtkBox" id="GlobalKeybinds">
-                    <property name="spacing">10</property>
                     <style>
                       <class name="global-keybinds"></class>
                     </style>
@@ -132,9 +120,6 @@
                 </child>
                 <child>
                   <object class="GtkBox" id="ItemKeybinds">
-                    <property name="hexpand">true</property>
-                    <property name="halign">end</property>
-                    <property name="spacing">10</property>
                     <style>
                       <class name="item-keybinds"></class>
                     </style>
@@ -147,7 +132,6 @@
                 <style>
                   <class name="error"></class>
                 </style>
-                <property name="xalign">0</property>
                 <property name="visible">false</property>
               </object>
             </child>

@@ -123,7 +123,7 @@ hl.animation({ leaf = "workspaces", enabled = true, speed = 1.95, bezier = "oneG
 -- Snapping windows in and moving them extremely quickly (1.5 = 150ms)
 hl.animation({ leaf = "windowsIn", enabled = true, speed = 1.5, bezier = "snap", style = "popin 85%" })
 -- Pure fade out: Removing the 'style' parameter dissolves the window in place (2.5 = 250ms)
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.5, bezier = "fluentAccel", style = "popin 15%" })
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 1.5, bezier = "snap" })
 
 -- Scratchpad (Vertical drop/lift)

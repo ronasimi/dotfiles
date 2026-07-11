@@ -1,7 +1,7 @@
 auto_detect_launch_prefix = true
 before_load = []
 git_on_demand = true
-ignored_providers = []
+ignored_providers = ["bitwarden", "bookmarks", "dnfpackages"]
 launch_prefix = ''
 overload_local_env = false
 terminal_cmd = ''

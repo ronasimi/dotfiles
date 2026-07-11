@@ -16,7 +16,7 @@ hl.window_rule({ name = "fix-xwayland-drags", match = { class = "^$", title = "^
 hl.layer_rule({
     name = "blur-ui-layers",
     match = { namespace = "^(wofi|waybar|notifications|syshud|dunst)$" },
-    animation = "slide",
+    animation = "fade",
     blur = true,
     blur_popups = true,
     ignore_alpha = 0.2,
@@ -26,7 +26,7 @@ hl.layer_rule({
 hl.layer_rule({
     name = "walker-launcher",
     match = { namespace = "^(walker)$" },
-    animation = "popin 50%",
+    animation = "fade",
     blur = true,
     ignore_alpha = 0.2,
 })

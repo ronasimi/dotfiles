@@ -13,10 +13,10 @@ page_jump_items = 10            # number of items to skip with Page Up/Down
 hide_quick_activation = true    # globally hide the quick activation buttons
 hide_action_hints = true        # globally hide the action hints
 hide_action_hints_dmenu = true  # hide the actions hints for dmenu
-hide_return_action = true      # hide actions that are bound to Return
-keybind_symbols = true          # render keybind hints with key symbols (e.g. ⌃+⏎) instead of plain text ("ctrl Return")
+hide_return_action = true       # hide actions that are bound to Return
+keybind_symbols = true          # render keybind hints with key symbols (e.g.  ) instead of plain text ("ctrl Return")
 resume_last_query = false       # open walker with the last query in place
-actions_as_menu = true         # display all possible actions in a submenu
+actions_as_menu = true          # display all possible actions in a submenu
 autoplay_videos = false         # auto-play video previews
 ext_background_effect_blur = true # request the compositor to blur behind the box-wrapper via ext-background-effect-v1 (compositor must support it)
 
@@ -32,7 +32,21 @@ anchor_right = true
 "symbols" = 3
 
 [placeholders]
-"default" = { input = "Search", list = "No Results" } # placeholders for input and empty list, key is the providers name, so f.e. "desktopapplications" or "menus:other"
+# Default placeholder for all providers
+"default" = { input = "󰍉", list = "" }
+
+# Provider-specific placeholders
+"desktopapplications" = { input = "Launch App", list = "No Applications" }
+"files" = { input = "Browse Files", list = "No Files Found" }
+"calc" = { input = "Calculate", list = "Enter Expression" }
+"runner" = { input = "Run Command", list = "No Commands" }
+"websearch" = { input = "󰜏", list = "" }
+"clipboard" = { input = "Clipboard", list = "Clipboard Empty" }
+"symbols" = { input = "Symbol", list = "No Symbols" }
+"todo" = { input = "Todo", list = "No Todos" }
+
+# For custom menus
+"menus:mymenu" = { input = "My Menu", list = "No Items" }
 
 [keybinds]
 close = ["Escape"]
@@ -50,21 +64,29 @@ page_up = ["Page_Up"]
 show_actions = ["alt j"]
 
 [providers]
+# Providers queried by default (when no prefix used)
 default = [
   "desktopapplications",
-  "calc",
-  # "runner",
-  "websearch",
-] # providers to be queried by default
-empty = ["desktopapplications"] # providers to be queried when query is empty
-ignore_preview = [] # providers that should not show previews
-max_results = 50 # global max results
+  "clipboard",
+#  "calc",
+#  "runner",
+  "menus",
+#  "websearch",
+]
+# Providers shown when search is empty
+empty = []
+# Global max results (can be overridden per provider)
+max_results = 50
 
-[providers.argument_delimiter] # define the argument delimiter per provider
+[providers.argument_delimiter]
+# define the argument delimiter per provider
 # runner = " "
 
-[providers.sets] # define your own defaults/empty sets of providers
-[providers.max_results_provider] # define max results per provider in here
+[providers.sets]
+# define your own defaults/empty sets of providers
+
+[providers.max_results_provider]
+# define max results per provider in here
 
 [[providers.prefixes]]
 prefix = ";"
@@ -86,9 +108,9 @@ provider = "symbols"
 prefix = "!"
 provider = "todo"
 
-[[providers.prefixes]]
-prefix = "%"
-provider = "bookmarks"
+#[[providers.prefixes]]
+#prefix = "%"
+#provider = "bookmarks"
 
 [[providers.prefixes]]
 prefix = "="
@@ -109,20 +131,18 @@ provider = "windows"
 [providers.clipboard]
 time_format = "relative" # format for the clipboard item date
 
-[providers.actions] # This will be MERGED/OVERWRITTEN with what the user specifies
+[providers.actions]
+# This will be MERGED/OVERWRITTEN with what the user specifies
 fallback = [
   { action = "menus:open", label = "open", after = "Nothing" },
   { action = "menus:default", label = "run", after = "Close" },
   { action = "menus:parent", label = "back", bind = "Escape", after = "Nothing" },
   { action = "erase_history", label = "clear hist", bind = "ctrl h", after = "AsyncReload" },
 ]
-
 dmenu = [{ action = "select", default = true, bind = "Return" }]
-
 providerlist = [
   { action = "activate", default = true, bind = "Return", after = "ClearReload" },
 ]
-
 bluetooth = [
   { action = "find", bind = "ctrl f", after = "AsyncClearReload" },
   { action = "remove", bind = "ctrl d", after = "AsyncReload" },
@@ -134,7 +154,6 @@ bluetooth = [
   { action = "power_on", label = "Power On", bind = "ctrl e", after = "AsyncReload" },
   { action = "power_off", label = "Power Off", bind = "ctrl e", after = "AsyncReload" },
 ]
-
 archlinuxpkgs = [
   { action = "install", bind = "Return", default = true },
   { action = "remove", bind = "Return", default = true },
@@ -143,19 +162,16 @@ archlinuxpkgs = [
   { action = "visit_url", label = "open URL", bind = "ctrl o" },
   { action = "show_installed", label = "show installed", bind = "ctrl i", after = "AsyncClearReload" },
 ]
-
 calc = [
   { action = "copy", default = true, bind = "Return" },
   { action = "delete", bind = "ctrl d", after = "AsyncReload" },
   { action = "delete_all", bind = "ctrl shift d", after = "AsyncReload" },
   { action = "save", bind = "ctrl s", after = "AsyncClearReload" },
 ]
-
 websearch = [
   { action = "search", default = true, bind = "Return" },
   { action = "open_url", label = "open url", default = true, bind = "Return" },
 ]
-
 desktopapplications = [
   { action = "start", default = true, bind = "Return" },
   { action = "start:keep", label = "open+next", bind = "shift Return", after = "KeepOpen" },
@@ -166,7 +182,6 @@ desktopapplications = [
   { action = "pinup", bind = "ctrl n", after = "AsyncReload" },
   { action = "pindown", bind = "ctrl m", after = "AsyncReload" },
 ]
-
 dnfpackages = [
   { action = "install", label = "Install Package", bind = "Return", default = true },
   { action = "remove", label = "Remove Package", bind = "Return", default = true },
@@ -175,7 +190,6 @@ dnfpackages = [
   { action = "refresh", label = "Refresh", bind = "ctrl r", after = "AsyncClearReload" },
   { action = "visit_url", label = "Open URL", bind = "ctrl o" },
 ]
-
 files = [
   { action = "open", default = true, bind = "Return" },
   { action = "opendir", label = "open dir", bind = "ctrl Return" },
@@ -184,13 +198,11 @@ files = [
   { action = "localsend", label = "localsend", bind = "ctrl l" },
   { action = "refresh_index", label = "reload", bind = "ctrl r", after = "AsyncReload" },
 ]
-
 1password = [
   { action = "copy_password", label = "copy password", default = true, bind = "Return" },
   { action = "copy_username", label = "copy username", bind = "shift Return" },
   { action = "copy_2fa", label = "copy 2fa", bind = "ctrl Return" },
 ]
-
 bitwarden = [
   { action = "copypassword", label = "copy password", default = true, bind = "Return" },
   { action = "typepassword", label = "type password", default = true, bind = "ctrl p" },
@@ -200,7 +212,6 @@ bitwarden = [
   { action = "typeotp", label = "type 2fa", bind = "ctrl t" },
   { action = "syncvault", label = "sync", bind = "ctrl s" },
 ]
-
 todo = [
   { action = "save", default = true, bind = "Return", after = "AsyncClearReload" },
   { action = "save_next", label = "save & new", bind = "shift Return", after = "AsyncClearReload" },
@@ -213,25 +224,20 @@ todo = [
   { action = "create", bind = "ctrl a", after = "AsyncClearReload" },
   { action = "search", bind = "ctrl a", after = "AsyncClearReload" },
 ]
-
 runner = [
   { action = "run", default = true, bind = "Return" },
   { action = "runterminal", label = "run in terminal", bind = "shift Return" },
 ]
-
 symbols = [
   { action = "run_cmd", label = "select", default = true, bind = "Return" },
 ]
-
 unicode = [
   { action = "run_cmd", label = "select", default = true, bind = "Return" },
 ]
-
 nirisessions = [
   { action = "start", label = "start", default = true, bind = "Return" },
   { action = "start_new", label = "start blank", bind = "ctrl Return" },
 ]
-
 clipboard = [
   { action = "copy", default = true, bind = "Return" },
   { action = "remove", bind = "ctrl d", after = "AsyncClearReload" },
@@ -246,7 +252,6 @@ clipboard = [
   { action = "edit", bind = "ctrl o" },
   { action = "localsend", bind = "ctrl l" },
 ]
-
 bookmarks = [
   { action = "save", bind = "Return", after = "AsyncClearReload" },
   { action = "open", default = true, bind = "Return" },
@@ -257,7 +262,6 @@ bookmarks = [
   { action = "create", bind = "ctrl a", after = "AsyncClearReload" },
   { action = "search", bind = "ctrl a", after = "AsyncClearReload" },
 ]
-
 wireplumber = [
   { action = "increase_volume", label = "+volume", bind = "ctrl y", after = "Nothing" },
   { action = "decrease_volume", label = "-volume", bind = "ctrl n", after = "Nothing" },
@@ -265,7 +269,6 @@ wireplumber = [
   { action = "unmute", bind = "ctrl m", after = "Nothing" },
   { action = "set_default_device", label = "set default", bind = "ctrl d", after = "Nothing" },
 ]
-
 playerctl = [
   { action = "pause", label = "pause", bind = "Return", after = "Nothing", default = true },
   { action = "play", label = "play", bind = "Return", after = "Nothing", default = true },
@@ -278,5 +281,4 @@ playerctl = [
   { action = "seek_back", label = "backward", bind = "ctrl b", after = "Nothing" },
   { action = "seek_forward", label = "forward", bind = "ctrl f", after = "Nothing" },
 ]
-
 niriactions = [{ action = "execute", bind = "Return" }]

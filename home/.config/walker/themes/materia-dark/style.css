@@ -1,5 +1,5 @@
 /* Color definitions */
-@define-color window_bg_color #1d1d1d73;
+@define-color window_bg_color #1d1d1de6;
 @define-color accent_bg_color #8ab4f8;
 @define-color theme_fg_color #c3c3c3;
 
@@ -25,14 +25,14 @@
       padding: 18px;
       border-radius: 9px;
       border: 1px solid @window_bg_color;
-      width: 540px;
+      width: 600px;
       min-height: 0px;
 }
 
 /* Input field */
 .input {
       caret-color: @accent_bg_color;
-      background: #27272773;
+      background: #272727e6
       padding: 9px;
       color: @theme_fg_color;
       border-radius: 9px;
@@ -59,7 +59,7 @@ child:selected .item-box {
 scrollbar { opacity: 0; }
 
 #box {
-      width: 540px;
+      width: 600px;
 }
 
 /* Structural crush on dormant labels */

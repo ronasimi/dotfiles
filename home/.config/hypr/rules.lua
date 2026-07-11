@@ -38,7 +38,7 @@ end
 
 -- 6. Floating Apps (Only specify 'float = true' here; the global rule handles border)
 hl.window_rule({
-    match = { class = "^(dunst|btop|galculator|nwg-look|catfish|org\\.pwmt\\.zathura|localsend|nm-connection-editor|com.moonlight_stream.Moonlight|super-enter|nmtui|org\\.pulseaudio\\.pavucontrol|mpv|imv)$" },
+    match = { class = "^(dunst|btop|galculator|nwg-look|catfish|org\\.pwmt\\.zathura|localsend|nm-connection-editor|com.moonlight_stream.Moonlight|super-enter|nmtui|org\\.pulseaudio\\.pavucontrol|mpv|imv|tnywfi.py|tnywfi)$" },
     float = true
 })
 
@@ -49,6 +49,8 @@ hl.window_rule({ match = { class = "^(nmtui|org\\.pulseaudio\\.pavucontrol)$" },
 hl.window_rule({ match = { class = "^(io\\.github\\.kaii_lb\\.Overskride)$" }, size = { 942, 616 }, move = { 969, 45 }, float = true, pin = true })
 hl.window_rule({ match = { class = "^(xdg-desktop-portal-gtk)$" }, size = { 942, 504 }, float = true })
 hl.window_rule({ match = { class = "^(nwg-displays)$" }, size = { 916, 472 }, move = { 995, 45 }, float = true, pin = true })
+hl.window_rule({ match = { class = "^(tnywfi)$" }, size = { 480, 450 }, move = { 1430, 45 }, float = true, pin = true })
+hl.window_rule({ match = { class = "^(super-shift-enter)$" }, size = { 1884, 72 }, move = { 18, 990 }, float = true, pin = true })
 
 -- 8. Modal and Dialog Catch-all
 hl.window_rule({ match = { modal = true }, float = true })

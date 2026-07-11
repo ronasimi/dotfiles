@@ -155,6 +155,7 @@
             "󰤥",
             "󰤨"
         ],
+        "on-click": "tnywfi",
         "on-click-right": "uwsm app -- kitty -1 --class 'nmtui' -e nmtui",
         "cursor": false
     },
@@ -164,7 +165,7 @@
         "tooltip-format": "{controller_alias}",
         "tooltip-format-connected": "{controller_alias}\t\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_battery_percentage}%",
-        "on-click-right": "uwsm app -- overskride",
+        "on-click": "uwsm app -- overskride",
         "cursor": false
     },
     "pulseaudio": {

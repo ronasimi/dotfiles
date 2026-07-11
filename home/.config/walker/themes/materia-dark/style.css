@@ -22,9 +22,9 @@
 /* Window wrapper */ 
 .box-wrapper {   
     background: @window_bg_color;   
-    padding: 20px;   
+    padding: 18px;   
     border-radius: 9px;   
-    border: 1px solid alpha(@window_bg_color, 1.0); 
+    border: 1px solid @window_bg_color; 
 } 
 
 /* Input field */ 

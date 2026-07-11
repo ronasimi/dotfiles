@@ -25,12 +25,6 @@
     padding: 20px;   
     border-radius: 9px;   
     border: 1px solid alpha(@window_bg_color, 1.0); 
-    
-    /* Force exact 960x540 dimensions */
-    min-width: 960px;
-    max-width: 960px;
-    min-height: 540px;
-    max-height: 540px;
 } 
 
 /* Input field */ 
@@ -49,7 +43,7 @@
 } 
 
 child:selected .item-box {   
-    background: alpha(@accent_bg_color, 0.2); 
+    background: alpha(@accent_bg_color, 0.5); 
 } 
 
 .item-text {   

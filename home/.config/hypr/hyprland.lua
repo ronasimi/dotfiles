@@ -71,7 +71,7 @@ hl.config({
             color_inactive = 0x22000000,
             offset         = "5 15",
         },
-        dim_special      = 0.05,
+        dim_special      = 0.1,
         blur = {
             enabled = true,
             size = 3,

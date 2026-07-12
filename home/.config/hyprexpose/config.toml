@@ -10,7 +10,7 @@
 font = "SF Pro Display"
 
 # Font used for workspace number / name labels at the top of each card.
-label_font = "SF Pro Display Semibold 14"
+label_font = "SF Pro Display Semibold 16"
 
 # Gap between workspace cards, and between cards and the screen edge (px).
 card_padding = 18.0
@@ -41,13 +41,13 @@ select_border = 1
 [colors]
 
 # Full-screen dim overlay drawn behind all workspace cards.
-background = "#0000008cc"       # black at ~75% opacity
+background = "#0000001a"
 
 # Workspace card background fill.
-card = "#8ab4f880"
+card = "#27272773"
 
 # Border drawn around the currently selected card.
-selection = "#c3c3c380"
+selection = "#5d5d5d80"
 
 # Workspace number / name label text.
 label = "#c3c3c3ff"

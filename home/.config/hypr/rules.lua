@@ -28,8 +28,16 @@ hl.layer_rule({
     match = { namespace = "^(walker)$" },
     animation = "fade",
     blur = true,
-    ignore_alpha = 0.2,
 })
+
+-- Hyprexpose
+hl.layer_rule({
+    name = "hyprexpose",
+    match = { namespace = "^(hyprexpose)$" },
+    animation = "fade",
+    blur = true,
+})
+
 
 -- 5. Workspace Assignments
 local workspace_rules = {

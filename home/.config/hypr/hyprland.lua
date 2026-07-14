@@ -39,13 +39,6 @@ local terminal    = "uwsm app -- kitty --class 'super-enter'"
 local fileManager = "uwsm app -- thunar"
 local menu        = "uwsm app -- walker"
 
-local function run_in_ws(ws, cmd)
-    return function()
-        hl.dispatch(hl.dsp.focus({ workspace = ws }))
-        hl.dispatch(hl.dsp.exec_cmd("uwsm app -- " .. cmd))
-    end
-end
-
 ----------------------------------------
 ---- GLOBAL CONFIGURATION BATCHING  ----
 ----------------------------------------
@@ -72,21 +65,21 @@ hl.config({
         dim_inactive     = false,
         shadow           = {
             enabled        = true,
-            range          = 30,
-            scale          = 1.0,
-            render_power   = 3,
-            color          = 0x66000000,
-            color_inactive = 0x22000000,
-            offset         = "5 15",
+            range          = 50,         -- Wider spread for a softer, more diffuse ambient shadow
+            scale          = 0.97,       -- Pulls the shadow slightly inward to prevent harsh top-edge bleeding
+            render_power   = 4,          -- Smoothest falloff gradient (ranges 1-4)
+            color          = 0x77000000, -- Deep but transparent black for the active window
+            color_inactive = 0x22000000, -- Very faint ambient shadow for background windows
+            offset         = "0 12",     -- A natural, direct overhead light offset
         },
         dim_special      = 0.1,
-        blur = {
+        blur             = {
             enabled = true,
             size = 3,
             passes = 3,
             noise = 0.0234,
             popups = true,
-            special = true 
+            special = true
         },
     },
     animations = { enabled = true },
@@ -124,7 +117,8 @@ hl.animation({ leaf = "windowsIn", enabled = true, speed = 1.5, bezier = "snap",
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.5, bezier = "fluentAccel", style = "popin 15%" })
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 1.5, bezier = "snap" })
 hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 1.89, bezier = "oneGravity", style = "slide top fade" })
-hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 1.89, bezier = "oneGravity", style = "slide top fade" })
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 1.89, bezier = "oneGravity", style =
+"slide top fade" })
 hl.animation({ leaf = "border", enabled = true, speed = 3, bezier = "fluentDecel" })
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 3, bezier = "fluentDecel" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
@@ -150,9 +144,12 @@ hl.gesture({
 
 -- System & Power
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
-hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Restarting System...' --post-cmd 'systemctl reboot']]))
-hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Powering Off...' --post-cmd 'systemctl poweroff']]))
+hl.bind(mainMod .. " + SHIFT + X",
+    hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
+hl.bind(mainMod .. " + SHIFT + R",
+    hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Restarting System...' --post-cmd 'systemctl reboot']]))
+hl.bind(mainMod .. " + SHIFT + P",
+    hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Powering Off...' --post-cmd 'systemctl poweroff']]))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("systemctl suspend"))
 hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("dunstctl history-pop"))
 
@@ -160,8 +157,8 @@ hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("dunstctl history-pop"))
 hl.bind("switch:off:Lid Switch", hl.dsp.dpms({ action = "enable" }), { locked = true })
 hl.bind("switch:on:Lid Switch", function()
     hl.dispatch(hl.dsp.exec_cmd("loginctl lock-session"))
-    hl.timer(function() 
-        hl.dispatch(hl.dsp.dpms({ action = "disable" })) 
+    hl.timer(function()
+        hl.dispatch(hl.dsp.dpms({ action = "disable" }))
     end, { timeout = 500, type = "oneshot" })
 end, { locked = true })
 
@@ -232,6 +229,12 @@ hl.bind("XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast save a
 hl.bind("SHIFT + XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast copy area"))
 
 -- Applications
+local function run_in_ws(ws, cmd)
+    return function()
+        hl.dispatch(hl.dsp.focus({ workspace = ws }))
+        hl.dispatch(hl.dsp.exec_cmd("uwsm app -- " .. cmd))
+    end
+end
 hl.bind(mainMod .. " + F1", run_in_ws(1, "google-chrome-stable"))
 hl.bind(mainMod .. " + ALT + F1", hl.dsp.exec_cmd("uwsm app -- google-chrome-stable --incognito"))
 hl.bind(mainMod .. " + F2", run_in_ws(2, "kitty -1"))

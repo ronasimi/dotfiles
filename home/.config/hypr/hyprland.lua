@@ -224,8 +224,20 @@ hl.bind("XF86Favorites", hl.dsp.exec_cmd("uwsm app -- localsend"))
 
 -- Lock and Lid
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
-hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("hyprctl dispatch dpms off && loginctl lock-session"), { locked = true })
-hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("hyprctl dispatch dpms on"), { locked = true })
+
+-- Lid Open: Turn screen on natively
+hl.bind("switch:off:Lid Switch", hl.dsp.dpms({ action = "enable" }), { locked = true })
+
+-- Lid Close: Lock the session immediately, then natively turn off the display after a 1000ms delay
+hl.bind("switch:on:Lid Switch", function()
+    -- 1. Immediately trigger the lock screen
+    hl.dispatch(hl.dsp.exec_cmd("loginctl lock-session"))
+    
+    -- 2. Wait 1000ms for hyprlock to grab the blur screenshot, then disable DPMS
+    hl.timer(function() 
+        hl.dispatch(hl.dsp.dpms({ action = "disable" })) 
+    end, { timeout = 500, type = "oneshot" })
+end, { locked = true })
 
 -- Screenshots
 hl.bind("PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast save screen"))

@@ -2,8 +2,8 @@
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------
 
--- 1. GLOBAL FLOATING RULE: Force all floating windows to have no border.
--- This single rule covers all apps that are set to float, removing the need for 'border_size = 0' elsewhere.
+-- 1. Global Floating Rule
+-- Forces all floating windows to have no border.
 hl.window_rule({ match = { float = true }, border_size = 0 })
 
 -- 2. Suppress maximize events
@@ -14,30 +14,27 @@ hl.window_rule({ name = "fix-xwayland-drags", match = { class = "^$", title = "^
 
 -- 4. Layer Rules (Blur/Animation)
 hl.layer_rule({
-    name = "blur-ui-layers",
-    match = { namespace = "^(wofi|waybar|notifications|syshud|dunst)$" },
-    animation = "fade",
-    blur = true,
-    blur_popups = true,
+    name         = "blur-ui-layers",
+    match        = { namespace = "^(wofi|waybar|notifications|syshud|dunst)$" },
+    animation    = "fade",
+    blur         = true,
+    blur_popups  = true,
     ignore_alpha = 0.2,
 })
 
--- Walker launcher
 hl.layer_rule({
-    name = "walker-launcher",
-    match = { namespace = "^(walker)$" },
+    name      = "walker-launcher",
+    match     = { namespace = "^(walker)$" },
     animation = "fade",
-    blur = true,
+    blur      = true,
 })
 
--- Hyprexpose
 hl.layer_rule({
-    name = "hyprexpose",
-    match = { namespace = "^(hyprexpose)$" },
+    name      = "hyprexpose",
+    match     = { namespace = "^(hyprexpose)$" },
     animation = "fade",
-    blur = true,
+    blur      = true,
 })
-
 
 -- 5. Workspace Assignments
 local workspace_rules = {
@@ -53,21 +50,21 @@ for _, rule in ipairs(workspace_rules) do
     hl.window_rule({ match = { class = rule.class }, workspace = rule.ws })
 end
 
--- 6. Floating Apps (Only specify 'float = true' here; the global rule handles border)
+-- 6. Floating Apps
 hl.window_rule({
     match = { class = "^(dunst|btop|galculator|nwg-look|catfish|org\\.pwmt\\.zathura|localsend|nm-connection-editor|com.moonlight_stream.Moonlight|super-enter|nmtui|org\\.pulseaudio\\.pavucontrol|mpv|imv|tnywfi.py|tnywfi)$" },
     float = true
 })
 
 -- 7. Complex Floating Apps (Positions/Sizes)
-hl.window_rule({ match = { class = "hyprland-run" }, move = "20 monitor_h-120", float = true })
+hl.window_rule({ match = { class = "hyprland-run" }, float = true, move = "20 monitor_h-120" })
 hl.window_rule({ match = { class = "^(super-enter)$" }, float = true, pin = true })
-hl.window_rule({ match = { class = "^(nmtui|org\\.pulseaudio\\.pavucontrol)$" }, size = { 600, 566 }, move = { 1311, 45 }, float = true, pin = true })
-hl.window_rule({ match = { class = "^(io\\.github\\.kaii_lb\\.Overskride)$" }, size = { 942, 616 }, move = { 969, 45 }, float = true, pin = true })
-hl.window_rule({ match = { class = "^(xdg-desktop-portal-gtk)$" }, size = { 942, 504 }, float = true })
-hl.window_rule({ match = { class = "^(nwg-displays)$" }, size = { 916, 472 }, move = { 995, 45 }, float = true, pin = true })
-hl.window_rule({ match = { class = "^(tnywfi)$" }, size = { 480, 450 }, move = { 1430, 45 }, float = true, pin = true })
-hl.window_rule({ match = { class = "^(super-shift-enter)$" }, size = { 1884, 72 }, move = { 18, 990 }, float = true, pin = true })
+hl.window_rule({ match = { class = "^(nmtui|org\\.pulseaudio\\.pavucontrol)$" }, float = true, pin = true, size = { 600, 566 }, move = { 1311, 45 } })
+hl.window_rule({ match = { class = "^(io\\.github\\.kaii_lb\\.Overskride)$" },   float = true, pin = true, size = { 942, 616 }, move = { 969, 45 } })
+hl.window_rule({ match = { class = "^(nwg-displays)$" },                         float = true, pin = true, size = { 916, 472 }, move = { 995, 45 } })
+hl.window_rule({ match = { class = "^(tnywfi)$" },                               float = true, pin = true, size = { 480, 450 }, move = { 1430, 45 } })
+hl.window_rule({ match = { class = "^(super-shift-enter)$" },                    float = true, pin = true, size = { 1884, 72 }, move = { 18, 990 } })
+hl.window_rule({ match = { class = "^(xdg-desktop-portal-gtk)$" },               float = true, size = { 942, 504 } })
 
 -- 8. Modal and Dialog Catch-all
 hl.window_rule({ match = { modal = true }, float = true })

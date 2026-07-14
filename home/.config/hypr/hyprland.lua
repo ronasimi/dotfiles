@@ -31,24 +31,32 @@ require("autostart")
 require("plugins")
 require("functions")
 
----------------------
----- MY PROGRAMS ----
----------------------
+---------------------------------
+---- VARIABLES & HELPERS     ----
+---------------------------------
+local mainMod     = "SUPER"
 local terminal    = "uwsm app -- kitty --class 'super-enter'"
 local fileManager = "uwsm app -- thunar"
-local menu = "pkill fuzzel || uwsm app -- walker"
+local menu        = "uwsm app -- walker"
+
+local function run_in_ws(ws, cmd)
+    return function()
+        hl.dispatch(hl.dsp.focus({ workspace = ws }))
+        hl.dispatch(hl.dsp.exec_cmd("uwsm app -- " .. cmd))
+    end
+end
+
 ----------------------------------------
 ---- GLOBAL CONFIGURATION BATCHING  ----
 ----------------------------------------
--- Batched into a single API call for faster initialization
 hl.config({
     general    = {
         gaps_in              = 9,
         gaps_out             = { top = 18, left = 18, right = 18, bottom = 18 },
-        border_size          = 0,           -- Set this to 1 globally
+        border_size          = 0,
         col                  = {
-            active_border   = "rgba(00000000)", -- Let functions.lua handle this
-            inactive_border = "rgba(00000000)", -- Keep inactive transparent
+            active_border   = "rgba(00000000)",
+            inactive_border = "rgba(00000000)",
         },
         resize_on_border     = true,
         hover_icon_on_border = true,
@@ -78,7 +86,8 @@ hl.config({
             passes = 3,
             noise = 0.0234,
             popups = true,
-            special = true },
+            special = true 
+        },
     },
     animations = { enabled = true },
     dwindle    = { preserve_split = true, force_split = 2 },
@@ -106,90 +115,83 @@ hl.config({
 -----------------------
 hl.curve("fluentDecel", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.0 } } })
 hl.curve("fluentAccel", { type = "bezier", points = { { 0.3, 0.0 }, { 0.8, 0.15 } } })
-
--- 1g Constant Acceleration Curve (y = x^2)
 hl.curve("oneGravity", { type = "bezier", points = { { 0.333, 0.0 }, { 0.667, 0.333 } } })
-
--- Ultra-fast ease-out for magnetic snapping
 hl.curve("snap", { type = "bezier", points = { { 0.1, 1.0 }, { 0.1, 1.0 } } })
 
--- Global fallback
 hl.animation({ leaf = "global", enabled = true, speed = 3.5, bezier = "fluentDecel" })
-
--- 1. BACKGROUND LAYER: Workspaces (Horizontal sweeps)
 hl.animation({ leaf = "workspaces", enabled = true, speed = 1.95, bezier = "oneGravity", style = "slide fade" })
-
--- 2. MIDDLE LAYER: Windows
--- Snapping windows in and moving them extremely quickly (1.5 = 150ms)
 hl.animation({ leaf = "windowsIn", enabled = true, speed = 1.5, bezier = "snap", style = "popin 85%" })
--- Pure fade out: Removing the 'style' parameter dissolves the window in place (2.5 = 250ms)
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.5, bezier = "fluentAccel", style = "popin 15%" })
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 1.5, bezier = "snap" })
-
--- Scratchpad (Vertical drop/lift)
--- Speed set to exactly 1.89 to match 188.5ms 1g fall time
 hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 1.89, bezier = "oneGravity", style = "slide top fade" })
 hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 1.89, bezier = "oneGravity", style = "slide top fade" })
-
--- 3. TOP LAYER: UI Overlays & Borders
 hl.animation({ leaf = "border", enabled = true, speed = 3, bezier = "fluentDecel" })
-
--- Standard Fades
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 3, bezier = "fluentDecel" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
 hl.animation({ leaf = "fadeIn", enabled = true, speed = 3, bezier = "fluentDecel" })
 hl.animation({ leaf = "fadeOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
 
--------------------
----- GESTURES  ----
--------------------
+-----------------------------
+---- CUSTOM ACTIONS/GESTURES ----
+-----------------------------
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 hl.gesture({ fingers = 3, direction = "down", action = "special", workspace_name = "scratchpad" })
--- Hyprexpose
 hl.gesture({
     fingers = 3,
     direction = "up",
     action = function()
-        hl.exec_cmd(
-            "pkill -SIGUSR1 hyprexpose &")
+        hl.exec_cmd("pkill -SIGUSR1 hyprexpose &")
     end
 })
 
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
-local mainMod = "SUPER"
 
--- Core
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + X", hl.dsp.window.close())
-hl.bind(mainMod .. " + SHIFT + X",
-    hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
-hl.bind(mainMod .. " + SHIFT + R",
-    hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Restarting System...' --post-cmd 'systemctl reboot']]))
-hl.bind(mainMod .. " + SHIFT + P",
-    hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Powering Off...' --post-cmd 'systemctl poweroff']]))
+-- System & Power
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
+hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Restarting System...' --post-cmd 'systemctl reboot']]))
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Powering Off...' --post-cmd 'systemctl poweroff']]))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("systemctl suspend"))
+hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("dunstctl history-pop"))
+
+-- Lid Switches
+hl.bind("switch:off:Lid Switch", hl.dsp.dpms({ action = "enable" }), { locked = true })
+hl.bind("switch:on:Lid Switch", function()
+    hl.dispatch(hl.dsp.exec_cmd("loginctl lock-session"))
+    hl.timer(function() 
+        hl.dispatch(hl.dsp.dpms({ action = "disable" })) 
+    end, { timeout = 500, type = "oneshot" })
+end, { locked = true })
+
+-- Core Launchers
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))
+hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty --class 'super-shift-enter'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + SPACE", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
+
+-- Window Management
+hl.bind(mainMod .. " + X", hl.dsp.window.close())
+hl.bind(mainMod .. " + SPACE", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+hl.bind("ALT + TAB", hl.dsp.exec_cmd("pkill -SIGUSR1 hyprexpose &"))
 
--- Focus and Window Movement
+-- Window Focus & Movement
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
-hl.bind("ALT + TAB", hl.dsp.exec_cmd("pkill -SIGUSR1 hyprexpose &"))
 hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
 
--- Mouse
+-- Mouse Window Management
 hl.bind(mainMod .. " + mouse:272", hl.dsp.exec_cmd("hyprctl keyword dwindle:smart split 1"), { mouse = true })
 hl.bind(mainMod .. " + mouse:272", hl.dsp.exec_cmd("hyprctl keyword dwindle:smart split 0"), { release = true })
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
@@ -201,14 +203,12 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
--- Special Workspace (Scratchpad)
+
 hl.bind(mainMod .. " + GRAVE", hl.dsp.workspace.toggle_special("scratchpad"))
 hl.bind(mainMod .. " + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special:scratchpad" }))
--- Workspace Back-and-Forth
 hl.bind(mainMod .. " + TAB", hl.dsp.focus({ workspace = "previous" }))
 hl.bind(mainMod .. " + Next", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + Prior", hl.dsp.focus({ workspace = "e-1" }))
-
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 
@@ -221,23 +221,7 @@ hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"), { locke
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { locked = true, repeating = true })
 hl.bind("XF86Display", hl.dsp.exec_cmd("uwsm app -- nwg-displays"))
 hl.bind("XF86Favorites", hl.dsp.exec_cmd("uwsm app -- localsend"))
-
--- Lock and Lid
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
-
--- Lid Open: Turn screen on natively
-hl.bind("switch:off:Lid Switch", hl.dsp.dpms({ action = "enable" }), { locked = true })
-
--- Lid Close: Lock the session immediately, then natively turn off the display after a 1000ms delay
-hl.bind("switch:on:Lid Switch", function()
-    -- 1. Immediately trigger the lock screen
-    hl.dispatch(hl.dsp.exec_cmd("loginctl lock-session"))
-    
-    -- 2. Wait 1000ms for hyprlock to grab the blur screenshot, then disable DPMS
-    hl.timer(function() 
-        hl.dispatch(hl.dsp.dpms({ action = "disable" })) 
-    end, { timeout = 500, type = "oneshot" })
-end, { locked = true })
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
 
 -- Screenshots
 hl.bind("PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast save screen"))
@@ -246,21 +230,8 @@ hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast copy screen"))
 hl.bind("ALT + SHIFT + PRINT", hl.dsp.exec_cmd("uwsm app -- grimblast copy active"))
 hl.bind("XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast save area"))
 hl.bind("SHIFT + XF86SelectiveScreenshot", hl.dsp.exec_cmd("uwsm app -- grimblast copy area"))
-hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))
-hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty --class 'super-shift-enter'"))
-hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("dunstctl history-pop"))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pkill -SIGUSR1 '^waybar$'"))
 
---------------------------
--- Application Bindings --
---------------------------
-local function run_in_ws(ws, cmd)
-    return function()
-        hl.dispatch(hl.dsp.focus({ workspace = ws }))
-        hl.dispatch(hl.dsp.exec_cmd("uwsm app -- " .. cmd))
-    end
-end
-
+-- Applications
 hl.bind(mainMod .. " + F1", run_in_ws(1, "google-chrome-stable"))
 hl.bind(mainMod .. " + ALT + F1", hl.dsp.exec_cmd("uwsm app -- google-chrome-stable --incognito"))
 hl.bind(mainMod .. " + F2", run_in_ws(2, "kitty -1"))

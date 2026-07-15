@@ -1,2 +1,0 @@
-rd.luks.name=2c0d167a-bdbd-49cc-be5d-499060041891=root rd.luks.options=discard,tpm2-device=auto root=/dev/mapper/root rootflags=subvol=@ rootfstype=btrfs zswap.enabled=0 lsm=landlock,lockdown,yama,integrity,apparmor,bpf apparmor=1 security=apparmor quiet loglevel=3 systemd.show_status=false rd.systemd.show_status=false rw fbcon=nodefer vt.global_cursor_default=0 nvme_core.default_ps_max_latency_us=0 psmouse.synaptics_intertouch=1
-

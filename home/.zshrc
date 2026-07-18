@@ -45,17 +45,17 @@ if [ "$TERM" = "linux" ]; then
 
   # Configure Git integration
   zstyle ':vcs_info:*' enable git
-  zstyle ':vcs_info:git:*' formats '%F{12}git:(%b)%f'
-  zstyle ':vcs_info:git:*' actionformats '%F{12}git:(%b|%a)%f'
+  zstyle ':vcs_info:git:*' formats '%F{blue}git:(%b)%f'
+  zstyle ':vcs_info:git:*' actionformats '%F{blue}git:(%b|%a)%f'
 
   # Hook vcs_info to run before every command
   function tty_precmd() { vcs_info }
   add-zsh-hook precmd tty_precmd
 
   # LEFT PROMPT (Flush left, pure ASCII)
-  # Line 1: [Blue Dir] [Bright Blue Git Status]
-  # Line 2: [Green/Red >]
-  PROMPT=$'%F{blue}%~%f ${vcs_info_msg_0_}\n%(?.%F{green}.%F{red})>%f '
+  # Line 1: [White Dir] [Blue Git Status]
+  # Line 2: [Green >]
+  PROMPT=$'%F{white}%~%f ${vcs_info_msg_0_}\n%F{green}>%f '
 
   # RIGHT PROMPT (Pure ASCII)
   # Shows exit code (! 1) in red if a command fails, plus current time (HH:MM) in cyan

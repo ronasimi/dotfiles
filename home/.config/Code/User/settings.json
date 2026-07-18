@@ -168,5 +168,6 @@
         "https://raw.githubusercontent.com": true,
         "https://*.githubusercontent.com": true
     },
-    "http.systemCertificatesNode": true
+    "http.systemCertificatesNode": true,
+    "editor.acceptSuggestionOnEnter": "off"
 }

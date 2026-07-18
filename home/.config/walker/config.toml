@@ -33,14 +33,14 @@ anchor_right = true
 
 [placeholders]
 # Default placeholder for all providers
-"default" = { input = "󰍉", list = "" }
+"default" = { input = " ", list = "" }
 
 # Provider-specific placeholders
 "desktopapplications" = { input = "Launch App", list = "No Applications" }
 "files" = { input = "Browse Files", list = "No Files Found" }
 "calc" = { input = "Calculate", list = "Enter Expression" }
 "runner" = { input = "Run", list = "No Commands" }
-"websearch" = { input = "󰜏", list = "" }
+"websearch" = { input = " ", list = "" }
 "clipboard" = { input = "Clipboard", list = "Clipboard Empty" }
 "symbols" = { input = "Symbol", list = "No Symbols" }
 "todo" = { input = "Todo", list = "No Todos" }
@@ -73,6 +73,7 @@ default = [
   "menus",
 #  "websearch",
 ]
+
 # Providers shown when search is empty
 empty = []
 # Global max results (can be overridden per provider)
@@ -133,6 +134,7 @@ time_format = "relative" # format for the clipboard item date
 
 [providers.actions]
 # This will be MERGED/OVERWRITTEN with what the user specifies
+
 fallback = [
   { action = "menus:open", label = "open", after = "Nothing" },
   { action = "menus:default", label = "run", after = "Close" },
@@ -140,6 +142,7 @@ fallback = [
   { action = "erase_history", label = "clear hist", bind = "ctrl h", after = "AsyncReload" },
 ]
 dmenu = [{ action = "select", default = true, bind = "Return" }]
+
 providerlist = [
   { action = "activate", default = true, bind = "Return", after = "ClearReload" },
 ]

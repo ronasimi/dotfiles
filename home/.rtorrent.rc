@@ -6,9 +6,6 @@ max_peers = 100
 min_peers_seed = 10
 max_peers_seed = 50
 
-# Maximum number of simultanious uploads per torrent.
-#max_uploads = 10
-
 # Maximum number of simultaneous downloads
 max_downloads_global = 3
 # Maximum number of simultaneous uploads
@@ -21,11 +18,10 @@ upload_rate = 500
 # Default directory to save the downloaded torrents.
 directory = /home/ron/Downloads/torrents
 
-# Default session directory. Make sure you don't run multiple instance
-# of rtorrent using the same session directory. Perhaps using a
-# relative path?
+# Default session directory.
 session = /home/ron/.rtsession
 
+# --- Logging ---
 log.open_file = "rtorrent", /home/ron/.rtsession/rtorrent.log
 log.open_file = "tracker", /home/ron/.rtsession/tracker.log
 log.open_file = "storage", /home/ron/.rtsession/storage.log
@@ -36,65 +32,38 @@ log.add_output = "error", "rtorrent"
 log.add_output = "warn", "rtorrent"
 log.add_output = "notice", "rtorrent"
 log.add_output = "debug", "rtorrent"
-
-# log.add_output = "dht_debug", "tracker"
-#log.add_output = "tracker_debug", "tracker"
-
 log.add_output = "storage_debug", "storage"
 
-# Watch a directory for new torrents, and stop those that have been
-# deleted.
+# --- Scheduling ---
 schedule = watch_directory,5,5,load.start=/home/ron/Downloads/*.torrent
 schedule = untied_directory,5,5,stop_untied=
 schedule = tied_directory,5,5,start_tied=
-
-# Close torrents when diskspace is low.
 schedule = low_diskspace,5,60,close_low_diskspace=100M
 
-# Port range to use for listening.
-network.port_range.set = 49459-49459
-
-# Check hash for finished torrents. Might be usefull until the bug is
-# fixed that causes lack of diskspace not to be properly reported.
+# Check hash for finished torrents
 check_hash = yes
 
-# Set whether the client should try to connect to UDP trackers.
-trackers.use_udp.set = 1
+# --- Network & Protocol ---
+# These must be defined as separate keys to satisfy the strict parser
+protocol.encryption.set = handshake_prefer, stream_prefer
 
-# Encryption options, set to none (default) or any combination of the following:
-# allow_incoming, try_outgoing, require, require_RC4, enable_retry, prefer_plaintext
-encryption = allow_incoming,try_outgoing,enable_retry
-
-# Enable DHT support for trackerless torrents or when all trackers are down.
-dht.mode.set = auto
-
-# Enable peer exchange (for torrents not marked private)
+network.listen.port.set = 6900
+dht.override_port.set = 6901
 protocol.pex.set = yes
 
-# Sets the title color
+# --- UI Colors ---
 ui.color.title.set = "bold black on bright white"
-# Sets the footer color
 ui.color.footer.set = "bold black on white"
-# Sets the focus color. The other color settings take precedence over this, so normally it's just an attribute
 ui.color.focus.set = "reverse"
-# The default label color
 ui.color.label.set = ""
-# If the torrent is complete, active and not uploading data
 ui.color.complete.set = "green"
-# If the torrent is complete, active and uploading data
 ui.color.seeding.set = "blue"
-# If the torrent is complete and not active
 ui.color.stopped.set = "red"
-# If the torrent is incomplete, active and not downloading data
 ui.color.queued.set = "dim yellow"
-# If the torrent is incomplete, active and downloading data
 ui.color.leeching.set = "bright yellow"
-# If the torrent is incomplete and not active
 ui.color.incomplete.set = "bright red"
-# Colors the odd rows
 ui.color.odd.set = "bold"
-# Colors the even rows
 ui.color.even.set = ""
 
-# Send a desktop notification for each completed torrent via notify-send
-method.set_key = event.download.finished,notify_me,"execute=notify-send,Torrent Finished,$d.name="
+# --- Notifications ---
+method.set_key = event.download.finished,notify_me,"execute=/usr/bin/notify-send,Torrent Finished,$d.name="

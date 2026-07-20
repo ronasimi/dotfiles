@@ -41,7 +41,7 @@ select_border = 1
 [colors]
 
 # Full-screen dim overlay drawn behind all workspace cards.
-background = "#0000001a"
+background = "#00000033"
 
 # Workspace card background fill.
 card = "#27272773"

@@ -27,7 +27,7 @@ hl.layer_rule({
     match     = { namespace = "^(walker)$" },
     animation = "fade",
     blur      = true,
-        ignore_alpha = 0.2,
+    ignore_alpha = 0.2,
 
 })
 

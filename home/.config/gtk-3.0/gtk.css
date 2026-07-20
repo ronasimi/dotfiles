@@ -34,7 +34,7 @@
   /* --- Base Window Transparency --- */
   window.thunar,
   window.thunar .dialog-vbox {
-    background-color: rgba(39, 39, 39, 1);
+    background-color: rgba(39, 39, 39, 0.95);
   }
 
   /* --- Main View --- */
@@ -42,7 +42,7 @@
     background-color: #2e2e2e;
     border-radius: 9px;
     /* TRBL: 6px top, 9px right, 6px bottom, 6px left */
-    margin: 0px 18px 0px 0px;
+    margin: 0px 9px 0px 0px;
     border: 1px solid rgba(0, 0, 0, 0.2);
   }
 
@@ -52,7 +52,7 @@
   }
 
   menu {
-    background-color: rgba(39, 39, 39, 0.9);
+    background-color: rgba(39, 39, 39, 0.95);
     border: 1px solid #1d1d1d;
   }
 

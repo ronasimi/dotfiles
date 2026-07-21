@@ -8,8 +8,8 @@
 --   /::::\    \                |::|   |           /::::\   \:::\    \      /::::\   \:::\    \      /:::/    /       /::::\   \:::\    \      /:::/ |::|   |           /:::/    \:::\    \
 --  /::::::\    \   _____       |::|___|______    /::::::\   \:::\    \    /::::::\   \:::\    \    /:::/    /       /::::::\   \:::\    \    /:::/  |::|   | _____    /:::/    / \:::\    \
 -- /:::/\:::\    \ /\    \      /::::::::\    \  /:::/\:::\   \:::\____\  /:::/\:::\   \:::\____\  /:::/    /       /:::/\:::\   \:::\    \  /:::/   |::|   |/\    \  /:::/    /   \:::\ ___\
---/:::/  \:::\    /::\____\    /::::::::::\____\/:::/  \:::\   \:::|    |/:::/  \:::\   \:::|    |/:::/____/       /:::/  \:::\   \:::\____\/:: /    |::|   /::\____\/:::/____/     \:::|    |
---\::/    \:::\  /:::/    /   /:::/~~~~/~~      \::/    \:::\  /:::|____|\::/   |::::\  /:::|____|\:::\    \       \::/    \:::\  /:::/    /\::/    /|::|  /:::/    /\:::\    \     /:::|____|
+-- /:::/  \:::\    /::\____\    /::::::::::\____\/:::/  \:::\   \:::|    |/:::/  \:::\   \:::|    |/:::/____/       /:::/  \:::\   \:::\____\/:: /    |::|   /::\____\/:::/____/     \:::|    |
+-- \::/    \:::\  /:::/    /   /:::/~~~~/~~      \::/    \:::\  /:::|____|\::/   |::::\  /:::|____|\:::\    \       \::/    \:::\  /:::/    /\::/    /|::|  /:::/    /\:::\    \     /:::|____|
 -- \/____/ \:::\/:::/    /   /:::/    /          \/_____/\:::\/:::/    /  \/____|:::::\/:::/    /  \:::\    \       \/____/ \:::\/:::/    /  \/____/ |::| /:::/    /  \:::\    \   /:::/    /
 --          \::::::/    /   /:::/    /                    \::::::/    /         |:::::::::/    /    \:::\    \               \::::::/    /           |::|/:::/    /    \:::\    \ /:::/    /
 --           \::::/    /   /:::/    /                      \::::/    /          |::|\::::/    /      \:::\    \               \::::/    /            |::::::/    /      \:::\    /:::/    /
@@ -65,18 +65,18 @@ hl.config({
         dim_inactive     = false,
         shadow           = {
             enabled        = true,
-            range          = 50,         -- Wider spread for a softer, more diffuse ambient shadow
-            scale          = 0.97,       -- Pulls the shadow slightly inward to prevent harsh top-edge bleeding
-            render_power   = 4,          -- Smoothest falloff gradient (ranges 1-4)
-            color          = 0x77000000, -- Deep but transparent black for the active window
-            color_inactive = 0x22000000, -- Very faint ambient shadow for background windows
-            offset         = "0 12",     -- A natural, direct overhead light offset
+            range          = 24,         -- Balanced spread for performance
+            scale          = 0.97,
+            render_power   = 3,
+            color          = 0x77000000,
+            color_inactive = 0x22000000,
+            offset         = "0 12",
         },
         dim_special      = 0.1,
         blur             = {
             enabled = true,
             size = 3,
-            passes = 3,
+            passes = 2,                 -- Reduced pass count for GPU efficiency
             noise = 0.0234,
             popups = true,
             special = true
@@ -117,8 +117,7 @@ hl.animation({ leaf = "windowsIn", enabled = true, speed = 1.5, bezier = "snap",
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.5, bezier = "fluentAccel", style = "popin 15%" })
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 1.5, bezier = "snap" })
 hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 1.89, bezier = "oneGravity", style = "slide top fade" })
-hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 1.89, bezier = "oneGravity", style =
-"slide top fade" })
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 1.89, bezier = "oneGravity", style = "slide top fade" })
 hl.animation({ leaf = "border", enabled = true, speed = 3, bezier = "fluentDecel" })
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 3, bezier = "fluentDecel" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
@@ -134,7 +133,9 @@ hl.gesture({
     fingers = 3,
     direction = "up",
     action = function()
-        hl.exec_cmd("pkill -SIGUSR1 hyprexpose &")
+        if hl.plugin.hymission ~= nil then
+            hl.plugin.hymission.toggle()
+        end
     end
 })
 
@@ -176,7 +177,6 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
-hl.bind("ALT + TAB", hl.dsp.exec_cmd("pkill -SIGUSR1 hyprexpose &"))
 
 -- Window Focus & Movement
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
@@ -203,7 +203,15 @@ end
 
 hl.bind(mainMod .. " + GRAVE", hl.dsp.workspace.toggle_special("scratchpad"))
 hl.bind(mainMod .. " + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special:scratchpad" }))
-hl.bind(mainMod .. " + TAB", hl.dsp.focus({ workspace = "previous" }))
+
+-- Rebound Tab Actions
+hl.bind("ALT + TAB", hl.dsp.focus({ workspace = "previous" }))
+hl.bind(mainMod .. " + TAB", function()
+    if hl.plugin.hymission ~= nil then
+        hl.plugin.hymission.toggle()
+    end
+end)
+
 hl.bind(mainMod .. " + Next", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + Prior", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))

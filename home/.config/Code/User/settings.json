@@ -169,5 +169,8 @@
         "https://*.githubusercontent.com": true
     },
     "http.systemCertificatesNode": true,
-    "editor.acceptSuggestionOnEnter": "off"
+    "editor.acceptSuggestionOnEnter": "off",
+    "[lua]": {
+        "editor.defaultFormatter": "yinfei.luahelper"
+    }
 }

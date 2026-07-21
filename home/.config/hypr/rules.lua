@@ -51,7 +51,7 @@ hl.window_rule({
 })
 
 -- 7. Complex Floating Apps (Positions/Sizes)
-hl.window_rule({ match = { class = "hyprland-run" }, float = true, move = "20 monitor_h-120" })
+hl.window_rule({ match = { class = "hyprland-run" }, float = true, move = { 9, 45 } })
 hl.window_rule({ match = { class = "^(super-enter)$" }, float = true, pin = true })
 hl.window_rule({ match = { class = "^(nmtui|org\\.pulseaudio\\.pavucontrol)$" }, float = true, pin = true, size = { 600, 566 }, move = { 1311, 45 } })
 hl.window_rule({ match = { class = "^(io\\.github\\.kaii_lb\\.Overskride)$" },   float = true, pin = true, size = { 942, 616 }, move = { 969, 45 } })

@@ -169,6 +169,7 @@ hl.bind(mainMod .. " + ALT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))
 hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty --class 'super-shift-enter'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("uwsm app -- hyprland-run"))
 
 -- Window Management
 hl.bind(mainMod .. " + X", hl.dsp.window.close())

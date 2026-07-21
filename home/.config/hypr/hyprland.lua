@@ -65,18 +65,18 @@ hl.config({
         dim_inactive     = false,
         shadow           = {
             enabled        = true,
-            range          = 24,         -- Balanced spread for performance
-            scale          = 0.97,
-            render_power   = 3,
-            color          = 0x77000000,
-            color_inactive = 0x22000000,
-            offset         = "0 12",
+            range          = 20,
+            scale          = 0.98,
+            render_power   = 4,
+            color          = 0x55000000,
+            color_inactive = 0x00000000, -- Fully transparent to disable shadows on inactive windows
+            offset         = "0 8",
         },
         dim_special      = 0.1,
         blur             = {
             enabled = true,
             size = 3,
-            passes = 2,                 -- Reduced pass count for GPU efficiency
+            passes = 3, -- Reduced pass count for GPU efficiency
             noise = 0.0234,
             popups = true,
             special = true
@@ -117,7 +117,8 @@ hl.animation({ leaf = "windowsIn", enabled = true, speed = 1.5, bezier = "snap",
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.5, bezier = "fluentAccel", style = "popin 15%" })
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 1.5, bezier = "snap" })
 hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 1.89, bezier = "oneGravity", style = "slide top fade" })
-hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 1.89, bezier = "oneGravity", style = "slide top fade" })
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 1.89, bezier = "oneGravity", style =
+"slide top fade" })
 hl.animation({ leaf = "border", enabled = true, speed = 3, bezier = "fluentDecel" })
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 3, bezier = "fluentDecel" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })

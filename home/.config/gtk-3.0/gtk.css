@@ -39,11 +39,11 @@
 
   /* --- Main View --- */
   .thunar .standard-view {
-    background-color: #2e2e2e;
+    background-color: rgba(39, 39, 39, 1);
     border-radius: 9px;
     /* TRBL: 6px top, 9px right, 6px bottom, 6px left */
     margin: 0px 9px 0px 0px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: none;
   }
 
   /* --- Menus & Menubar --- */

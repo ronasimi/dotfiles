@@ -65,12 +65,12 @@ hl.config({
         dim_inactive     = false,
         shadow           = {
             enabled        = true,
-            range          = 20,
-            scale          = 0.98,
-            render_power   = 4,
-            color          = 0x55000000,
-            color_inactive = 0x00000000, -- Fully transparent to disable shadows on inactive windows
-            offset         = "0 8",
+            range          = 18,
+            scale          = 1.0,
+            render_power   = 2,
+            color          = 0x40000000, -- Exactly 25% opacity
+            color_inactive = 0x00000000,
+            offset         = "0 4",
         },
         dim_special      = 0.1,
         blur             = {
@@ -106,24 +106,37 @@ hl.config({
 -----------------------
 ----  ANIMATIONS   ----
 -----------------------
-hl.curve("fluentDecel", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.0 } } })
-hl.curve("fluentAccel", { type = "bezier", points = { { 0.3, 0.0 }, { 0.8, 0.15 } } })
-hl.curve("oneGravity", { type = "bezier", points = { { 0.333, 0.0 }, { 0.667, 0.333 } } })
-hl.curve("snap", { type = "bezier", points = { { 0.1, 1.0 }, { 0.1, 1.0 } } })
+-- Synchronized Spring Physics (Fast & Responsive)
 
-hl.animation({ leaf = "global", enabled = true, speed = 3.5, bezier = "fluentDecel" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 1.95, bezier = "oneGravity", style = "slide fade" })
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 1.5, bezier = "snap", style = "popin 85%" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.5, bezier = "fluentAccel", style = "popin 15%" })
-hl.animation({ leaf = "windowsMove", enabled = true, speed = 1.5, bezier = "snap" })
-hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 1.89, bezier = "oneGravity", style = "slide top fade" })
-hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 1.89, bezier = "oneGravity", style =
-"slide top fade" })
-hl.animation({ leaf = "border", enabled = true, speed = 3, bezier = "fluentDecel" })
-hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 3, bezier = "fluentDecel" })
-hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
-hl.animation({ leaf = "fadeIn", enabled = true, speed = 3, bezier = "fluentDecel" })
-hl.animation({ leaf = "fadeOut", enabled = true, speed = 2.5, bezier = "fluentAccel" })
+-- Responsive Spring (Response 0.45, Damping Fraction 0.825)
+-- Unified for in/out/move so they perfectly sync during layout changes
+hl.curve("fast_window_spring", { type = "spring", mass = 1, stiffness = 194.9, dampening = 23.0 }) 
+
+-- Workspaces are critically damped for rapid sliding (Response 0.35, Damping 1.0)
+hl.curve("workspace_slide", { type = "spring", mass = 1, stiffness = 322.5, dampening = 35.9 }) 
+
+-- Smooth Ease-In-Out for layer fades
+hl.curve("smooth_ease", { type = "bezier", points = { { 0.42, 0.0 }, { 0.58, 1.0 } } })
+
+-- Speeds reduced to 4 to match the faster spring response
+hl.animation({ leaf = "global", enabled = true, speed = 4, spring = "fast_window_spring" })
+
+-- Workspaces & Special Workspaces
+hl.animation({ leaf = "workspaces", enabled = true, speed = 4, spring = "workspace_slide", style = "slide fade" })
+hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 4, spring = "workspace_slide", style = "slide top fade" })
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 4, spring = "workspace_slide", style = "slide top fade" })
+
+-- Window Operations (All synced to exact same curve and speed)
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 4, spring = "fast_window_spring", style = "popin 85%" })
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 4, spring = "fast_window_spring" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 4, spring = "fast_window_spring", style = "popin 80%" }) 
+
+-- Fades & Borders
+hl.animation({ leaf = "border", enabled = true, speed = 3, bezier = "smooth_ease" })
+hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 2, bezier = "smooth_ease" })
+hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 2, bezier = "smooth_ease" })
+hl.animation({ leaf = "fadeIn", enabled = true, speed = 2, bezier = "smooth_ease" })
+hl.animation({ leaf = "fadeOut", enabled = true, speed = 2, bezier = "smooth_ease" })
 
 -----------------------------
 ---- CUSTOM ACTIONS/GESTURES ----

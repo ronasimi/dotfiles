@@ -59,7 +59,7 @@ hl.window_rule({ match = { class = "^(io\\.github\\.kaii_lb\\.Overskride)$" },  
 hl.window_rule({ match = { class = "^(nwg-displays)$" },                         float = true, pin = true, size = { 916, 472 }, move = { 995, 45 } })
 hl.window_rule({ match = { class = "^(tnywfi)$" },                               float = true, pin = true, size = { 480, 450 }, move = { 1430, 45 } })
 hl.window_rule({ match = { class = "^(super-shift-enter)$" },                    float = true, pin = true, size = { 1884, 72 }, move = { 18, 990 } })
-hl.window_rule({ match = { class = "^(mpv)$" },                                  float = true, pin = true, opaque = true, no_shadow = true, keep_aspect_ratio = true })
+hl.window_rule({ match = { class = "^(mpv)$" },                                  float = true, pin = true, opaque = true, no_shadow = true, keep_aspect_ratio = true, idle_inhibit = always })
 hl.window_rule({ match = { class = "^(xdg-desktop-portal-gtk)$" },               float = true, size = { 942, 504 } })
 
 -- 8. Modal and Dialog Catch-all

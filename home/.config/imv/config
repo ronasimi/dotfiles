@@ -13,6 +13,7 @@ suppress_default_binds = true
 
 [binds]
 # Define some key bindings
+<Escape> = quit
 q = quit
 y = exec echo working!
 

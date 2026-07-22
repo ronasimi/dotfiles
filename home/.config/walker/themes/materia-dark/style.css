@@ -8,6 +8,15 @@
       all: unset;
 }
 
+window {
+      background: transparent;
+}
+
+#Window, window, window.background {
+      background-color: transparent;
+      box-shadow: none;
+}
+
 /* Force hide and collapse all image widgets and icon text in list items */
 .item-image,
 .item-image-text,
@@ -19,6 +28,7 @@
       margin: 0px !important;
       padding: 0px !important;
       opacity: 0;
+      border-radius: 9px;
 }
 
 /* Window wrapper */
@@ -69,7 +79,8 @@ scrollbar { opacity: 0; }
 
 #box {
       width: 600px;
-      height: 48px;
+      height: 36px;
+      border-radius: 9px;
 }
 
 /* Structural crush on dormant labels */

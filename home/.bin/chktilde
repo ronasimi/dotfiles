@@ -1,0 +1,4 @@
+#!/bin/bash
+
+tmux -L tilde attach -t tilde
+#tmux attach -t rt

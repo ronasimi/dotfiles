@@ -55,7 +55,7 @@ hl.config({
         rounding         = 9,
         rounding_power   = 2,
         active_opacity   = 1.0,
-        inactive_opacity = 0.90,
+        inactive_opacity = 0.95,
         dim_inactive     = false,
         shadow           = {
             enabled        = true,

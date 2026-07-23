@@ -222,12 +222,35 @@ bindkey "eOF" end-of-line
 bindkey "e[H" beginning-of-line
 bindkey "e[F" end-of-line
 bindkey '^i' expand-or-complete-prefix
+bindkey -M vicmd "^[[2~" vi-insert
+bindkey -M viins "^[[2~" vi-cmd-mode
 
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   function zle-line-init () { printf '%s' "${terminfo[smkx]}" }
   function zle-line-finish () { printf '%s' "${terminfo[rmkx]}" }
   zle -N zle-line-init
   zle -N zle-line-finish
+fi
+
+if [[ "$TERM" == "xterm-kitty" || -n "$KITTY_PID" \
+      || "$TERM" == "alacritty" || -n "$ALACRITTY_LOG" \
+      || -n "$ITERM_SESSION_ID" || -n "$WEZTERM_PANE" \
+      || "$TERM" == "foot" || "$TERM" == "foot-extra" \
+      || "$TERM" == "kmscon" || "$TERM" == "xterm-256color" ]]; then
+
+    function zle-keymap-select() {
+        if [[ ${KEYMAP} == vicmd ]]; then
+            echo -ne "\e[6 q"
+        else
+            echo -ne "\e[2 q"
+        fi
+    }
+    zle -N zle-keymap-select
+
+    function zle-line-init() {
+        echo -ne "\e[2 q"
+    }
+    zle -N zle-line-init
 fi
 
 # INTEGRATIONS (FZF, THEFUCK, ZOXIDE, PKGFILE)

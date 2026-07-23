@@ -1,0 +1,16 @@
+[Unit]
+Description=tilde overview
+After=network.target
+
+[Service]
+Type=forking
+ExecStartPre=/usr/bin/bash -c "if test -e ~/.session/rtorrent.lock && test -z $(pidof rtorrent); then rm -f ~/.session/rtorrent.lock; fi"
+ExecStartPre=-/usr/bin/tmux -L tilde kill-server
+
+ExecStart=/usr/bin/bash -c '/usr/bin/tmux -L tilde new-session -s tilde -n rtorrent -d "rtorrent" && /usr/bin/tmux -L tilde split-window -h -t tilde:rtorrent "btop" && /usr/bin/tmux -L tilde split-window -v -t tilde:rtorrent.1 "zsh"'
+
+ExecStop=/usr/bin/bash -c "/usr/bin/tmux -L tilde send-keys -t tilde:rtorrent.0 C-q; while pidof rtorrent > /dev/null; do echo stopping rtorrent...; sleep 1; done"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

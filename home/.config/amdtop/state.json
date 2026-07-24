@@ -1,0 +1,8 @@
+{
+  "cpu": false,
+  "gpu": false,
+  "npu": false,
+  "processes": false,
+  "theme": "mine",
+  "block_style": 4
+}

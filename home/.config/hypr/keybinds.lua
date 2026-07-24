@@ -73,6 +73,7 @@ hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left" })
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
+hl.bind(mainMod .. " + SLASH", hl.dsp.layout("togglesplit"))
 
 -- Mouse Window Management
 hl.bind(mainMod .. " + mouse:272", hl.dsp.exec_cmd("hyprctl keyword dwindle:smart split 1"), { mouse = true })

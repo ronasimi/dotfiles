@@ -1,0 +1,70 @@
+schema = 1
+name = "mine"
+
+[palette]
+bg = "#272727"
+fg = "#c3c3c3"
+accent = "#8ab4f8"
+muted = "#5d5d5d"
+green = "#90a959"
+yellow = "#f4bf75"
+red = "#ac4142"
+
+[ui]
+background = "$bg"
+foreground = "$fg"
+title = "$fg"
+highlight = "$accent"
+selected_background = "#1d1d1d"
+selected_foreground = "$fg"
+inactive = "$muted"
+graph_text = "$fg"
+misc = "$accent"
+
+[stats]
+clock = "$accent"
+power = "$yellow"
+fan = "$fg"
+bandwidth = "$accent"
+
+[borders]
+cpu = "$muted"
+gpu = "$accent"
+memory = "$muted"
+npu = "#aa759f"
+processes = "$muted"
+
+[gradients.temperature]
+stops = [
+  { at = 0.0, color = "$green" },
+  { at = 0.65, color = "$yellow" },
+  { at = 1.0, color = "$red" },
+]
+
+[gradients.cpu]
+stops = [
+  { at = 0.0, color = "$green" },
+  { at = 1.0, color = "$red" },
+]
+
+[gradients.gpu]
+stops = [
+  { at = 0.0, color = "#75b5aa" },
+  { at = 0.5, color = "$yellow" },
+  { at = 1.0, color = "$red" },
+]
+
+[gradients.memory]
+stops = [{ at = 0.0, color = "$accent" }]
+
+[gradients.npu]
+stops = [
+  { at = 0.0, color = "#aa759f" },
+  { at = 1.0, color = "$red" },
+]
+
+[gradients.process]
+stops = [
+  { at = 0.0, color = "$green" },
+  { at = 1.0, color = "$red" },
+]

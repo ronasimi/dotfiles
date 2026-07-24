@@ -4,12 +4,20 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStartPre=/usr/bin/bash -c "if test -e ~/.session/rtorrent.lock && test -z $(pidof rtorrent); then rm -f ~/.session/rtorrent.lock; fi"
+ExecStartPre=/usr/bin/bash -c 'if test -e ~/.session/rtorrent.lock && test -z "$(pidof rtorrent)"; then rm -f ~/.session/rtorrent.lock; fi'
 ExecStartPre=-/usr/bin/tmux -L tilde kill-server
 
-ExecStart=/usr/bin/bash -c '/usr/bin/tmux -L tilde new-session -s tilde -n rtorrent -d "rtorrent" && /usr/bin/tmux -L tilde split-window -h -t tilde:rtorrent "btop" && /usr/bin/tmux -L tilde split-window -v -t tilde:rtorrent.1 "zsh"'
+# Pane layout sequence:
+# 1. Spawns rtorrent in Pane 0 on a large 240x60 virtual canvas to prevent proportional stretching upon attachment.
+# 2. Splits Pane 0 horizontally (40% width) for btop (Pane 1).
+# 3. Splits btop vertically, sharing space with nvtop (Pane 2).
+# 4. Splits nvtop vertically, sharing space with rustnet (Pane 3).
+# 5. Splits rustnet vertically with -b, injecting ctop above it with exactly 7 lines.
+# 6. Explicitly resizes btop (Pane 1) to exactly 25 lines.
+# 7. Splits original Pane 0 vertically (fixed 4 lines height) for zsh on the bottom left.
+ExecStart=/usr/bin/bash -c '/usr/bin/tmux -L tilde new-session -x 240 -y 60 -s tilde -n tilde -d "rtorrent; /usr/bin/tmux -L tilde kill-session -t tilde" && /usr/bin/tmux -L tilde split-window -h -p 45 "btop" && /usr/bin/tmux -L tilde split-window -v -p 45 "nvtop -i" && /usr/bin/tmux -L tilde split-window -v -p 75 "rustnet" && /usr/bin/tmux -L tilde split-window -v -b -p 35 "ctop" && /usr/bin/tmux -L tilde resize-pane -t tilde:tilde.1 -y 25 && /usr/bin/tmux -L tilde split-window -v -l 12 -t tilde:tilde.0 "zsh"'
 
-ExecStop=/usr/bin/bash -c "/usr/bin/tmux -L tilde send-keys -t tilde:rtorrent.0 C-q; while pidof rtorrent > /dev/null; do echo stopping rtorrent...; sleep 1; done"
+ExecStop=/usr/bin/bash -c '/usr/bin/tmux -L tilde send-keys -t tilde:tilde.0 C-q; while pidof rtorrent > /dev/null; do echo stopping rtorrent...; sleep 1; done'
 Restart=on-failure
 
 [Install]

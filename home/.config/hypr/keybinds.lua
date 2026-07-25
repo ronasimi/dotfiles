@@ -74,6 +74,11 @@ hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" 
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
 hl.bind(mainMod .. " + SLASH", hl.dsp.layout("togglesplit"))
+-- Directional Split Preselect Binds
+hl.bind(mainMod .. " + ALT + left", function() preselect_with_border("l", 0) end)
+hl.bind(mainMod .. " + ALT + right", function() preselect_with_border("r", 180) end)
+hl.bind(mainMod .. " + ALT + up", function() preselect_with_border("u", 90) end)
+hl.bind(mainMod .. " + ALT + down", function() preselect_with_border("d", 270) end)
 
 -- Mouse Window Management
 hl.bind(mainMod .. " + mouse:272", hl.dsp.exec_cmd("hyprctl keyword dwindle:smart split 1"), { mouse = true })
@@ -90,7 +95,11 @@ end
 
 hl.bind(mainMod .. " + GRAVE", hl.dsp.workspace.toggle_special("scratchpad"))
 hl.bind(mainMod .. " + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special:scratchpad" }))
-
+-- Directional Split Preselect Binds
+hl.bind(mainMod .. " + ALT + left", function() preselect_with_border("l", 0) end)
+hl.bind(mainMod .. " + ALT + right", function() preselect_with_border("r", 180) end)
+hl.bind(mainMod .. " + ALT + up", function() preselect_with_border("u", 90) end)
+hl.bind(mainMod .. " + ALT + down", function() preselect_with_border("d", 270) end)
 -- Rebound Tab Actions
 hl.bind("ALT + TAB", hl.dsp.focus({ workspace = "previous" }))
 hl.bind(mainMod .. " + TAB", function()

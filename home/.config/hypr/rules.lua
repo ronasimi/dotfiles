@@ -23,7 +23,7 @@ hl.layer_rule({
     animation    = "fade",
     blur         = true,
     dim_around   = true,
-    ignore_alpha = 0.2,
+    ignore_alpha = 0.1,
 })
 
 -- Workspace Assignments

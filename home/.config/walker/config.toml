@@ -68,26 +68,16 @@ show_actions = ["alt j"]
 default = [
   "desktopapplications",
   "clipboard",
-#  "calc",
-#  "runner",
-  "menus",
-#  "websearch",
 ]
 
 # Providers shown when search is empty
-empty = []
-# Global max results (can be overridden per provider)
-max_results = 50
+empty = [""]
 
 [providers.argument_delimiter]
-# define the argument delimiter per provider
-# runner = " "
 
 [providers.sets]
-# define your own defaults/empty sets of providers
 
 [providers.max_results_provider]
-# define max results per provider in here
 
 [[providers.prefixes]]
 prefix = ";"
@@ -109,10 +99,6 @@ provider = "symbols"
 prefix = "!"
 provider = "todo"
 
-#[[providers.prefixes]]
-#prefix = "%"
-#provider = "bookmarks"
-
 [[providers.prefixes]]
 prefix = "="
 provider = "calc"
@@ -130,11 +116,9 @@ prefix = "$"
 provider = "windows"
 
 [providers.clipboard]
-time_format = "relative" # format for the clipboard item date
+time_format = "relative"
 
 [providers.actions]
-# This will be MERGED/OVERWRITTEN with what the user specifies
-
 fallback = [
   { action = "menus:open", label = "open", after = "Nothing" },
   { action = "menus:default", label = "run", after = "Close" },
@@ -142,7 +126,6 @@ fallback = [
   { action = "erase_history", label = "clear hist", bind = "ctrl h", after = "AsyncReload" },
 ]
 dmenu = [{ action = "select", default = true, bind = "Return" }]
-
 providerlist = [
   { action = "activate", default = true, bind = "Return", after = "ClearReload" },
 ]
@@ -253,7 +236,7 @@ clipboard = [
   { action = "unpin", bind = "ctrl p", after = "AsyncClearReload" },
   { action = "pin", bind = "ctrl p", after = "AsyncClearReload" },
   { action = "edit", bind = "ctrl o" },
-  { action = "localsend", bind = "ctrl l" },
+  { action = "localsend", label = "localsend", bind = "ctrl l" },
 ]
 bookmarks = [
   { action = "save", bind = "Return", after = "AsyncClearReload" },

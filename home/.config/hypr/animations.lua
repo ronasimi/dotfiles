@@ -24,7 +24,7 @@ hl.animation({ leaf = "windowsMove", enabled = true, speed = 4, spring = "fast_w
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 4, spring = "window_spring_out", style = "popin 80%" }) 
 
 -- UI Elements & Fades
-hl.animation({ leaf = "border", enabled = true, speed = 5, bezier = "smooth_ease" })
+hl.animation({ leaf = "border", enabled = true, speed = 4, bezier = "smooth_ease" })
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 2, bezier = "smooth_ease" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 2, bezier = "smooth_ease" })
 hl.animation({ leaf = "fadeIn", enabled = true, speed = 2, bezier = "smooth_ease" })

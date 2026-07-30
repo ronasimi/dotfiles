@@ -1,8 +1,8 @@
-auto_detect_launch_prefix = true
+auto_detect_launch_prefix = false
 before_load = []
 git_on_demand = true
 ignored_providers = ["bitwarden", "bookmarks", "dnfpackages"]
-launch_prefix = ''
+launch_prefix = 'uwsm app -- '
 overload_local_env = false
 terminal_cmd = ''
 

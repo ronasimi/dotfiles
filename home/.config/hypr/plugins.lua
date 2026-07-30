@@ -45,6 +45,25 @@ if hl.plugin.hymission ~= nil then
                 close_button_hover_color = "rgba(f24d47f2)",
                 close_button_glyph_color = "rgba(fffffffa)",
             }
+        },
+        plugin = {
+            hyprgrass = {
+                -- The default sensitivity is probably too low on tablet screens,
+                -- I recommend turning it up to 4.0
+                sensitivity = 1.0,
+
+                -- in milliseconds
+                long_press_delay = 400,
+
+                -- resize windows by long-pressing on window borders and gaps.
+                -- If general:resize_on_border is enabled, general:extend_border_grab_area is
+                -- used for floating windows
+                resize_on_border_long_press = true,
+
+                -- in pixels, the distance from the edge that is considered an edge
+                edge_margin = 10,
+            }
         }
     })
 end
+

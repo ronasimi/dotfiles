@@ -153,3 +153,9 @@ hl.bind(mainMod .. " + T", function()
     hl.dispatch(hl.dsp.focus({ workspace = "special:scratchpad" }))
     hl.dispatch(hl.dsp.exec_cmd("/home/ron/.bin/starttilde && uwsm app -- kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chktilde'"))
 end)
+
+--hyprgrass gestures
+hl.plugin.hyprgrass.gesture {
+    pattern = {kind = "swipe", fingers = 3, direction = "horizontal"},
+    action = "workspace",
+}

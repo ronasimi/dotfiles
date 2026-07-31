@@ -20,11 +20,11 @@ hl.gesture({
         end
     end
 })
---hyprgrass gestures
-hl.plugin.hyprgrass.gesture {
-    pattern = {kind = "swipe", fingers = 3, direction = "horizontal"},
-    action = "workspace",
-}
+-- --hyprgrass gestures
+-- hl.plugin.hyprgrass.gesture {
+--     pattern = {kind = "swipe", fingers = 3, direction = "horizontal"},
+--     action = "workspace",
+-- }
 
 ---------------------
 ---- KEYBINDINGS ----

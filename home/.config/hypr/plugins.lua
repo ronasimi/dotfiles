@@ -38,32 +38,10 @@ if hl.plugin.hymission ~= nil then
                 focus_title_color = "rgba(ffffffff)",
                 focus_hover_thickness = 2,
                 focus_selected_thickness = 4,
-                drag_preview_color = "rgba(29333d47)",
-                drag_outline_color = "rgba(f2f7ffd1)",
-                drag_outline_thickness = 2,
                 close_button_color = "rgba(29292eeb)",
                 close_button_hover_color = "rgba(f24d47f2)",
                 close_button_glyph_color = "rgba(fffffffa)",
             }
-        },
-        plugin = {
-            hyprgrass = {
-                -- The default sensitivity is probably too low on tablet screens,
-                -- I recommend turning it up to 4.0
-                sensitivity = 1.0,
-
-                -- in milliseconds
-                long_press_delay = 400,
-
-                -- resize windows by long-pressing on window borders and gaps.
-                -- If general:resize_on_border is enabled, general:extend_border_grab_area is
-                -- used for floating windows
-                resize_on_border_long_press = true,
-
-                -- in pixels, the distance from the edge that is considered an edge
-                edge_margin = 10,
-            }
         }
     })
 end
-

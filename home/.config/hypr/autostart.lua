@@ -2,7 +2,7 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/ for more details.
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("hyprpm reload -n")
+    hl.exec_cmd("hyprpm reload")
     hl.exec_cmd("uwsm app -- syshud")
     hl.exec_cmd("uwsm app -- thunar --daemon", { workspace = "3 silent" })
 end)

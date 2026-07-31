@@ -11,9 +11,8 @@ fi
 TARGET_FILE=$(realpath "$1")
 
 # 1. Live Apply via IPC FIRST (Instant visual feedback)
-hyprctl hyprpaper preload "$TARGET_FILE" >/dev/null 2>&1
-hyprctl hyprpaper wallpaper "eDP-1,$TARGET_FILE" >/dev/null 2>&1
-hyprctl hyprpaper unload unused >/dev/null 2>&1
+# Uses the modern, unified wallpaper command. Fit mode added to match your config.
+hyprctl hyprpaper wallpaper "eDP-1, $TARGET_FILE, cover" >/dev/null 2>&1
 
 # 2. Offload the slow tasks to the background
 (

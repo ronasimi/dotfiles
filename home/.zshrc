@@ -217,10 +217,10 @@ bindkey "^H"    backward-delete-word
 bindkey "^R" history-incremental-search-backward
 bindkey "${terminfo[khome]}" beginning-of-line
 bindkey "${terminfo[kend]}" end-of-line
-bindkey "eOH" beginning-of-line
-bindkey "eOF" end-of-line
-bindkey "e[H" beginning-of-line
-bindkey "e[F" end-of-line
+bindkey "\eOH" beginning-of-line
+bindkey "\eOF" end-of-line
+bindkey "\e[H" beginning-of-line
+bindkey "\e[F" end-of-line
 bindkey '^i' expand-or-complete-prefix
 bindkey -M vicmd "^[[2~" vi-insert
 bindkey -M viins "^[[2~" vi-cmd-mode

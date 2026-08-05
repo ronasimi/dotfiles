@@ -1,55 +1,84 @@
 #syshud {
-	background: transparent;
+    background: transparent;
 }
 
+/* Base Box */
 #syshud .box_layout {
-	background: rgba(29, 29, 29, 0.45);
-	border-radius: 9px;
-	border: 1px solid #454545;
-	margin: 9px;
-	padding: 6px;
+    background: rgba(30, 30, 30, 0.6);
+    border-radius: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 0px;
+    padding: 0px;
+    min-width: 200px;
+    min-height: 200px;
 }
 
-#syshud scale {
-	margin: 0px;
-	padding: 0px;
-}
+/* Hides the percentage text */
 #syshud label {
-	color: #8ab4f8;
-	font-size: 14px;
+    font-size: 0px; 
+    margin: 0px;
+    padding: 0px;
+    min-height: 0px;
+    min-width: 0px;
 }
 
-/* Scale */
+/* 
+ * 1. SLIDER (Right Side)
+ * margin-top: 27px accounts for the invisible thumb and centers the trough.
+ * margin-bottom: -109px places the layout cursor perfectly at Y=64 for the icon.
+ */
 #syshud scale {
-	padding: 0px;
-	min-height: 5px;
-	min-width: 5px;
-}
-#syshud scale trough {
-	border-radius: 3px;
-	background: rgba(195, 195, 195, 0.15);
-	min-height: 3px;
-	min-width: 3px;
-	padding: 0px;
-}
-#syshud scale.horizontal highlight {
-	border-radius: 0px;
-	min-height: 5px;
-	min-width: 5px;
-	background: #8ab4f8;
-	margin: 0px;
-}
-#syshud scale slider {
-	margin: 0px;
-	background: transparent;
-	min-height: 3px;
-	min-width: 3px;
-	box-shadow: none;
-	padding: 0px;
+    padding: 0px;
+    min-width: 12px;
+    min-height: 130px;
+    margin-top: 27px;
+    margin-bottom: -109px; 
+    transform: translate(45px, 0px);
 }
 
-/* Levels */
+/* Vertical track styling */
+#syshud scale trough {
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    min-width: 12px;
+    min-height: 130px;
+    padding: 0px;
+}
+
+/* Accent Color */
+#syshud scale.vertical highlight,
+#syshud scale highlight {
+    border-radius: 6px;
+    background: #8ab4f8; 
+    min-width: 12px;
+    margin: 0px;
+}
+
+/* Hides the circular thumb handle */
+#syshud scale slider {
+    background: transparent;
+    min-width: 0px;
+    min-height: 0px;
+    box-shadow: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* 
+ * 2. ICON (Left Side)
+ * Zero bottom margin keeps the total layout footprint under 200px, 
+ * ensuring the window stays a perfect square.
+ */
+#syshud image {
+    color: #ffffff;
+    min-width: 72px;
+    min-height: 72px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    transform: translate(-17px, 0px);
+}
+
 #syshud .muted {
-	color: #5d5d5d;
-	font-size: 14px;
+    color: #5d5d5d;
 }

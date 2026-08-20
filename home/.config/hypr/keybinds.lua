@@ -20,11 +20,56 @@ hl.gesture({
         end
     end
 })
--- --hyprgrass gestures
--- hl.plugin.hyprgrass.gesture {
---     pattern = {kind = "swipe", fingers = 3, direction = "horizontal"},
---     action = "workspace",
--- }
+
+---------------------------------
+---- HYPRGRASS TOUCH GESTURES ----
+---------------------------------
+if hl.plugin.hyprgrass ~= nil then
+    -- 3-Finger Horizontal Swipe: Switch Workspaces
+    hl.plugin.hyprgrass.gesture({
+        pattern = { kind = "swipe", fingers = 3, direction = "horizontal" },
+        action = "workspace",
+    })
+    
+    -- 3-Finger Swipe Down: Toggle Scratchpad
+    hl.plugin.hyprgrass.gesture({
+        pattern = { kind = "swipe", fingers = 3, direction = "down" },
+        action = function()
+            hl.dispatch(hl.dsp.workspace.toggle_special("scratchpad"))
+        end,
+    })
+    
+    -- 3-Finger Swipe Up: Toggle Hymission Overview
+    hl.plugin.hyprgrass.gesture({
+        pattern = { kind = "swipe", fingers = 3, direction = "up" },
+        action = function()
+            if hl.plugin.hymission ~= nil then
+                hl.plugin.hymission.toggle()
+            end
+        end,
+    })
+
+    ---------------------------------
+    ---- OPTIONAL: EDGE SWIPES   ----
+    ---------------------------------
+    -- Swipe down from top edge: Toggle Overview (Hymission)
+    hl.plugin.hyprgrass.gesture({
+        pattern = { kind = "edge", origin = "u", direction = "d" },
+        action = function()
+            if hl.plugin.hymission ~= nil then
+                hl.plugin.hymission.toggle()
+            end
+        end,
+    })
+    
+    -- Swipe up from bottom edge: Toggle Scratchpad
+    hl.plugin.hyprgrass.gesture({
+        pattern = { kind = "edge", origin = "d", direction = "u" },
+        action = function()
+            hl.dispatch(hl.dsp.workspace.toggle_special("scratchpad"))
+        end,
+    })
+end
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -74,11 +119,14 @@ hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
+
 hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
+
 hl.bind(mainMod .. " + SLASH", hl.dsp.layout("togglesplit"))
+
 -- Directional Split Preselect Binds
 hl.bind(mainMod .. " + ALT + left", function() preselect_with_border("l", 0) end)
 hl.bind(mainMod .. " + ALT + right", function() preselect_with_border("r", 180) end)
@@ -100,11 +148,7 @@ end
 
 hl.bind(mainMod .. " + GRAVE", hl.dsp.workspace.toggle_special("scratchpad"))
 hl.bind(mainMod .. " + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special:scratchpad" }))
--- Directional Split Preselect Binds
-hl.bind(mainMod .. " + ALT + left", function() preselect_with_border("l", 0) end)
-hl.bind(mainMod .. " + ALT + right", function() preselect_with_border("r", 180) end)
-hl.bind(mainMod .. " + ALT + up", function() preselect_with_border("u", 90) end)
-hl.bind(mainMod .. " + ALT + down", function() preselect_with_border("d", 270) end)
+
 -- Rebound Tab Actions
 hl.bind("ALT + TAB", hl.dsp.focus({ workspace = "previous" }))
 hl.bind(mainMod .. " + TAB", function()

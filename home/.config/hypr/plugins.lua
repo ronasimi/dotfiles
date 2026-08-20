@@ -45,3 +45,18 @@ if hl.plugin.hymission ~= nil then
         }
     })
 end
+
+-- Guard and configure hyprgrass
+if hl.plugin.hyprgrass ~= nil then
+    hl.config({
+        plugin = {
+            hyprgrass = {
+                -- Touch sensitivity scale factor
+                sensitivity = 1.0,
+
+                -- Edge margin in pixels for edge-swipe gestures
+                edge_margin = 16,
+            }
+        }
+    })
+end

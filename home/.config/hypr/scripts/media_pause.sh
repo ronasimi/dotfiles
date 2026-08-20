@@ -1,5 +1,6 @@
 #!/usr/bin/env dash
 # Runs in the background to avoid blocking the compositor lock
+
 rm -f /tmp/active_players
 for p in $(playerctl -l 2>/dev/null); do
     if [ "$(playerctl -p "$p" status 2>/dev/null)" = "Playing" ]; then
@@ -13,6 +14,9 @@ for p in $(playerctl -l 2>/dev/null); do
 done
 
 playerctl -a pause
+
+# Give hyprlock time to spin up before polling to prevent immediate resume
+sleep 1 
 
 # Wait for hyprlock to close before resuming
 while pidof hyprlock > /dev/null; do

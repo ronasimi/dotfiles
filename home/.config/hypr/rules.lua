@@ -47,14 +47,14 @@ hl.window_rule({
 })
 
 -- Complex Floating Apps (Positions/Sizes)
-hl.window_rule({ match = { class = "hyprland-run" },                             float = true, pin = true, opacity = 0.85, no_shadow = true, layer = shell, center = true })
+hl.window_rule({ match = { class = "hyprland-run" },                             float = true, pin = true, opacity = 0.85, no_shadow = true, center = true })
 hl.window_rule({ match = { class = "^(super-enter)$" },                          float = true, pin = true })
 hl.window_rule({ match = { class = "^(nmtui|org\\.pulseaudio\\.pavucontrol)$" }, float = true, pin = true, size = { 600, 566 }, move = { 1311, 45 } })
 hl.window_rule({ match = { class = "^(io\\.github\\.kaii_lb\\.Overskride)$" },   float = true, pin = true, size = { 942, 616 }, move = { 969, 45 } })
 hl.window_rule({ match = { class = "^(nwg-displays)$" },                         float = true, pin = true, size = { 916, 472 }, move = { 995, 45 } })
 hl.window_rule({ match = { class = "^(tnywfi)$" },                               float = true, pin = true, size = { 480, 450 }, move = { 1430, 45 } })
 hl.window_rule({ match = { class = "^(super-shift-enter)$" },                    float = true, pin = true, size = { 1884, 72 }, move = { 18, 990 } })
-hl.window_rule({ match = { class = "^(mpv)$" },                                  float = true, opaque = true, no_shadow = true, keep_aspect_ratio = true, idle_inhibit = always })
+hl.window_rule({ match = { class = "^(mpv)$" },                                  float = true, opaque = true, no_shadow = true, keep_aspect_ratio = true, idle_inhibit = "always" })
 hl.window_rule({ match = { class = "^(xdg-desktop-portal-gtk)$" },               float = true, size = { 942, 504 } })
 
 -- Modal and Dialog Catch-all

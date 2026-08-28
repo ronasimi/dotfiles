@@ -1,0 +1,11 @@
+[Unit]
+Description=Ollama Model Warmup Service (User)
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.bin/ollama-warmup
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target

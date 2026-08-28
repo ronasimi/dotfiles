@@ -1,0 +1,178 @@
+#!/home/ron/.local/share/ai-assist-env/bin/python3
+import subprocess
+import json
+import time
+import os
+import socket
+import threading
+import urllib.request
+import urllib.parse
+import re
+from ddgs import DDGS
+import ollama
+
+# ================= CONFIGURATION =================
+MODEL = "qwen2.5-coder:3b"
+ALBA_PATH = os.path.expanduser("~/.bin/alba-say")
+# =================================================
+
+# Global lock state flag
+is_locked = threading.Event()
+
+def watch_hyprland_lock():
+    """Listens to Hyprland's socket2 event stream for lock/unlock states."""
+    while True:
+        try:
+            xdg_runtime = os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}")
+            instance = os.environ.get("HYPRLAND_INSTANCE_SIGNATURE")
+            if not instance:
+                hip = f"{xdg_runtime}/hypr"
+                if os.path.exists(hip):
+                    dirs = os.listdir(hip)
+                    if dirs:
+                        instance = dirs[0]
+            
+            if not instance:
+                time.sleep(5)
+                continue
+
+            socket_path = f"{xdg_runtime}/hypr/{instance}/.socket2.sock"
+            if not os.path.exists(socket_path):
+                time.sleep(5)
+                continue
+
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as sock:
+                sock.connect(socket_path)
+                f = sock.makefile('r')
+                while True:
+                    line = f.readline()
+                    if not line:
+                        break
+                    if "lockv1" in line or "activatespecial" in line:
+                        if ">>1" in line: # Locked
+                            is_locked.set()
+                        elif ">>0" in line: # Unlocked
+                            is_locked.clear()
+        except Exception:
+            time.sleep(5)
+
+def clean_error_for_search(error_msg: str) -> str:
+    """Removes PIDs, memory addresses, and noise to isolate the core error."""
+    cleaned = re.sub(r'\[\d+\]', '', error_msg)
+    cleaned = re.sub(r'0x[0-9a-fA-F]+', '', cleaned)
+    cleaned = re.sub(r'\b(pid|uid|gid)=\d+\b', '', cleaned, flags=re.IGNORECASE)
+    return cleaned.strip()
+
+def search_arch_wiki(error_msg: str) -> str:
+    """Isolates the core error and searches the Arch Linux Wiki."""
+    core_error = clean_error_for_search(error_msg)
+    query = f"{core_error} Arch Linux"
+    
+    url = f"https://wiki.archlinux.org/api.php?action=query&list=search&srsearch={urllib.parse.quote(query)}&format=json"
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'JournalMonitor/1.0'})
+        with urllib.request.urlopen(req) as response:
+            data = json.loads(response.read().decode())
+            results = data.get("query", {}).get("search", [])
+            if results:
+                title = results[0]["title"]
+                snippet = re.sub(r'<[^>]+>', '', results[0]["snippet"])
+                wiki_url = f"https://wiki.archlinux.org/title/{urllib.parse.quote(title.replace(' ', '_'))}"
+                return f"Arch Wiki Result - Title: {title}\nSnippet: {snippet}\nURL: {wiki_url}"
+    except Exception as e:
+        return f"Wiki search error: {e}"
+    return "No Arch Wiki results found."
+
+def search_web(error_msg: str) -> str:
+    """Isolates the core error and searches the web specifically for Linux fixes."""
+    core_error = clean_error_for_search(error_msg)
+    query = f"{core_error} linux fix error"
+    
+    try:
+        with DDGS() as ddgs:
+            results = list(ddgs.text(query, max_results=2))
+            formatted = [f"Title: {r.get('title')}\nSnippet: {r.get('body')}\nURL: {r.get('href')}" for r in results]
+            return "\n\n".join(formatted) if formatted else "No web results found."
+    except Exception as e:
+        return f"Web search error: {e}"
+
+def notify_and_speak(service_name: str, message: str, url: str):
+    """Triggers a persistent descriptive Dunst notification without icons, places URL at the end, and speaks via alba-say."""
+    notif_title = f"Journal Error: {service_name}"
+    
+    # Raw URL placed strictly at the end for Dunst clickability
+    body = f"{message}\n\n{url}"
+    
+    subprocess.run(["notify-send", "-u", "critical", "-t", "0", "-a", "JournalMonitor", notif_title, body])
+    
+    clean_msg = re.sub(r'https?://[^\s]+', '', message)
+    clean_msg = re.sub(r'[^a-zA-Z0-9 .,!?]', '', clean_msg)
+    tts_text = f"System error detected in service {service_name}. {clean_msg}"
+    
+    if os.path.exists(ALBA_PATH):
+        subprocess.run([ALBA_PATH, "0.85", tts_text])
+
+def process_error(service: str, error_msg: str):
+    print(f"Processing error in {service}: {error_msg}")
+    
+    wiki_data = search_arch_wiki(error_msg)
+    web_data = search_web(error_msg)
+    
+    # Extract the primary URL from search results
+    url_match = re.search(r'URL:\s*(https?://[^\s]+)', wiki_data)
+    if not url_match:
+        url_match = re.search(r'URL:\s*(https?://[^\s]+)', web_data)
+    target_url = url_match.group(1) if url_match else "https://wiki.archlinux.org/"
+    
+    prompt = (
+        f"A systemd journal error occurred in Arch Linux service '{service}':\n"
+        f"\"{error_msg}\"\n\n"
+        f"=== ARCH WIKI RESULTS ===\n{wiki_data}\n\n"
+        f"=== WEB SEARCH RESULTS (Linux Context) ===\n{web_data}\n\n"
+        "Based strictly on the Arch Linux and Linux search results above, provide a very concise summary (2-3 sentences max) of the cause and the fix tailored for Arch Linux. "
+        "Do NOT include any URLs or markdown links in your response."
+    )
+    
+    try:
+        response = ollama.chat(
+            model=MODEL,
+            messages=[{'role': 'user', 'content': prompt}]
+        )
+        llm_reply = response['message']['content'].strip()
+    except Exception as e:
+        print(f"Ollama generation failed: {e}")
+        return
+
+    notify_and_speak(service, llm_reply, target_url)
+
+def monitor_journal():
+    threading.Thread(target=watch_hyprland_lock, daemon=True).start()
+
+    cmd = ["journalctl", "-p", "err", "-f", "-n", "0", "-o", "json"]
+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True)
+    recent_errors = {}
+    
+    for line in iter(process.stdout.readline, ''):
+        if is_locked.is_set():
+            continue
+
+        if not line.strip():
+            continue
+        try:
+            entry = json.loads(line)
+            msg = entry.get("MESSAGE", "")
+            service = entry.get("SYSLOG_IDENTIFIER", entry.get("_SYSTEMD_UNIT", "unknown"))
+            
+            error_key = f"{service}:{msg}"[:50]
+            now = time.time()
+            if error_key in recent_errors and now - recent_errors[error_key] < 3600:
+                continue
+                
+            recent_errors[error_key] = now
+            process_error(service, msg)
+            
+        except json.JSONDecodeError:
+            continue
+
+if __name__ == "__main__":
+    monitor_journal()

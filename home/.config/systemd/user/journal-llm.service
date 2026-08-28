@@ -1,0 +1,12 @@
+[Unit]
+Description=LLM Journald Error Monitor
+After=network-online.target
+
+[Service]
+ExecStart=%h/.bin/journal-monitor
+Restart=always
+RestartSec=10
+Environment="PATH=%h/.bin:/usr/bin:/bin"
+
+[Install]
+WantedBy=default.target

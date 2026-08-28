@@ -8,7 +8,7 @@ window#waybar, button, label {
 
 window#waybar {
     background-color: rgba(29, 29, 29, 0.45);
-    border-bottom: 1px solid alpha(#1d1d1d, 0.9);
+    border-bottom: 1px solid alpha(#1d1d1d, 0.90);
     color: #c3c3c3;
 }
 

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Wait until Ollama's API endpoint is actively responding
+until curl -s http://localhost:11434/api/tags >/dev/null 2>&1; do
+    sleep 1
+done
+
+# Preload your model in the background (adjust model name if needed)
+curl -s http://localhost:11434/api/generate -d '{
+    "model": "qwen2.5-coder:3b",
+    "keep_alive": -1
+}' >/dev/null &

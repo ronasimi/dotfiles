@@ -78,18 +78,21 @@ end
 -- System & Power
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Restarting System...' --post-cmd 'systemctl reboot']]))
-hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd([[uwsm app -- hyprshutdown -t 'Powering Off...' --post-cmd 'systemctl poweroff']]))
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd([[hyprshutdown -t 'Restarting System...' --post-cmd 'systemctl reboot']]))
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd([[hyprshutdown -t 'Powering Off...' --post-cmd 'systemctl poweroff']]))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("systemctl suspend"))
 hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("dunstctl history-pop"))
 
 -- Lid Switches
 hl.bind("switch:off:Lid Switch", hl.dsp.dpms({ action = "enable" }), { locked = true })
 hl.bind("switch:on:Lid Switch", function()
+    -- Always trigger the lock; flock in hypridle will handle deduplication
     hl.dispatch(hl.dsp.exec_cmd("loginctl lock-session"))
+    
+    -- Turn off screen manually (crucial for AC power state where systemd ignores the lid)
     hl.timer(function()
         hl.dispatch(hl.dsp.dpms({ action = "disable" }))
-    end, { timeout = 500, type = "oneshot" })
+    end, { timeout = 800, type = "oneshot" })
 end, { locked = true })
 
 -- Core Launchers
@@ -99,6 +102,10 @@ hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty --cla
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("uwsm app -- hyprland-run"))
+
+-- AI Assistant Binds
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("/home/ron/.bin/ai-assist voice"))
+hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("/home/ron/.bin/ai-assist vision"))
 
 -- Window Management
 hl.bind(mainMod .. " + X", hl.dsp.window.close())

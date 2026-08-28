@@ -1,0 +1,680 @@
+#!/home/ron/.local/share/ai-assist-env/bin/python3
+import sys
+import os
+import subprocess
+import tempfile
+import wave
+import datetime
+import json
+import urllib.request
+import urllib.parse
+import warnings
+import re
+import concurrent.futures
+import numpy as np
+import sounddevice as sd
+from faster_whisper import WhisperModel
+from ddgs import DDGS
+from gnews import GNews
+import ollama
+
+# Suppress minor runtime and resource warnings for clean execution
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+warnings.filterwarnings("ignore", category=ResourceWarning)
+
+USER_NAME = "Ron Asimi"
+TEXT_MODEL = "phi4-mini"
+VISION_MODEL = "moondream"
+HISTORY_FILE = os.path.expanduser("~/.local/share/ai-assist-history.json")
+KB_FILE = os.path.expanduser("~/.local/share/ai-assist-kb.txt")
+ALBA_PATH = os.path.expanduser("~/.bin/alba-say")
+MAX_HISTORY = 6  # Keeps last 3 turns (user + assistant pairs)
+NOTIF_ID = "9999"
+
+# ==========================================
+# PRE-COMPILED REGEX PATTERNS FOR PIPER TTS
+# ==========================================
+ABBREVIATIONS = {
+    re.compile(r'\bvs\.\b', re.IGNORECASE): 'versus',
+    re.compile(r'\be\.g\.\b', re.IGNORECASE): 'for example',
+    re.compile(r'\bi\.e\.\b', re.IGNORECASE): 'that is',
+    re.compile(r'\betc\.\b', re.IGNORECASE): 'et cetera',
+    re.compile(r'\bapprox\.\b', re.IGNORECASE): 'approximately',
+    re.compile(r'\bkm/h\b', re.IGNORECASE): 'kilometers per hour',
+    re.compile(r'\bmph\b', re.IGNORECASE): 'miles per hour'
+}
+
+CURRENCY_PATTERN = re.compile(r'\$(\d{1,3}(?:,\d{3})*|\d+)')
+TEMP_PATTERN = re.compile(r'([+-]?\d+)\s*°([CcFf])\b')
+PERCENT_PATTERN = re.compile(r'(\d+)%')
+
+UNIT_PATTERNS = [
+    (re.compile(rf'(?<!\w)(\d+(?:[.,]\d+)?)\s*{unit}\b', re.IGNORECASE), spoken)
+    for unit, spoken in [
+        (r'km/h', 'kilometers per hour'), (r'mph', 'miles per hour'),
+        (r'km', 'kilometers'), (r'mi', 'miles'), (r'm', 'meters'),
+        (r'cm', 'centimeters'), (r'mm', 'millimeters'), (r'in', 'inches'), 
+        (r'ft', 'feet'), (r'yd', 'yards'), (r'kg', 'kilograms'), 
+        (r'g', 'grams'), (r'lbs?', 'pounds'), (r'oz', 'ounces')
+    ]
+]
+
+FILE_EXT_PATTERNS = [
+    (re.compile(r'\b(\w+)\.py\b', re.IGNORECASE), r'\1 python script'),
+    (re.compile(r'\b(\w+)\.json\b', re.IGNORECASE), r'\1 j s n file'),
+    (re.compile(r'\b(\w+)\.conf\b', re.IGNORECASE), r'\1 config file'),
+    (re.compile(r'\b(\w+)\.lua\b', re.IGNORECASE), r'\1 lua script')
+]
+
+TIME_PATTERN = re.compile(r'\b(\d{1,2}):(\d{2})\s*([APap]\.?[Mm]\.?)?')
+MONTHS_PATTERN = re.compile(r'\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2})(?:st|nd|rd|th)?\b', re.IGNORECASE)
+DIGIT_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+
+def notify(title: str, message: str, urgency: str = "low", expire: str = "0"):
+    subprocess.run([
+        "notify-send", "-r", NOTIF_ID, "-u", urgency, "-t", expire, title, message
+    ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+def number_to_ordinal(n: int) -> str:
+    ordinals = {
+        1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth",
+        6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "tenth",
+        11: "eleventh", 12: "twelfth", 13: "thirteenth", 14: "fourteenth", 15: "fifteenth",
+        16: "sixteenth", 17: "seventeenth", 18: "eighteenth", 19: "nineteenth", 20: "twentieth",
+        21: "twenty-first", 22: "twenty-second", 23: "twenty-third", 24: "twenty-fourth", 25: "twenty-fifth",
+        26: "twenty-sixth", 27: "twenty-seventh", 28: "twenty-eighth", 29: "twenty-ninth", 30: "thirtieth",
+        31: "thirty-first"
+    }
+    return ordinals.get(n, str(n))
+
+def normalize_speech_text(text: str) -> str:
+    """Normalize symbols, numbers, and abbreviations for clean TTS speech output."""
+    for pattern, replacement in ABBREVIATIONS.items():
+        text = pattern.sub(replacement, text)
+
+    text = CURRENCY_PATTERN.sub(lambda m: f"{m.group(1).replace(',', '')} dollars", text)
+
+    def replace_temp(match):
+        val, scale = match.group(1), "Celsius" if match.group(2).upper() == 'C' else "Fahrenheit"
+        prefix = "minus " if val.startswith('-') else ""
+        return f"{prefix}{val.lstrip('+-')} degrees {scale}"
+    text = TEMP_PATTERN.sub(replace_temp, text)
+
+    text = PERCENT_PATTERN.sub(r'\1 percent', text)
+
+    for pattern, spoken in UNIT_PATTERNS:
+        text = pattern.sub(rf'\1 {spoken}', text)
+
+    for pattern, replacement in FILE_EXT_PATTERNS:
+        text = pattern.sub(replacement, text)
+
+    def time_replacer(match):
+        hour, minute, ampm = match.group(1), match.group(2), match.group(3) if match.lastindex >= 3 and match.group(3) else ""
+        
+        hour = str(int(hour))
+        
+        if minute == '00': min_spoken = "o'clock"
+        elif minute.startswith('0'): min_spoken = f"oh {DIGIT_WORDS[int(minute[1])]}"
+        else: min_spoken = minute
+
+        ampm_formatted = ""
+        if ampm:
+            clean_ampm = ampm.lower().replace('.', '')
+            if clean_ampm == 'am': ampm_formatted = " A M"
+            elif clean_ampm == 'pm': ampm_formatted = " P M"
+            
+        return f"{hour} {min_spoken}{ampm_formatted}"
+    text = TIME_PATTERN.sub(time_replacer, text)
+
+    def replace_date(match):
+        day = int(match.group(2))
+        return f"{match.group(1)} {number_to_ordinal(day)}" if 1 <= day <= 31 else match.group(0)
+    text = MONTHS_PATTERN.sub(replace_date, text)
+    
+    return text
+
+def load_knowledge_base():
+    """Load persistent static knowledge base if available."""
+    if os.path.exists(KB_FILE):
+        try:
+            with open(KB_FILE, "r") as f:
+                content = f.read().strip()
+                return content if content else "Knowledge base is empty."
+        except Exception:
+            return "Knowledge base unavailable."
+    return "No knowledge base file found."
+
+def load_history():
+    if os.path.exists(HISTORY_FILE):
+        try:
+            with open(HISTORY_FILE, "r") as f:
+                return json.load(f)
+        except Exception:
+            return []
+    return []
+
+def save_history(history):
+    os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
+    with open(HISTORY_FILE, "w") as f:
+        json.dump(history[-MAX_HISTORY:], f, indent=2)
+
+def clear_history():
+    if os.path.exists(HISTORY_FILE):
+        os.unlink(HISTORY_FILE)
+    print("AI Assistant memory cleared.")
+
+def record_until_silence(fs=16000, block_duration=0.1, silence_duration=0.4, threshold=0.030, max_duration=5.0):
+    """Record microphone audio dynamically with configured threshold and silence timeout."""
+    print("Recording... Speak now.")
+    notify("AI Assistant", "Recording... Speak now.", urgency="low")
+    
+    block_size = int(fs * block_duration)
+    frames = []
+    speech_started = False
+    silent_blocks = 0
+    max_silent_blocks = int(silence_duration / block_duration)
+    max_blocks = int(max_duration / block_duration)
+    
+    with sd.InputStream(samplerate=fs, channels=1, dtype='int16', blocksize=block_size) as stream:
+        for _ in range(max_blocks):
+            data, overflowed = stream.read(block_size)
+            if overflowed:
+                continue
+            
+            audio_float = data.astype(np.float32) / 32768.0
+            rms = np.sqrt(np.mean(audio_float**2))
+            
+            frames.append(data)
+            
+            if rms > threshold:
+                speech_started = True
+                silent_blocks = 0
+            elif speech_started:
+                silent_blocks += 1
+                if silent_blocks >= max_silent_blocks:
+                    break
+            else:
+                if len(frames) > int(2.0 / block_duration):
+                    break
+                    
+    notify("AI Assistant", "Transcribing audio...", urgency="low")
+    
+    audio_data = np.concatenate(frames, axis=0)
+    
+    temp_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
+    temp_file.close()
+    
+    with wave.open(temp_file.name, 'wb') as wf:
+        wf.setnchannels(1)
+        wf.setsampwidth(2)
+        wf.setframerate(fs)
+        wf.writeframes(audio_data.tobytes())
+        
+    return temp_file.name
+
+def transcribe_audio(audio_path):
+    """Transcribe recorded audio using local faster-whisper."""
+    model = WhisperModel("base.en", device="cpu", compute_type="int8")
+    segments, _ = model.transcribe(audio_path, beam_size=1)
+    text = " ".join([segment.text for segment in segments])
+    os.unlink(audio_path)
+    return text.strip()
+
+# ==========================================
+# TOOL FUNCTIONS
+# ==========================================
+
+def get_time() -> str:
+    """Returns the current local date and time. Use this when asked for the time."""
+    return datetime.datetime.now().strftime('%-I:%M %p')
+
+def get_weather(location: str = "London, Ontario") -> str:
+    """Gets the current weather forecast and conditions for any specified city or location."""
+    try:
+        loc_query = location if location else "London, Ontario"
+        encoded_loc = urllib.parse.quote(loc_query)
+        
+        geo_url = f"https://geocoding-api.open-meteo.com/v1/search?name={encoded_loc}&count=1&format=json"
+        geo_req = urllib.request.Request(geo_url, headers={'User-Agent': 'AIAssistant/1.0'})
+        
+        with urllib.request.urlopen(geo_req, timeout=3) as geo_res:
+            geo_data = json.loads(geo_res.read().decode('utf-8'))
+            results = geo_data.get("results", [])
+            if not results:
+                return f"Could not find location: {loc_query}."
+            
+            lat = results[0].get("latitude")
+            lon = results[0].get("longitude")
+            resolved_name = results[0].get("name", loc_query)
+            country = results[0].get("country", "")
+            location_label = f"{resolved_name}, {country}" if country else resolved_name
+
+        weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,weather_code"
+        weather_req = urllib.request.Request(weather_url, headers={'User-Agent': 'AIAssistant/1.0'})
+        
+        with urllib.request.urlopen(weather_req, timeout=3) as weather_res:
+            weather_data = json.loads(weather_res.read().decode('utf-8'))
+            current = weather_data.get("current", {})
+            temp = current.get("temperature_2m")
+            code = current.get("weather_code")
+            
+            wmo_codes = {
+                0: "Clear sky", 1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast",
+                45: "Fog", 48: "Depositing rime fog",
+                51: "Light drizzle", 53: "Moderate drizzle", 55: "Dense drizzle",
+                56: "Light freezing drizzle", 57: "Dense freezing drizzle",
+                61: "Slight rain", 63: "Moderate rain", 65: "Heavy rain",
+                66: "Light freezing rain", 67: "Heavy freezing rain",
+                71: "Slight snow fall", 73: "Moderate snow fall", 75: "Heavy snow fall",
+                77: "Snow grains", 80: "Slight rain showers", 81: "Moderate rain showers", 
+                82: "Violent rain showers", 85: "Slight snow showers", 86: "Heavy snow showers",
+                95: "Thunderstorm", 96: "Thunderstorm with slight hail", 99: "Thunderstorm with heavy hail"
+            }
+            
+            condition = wmo_codes.get(code, "Conditions unknown")
+            
+            if temp is not None:
+                return f"Current weather in {location_label}: {condition}, {temp}°C"
+                
+        return f"Weather data unavailable for {loc_query}."
+    except Exception as e:
+        return f"Weather lookup failed: {e}"
+
+def extract_location(query: str) -> str:
+    """Robustly extracts a target city name from natural language queries."""
+    q = re.sub(r'[^\w\s,]', ' ', query.lower())
+    words = q.split()
+    stop_words = {
+        "what", "is", "are", "was", "were", "the", "weather", "forecast", "like", "in", "for", 
+        "at", "around", "current", "currently", "today", "tomorrow", 
+        "whats", "what's", "can", "you", "tell", "me", "please", "now", "it",
+        "headlines", "headline", "news", "recent", "latest"
+    }
+    city_words = [w for w in words if w not in stop_words]
+    return " ".join(city_words) if city_words else "London, Ontario"
+
+def get_system_logs() -> str:
+    """Gets recent system errors and warnings from the local machine logs."""
+    try:
+        res = subprocess.run(["journalctl", "-p", "err", "-b", "--no-pager", "-n", "3"], capture_output=True, text=True, timeout=1)
+        return res.stdout.strip() or "No recent errors."
+    except Exception:
+        return "System log unavailable."
+
+def get_local_headlines(location: str = "London, Ontario") -> str:
+    """Gets the latest local news headlines for any arbitrary location using GNews."""
+    try:
+        loc_query = location if location else "London, Ontario"
+        google_news = GNews(language='en', country='CA', period='1d', max_results=3)
+        results = google_news.get_news(loc_query)
+        if not results:
+            results = google_news.get_news_by_location(loc_query)
+        
+        headlines = [item.get('title', '') for item in results[:3]]
+        return "\n".join(headlines) if headlines else f"No headlines found for {loc_query}."
+    except Exception as e:
+        return f"News lookup failed: {e}"
+
+def get_calendar_events() -> str:
+    """Retrieves the user's upcoming calendar schedule and events directly from their private Google Calendar iCal feed."""
+    url = "https://calendar.google.com/calendar/ical/ron.asimi%40gmail.com/private-1e9d8c301385f504d080075c62969e85/basic.ics"
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'AIAssistant/1.0'})
+        with urllib.request.urlopen(req, timeout=4) as response:
+            cal_data = response.read().decode('utf-8')
+            
+        events_raw = re.findall(r'BEGIN:VEVENT(.*?)END:VEVENT', cal_data, re.DOTALL)
+        upcoming_events = []
+        today_str = datetime.datetime.now().strftime("%Y%m%d")
+        
+        for event in events_raw:
+            summary_match = re.search(r'SUMMARY:([^\n\r]+)', event)
+            dtstart_match = re.search(r'DTSTART[^\:]*\:([0-9TZ]+)', event)
+            
+            if summary_match and dtstart_match:
+                summary = summary_match.group(1).strip()
+                dtstart = dtstart_match.group(1).strip()
+                
+                if dtstart >= today_str or "RRULE:" in event:
+                    formatted_time = dtstart.replace('T', ' at ').replace('Z', ' (UTC)')
+                    upcoming_events.append(f"Event: '{summary}' starting {formatted_time}")
+        
+        if not upcoming_events:
+            return "No upcoming calendar events found."
+            
+        upcoming_events.sort(key=lambda x: x.split("starting ")[-1])
+        return "Upcoming Schedule:\n" + "\n".join(upcoming_events[:15])
+    except Exception as e:
+        return f"Calendar lookup failed: {e}"
+
+def get_recent_emails() -> str:
+    """Retrieves summaries of recent, unread emails from the user's Gmail inbox."""
+    import imaplib
+    import email
+    from email.header import decode_header
+    
+    GMAIL_USER = "ron.asimi@gmail.com"
+    GMAIL_PASS = "xpjl gswg ylop kdrn"
+    
+    try:
+        mail = imaplib.IMAP4_SSL("imap.gmail.com", timeout=4.0)
+        mail.login(GMAIL_USER, GMAIL_PASS)
+        mail.select("inbox")
+        status, messages = mail.search(None, '(UNSEEN)')
+        
+        mail_ids = messages[0].split()
+        count = len(mail_ids)
+        
+        if count == 0:
+            mail.logout()
+            return "You have zero unread emails."
+            
+        details = []
+        for num in mail_ids[-3:]:
+            status, msg_data = mail.fetch(num, '(BODY.PEEK[HEADER.FIELDS (Subject From)])')
+            for response_part in msg_data:
+                if isinstance(response_part, tuple):
+                    msg = email.message_from_bytes(response_part[1])
+                    
+                    raw_subj = msg["Subject"]
+                    subject = "".join([part.decode(enc or "utf-8", errors="ignore") if isinstance(part, bytes) else part for part, enc in decode_header(raw_subj)]) if raw_subj else "No Subject"
+                        
+                    raw_from = msg["From"]
+                    sender = "".join([part.decode(enc or "utf-8", errors="ignore") if isinstance(part, bytes) else part for part, enc in decode_header(raw_from)]) if raw_from else "Unknown Sender"
+                    if "<" in sender: sender = sender.split("<")[0].strip().strip('"')
+                        
+                    details.append(f"from {sender} about '{subject}'")
+                    
+        mail.logout()
+        return f"You have {count} unread emails. Recent ones include: {', '.join(details)}."
+    except Exception as e:
+        return f"email details unavailable: {e}"
+
+def perform_web_search(query: str) -> str:
+    """Fetch live web snippets using DuckDuckGo search with a safety timeout."""
+    def _search():
+        with DDGS() as ddgs:
+            return [r.get('body', '') for r in ddgs.text(query, max_results=3)]
+    try:
+        print("Searching the web...")
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(_search)
+            results = future.result(timeout=4)
+            return "\n".join(results) if results else "No relevant web results found."
+    except Exception:
+        return "Web search unavailable."
+
+def perform_wikipedia_search(query: str) -> str:
+    """Fetch encyclopedic summaries directly from Wikipedia API."""
+    try:
+        encoded_query = urllib.parse.quote(query)
+        url = f"https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch={encoded_query}&format=json&srlimit=1"
+        req = urllib.request.Request(url, headers={'User-Agent': 'AIAssistant/1.0'})
+        with urllib.request.urlopen(req, timeout=3) as response:
+            data = json.loads(response.read().decode())
+            search_results = data.get("query", {}).get("search", [])
+            if search_results:
+                title = search_results[0]["title"]
+                summary_url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{urllib.parse.quote(title)}"
+                sum_req = urllib.request.Request(summary_url, headers={'User-Agent': 'AIAssistant/1.0'})
+                with urllib.request.urlopen(sum_req, timeout=3) as sum_response:
+                    sum_data = json.loads(sum_response.read().decode())
+                    extract = sum_data.get("extract", "")
+                    if extract:
+                        return f"{extract}"
+        return "No relevant Wikipedia entry found."
+    except Exception:
+        return "Wikipedia search unavailable."
+
+def safe_ollama_chat(model, messages, tools=None, options=None, timeout=12):
+    """Executes ollama.chat with a thread timeout to prevent infinite hanging."""
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(ollama.chat, model=model, messages=messages, tools=tools, options=options)
+        try:
+            return future.result(timeout=timeout)
+        except concurrent.futures.TimeoutError:
+            return None
+
+# ==========================================
+# CORE AGENT LOGIC
+# ==========================================
+
+def handle_query_execution(query: str, speak: bool = True):
+    """Shared query execution logic for both voice and text modes."""
+    print(f"Query: {query}")
+    query_lower = query.lower()
+    
+    # -------------------------------------------------------------
+    # FAST PATH: Instant local answers & Wikipedia facts
+    # -------------------------------------------------------------
+    now = datetime.datetime.now()
+    fast_answer = None
+    
+    if "clear history" in query_lower or "forget this conversation" in query_lower:
+        notify("AI Assistant", "Clearing memory (Fast Path)...", urgency="low")
+        clear_history()
+        fast_answer = "My conversation memory has been cleared."
+        
+    elif "lock screen" in query_lower:
+        notify("AI Assistant", "Locking screen...", urgency="critical")
+        subprocess.run(["hyprlock"])
+        return
+        
+    elif "time" in query_lower and "date" not in query_lower:
+        notify("AI Assistant", f"Query: {query}\nFetching time (Fast Path)...", urgency="low")
+        fast_answer = f"The current time is {now.strftime('%-I:%M %p')}."
+        
+    elif "date" in query_lower or "day" in query_lower:
+        notify("AI Assistant", f"Query: {query}\nFetching date (Fast Path)...", urgency="low")
+        fast_answer = f"Today is {now.strftime('%A, %B %d, %Y')}."
+        
+    elif "weather" in query_lower or "forecast" in query_lower:
+        notify("AI Assistant", f"Query: {query}\nFetching weather (Fast Path)...", urgency="low")
+        target_loc = extract_location(query)
+        fast_answer = get_weather(target_loc)
+        
+    elif "email" in query_lower or "inbox" in query_lower:
+        notify("AI Assistant", f"Query: {query}\nFetching emails (Fast Path)...", urgency="low")
+        fast_answer = get_recent_emails()
+        
+    elif "headline" in query_lower or "news" in query_lower:
+        notify("AI Assistant", f"Query: {query}\nFetching headlines (Fast Path)...", urgency="low")
+        target_loc = extract_location(query)
+        news_data = get_local_headlines(target_loc)
+        fast_answer = f"Here are the latest headlines for {target_loc}:\n{news_data}"
+        
+    elif "calendar" in query_lower or "schedule" in query_lower:
+        notify("AI Assistant", f"Query: {query}\nFetching schedule (Fast Path)...", urgency="low")
+        fast_answer = get_calendar_events()
+
+    elif "system status" in query_lower or "errors" in query_lower or "logs" in query_lower:
+        notify("AI Assistant", f"Query: {query}\nChecking logs (Fast Path)...", urgency="low")
+        fast_answer = get_system_logs()
+
+    elif any(query_lower.startswith(p) for p in ["what is", "who is", "define", "what's", "largest", "tallest", "fastest", "smallest", "highest", "lowest", "how do", "how does"]):
+        notify("AI Assistant", f"Query: {query}\nQuerying Wikipedia (Fast Path)...", urgency="low")
+        fast_answer = perform_wikipedia_search(query)
+        
+    # If a fast path triggered, handle output and exit early
+    if fast_answer:
+        print(f"AI (Fast Path): {fast_answer}")
+        
+        history = load_history()
+        history.append({"role": "user", "content": query})
+        history.append({"role": "assistant", "content": fast_answer})
+        save_history(history)
+        
+        notify("AI Assistant", f"Query: {query}\n\n{fast_answer}", urgency="normal")
+        if speak:
+            subprocess.run([ALBA_PATH, "0.85", normalize_speech_text(fast_answer)])
+        return
+        
+    # -------------------------------------------------------------
+    # STANDARD PATH: LLM Tool Routing
+    # -------------------------------------------------------------
+    notify("AI Assistant", f"Query: {query}\nDeciding on actions...", urgency="low")
+    
+    available_tools = [
+        get_time, get_weather, get_system_logs, get_local_headlines,
+        get_calendar_events, get_recent_emails, perform_web_search, perform_wikipedia_search
+    ]
+    
+    messages = load_history()
+    
+    if not messages or messages[0].get("role") != "system":
+        kb_content = load_knowledge_base()
+        messages.insert(0, {
+            "role": "system", 
+            "content": f"You are a fast, concise AI assistant for {USER_NAME}. You have tools for real-time data.\nKB:\n{kb_content}"
+        })
+        
+    messages.append({"role": "user", "content": query})
+
+    response = safe_ollama_chat(
+        model=TEXT_MODEL,
+        messages=messages,
+        tools=available_tools,
+        options={"keep_alive": -1, "num_ctx": 8192},
+        timeout=12
+    )
+    
+    if not response:
+        notify("AI Assistant", f"Query: {query}\nModel timed out, querying Wikipedia...", urgency="low")
+        wiki_result = perform_wikipedia_search(query)
+        fallback_prompt = f"Answer the user query based on this Wikipedia info:\n{wiki_result}"
+        messages.append({"role": "user", "content": fallback_prompt})
+        response = safe_ollama_chat(
+            model=TEXT_MODEL,
+            messages=messages,
+            options={"keep_alive": -1, "num_ctx": 8192},
+            timeout=10
+        )
+        if not response:
+            answer = "I'm having trouble connecting to the model right now."
+            print(f"AI: {answer}")
+            notify("AI Assistant", answer, urgency="normal")
+            if speak:
+                subprocess.run([ALBA_PATH, "0.85", normalize_speech_text(answer)])
+            return
+
+    messages.append(response["message"])
+    
+    if response.get("message", {}).get("tool_calls"):
+        tool_map = {t.__name__: t for t in available_tools}
+        
+        tool_names = [
+            call["function"]["name"].replace("get_", "").replace("perform_", "").replace("_", " ").title() 
+            for call in response["message"]["tool_calls"]
+        ]
+        notify("AI Assistant", f"Query: {query}\nUsing tools: {', '.join(tool_names)}", urgency="low")
+        
+        for call in response["message"]["tool_calls"]:
+            func_name = call["function"]["name"]
+            args = call["function"]["arguments"]
+            
+            if func_name in tool_map:
+                print(f"Executing tool: {func_name} with {args}")
+                tool_result = tool_map[func_name](**args)
+                
+                messages.append({
+                    "role": "tool",
+                    "content": str(tool_result),
+                    "name": func_name
+                })
+        
+        response = safe_ollama_chat(
+            model=TEXT_MODEL,
+            messages=messages,
+            tools=available_tools,
+            options={"keep_alive": -1, "num_ctx": 8192},
+            timeout=12
+        )
+        if response:
+            messages.append(response["message"])
+
+    answer = response.get("message", {}).get("content", "").strip() if response else "I've processed the tools but don't have a spoken response."
+    if not answer:
+        answer = "I've processed the tools but don't have a spoken response."
+        
+    print(f"AI: {answer}")
+    
+    save_history([m for m in messages if m["role"] in ["user", "assistant"]])
+    
+    notify("AI Assistant", f"Query: {query}\n\n{answer}", urgency="normal")
+    if speak:
+        subprocess.run([ALBA_PATH, "0.85", normalize_speech_text(answer)])
+
+def handle_voice_query():
+    audio_file = record_until_silence()
+    query = transcribe_audio(audio_file)
+    if not query:
+        fallback_msg = "I didn't catch that."
+        notify("AI Assistant", fallback_msg, urgency="normal")
+        subprocess.run([ALBA_PATH, "0.85", normalize_speech_text(fallback_msg)])
+        return
+    handle_query_execution(query, speak=True)
+
+def handle_text_query(query: str):
+    if not query.strip():
+        print("Error: Empty query provided.")
+        return
+    handle_query_execution(query, speak=False)
+
+def handle_vision_query():
+    """Capture a screen region and analyze it with a lightweight vision model."""
+    tf = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
+    screenshot_path = tf.name
+    tf.close()
+
+    region = subprocess.run(["slurp"], capture_output=True, text=True)
+    if region.returncode != 0:
+        if os.path.exists(screenshot_path):
+            os.unlink(screenshot_path)
+        return
+
+    subprocess.run(["grim", "-g", region.stdout.strip(), screenshot_path])
+
+    prompt = "Describe what is on this screen or answer any text/code visible in it concisely."
+    
+    response = ollama.chat(
+        model=VISION_MODEL,
+        messages=[{
+            'role': 'user',
+            'content': prompt,
+            'images': [screenshot_path]
+        }],
+        options={"keep_alive": -1}
+    )
+    
+    if os.path.exists(screenshot_path):
+        os.unlink(screenshot_path)
+        
+    analysis = response["message"]["content"].strip()
+    print(f"Vision AI: {analysis}")
+    
+    notify("Vision Assistant", analysis, urgency="normal")
+    subprocess.run([ALBA_PATH, "0.85", normalize_speech_text(analysis)])
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: ai-assist [voice|vision|text|clear]")
+        sys.exit(1)
+        
+    mode = sys.argv[1]
+    if mode == "voice":
+        handle_voice_query()
+    elif mode == "vision":
+        handle_vision_query()
+    elif mode == "text":
+        query = " ".join(sys.argv[2:]) if len(sys.argv) > 2 else ""
+        if query:
+            handle_text_query(query)
+        else:
+            print("Usage: ai-assist text \"your query here\"")
+    elif mode == "clear":
+        clear_history()
+    else:
+        print("Usage: ai-assist [voice|vision|text|clear]")
+
+if __name__ == "__main__":
+    main()

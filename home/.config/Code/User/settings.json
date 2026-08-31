@@ -127,7 +127,6 @@
         ]
     },
     "window.titleBarStyle": "native",
-    "chat.viewSessions.orientation": "stacked",
     "window.customTitleBarVisibility": "never",
     "geminicodeassist.project": "encouraging-xerocopy-sf9kn",
     "workbench.activityBar.location": "hidden",

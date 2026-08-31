@@ -1,6 +1,6 @@
 # Maximum and minimum number of peers to connect to per torrent.
 min_peers = 1
-max_peers = 100
+max_peers = 400
 
 # Same as above but for seeding completed torrents (-1 = same as downloading)
 min_peers_seed = 10
@@ -51,6 +51,12 @@ network.listen.port.set = 6900
 dht.override_port.set = 6901
 protocol.pex.set = yes
 
+# --- Speed Optimizations ---
+network.max_open_sockets.set = 999
+network.max_open_files.set = 600
+pieces.memory.max.set = 2048M
+trackers.use_udp.set = yes
+
 # --- UI Colors ---
 ui.color.title.set = "bold black on bright white"
 ui.color.footer.set = "bold black on white"
@@ -66,4 +72,4 @@ ui.color.odd.set = "bold"
 ui.color.even.set = ""
 
 # --- Notifications ---
-method.set_key = event.download.finished,notify_me,"execute=/usr/bin/notify-send,Torrent Finished,$d.name="
+method.set_key = event.download.finished,notify_me,"execute={notify-send,-u,normal,-a,rTorrent,Torrent Finished,$d.name=}"

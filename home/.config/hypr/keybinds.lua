@@ -104,10 +104,6 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("uwsm app -- hyprland-run"))
 
--- AI Assistant Binds
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("/home/ron/.bin/ai-assist voice"))
-hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("/home/ron/.bin/ai-assist vision"))
-
 -- Window Management
 hl.bind(mainMod .. " + X", hl.dsp.window.close())
 hl.bind(mainMod .. " + SPACE", hl.dsp.window.float({ action = "toggle" }))

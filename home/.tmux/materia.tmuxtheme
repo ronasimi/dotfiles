@@ -51,7 +51,7 @@ set -goq  @theme-message-fg "#c3c3c3"
 set -goq  @theme-mode-bg "#8ab4f8"
 set -goq  @theme-mode-fg "#272727"
 set -goq  @theme-pane-active-border-bg default
-set -goq  @theme-pane-active-border-fg "#90a959"
+set -goq  @theme-pane-active-border-fg "#8ab4f8"
 set -goq  @theme-pane-border-bg default
 set -goq  @theme-pane-border-fg "#5d5d5d"
 set -goq  @theme-status-bg "#272727"

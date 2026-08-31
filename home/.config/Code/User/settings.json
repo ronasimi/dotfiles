@@ -171,9 +171,5 @@
     "[lua]": {
         "editor.defaultFormatter": "yinfei.luahelper"
     },
-    "yaml.schemas": {
-        "file:///home/ron/.vscode/extensions/continue.continue-2.0.0-linux-x64/config-yaml-schema.json": [
-            ".continue/**/*.yaml"
-        ]
-    }
+
 }

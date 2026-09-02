@@ -19,8 +19,7 @@ window {
 
 /* Display symbolic icons for list items */ 
 .item-image, .item-image-text, .item-box image {       
-    -gtk-icon-style: symbolic;
-    -gtk-icon-size: 26px;       
+    -gtk-icon-size: 24px;       
     min-width: 0px;       
     min-height: 0px;       
     margin: 0px !important;       

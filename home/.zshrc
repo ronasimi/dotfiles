@@ -110,7 +110,7 @@ zsh-mime-setup
 select-word-style bash
 
 autoload -Uz compinit
-compinit -C
+compinit
 zmodload -i zsh/complist
 
 setopt hash_list_all

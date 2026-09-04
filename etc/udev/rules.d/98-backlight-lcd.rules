@@ -1,0 +1,3 @@
+# Adjust screen brightness according to AC power state
+ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="1", RUN+="/usr/bin/systemd-run --no-block /usr/bin/brightnessctl -s set 100%"
+ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="0", RUN+="/usr/bin/systemd-run --no-block /usr/bin/brightnessctl -s set 50%"

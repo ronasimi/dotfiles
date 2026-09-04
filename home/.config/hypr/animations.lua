@@ -6,8 +6,8 @@
 hl.curve("fast_window_spring", { type = "spring", mass = 1, stiffness = 400.0, dampening = 24.5 }) 
 hl.curve("window_spring_out", { type = "spring", mass = 1, stiffness = 350.0, dampening = 29.5 }) 
 hl.curve("workspace_slide", { type = "spring", mass = 1, stiffness = 380.0, dampening = 27.5 }) 
--- Heavily over-damped spring for move/resize to completely eliminate any overshoot or bounceback.
-hl.curve("no_overshoot_spring", { type = "spring", mass = 1, stiffness = 400.0, dampening = 50.0 })
+-- Critically damped spring paired with high stiffness for a rigid, zero-overshoot stop.
+hl.curve("no_overshoot_spring", { type = "spring", mass = 1, stiffness = 600.0, dampening = 49.0 })
 hl.curve("human_optimal_in", { type = "spring", mass = 1, stiffness = 520.0, dampening = 27.0 })
 hl.curve("smooth_ease", { type = "bezier", points = { { 0.34, 1.15 }, { 0.64, 1.0 } } })
 
@@ -23,7 +23,8 @@ hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3.5, spring
 
 -- Windows
 hl.animation({ leaf = "windowsIn", enabled = true, speed = 3.5, spring = "human_optimal_in", style = "popin 85%" })
-hl.animation({ leaf = "windowsMove", enabled = true, speed = 3.5, spring = "no_overshoot_spring" })
+-- Boosted speed multiplier to 4.6 to compensate for the asymptotic tail of the critically damped curve.
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 4.6, spring = "no_overshoot_spring" })
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 3.5, spring = "window_spring_out", style = "popin 80%" }) 
 
 -- UI Elements & Fades

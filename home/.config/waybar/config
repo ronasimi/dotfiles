@@ -28,7 +28,7 @@
     "on-click": "activate",
     "format": "{icon}",
     "format-window-separator": " ",
-    "window-rewrite-default": "",
+    "window-rewrite-default": "󰘔",
     "window-rewrite": {
       "class<google-chrome>": "󰊯",
       "class<chromium>": "󰊯",

@@ -59,8 +59,8 @@ hl.config({
         dim_inactive     = false,
         shadow           = {
             enabled        = true,
-            range          = 18,
-            scale          = 1.0,
+            range          = 16,
+            scale          = 1.5,
             render_power   = 2,
             color          = 0x40000000, -- Exactly 25% opacity
             color_inactive = 0x00000000,
@@ -69,7 +69,7 @@ hl.config({
         dim_special      = 0.1,
         blur             = {
             enabled = true,
-            size    = 3,
+            size    = 6,
             passes  = 3, -- GPU optimized
             noise   = 0.0234,
             popups  = true,

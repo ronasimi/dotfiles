@@ -61,7 +61,7 @@ hl.config({
             enabled        = true,
             range          = 16,
             scale          = 1.0,
-            render_power   = 3,
+            render_power   = 2,
             color          = "rgba(0, 0, 0, 0.25)", -- Exactly 25% opacity
             color_inactive = "rgba(0, 0, 0, 0)",
             offset         = { 0, 0 },

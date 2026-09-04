@@ -27,8 +27,13 @@ if hl.plugin.hymission ~= nil then
                 one_workspace_per_row = 0,
 
                 -- Behavior Defaults
-                expand_selected_window = 1,
+                selected_expand_scale = 1.18,
+                hover_expand_scale = 1.18,
                 overview_focus_follows_mouse = 1,
+                show_focus_indicator = 0,
+                grouped_windows_policy = "expanded",
+                grouped_windows_collapsed_labels = 1,
+                grouped_windows_collapsed_scroll = 1,
 
                 -- Appearance Defaults
                 backdrop_color = "rgba(00000033)",

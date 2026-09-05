@@ -29,7 +29,7 @@
     horizontal_padding = 18
     text_icon_padding = 0
     frame_width = 1
-    frame_color = "#1d1d1d"
+    frame_color = "#1d1d1dbf"
     separator_color = frame
     sort = yes
 

@@ -22,8 +22,8 @@ window {
     -gtk-icon-size: 24px;       
     min-width: 0px;       
     min-height: 0px;       
-    margin: 0px !important;       
-    padding: 0px !important;       
+    margin: 0px;       
+    padding: 0px;       
     border-radius: 9px; 
 }
 
@@ -33,7 +33,7 @@ window {
     padding: 18px;       
     border-radius: 9px;       
     border: 1px solid @window_bg_color;       
-    width: 600px;       
+    min-width: 600px;       
     min-height: 0px; 
 }
 
@@ -76,8 +76,8 @@ scrollbar {
 } 
 
 #box {       
-    width: 600px;       
-    height: 36px;       
+    min-width: 600px;       
+    min-height: 36px;       
     border-radius: 9px; 
 }
 
@@ -85,7 +85,7 @@ scrollbar {
 #Placeholder, #ElephantHint {       
     font-size: 0px;       
     min-height: 0px;       
-    margin: 0px !important;       
-    padding: 0px !important;       
+    margin: 0px;       
+    padding: 0px;       
     opacity: 0; 
 }

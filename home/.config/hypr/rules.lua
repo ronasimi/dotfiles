@@ -61,12 +61,13 @@ hl.window_rule({ match = { class = "^(xdg-desktop-portal-gtk)$" },              
 hl.window_rule({ match = { modal = true }, float = true })
 
 local dialog_rules = {
-    { class = "^(thunar)$",                 title = "^(File|Rename|Create|Attention|Copy|Move|Delete).*" },
-    { class = "^(google-chrome|electron)$", title = "^(Open|Save|Downloads|Print).*" },
-    { class = "^(code)$",                   title = "^(Open|Save|Print).*" },
-    { class = "^(gimp)$",                   title = "^(Open|Save|Export|Quit|Scale|Set|Print).*" },
-    { class = "^(xarchiver)",               title = "^(Extract|Add|Delete|Properties|Please).*" },
-    { class = "^(Vmware)$",                 title = "^(Open|Save|Progress|Quit).*" }
+    { class = "^(?i)(thunar)$",                 title = "^(File|Rename|Create|Attention|Copy|Move|Delete).*" },
+    { class = "^(?i)(google-chrome.*|electron)$", title = "^(Open|Save|Downloads|Print).*" },
+    { class = "^(?i)(code)$",                   title = "^(Open|Save|Print).*" },
+    { class = "^(?i)(gimp|gimp-3\\.0)$",        title = "^(Open|Save|Export|Quit|Scale|Set|Print).*" },
+    { class = "^(?i)(xarchiver)$",              title = "^(Extract|Add|Delete|Properties|Please).*" },
+    { class = "^(?i)(vmware)$",                 title = "^(Open|Save|Progress|Quit).*" },
+    { class = "^(?i)(soffice)$",                title = "^(Text Import|Open|Save|Error|Warning|Information|Confirm|Export|Print|Properties|Options).*" }
 }
 
 for _, rule in ipairs(dialog_rules) do

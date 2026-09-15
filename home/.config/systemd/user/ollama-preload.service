@@ -1,0 +1,10 @@
+[Unit]
+Description=Preload Ollama Models into VRAM
+
+[Service]
+Type=oneshot
+ExecStart=%h/.bin/preload-ollama.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target

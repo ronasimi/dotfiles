@@ -8,14 +8,14 @@ ExecStartPre=/usr/bin/bash -c 'if test -e ~/.session/rtorrent.lock && test -z "$
 ExecStartPre=-/usr/bin/tmux -L tilde kill-server
 
 # Pane layout sequence:
-# 1. Spawns Docker agent in Pane 0 on a large 240x60 virtual canvas to prevent proportional stretching upon attachment.
+# 1. Spawns a Zsh shell in Pane 0 on a large 240x60 virtual canvas to prevent proportional stretching upon attachment.
 # 2. Splits Pane 0 horizontally (40% width) for btop (Pane 1).
 # 3. Splits btop vertically, sharing space with nvtop (Pane 2).
 # 4. Splits nvtop vertically, sharing space with rustnet (Pane 3).
 # 5. Splits rustnet vertically with -b, injecting ctop above it with exactly 7 lines.
 # 6. Explicitly resizes btop (Pane 1) to exactly 25 lines.
 # 7. Splits original Pane 0 vertically (50% height) for rtorrent on the bottom left (Pane 5).
-ExecStart=/usr/bin/bash -c '/usr/bin/tmux -L tilde new-session -x 240 -y 60 -s tilde -n tilde -d "docker compose -f /home/ron/Projects/agent/docker-compose.yml attach agent; /usr/bin/tmux -L tilde kill-session -t tilde" && /usr/bin/tmux -L tilde split-window -h -p 45 "btop" && /usr/bin/tmux -L tilde split-window -v -p 45 "nvtop -i" && /usr/bin/tmux -L tilde split-window -v -p 75 "rustnet" && /usr/bin/tmux -L tilde split-window -v -b -p 35 "ctop" && /usr/bin/tmux -L tilde resize-pane -t tilde:tilde.1 -y 25 && /usr/bin/tmux -L tilde split-window -v -p 50 -t tilde:tilde.0 "rtorrent"'
+ExecStart=/usr/bin/bash -c '/usr/bin/tmux -L tilde new-session -x 240 -y 60 -s tilde -n tilde -d "zsh; /usr/bin/tmux -L tilde kill-session -t tilde" && /usr/bin/tmux -L tilde split-window -h -p 45 "btop" && /usr/bin/tmux -L tilde split-window -v -p 45 "nvtop -i" && /usr/bin/tmux -L tilde split-window -v -p 75 "rustnet" && /usr/bin/tmux -L tilde split-window -v -b -p 35 "ctop" && /usr/bin/tmux -L tilde resize-pane -t tilde:tilde.1 -y 25 && /usr/bin/tmux -L tilde split-window -v -p 50 -t tilde:tilde.0 "rtorrent"'
 
 ExecStop=/usr/bin/bash -c '/usr/bin/tmux -L tilde send-keys -t tilde:tilde.5 C-q; while pidof rtorrent > /dev/null; do echo stopping rtorrent...; sleep 1; done'
 Restart=on-failure

@@ -283,7 +283,7 @@ if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.
 fi
  # ZSH-AI CONFIGURATION
 export ZSH_AI_PROVIDER="ollama"
-export ZSH_AI_OLLAMA_MODEL="qwen2.5-coder:3b"
+export ZSH_AI_OLLAMA_MODEL="huihui_ai/qwen3.5-abliterated:4b"
 export ZSH_AI_OLLAMA_URL="http://localhost:11434"
 export ZSH_AI_TRIGGER=",,"
 

@@ -180,13 +180,16 @@ Top-right utility placement is used for `pavucontrol`/`nmtui`, Overskride, `nwg-
 | `keybinds.lua` | Keybinds and gestures |
 | `functions.lua` | Reusable compositor helpers and stateful behaviors |
 | `rules.lua` | Window/layer rules and utility-window registrations |
-| `workspaces.lua` | Optional workspace-specific Lua configuration (currently empty, matching the original config) |
 | `animations.lua` | Animation curves and animation configuration |
 | `plugins.lua` | Hymission and Hyprgrass configuration |
 | `monitors.lua` | Monitor configuration loader |
 | `permissions.lua` | Optional Hyprland permission rules |
 | `autostart.lua` | Startup applications and services |
-| `hypridle.conf` | Idle/lock/DPMS behavior |
+| `hypridle.conf` | Idle/lock/DPMS behavior and asynchronous media pause/resume hooks |
+| `hyprlock.conf` | Lock-screen UI; calls the lightweight battery/network status helpers |
+| `scripts/battlock.sh` | Sysfs-only battery status for Hyprlock |
+| `scripts/netlock.sh` | Bounded single-query Wi-Fi status for Hyprlock |
+| `scripts/media_pause.sh` | Event-driven MPRIS pause/resume state helper |
 
 ## Dwindle spiral behavior
 
@@ -198,3 +201,14 @@ The default tiled layout uses the original Dwindle settings from this configurat
 Inner/outer gaps always remain at the normal configured values; no smart-gaps feature or toggle is installed.
 
 If an existing workspace was created under a different split policy, open the test windows on a fresh workspace (or recreate them) to verify the new tree shape.
+
+## Runtime helper scripts
+
+The `scripts/` directory contains only helpers referenced by the active configuration:
+
+- `battlock.sh` reads battery state directly from sysfs and starts no child processes.
+- `netlock.sh` performs one `iw` query with a 500 ms timeout and parses it with shell built-ins.
+- `media_pause.sh` is event-driven: Hypridle calls `pause` immediately before Hyprlock starts and `resume` on unlock. It has no sleep loop, resident watcher, or Hyprlock polling process.
+
+`track_backlight.sh` and `wofi-switcher.py` were removed because nothing in this configuration referenced them. The duplicate legacy `monitors.conf` and empty workspace include files were also removed; `monitors.lua` is the active monitor definition.
+

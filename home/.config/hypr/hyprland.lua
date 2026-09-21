@@ -24,7 +24,6 @@
 ----   IMPORTS   ----
 ---------------------
 require("monitors")
-require("workspaces")
 require("permissions")
 __require("functions")
 require("rules")

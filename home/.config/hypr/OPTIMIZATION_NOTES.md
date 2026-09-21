@@ -62,11 +62,19 @@ Placement is monitor-relative at window-rule time and is re-applied after utilit
 - `hyprland.lua`
 - `keybinds.lua`
 - `rules.lua`
-- `workspaces.lua`
 - `README.md`
 
 `SUPER + J` uses the original `hyprctl keyword general:layout` toggle from the source config. The SUPER-drag path remains compositor-native and no longer changes window mode.
 
 ## Lua module loading
 
-`functions.lua` is the value-returning helper module used by `rules.lua` and `keybinds.lua`, so callers load it with Hyprland's `__require()`. `workspaces.lua` is restored to the original empty config include.
+`functions.lua` is the value-returning helper module used by `rules.lua` and `keybinds.lua`, so callers load it with Hyprland's `__require()`. The former empty `workspaces.lua` include was removed as dead configuration.
+
+## Helper-script cleanup
+
+- Removed unreferenced `scripts/track_backlight.sh` and `scripts/wofi-switcher.py`.
+- Removed stale `monitors.conf`, empty `workspaces.conf`, and empty `workspaces.lua`; `hyprland.lua` no longer imports the no-op workspace module.
+- `media_pause.sh` is now event-driven (`pause`/`resume`) and contains no sleeps or process-polling loop. Hypridle invokes it only at lock/unlock boundaries; it exits immediately after state capture/restore and leaves no resident watcher.
+- `netlock.sh` uses one bounded `iw` request rather than three external commands/pipeline stages.
+- `battlock.sh` performs only direct sysfs reads and shell built-ins.
+

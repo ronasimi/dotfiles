@@ -1,6 +1,6 @@
 # Hyprland Lua configuration
 
-Modular Hyprland Lua configuration with Dwindle/Master layout controls, monitor-aware utility-window placement, smart tiled/floating mouse dragging, scratchpads, touch gestures, and optional compositor effects.
+Modular Hyprland Lua configuration with Dwindle/Master layout controls, monitor-aware utility-window placement, native tiled mouse reordering, scratchpads, touch gestures, and optional compositor effects.
 
 ## Keybinds
 
@@ -16,9 +16,7 @@ Modular Hyprland Lua configuration with Dwindle/Master layout controls, monitor-
 | `SUPER + E` | Open Thunar |
 | `SUPER + D` | Open Walker |
 | `SUPER + R` | Open `hyprland-run` |
-| `SUPER + T` | Toggle/reuse the terminal scratchpad; spawn it only if needed |
 
-#> **Smart gaps compatibility:** Smart gaps start OFF. `SUPER + CTRL + G` uses only Hyprland 0.55+ documented Lua APIs; no workspace-rule runtime handle is required.
 
 ## Window management
 
@@ -38,11 +36,10 @@ Modular Hyprland Lua configuration with Dwindle/Master layout controls, monitor-
 
 | Keybind | Action |
 |---|---|
-| `SUPER + Left Drag` | Smart move: tiled → floating; floating → tiled on completed drag |
-| `SUPER + Left Click` | No mode change if movement stays below the drag threshold |
+| `SUPER + Left Drag` | Move/reorder the active window; tiled windows stay tiled and are placed from the drop position |
 | `SUPER + Right Drag` | Resize active window |
 
-Pinned floating windows remain floating after `SUPER + Left Drag`.
+`SUPER + Left Drag` does not change tiled/floating state. Dwindle pointer-aware placement is enabled only while the drag is active.
 
 ### Focus and window movement
 
@@ -57,19 +54,10 @@ Pinned floating windows remain floating after `SUPER + Left Drag`.
 |---|---|
 | `SUPER + J` | Toggle the primary layout between Dwindle and Master |
 | `SUPER + /` | Toggle Dwindle split orientation |
-| `SUPER + A` | Layout-aware previous/left action |
-| `SUPER + Shift + A` | Layout-aware next/right action |
 | `SUPER + Alt + ←` | Preselect next Dwindle split to the left |
 | `SUPER + Alt + →` | Preselect next Dwindle split to the right |
 | `SUPER + Alt + ↑` | Preselect next Dwindle split upward |
 | `SUPER + Alt + ↓` | Preselect next Dwindle split downward |
-
-`SUPER + A` / `SUPER + Shift + A` adapt to the current tiled layout:
-
-- **Dwindle:** swap split / toggle split
-- **Master:** cycle previous / next
-- **Monocle:** cycle previous / next
-- **Scrolling:** swap column left / right
 
 ### Workspaces and overview
 
@@ -77,7 +65,7 @@ Pinned floating windows remain floating after `SUPER + Left Drag`.
 |---|---|
 | `SUPER + 1…0` | Switch to workspace 1…10 |
 | `SUPER + Shift + 1…0` | Move active window to workspace 1…10 |
-| `SUPER + Grave` | Toggle `special:scratchpad` |
+| `SUPER + Grave` (`~` key) | Launch Tilde if needed; otherwise show/hide the existing Tilde window |
 | `SUPER + Shift + Grave` | Move active window to `special:scratchpad` |
 | `Alt + Tab` | Switch to the previous workspace |
 | `SUPER + Tab` | Toggle Hymission overview |
@@ -90,14 +78,12 @@ Pinned floating windows remain floating after `SUPER + Left Drag`.
 
 | Keybind | Action |
 |---|---|
-| `SUPER + Ctrl + G` | Toggle smart gaps; **disabled by default** |
 | `SUPER + Ctrl + B` | Toggle low-effects performance/battery mode |
 | `SUPER + B` | Toggle Waybar visibility |
 | `SUPER + Z` | Toggle cursor zoom between 1.0× and 1.5× |
 | `SUPER + =` | Increase cursor zoom by 0.25× |
 | `SUPER + -` | Decrease cursor zoom by 0.25× |
 
-When smart gaps are enabled, a regular workspace with exactly one visible tiled window removes its inner/outer gaps and window rounding. Special workspaces are excluded. Reloading the config returns smart gaps to the default **off** state.
 
 ### System and power
 
@@ -194,7 +180,7 @@ Top-right utility placement is used for `pavucontrol`/`nmtui`, Overskride, `nwg-
 | `keybinds.lua` | Keybinds and gestures |
 | `functions.lua` | Reusable compositor helpers and stateful behaviors |
 | `rules.lua` | Window/layer rules and utility-window registrations |
-| `workspaces.lua` | Workspace rules and smart-gaps toggle state |
+| `workspaces.lua` | Optional workspace-specific Lua configuration (currently empty, matching the original config) |
 | `animations.lua` | Animation curves and animation configuration |
 | `plugins.lua` | Hymission and Hyprgrass configuration |
 | `monitors.lua` | Monitor configuration loader |
@@ -204,11 +190,11 @@ Top-right utility placement is used for `pavucontrol`/`nmtui`, Overskride, `nwg-
 
 ## Dwindle spiral behavior
 
-The default tiled layout uses classic dynamic Dwindle behavior:
+The default tiled layout uses the original Dwindle settings from this configuration:
 
-- `force_split = 2`: the newly opened child is placed on the right or bottom.
-- `preserve_split = false`: split orientation is recalculated from the parent aspect ratio, producing the alternating left/right then top/bottom spiral.
-- `smart_split = false`: normal window creation is not influenced by pointer position.
-- `precise_mouse_move = true`: manual `SUPER + drag` reinsertion can still use the pointer for accurate drop placement.
+- `preserve_split = true`
+- `force_split = 2`
+
+Inner/outer gaps always remain at the normal configured values; no smart-gaps feature or toggle is installed.
 
 If an existing workspace was created under a different split policy, open the test windows on a fresh workspace (or recreate them) to verify the new tree shape.

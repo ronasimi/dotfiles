@@ -332,92 +332,29 @@ hl.on("window.active", M.reset_border_state)
 hl.on("workspace.active", M.reset_border_state)
 
 -------------------------------------------
----- SMART SUPER + DRAG TILE/FLOAT     ----
+---- NATIVE SUPER + DRAG TILED MOVE     ----
 -------------------------------------------
 
-local smart_drag = nil
-
-function M.smart_drag_begin()
-    local window = hl.get_active_window()
-    if not window then
-        smart_drag = nil
-        return
-    end
-
-    smart_drag = {
-        window = window,
-        was_floating = window.floating,
-        was_pinned = window.pinned,
-    }
-
-    -- Detach tiled windows immediately so the native mouse-drag dispatcher
-    -- can move them freely. keybinds.lua starts the actual interactive drag.
-    if not window.floating then
-        hl.dispatch(hl.dsp.window.float({ window = window, action = "set" }))
-        if M.schedule_smart_gaps_refresh then
-            M.schedule_smart_gaps_refresh()
-        end
-    end
+-- Keep the user's normal Dwindle settings untouched at rest. During a mouse
+-- move, temporarily enable the two pointer-aware placement options so a tiled
+-- window is reinserted according to where it is released. No float/tile state
+-- transition is performed here; hl.dsp.window.drag() owns the actual move.
+function M.tiled_drag_begin()
+    hl.config({
+        dwindle = {
+            smart_split = true,
+            precise_mouse_move = true,
+        }
+    })
 end
 
--- A click (movement stayed under binds.drag_threshold) is a no-op: restore the
--- original state if we temporarily detached a tiled window on button press.
-function M.smart_drag_click_end()
-    if not smart_drag then
-        return
-    end
-
-    if not smart_drag.was_floating then
-        hl.dispatch(hl.dsp.window.float({ window = smart_drag.window, action = "unset" }))
-        if M.schedule_smart_gaps_refresh then
-            M.schedule_smart_gaps_refresh()
-        end
-    end
-
-    smart_drag = nil
-end
-
--- A real drag commits a mode transition. Tiled -> floating remains detached;
--- floating -> tiled is reinserted into the active layout. Pinned windows remain
--- floating because pinning only has meaningful semantics for floating windows.
-function M.smart_drag_drag_end()
-    if not smart_drag then
-        return
-    end
-
-    if smart_drag.was_floating and not smart_drag.was_pinned then
-        hl.dispatch(hl.dsp.window.float({ window = smart_drag.window, action = "unset" }))
-        if M.schedule_smart_gaps_refresh then
-            M.schedule_smart_gaps_refresh()
-        end
-    end
-
-    smart_drag = nil
-end
-
--------------------------------------------
----- LAYOUT-AWARE COMPOSITOR ACTIONS   ----
--------------------------------------------
-
-function M.layout_action(actions)
-    return function()
-        local workspace = hl.get_active_special_workspace() or hl.get_active_workspace()
-        if not workspace then
-            return
-        end
-
-        local dispatcher = actions[workspace.tiled_layout]
-        if dispatcher then
-            hl.dispatch(dispatcher)
-        end
-    end
-end
-
-function M.toggle_primary_layout()
-    local current = hl.get_config("general.layout")
-    local next_layout = (current == "master") and "dwindle" or "master"
-    hl.config({ general = { layout = next_layout } })
-    notify("Layout: " .. next_layout, "info")
+function M.tiled_drag_end()
+    hl.config({
+        dwindle = {
+            smart_split = false,
+            precise_mouse_move = false,
+        }
+    })
 end
 
 -------------------------------------------
@@ -525,204 +462,6 @@ function M.zoom(offset)
 end
 
 -------------------------------------------
----- SMART GAPS                         ----
--------------------------------------------
-
--- Default: OFF. This implementation intentionally avoids workspace-rule
--- runtime handles: Hyprland 0.55 exposes runtime handles for named window
--- rules, but not for workspace rules. Gaps are therefore updated with the
--- documented hl.get_config()/hl.config() path when the active regular
--- workspace transitions between one tiled window and any other state.
-local smart_gaps_enabled = false
-local smart_gaps_applied = false
-local smart_gap_base = nil
-local smart_gap_refresh_timer = nil
-
--- Named window rules *are* runtime-toggleable on Hyprland 0.55+. Keep this
--- rule disabled until smart gaps are enabled. It handles rounding/borders on
--- every matching workspace while the event-driven code below handles gaps.
-local smart_gap_window_rule = hl.window_rule({
-    name = "smart-gaps-single-tiled",
-    match = { float = false, workspace = "w[tv1]s[false]" },
-    border_size = 0,
-    rounding = 0,
-})
-
-if smart_gap_window_rule and smart_gap_window_rule.set_enabled then
-    smart_gap_window_rule:set_enabled(false)
-end
-
-local function copy_gaps(value, fallback)
-    if type(value) ~= "table" then
-        return fallback
-    end
-
-    return {
-        top = value.top or fallback.top,
-        left = value.left or fallback.left,
-        right = value.right or fallback.right,
-        bottom = value.bottom or fallback.bottom,
-    }
-end
-
-local function capture_smart_gap_base()
-    if smart_gap_base then
-        return
-    end
-
-    -- functions.lua is imported before the main hl.config() batch, so capture
-    -- these lazily on first enable rather than at module load time.
-    smart_gap_base = {
-        gaps_in = copy_gaps(hl.get_config("general.gaps_in"), {
-            top = 9, left = 9, right = 9, bottom = 9,
-        }),
-        gaps_out = copy_gaps(hl.get_config("general.gaps_out"), {
-            top = 18, left = 18, right = 18, bottom = 18,
-        }),
-    }
-end
-
-local function active_regular_workspace_has_one_tiled()
-    -- Match the official smart-gap selector's s[false] behavior.
-    if hl.get_active_special_workspace() ~= nil then
-        return false
-    end
-
-    local workspace = hl.get_active_workspace()
-    if not workspace then
-        return false
-    end
-
-    local selector = workspace.id or workspace.addressable_name or workspace.name
-    if selector == nil then
-        return false
-    end
-
-    local windows = hl.get_workspace_windows(selector) or {}
-    local tiled = 0
-
-    for _, window in ipairs(windows) do
-        if window and window.mapped ~= false and not window.floating then
-            tiled = tiled + 1
-            if tiled > 1 then
-                return false
-            end
-        end
-    end
-
-    return tiled == 1
-end
-
-local function apply_smart_gap_state(gapless)
-    capture_smart_gap_base()
-
-    if smart_gaps_applied == gapless then
-        return
-    end
-
-    smart_gaps_applied = gapless
-
-    if gapless then
-        hl.config({
-            general = {
-                gaps_in = 0,
-                gaps_out = 0,
-            }
-        })
-    else
-        hl.config({
-            general = {
-                gaps_in = smart_gap_base.gaps_in,
-                gaps_out = smart_gap_base.gaps_out,
-            }
-        })
-    end
-end
-
-function M.refresh_smart_gaps()
-    if not smart_gaps_enabled then
-        return
-    end
-
-    apply_smart_gap_state(active_regular_workspace_has_one_tiled())
-end
-
-function M.schedule_smart_gaps_refresh()
-    if not smart_gaps_enabled or smart_gap_refresh_timer ~= nil then
-        return
-    end
-
-    -- Window/layout dispatchers complete after the current Lua callback. A tiny
-    -- one-shot lets Hyprland update window.floating/workspace membership first.
-    smart_gap_refresh_timer = hl.timer(function()
-        smart_gap_refresh_timer = nil
-        M.refresh_smart_gaps()
-    end, { timeout = 20, type = "oneshot" })
-end
-
-function M.set_smart_gaps(enabled, quiet)
-    enabled = not not enabled
-
-    if enabled == smart_gaps_enabled then
-        return true
-    end
-
-    capture_smart_gap_base()
-    smart_gaps_enabled = enabled
-
-    if smart_gap_window_rule and smart_gap_window_rule.set_enabled then
-        smart_gap_window_rule:set_enabled(enabled)
-    end
-
-    if enabled then
-        M.refresh_smart_gaps()
-    else
-        if smart_gap_refresh_timer and smart_gap_refresh_timer.set_enabled then
-            smart_gap_refresh_timer:set_enabled(false)
-        end
-        smart_gap_refresh_timer = nil
-        apply_smart_gap_state(false)
-    end
-
-    if not quiet then
-        notify("Smart gaps: " .. (enabled and "enabled" or "disabled"), enabled and "ok" or "info")
-    end
-
-    return true
-end
-
-function M.toggle_smart_gaps()
-    return M.set_smart_gaps(not smart_gaps_enabled)
-end
-
-function M.smart_gaps_enabled()
-    return smart_gaps_enabled
-end
-
--- Keep smart gaps synchronized with the active workspace without polling.
--- All of these events are available in Hyprland 0.55's Lua API.
-local function smart_gap_event_refresh()
-    M.schedule_smart_gaps_refresh()
-end
-
-hl.on("window.open", smart_gap_event_refresh)
-hl.on("window.close", smart_gap_event_refresh)
-hl.on("window.destroy", smart_gap_event_refresh)
-hl.on("window.active", smart_gap_event_refresh)
-hl.on("window.move_to_workspace", smart_gap_event_refresh)
-hl.on("workspace.active", smart_gap_event_refresh)
-hl.on("workspace.created", smart_gap_event_refresh)
-hl.on("workspace.removed", smart_gap_event_refresh)
-hl.on("monitor.focused", smart_gap_event_refresh)
-
--- Route the normal float toggle through a tiny wrapper so smart gaps refresh
--- immediately after a window switches between tiled and floating.
-function M.toggle_floating()
-    hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
-    M.schedule_smart_gaps_refresh()
-end
-
--------------------------------------------
 ---- PERFORMANCE / BATTERY MODE        ----
 -------------------------------------------
 
@@ -759,33 +498,33 @@ function M.toggle_performance_mode()
 end
 
 -------------------------------------------
----- CONTEXT-SENSITIVE SCRATCHPAD      ----
+---- TILDE SCRATCHPAD                  ----
 -------------------------------------------
 
-local SCRATCHPAD_CLASS = "scratchpad"
-local SCRATCHPAD_WORKSPACE = "special:scratchpad"
-local SCRATCHPAD_COMMAND = "/home/ron/.bin/starttilde && uwsm app -- kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chktilde'"
+local TILDE_CLASS = "scratchpad"
+local TILDE_WORKSPACE = "special:scratchpad"
+local TILDE_COMMAND = "/home/ron/.bin/starttilde && uwsm app -- kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chktilde'"
 
-function M.toggle_terminal_scratchpad()
-    local windows = hl.get_windows({ class = SCRATCHPAD_CLASS })
+function M.toggle_tilde()
+    local windows = hl.get_windows({ class = TILDE_CLASS })
 
     if #windows == 0 then
         -- Open the special workspace first so the terminal appears immediately
         -- when the process creates its window. Avoid toggling it closed in the
         -- unusual case that the empty scratchpad workspace is already visible.
         local active_special = hl.get_active_special_workspace()
-        if not active_special or active_special.addressable_name ~= SCRATCHPAD_WORKSPACE then
+        if not active_special or active_special.addressable_name ~= TILDE_WORKSPACE then
             hl.dispatch(hl.dsp.workspace.toggle_special("scratchpad"))
         end
-        hl.dispatch(hl.dsp.exec_cmd(SCRATCHPAD_COMMAND))
+        hl.dispatch(hl.dsp.exec_cmd(TILDE_COMMAND))
         return
     end
 
     local window = windows[1]
-    if window.workspace and window.workspace.addressable_name ~= SCRATCHPAD_WORKSPACE then
+    if window.workspace and window.workspace.addressable_name ~= TILDE_WORKSPACE then
         hl.dispatch(hl.dsp.window.move({
             window = window,
-            workspace = SCRATCHPAD_WORKSPACE,
+            workspace = TILDE_WORKSPACE,
             follow = false,
         }))
     end

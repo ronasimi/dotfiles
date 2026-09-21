@@ -101,7 +101,7 @@ hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("uwsm app -- hyprland-run"))
 
 -- Window Management
 hl.bind(mainMod .. " + X", hl.dsp.window.close())
-hl.bind(mainMod .. " + SPACE", fx.toggle_floating)
+hl.bind(mainMod .. " + SPACE", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + P", hl.dsp.window.pin())
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
@@ -116,23 +116,12 @@ hl.bind(mainMod .. " + SHIFT + N", fx.restore_minimized)
 -- Urgent window if one exists, otherwise the last-focused window.
 hl.bind(mainMod .. " + U", fx.focus_urgent_or_last)
 
--- Dwindle <-> Master without spawning hyprctl.
-hl.bind(mainMod .. " + J", fx.toggle_primary_layout)
-
--- Layout-aware actions: same key does useful native work in each tiled layout.
-hl.bind(mainMod .. " + A", fx.layout_action({
-    scrolling = hl.dsp.layout("swapcol l"),
-    dwindle   = hl.dsp.layout("swapsplit"),
-    monocle   = hl.dsp.layout("cycleprev"),
-    master    = hl.dsp.layout("cycleprev"),
-}))
-
-hl.bind(mainMod .. " + SHIFT + A", fx.layout_action({
-    scrolling = hl.dsp.layout("swapcol r"),
-    dwindle   = hl.dsp.layout("togglesplit"),
-    monocle   = hl.dsp.layout("cyclenext"),
-    master    = hl.dsp.layout("cyclenext"),
-}))
+-- Layout Toggle
+local current_layout = "dwindle"
+hl.bind(mainMod .. " + J", function()
+    current_layout = (current_layout == "master") and "dwindle" or "master"
+    hl.dispatch(hl.dsp.exec_cmd("hyprctl keyword general:layout " .. current_layout))
+end)
 
 -- Window Focus & Movement
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
@@ -153,16 +142,13 @@ hl.bind(mainMod .. " + ALT + right", function() fx.preselect_with_border("r", 18
 hl.bind(mainMod .. " + ALT + up", function() fx.preselect_with_border("u", 90) end)
 hl.bind(mainMod .. " + ALT + down", function() fx.preselect_with_border("d", 270) end)
 
--- Smart mouse window management. SUPER+LMB tears a tiled window out to float;
--- dragging an already-floating (non-pinned) window reinserts it into tiling.
--- A click without a real drag changes nothing.
--- Same-key binds execute in declaration order: capture/toggle state first,
--- then let Hyprland own the interactive mouse move. Release handlers decide
--- whether this was a click or a real drag using binds.drag_threshold.
-hl.bind(mainMod .. " + mouse:272", fx.smart_drag_begin)
+-- Native tiled mouse movement. SUPER+LMB keeps tiled windows in the layout
+-- and reorders/reinserts them according to the pointer's drop position.
+-- Precise mouse placement is enabled only for the duration of the drag so the
+-- normal Dwindle configuration remains identical to the original config.
+hl.bind(mainMod .. " + mouse:272", fx.tiled_drag_begin, { mouse = true })
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
-hl.bind(mainMod .. " + mouse:272", fx.smart_drag_click_end, { mouse = true, click = true })
-hl.bind(mainMod .. " + mouse:272", fx.smart_drag_drag_end, { mouse = true, drag = true })
+hl.bind(mainMod .. " + mouse:272", fx.tiled_drag_end, { release = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Workspaces
@@ -172,7 +158,8 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
-hl.bind(mainMod .. " + GRAVE", hl.dsp.workspace.toggle_special("scratchpad"))
+-- Tilde scratchpad: launch it once, then use the same key to show/hide it.
+hl.bind(mainMod .. " + GRAVE", fx.toggle_tilde)
 hl.bind(mainMod .. " + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special:scratchpad" }))
 
 -- Rebound Tab Actions
@@ -192,11 +179,6 @@ hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + Z", fx.zoom)
 hl.bind(mainMod .. " + equal", function() fx.zoom(0.25) end, { repeating = true })
 hl.bind(mainMod .. " + minus", function() fx.zoom(-0.25) end, { repeating = true })
-
--- Toggle compositor-native smart gaps. Smart gaps are OFF at startup and
--- collapse gaps/rounding only when a regular workspace has one visible tiled
--- window.
-hl.bind(mainMod .. " + CTRL + G", fx.toggle_smart_gaps)
 
 -- Toggle blur/shadows/animations for battery or low-latency use. The previous
 -- values are snapshotted and restored rather than assuming hard-coded defaults.
@@ -239,6 +221,3 @@ hl.bind(mainMod .. " + F6", run_in_ws(6, "vmware"))
 hl.bind(mainMod .. " + F7", run_in_ws(7, "libreoffice --writer"))
 hl.bind(mainMod .. " + F8", run_in_ws(8, "env GTK_THEME=Adwaita:dark prusa-slicer"))
 
--- Context-sensitive scratchpad: reuse an existing scratchpad terminal instead
--- of spawning a duplicate every time.
-hl.bind(mainMod .. " + T", fx.toggle_terminal_scratchpad)

@@ -1,0 +1,5 @@
+[user]
+	email = ron.asimi@gmail.com
+	name = Ron Asimi
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret

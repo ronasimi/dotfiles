@@ -15,20 +15,20 @@ fi
 [[ $- != *i* ]] && return
 
 # ENVIRONMENT VARIABLES
-export PATH="/home/ron/.bin:/usr/local/bin:$PATH"
+export PATH="$HOME/.bin:/usr/local/bin:$PATH"
 export EDITOR="nano"
 export VISUAL=$EDITOR
 export USE_CCACHE=1
-export CCACHE_DIR=/home/ron/.ccache
+export CCACHE_DIR="$HOME/.ccache"
 export CCACHE_SLOPPINESS=include_file_mtime
 export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
 
 # PERL ENV
-export PATH="/home/ron/.perl5/bin:$PATH"
-export PERL5LIB="/home/ron/.perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
-export PERL_LOCAL_LIB_ROOT="/home/ron/.perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
-export PERL_MB_OPT="--install_base \"/home/ron/.perl5\""
-export PERL_MM_OPT="INSTALL_BASE=/home/ron/.perl5"
+export PATH="$HOME/.perl5/bin:$PATH"
+export PERL5LIB="$HOME/.perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+export PERL_LOCAL_LIB_ROOT="$HOME/.perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+export PERL_MB_OPT="--install_base \"$HOME/.perl5\""
+export PERL_MM_OPT="INSTALL_BASE=$HOME/.perl5"
 
 # SET TTY COLORS AND LOAD PROMPTS
 if [ "$TERM" = "linux" ]; then
@@ -149,7 +149,7 @@ zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=29=34"
 zstyle ':completion:*:*:killall:*' menu yes select
 zstyle ':completion:*:killall:*' force-list always
 zstyle ':completion:*:*:killall:*:processes' list-colors "=(#b) #([0-9]#)*=29=34"
-zstyle ':completion:*' users ron root
+zstyle ':completion:*' users "$USER" root
 
 # ALIASES
 alias ls='eza --group-directories-first --git --header --icons=never'
@@ -171,10 +171,6 @@ xterm_title_precmd () {
 xterm_title_preexec () {
   print -Pn -- '\e]2;%n@%m %~ %# ' && print -n -- "${(q)1}\a"
   [[ "$TERM" == 'screen'* ]] && { print -Pn -- '\e_\005{g}%n\005{-}@\005{m}%m\005{-} \005{B}%~\005{-} %# ' && print -n -- "${(q)1}\e\\"; }
-}
-
-zshalias() {
-  grep "^alias" ~/.zshrc > ~/.zshenv
 }
 
 google() {
@@ -281,11 +277,11 @@ fi
 if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
   source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
- # ZSH-AI CONFIGURATION
-export ZSH_AI_PROVIDER="ollama"
-export ZSH_AI_OLLAMA_MODEL="huihui_ai/qwen3.5-abliterated:4b"
-export ZSH_AI_OLLAMA_URL="http://localhost:11434"
-export ZSH_AI_TRIGGER=",,"
-
-# Source zsh-ai plugin
-source /usr/share/zsh/plugins/zsh-ai/zsh-ai.plugin.zsh
+# ZSH-AI CONFIGURATION
+if [[ -f /usr/share/zsh/plugins/zsh-ai/zsh-ai.plugin.zsh ]]; then
+  export ZSH_AI_PROVIDER="ollama"
+  export ZSH_AI_OLLAMA_MODEL="huihui_ai/qwen3.5-abliterated:4b"
+  export ZSH_AI_OLLAMA_URL="http://localhost:11434"
+  export ZSH_AI_TRIGGER=",,"
+  source /usr/share/zsh/plugins/zsh-ai/zsh-ai.plugin.zsh
+fi

@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=GNOME Keyring Daemon
+Exec=gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
+NoDisplay=true

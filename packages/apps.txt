@@ -1,0 +1,11 @@
+# Applications referenced by keybinds/window rules or present in the workflow.
+google-chrome
+visual-studio-code-bin
+gimp
+prusa-slicer
+libreoffice-fresh
+vmware-workstation
+localsend-bin
+meld
+galculator
+moonlight-qt

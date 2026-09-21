@@ -1,0 +1,17 @@
+# Existing files/configs seen in the current home-directory inventory that are
+# useful candidates for future management. Run:
+#   ./backup.sh --adopt-suggested
+# to copy existing entries into home/ and append them to manifests/home.txt.
+.gitconfig
+.config/autostart
+.config/mimeapps.list
+.config/pikaur.conf
+.config/user-dirs.dirs
+.config/thefuck
+.config/qt6ct
+.config/nwg-look
+.config/xsettingsd
+.config/Kvantum
+.config/Thunar/uca.xml
+.hyprlogin.png
+Projects/Wallpapers/ivan.levyv.png

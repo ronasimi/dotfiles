@@ -1,101 +1,175 @@
-# My Hyprland Dotfiles
+# T14 Arch / Hyprland Dotfiles
 
-This repository contains my personal [Hyprland](https://hyprland.org/) configuration, written in Lua using a native Lua implementation. It is tailored for a seamless, Wayland-native workflow on Arch Linux.
+Personal Arch Linux dotfiles for a Hyprland + UWSM desktop on the ThinkPad T14. The repository is designed to be used directly from `~/.dotfiles`: managed files are symlinked into `$HOME`, while system files under `etc/` are copied into `/etc` by the installer.
 
-## 📦 Dependencies
+The active launcher stack is **Walker + Elephant**. Legacy Rofi, Wofi, Fuzzel, Hyprexpose, htop and amdtop configuration was removed during the September 2026 home-directory audit because those configs are no longer present in the live managed setup and the current Hyprland configuration does not use them.
 
-To replicate this setup, you will need to install the following packages. They are divided into core Wayland components, UI elements, hardware controls, and specific applications bound in the configuration.
+## Repository layout
 
-### 1. Core Wayland & Session
-* **`hyprland`**: The Wayland compositor itself.
-* **`uwsm`**: Universal Wayland Session Manager (used to wrap and launch applications).
-* **`xdg-desktop-portal-hyprland`**: Required for Wayland screen sharing and portal support.
-* **`xdg-desktop-portal-gtk`**: Fallback portal for GTK applications.
-* **`polkit-gnome`**: Graphical authentication agent.
-* **`gnome-keyring`**: Secret service provider.
-
-### 2. Hyprland Ecosystem
-* **`hypridle`**: Manages idle states and screen blanking.
-* **`hyprlock`**: Screen locker.
-* **`hyprpaper`**: Wallpaper utility.
-
-### 3. Shell, Status & UI
-* **`waybar`**: Highly customizable status bar.
-* **`wofi`**: Application launcher and dynamic menu.
-* **`dunst`**: Lightweight notification daemon.
-* **`nwg-displays`**: Display configuration GUI.
-* **`nwg-look`**: GTK theme configuration tool.
-* **`qt6ct`**: Qt6 theme configuration tool.
-
-### 4. Clipboard & Screenshots
-* **`wl-clipboard`**: Command-line copy/paste utilities (`wl-copy` and `wl-paste`).
-* **`cliphist`**: Clipboard history manager.
-* **`grimblast`** *(AUR)*: Advanced screenshot utility.
-* **`wl-clip-persist`** *(AUR)*: Keeps clipboard contents active after closing the source application.
-
-### 5. Hardware & Media Control
-* **`pamixer`**: Pulseaudio command-line mixer for volume control keybinds.
-* **`libpulse`**: Provides `pactl` for microphone muting.
-* **`pavucontrol`**: GUI audio mixer.
-* **`brightnessctl`**: Backlight control for the screen and keyboard.
-* **`playerctl`**: Media player controller (heavily used in the idle configuration).
-* **`wireless_tools`**: Provides `iwgetid` (used in the lock screen to show Wi-Fi status).
-* **`overskride`** *(AUR)*: Bluetooth GUI.
-
-### 6. Terminal & File Management
-* **`kitty`**: Default GPU-accelerated terminal emulator.
-* **`thunar`**: Default file manager.
-* **`catfish`**: File search tool.
-* **`xarchiver`**: Archive manager.
-* **`trash-cli`**: Command-line trash utility (used for Electron apps).
-* **`dash`**: Lightweight, POSIX-compliant shell (used for battery/idle scripts).
-
-### 7. System Utilities
-* **`hyprshutdown`** *(AUR)*: Power menu and shutdown script.
-* **`syshud`** *(AUR)*: Visual on-screen indicator (OSD) for volume and brightness changes.
-* **`btop`**: Resource monitor.
-* **`galculator`**: Calculator.
-* **`networkmanager`**: Provides `nmtui` and `nm-connection-editor` for network management.
-* **`jq`**: Command-line JSON processor (used in custom layout toggle scripts).
-
-### 8. End-User Applications (Configured & Bound)
-These applications have specific window rules or keybinds assigned in the configuration:
-* **Web**: `google-chrome` *(AUR)*
-* **Development**: `visual-studio-code-bin` *(AUR)*, `meld`
-* **Creativity/Design**: `gimp`, `prusa-slicer`
-* **Office**: `libreoffice-fresh` (or `libreoffice-still`)
-* **Virtualization**: `vmware-workstation` *(AUR)*
-* **Media/Viewing**: `mpv` (video), `imv` (images), `zathura` (documents/PDFs)
-* **Networking**: `localsend-bin` *(AUR)*
-
----
-
-## 🚀 Installation Guide (Arch Linux)
-
-You can install the majority of these packages using the official Arch repositories, and the rest using your preferred AUR helper (e.g., `yay` or `paru`).
-
-**1. Install Official Repository Packages:**
-```bash
-sudo pacman -S hyprland xdg-desktop-portal-hyprland xdg-desktop-portal-gtk polkit-gnome gnome-keyring hypridle hyprlock hyprpaper waybar wofi dunst qt6ct wl-clipboard cliphist pamixer libpulse pavucontrol brightnessctl playerctl wireless_tools kitty thunar catfish xarchiver trash-cli dash btop galculator networkmanager jq gimp prusa-slicer libreoffice-fresh mpv imv zathura meld
+```text
+.
+├── backup.sh                 # sync live dotfiles back into the repo
+├── install.sh                # restore packages, links, /etc files and services
+├── home/                     # files that map into $HOME
+├── etc/                      # system configuration copied into /etc
+├── manifests/
+│   ├── home.txt              # exact paths managed as symlinks
+│   ├── suggested.txt         # useful current-home paths not yet managed
+│   └── systemd-user.txt      # user units enabled during restore when available
+└── packages/
+    ├── required.txt          # packages directly needed by the dotfiles
+    ├── apps.txt              # configured/bound desktop applications
+    ├── explicit-native.txt   # generated by backup.sh from pacman -Qqen
+    └── explicit-foreign.txt  # generated by backup.sh from pacman -Qqem
 ```
 
-**2. Install AUR Packages:**
+The detailed Hyprland keybind/layout documentation lives in [`home/.config/hypr/README.md`](home/.config/hypr/README.md).
+The full comparison notes are in [`AUDIT.md`](AUDIT.md).
+
+## Home-directory audit
+
+The current machine already links the core shell files and the main desktop configs back into this repo: `.bin`, `.nano`, `.tmux`, `.zshrc`, `.Xresources`, Hyprland, Waybar, Walker, Kitty, systemd user config, GTK config, MPV, Ranger and the other paths listed in `manifests/home.txt`.
+
+Cleanup performed against that live layout:
+
+- removed stale config directories for `rofi`, `wofi`, `fuzzel`, `hyprexpose`, `htop` and `amdtop`;
+- removed the unused `electron-flags.conf` snapshot;
+- removed legacy X11 helpers built around `urxvt`, `dmenu`, `feh` and `xdotool`;
+- removed old Rofi/Wofi clipboard/window-switcher helpers now superseded by Walker/Elephant;
+- removed the blocking legacy Waybar cursor polling script because bar reveal is implemented in the active Hyprland Lua config;
+- removed stale Hyprland files that the Hyprland notes already identified as retired: `track_backlight.sh`, `wofi-switcher.py`, `monitors.conf`, and the empty workspace include files;
+- removed generated systemd `*.target.wants` trees and the one-off dated reminder unit; the installer recreates only the intended service enablement;
+- removed runtime state (`ranger/history`, `ranger/tagged`, Python bytecode caches);
+- removed the duplicate root-level `.zshrc`, the unused `.xinitrc`, an empty old tmux theme-pack directory, and an unrelated prose document;
+- removed stale repo copies of `pikaur.conf`, `user-dirs.dirs`, and `thefuck` config because the live, non-symlinked versions are newer/different. They are listed as adoption candidates instead of restoring stale data.
+
+The shell config was also made less machine-specific by replacing hard-coded shell/perl cache paths with `$HOME`, and the optional zsh-ai plugin is now sourced only when installed.
+
+## Backing up the current machine
+
+Run from the repository:
 
 ```bash
-yay -S uwsm nwg-displays nwg-look grimblast-git wl-clip-persist overskride hyprshutdown syshud google-chrome visual-studio-code-bin vmware-workstation localsend-bin
+./backup.sh
 ```
 
-**⚙️ Applying the Configuration**
-Clone this repository to your local machine.
+For paths already symlinked into this repository, the script correctly treats them as already current instead of copying the repo onto itself. Non-symlinked managed files are synchronized into `home/`.
 
-Backup your existing Hyprland configurations.
+By default it also records the explicitly installed package set:
 
-Copy the contents of this repository into your ~/.config/hypr/ directory.
+- `pacman -Qqen` → `packages/explicit-native.txt`
+- `pacman -Qqem` → `packages/explicit-foreign.txt`
 
-Ensure all custom scripts (e.g., ~/.config/hypr/scripts/battlock.sh) are marked as executable:
+Useful options:
 
 ```bash
-chmod +x ~/.config/hypr/scripts/*.sh
+./backup.sh --dry-run
+./backup.sh --no-packages
+./backup.sh --adopt-suggested
 ```
 
-Log out and start your Hyprland session (preferably using uwsm).
+`--adopt-suggested` copies every existing path in `manifests/suggested.txt` and appends it to `manifests/home.txt`, making it part of future restores.
+
+## Fresh Arch restore
+
+Clone or copy the repository to `~/.dotfiles`, then run it as your normal user:
+
+```bash
+git clone <your-repo-url> ~/.dotfiles
+cd ~/.dotfiles
+./install.sh
+```
+
+For a non-interactive package install:
+
+```bash
+./install.sh --yes
+```
+
+To recreate the wider explicitly installed package set captured by `backup.sh` as well as the curated dotfile dependencies:
+
+```bash
+./install.sh --all-packages --yes
+```
+
+The installer:
+
+1. updates Arch package metadata and installs bootstrap tooling;
+2. installs `packages/required.txt` and `packages/apps.txt`;
+3. checks the Arch repositories first and uses **pikaur** for packages that are not available there, bootstrapping pikaur when necessary;
+4. moves conflicting home files into `~/.dotfiles-backup/<timestamp>/`;
+5. symlinks every path in `manifests/home.txt` to the corresponding file under `home/`;
+6. installs `etc/tlp.conf` and the udev rules when system installation is enabled;
+7. reloads systemd and enables the user units in `manifests/systemd-user.txt` when those units exist.
+
+Useful restore modes:
+
+```bash
+./install.sh --dry-run --no-packages --no-system --no-services
+./install.sh --no-packages
+./install.sh --no-system
+./install.sh --no-services
+```
+
+Do **not** run `install.sh` as root. It needs your real `$HOME` and your user systemd instance; it uses `sudo` only for package and `/etc` operations.
+
+## Package policy
+
+`packages/required.txt` is intentionally limited to software directly used by the tracked configs and services. `packages/apps.txt` contains applications referenced by the desktop workflow, keybinds or window rules. The package snapshots generated by `backup.sh` are optional and are restored only with `--all-packages`.
+
+This keeps a fresh install reproducible without automatically dragging every historical package onto the new machine.
+
+Hyprland plugins such as Hymission/Hyprgrass are intentionally **not** installed automatically. The Lua config checks for plugin availability, and plugin source/version management is better kept explicit because Hyprland plugin ABI compatibility can change.
+
+## Suggested additions from the current home directory
+
+The audit found several useful files that exist on the current machine but are not yet owned by this repo. They are listed in `manifests/suggested.txt`:
+
+- `.gitconfig`;
+- `.config/autostart/` for the keyring/polkit desktop entries;
+- `.config/mimeapps.list`;
+- live `.config/pikaur.conf`, `.config/user-dirs.dirs`, and `.config/thefuck/`;
+- `.config/qt6ct`, `.config/nwg-look`, `.config/xsettingsd`, and `.config/Kvantum` for theme consistency;
+- the custom Thunar actions file `.config/Thunar/uca.xml`;
+- `.hyprlogin.png`, which `hyprlogin.conf` expects;
+- `Projects/Wallpapers/ivan.levyv.png`, which the current `hyprpaper.conf` expects.
+
+Adopt all currently existing candidates with:
+
+```bash
+./backup.sh --adopt-suggested
+```
+
+For the visual setup to reproduce exactly, also document or install the **SF Pro / SFMono Nerd Font** family and the **OpenZone_White_Slim** cursor theme. Font files themselves should not be committed unless their license permits redistribution.
+
+## What should stay out of dotfiles
+
+Do not add transient or sensitive state just because it appears under `$HOME`. In particular, keep these out of the repository:
+
+- `.gnupg/`, private SSH keys, browser profiles, keyrings and authentication databases;
+- `.histfile`, shell/compiler/application caches and crash-recovery directories;
+- `.claude.json`, API-key `.env` files, tokens or credentials;
+- `.docker/`, `.ollama/`, VM disks, downloaded models and other large mutable data;
+- generated systemd `*.target.wants` directories;
+- application databases/history unless they are intentionally part of the configuration.
+
+## Machine-specific paths
+
+Most linking logic is `$HOME`-portable. A few application-owned configs still contain paths from this machine (for example rTorrent directories, GTK bookmarks, Hyprlock/login assets and the selected Hyprpaper wallpaper). Keep those paths aligned on a new install, or adopt the referenced assets and edit the configs before moving to a differently named user account.
+
+## After installation
+
+Log out and start Hyprland through UWSM. If using the plugin setup, install/rebuild the desired Hyprland plugins and run:
+
+```bash
+hyprpm reload
+```
+
+Then verify:
+
+```bash
+systemctl --user --failed
+systemctl --user status walker.service elephant.service waybar.service hypridle.service hyprpaper.service
+```
+
+The on-demand `tilde.service`, `rt.service`, and `ollama-preload.service` unit files are retained but are **not** automatically enabled because they were not enabled in the audited current-home systemd wants tree.

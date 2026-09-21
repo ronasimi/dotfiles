@@ -1,0 +1,11 @@
+# User units enabled in the current setup that matter to this desktop profile.
+# install.sh enables each one only when the unit exists.
+elephant.service
+hyprlogin.service
+hyprpaper.service
+walker.service
+hypridle.service
+waybar.service
+psd.service
+pipewire-pulse.service
+pipewire-pulse.socket

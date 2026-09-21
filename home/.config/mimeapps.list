@@ -1,0 +1,35 @@
+[Default Applications]
+text/html=google-chrome.desktop
+x-scheme-handler/http=google-chrome.desktop
+x-scheme-handler/https=google-chrome.desktop
+x-scheme-handler/about=google-chrome.desktop
+x-scheme-handler/unknown=google-chrome.desktop
+x-scheme-handler/mailto=google-chrome.desktop
+application/zip=xarchiver.desktop
+image/png=imv.desktop
+image/jpeg=imv.desktop
+image/webp=imv.desktop
+text/x-log=org.x.editor.desktop
+text/plain=org.x.editor.desktop
+application/xml=org.x.editor.desktop
+application/pdf=org.pwmt.zathura.desktop
+application/x-vmdk-disk=org.x.editor.desktop
+x-scheme-handler/webcal=google-chrome.desktop
+
+[Added Associations]
+application/pdf=google-chrome.desktop;org.pwmt.zathura-pdf-mupdf.desktop;org.pwmt.zathura.desktop;
+text/plain=code.desktop;
+image/png=gimp.desktop;imv.desktop;imv-dir.desktop;
+application/x-shellscript=code.desktop;
+image/jpeg=gimp.desktop;
+application/x-troff-man=org.x.editor.desktop;
+application/zip=xarchiver.desktop;
+image/webp=imv.desktop;
+text/markdown=org.x.editor.desktop;
+text/x-log=org.x.editor.desktop;
+application/x-zerosize=org.x.editor.desktop;code.desktop;
+application/xml=org.x.editor.desktop;
+text/x-lua=code.desktop;
+text/x-python=org.x.editor.desktop;code.desktop;
+application/x-vmdk-disk=org.x.editor.desktop;
+application/vnd.efi.iso=gnome-disk-image-mounter.desktop;

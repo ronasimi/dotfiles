@@ -16,7 +16,7 @@ hl.window_rule({
 -- Layer Rules (Blur/Animation)
 hl.layer_rule({
     name         = "blur-ui-layers",
-    match        = { namespace = "^(wofi|waybar|notifications|syshud|dunst)$" },
+    match        = { namespace = "^(waybar|notifications|syshud|dunst)$" },
     animation    = "fade",
     blur         = true,
     blur_popups  = true,

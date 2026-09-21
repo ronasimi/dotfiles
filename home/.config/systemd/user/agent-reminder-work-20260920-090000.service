@@ -1,8 +1,0 @@
-[Unit]
-Description=Local Agent reminder: work
-
-[Service]
-Type=oneshot
-Environment=XDG_RUNTIME_DIR=/run/user/1000
-Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
-ExecStart=/usr/bin/notify-send --app-name=LocalAgent -- "work" "Work reminder"

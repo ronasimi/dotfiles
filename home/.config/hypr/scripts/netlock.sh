@@ -23,4 +23,4 @@ $link
 EOF_LINK
 fi
 
-printf '󰖩 %s\n%s\n' "$ssid" "$speed"
+printf '󰖩 %s' "$ssid"

@@ -15,6 +15,7 @@ application/xml=org.x.editor.desktop
 application/pdf=org.pwmt.zathura.desktop
 application/x-vmdk-disk=org.x.editor.desktop
 x-scheme-handler/webcal=google-chrome.desktop
+text/markdown=code.desktop
 
 [Added Associations]
 application/pdf=google-chrome.desktop;org.pwmt.zathura-pdf-mupdf.desktop;org.pwmt.zathura.desktop;
@@ -25,7 +26,7 @@ image/jpeg=gimp.desktop;
 application/x-troff-man=org.x.editor.desktop;
 application/zip=xarchiver.desktop;
 image/webp=imv.desktop;
-text/markdown=org.x.editor.desktop;
+text/markdown=org.x.editor.desktop;code.desktop;
 text/x-log=org.x.editor.desktop;
 application/x-zerosize=org.x.editor.desktop;code.desktop;
 application/xml=org.x.editor.desktop;

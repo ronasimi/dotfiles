@@ -1,0 +1,16 @@
+[Unit]
+Description=Pi Web UI
+Requires=llama-warmup.service
+After=llama-warmup.service
+
+[Service]
+Type=simple
+Environment=LLAMA_BASE_URL=http://127.0.0.1:8080
+Environment=LLAMA_SERVER_URL=http://127.0.0.1:8080
+Environment=LLAMA_API_KEY=no-key
+ExecStart=%h/.pi/agent/npm/node_modules/.bin/pi-web-ui --host 127.0.0.1 --port 8787 --cwd %h --engine pi --agent-dir %h/.pi/agent --no-browser
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

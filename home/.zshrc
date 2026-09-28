@@ -285,3 +285,7 @@ if [[ -f /usr/share/zsh/plugins/zsh-ai/zsh-ai.plugin.zsh ]]; then
   export ZSH_AI_TRIGGER=",,"
   source /usr/share/zsh/plugins/zsh-ai/zsh-ai.plugin.zsh
 fi
+
+# Local llama.cpp for Pi
+export LLAMA_BASE_URL=http://127.0.0.1:8080
+export LLAMA_API_KEY=no-key

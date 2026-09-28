@@ -1,0 +1,175 @@
+{
+  "packages": [
+    "npm:pi-web-ui",
+    "npm:pi-loop-mode",
+    "npm:@gotgenes/pi-subagents",
+    "npm:@mjasnikovs/pi-task",
+    "npm:pi-llama-cpp"
+  ],
+  "lastChangelogVersion": "0.87.1",
+  "theme": "dark",
+  "llamaSettings": {
+    "servers": [
+      {
+        "url": "http://127.0.0.1:8080",
+        "id": "local-llama",
+        "name": "Local llama.cpp",
+        "overrides": {
+          "Qwen3.8-4B-Q4_K_M": {
+            "contextSize": 65536,
+            "maxTokens": 4096,
+            "reasoning": true,
+            "compat": {
+              "supportsDeveloperRole": false,
+              "supportsReasoningEffort": true,
+              "maxTokensField": "max_tokens"
+            },
+            "capabilities": [
+              "text",
+              "image"
+            ]
+          },
+          "gemma-4-e2b-Q4_K_M": {
+            "contextSize": 32768,
+            "maxTokens": 4096,
+            "reasoning": true,
+            "capabilities": [
+              "text",
+              "image"
+            ],
+            "compat": {
+              "supportsReasoningEffort": true
+            }
+          },
+          "Qwen3.5-4B-Q4_K_M": {
+            "contextSize": 32768,
+            "maxTokens": 4096,
+            "reasoning": true,
+            "capabilities": [
+              "text",
+              "image"
+            ],
+            "compat": {
+              "supportsDeveloperRole": false,
+              "supportsReasoningEffort": true,
+              "maxTokensField": "max_tokens"
+            }
+          },
+          "Huihui-Gemma4-E2B-Abliterated-Q4_K_M": {
+            "contextSize": 65536,
+            "maxTokens": 4096,
+            "reasoning": true,
+            "capabilities": [
+              "text",
+              "image"
+            ],
+            "compat": {
+              "supportsReasoningEffort": true,
+              "maxTokensField": "max_tokens"
+            }
+          },
+          "Huihui-Gemma4-E4B-Abliterated-Q4_K_M": {
+            "contextSize": 49152,
+            "maxTokens": 4096,
+            "reasoning": true,
+            "capabilities": [
+              "text",
+              "image"
+            ],
+            "compat": {
+              "supportsReasoningEffort": true,
+              "maxTokensField": "max_tokens"
+            }
+          },
+          "Qwen3.5-2B-Q5_K_M": {
+            "contextSize": 65536,
+            "maxTokens": 4096,
+            "reasoning": true,
+            "capabilities": [
+              "text",
+              "image"
+            ],
+            "compat": {
+              "supportsDeveloperRole": false,
+              "thinkingFormat": "openai",
+              "thinkingTokenBudgetField": "thinking_budget_tokens",
+              "maxTokensField": "max_tokens"
+            }
+          },
+          "Qwen3.8-4B-Distill-Q4_K_M": {
+            "contextSize": 65536,
+            "maxTokens": 4096,
+            "reasoning": true,
+            "capabilities": [
+              "text",
+              "image"
+            ],
+            "compat": {
+              "supportsDeveloperRole": false,
+              "supportsReasoningEffort": true,
+              "maxTokensField": "max_tokens"
+            }
+          },
+          "Qwen3.8-2B-Q4_K_M": {
+            "contextSize": 65536,
+            "maxTokens": 4096,
+            "reasoning": true,
+            "capabilities": [
+              "text",
+              "image"
+            ],
+            "compat": {
+              "supportsDeveloperRole": false,
+              "supportsReasoningEffort": true,
+              "maxTokensField": "max_tokens"
+            }
+          },
+          "Huihui-Gemma4-E2B-Abliterated-Q6_K": {
+            "contextSize": 49152,
+            "maxTokens": 4096,
+            "reasoning": true,
+            "capabilities": [
+              "text",
+              "image"
+            ]
+          }
+        }
+      }
+    ],
+    "reactToModelSelect": true,
+    "autoloadOnMessage": true
+  },
+  "thinkingBudgets": {
+    "minimal": 256,
+    "low": 1024,
+    "medium": 2048,
+    "high": 4096,
+    "xhigh": 8192
+  },
+  "defaultThinkingLevel": "minimal",
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 6144,
+    "keepRecentTokens": 12000
+  },
+  "defaultTools": [
+    "read",
+    "bash",
+    "edit",
+    "write",
+    "grep",
+    "find",
+    "ls"
+  ],
+  "modelThinkingLevels": {
+    "local-llama/gemma-4-e2b-Q4_K_M": "medium",
+    "local-llama/Qwen3.8-2B-Q4_K_M": "max",
+    "local-llama/Qwen3.8-4B-Q4_K_M": "medium",
+    "local-llama/Huihui-Gemma4-E4B-Abliterated-Q4_K_M": "medium",
+    "local-llama/Huihui-Gemma4-E2B-Abliterated-Q6_K": "medium",
+    "local-llama/gemma-4-E4B-it-QAT-Q4_0": "minimal"
+  },
+  "hideThinkingBlock": false,
+  "defaultProvider": "local-llama",
+  "defaultModel": "gemma-4-E4B-it-QAT-Q4_0"
+}

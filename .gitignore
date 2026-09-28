@@ -1,3 +1,14 @@
 # Python cache files and directories
 __pycache__/
 *.py[cod]
+
+# Pi runtime state
+home/.pi/agent/npm/
+home/.pi/agent/sessions/
+home/.pi/agent/history/
+home/.pi/agent/cache/
+home/.pi/agent/logs/
+home/.pi/agent/*.jsonl
+home/.pi/agent/**/*token*
+home/.pi/agent/**/*credential*
+home/.pi/agent/**/*secret*

@@ -1,0 +1,43 @@
+{
+  "llama.cpp": {
+    "models": [
+      {
+        "id": "gemma-4-e2b-Q4_K_M",
+        "name": "gemma-4-e2b-Q4_K_M",
+        "api": "openai-completions",
+        "provider": "llama.cpp",
+        "baseUrl": "http://127.0.0.1:8080/v1",
+        "reasoning": true,
+        "thinkingLevelMap": {
+          "off": "off",
+          "minimal": null,
+          "low": null,
+          "medium": "medium",
+          "high": null,
+          "xhigh": null
+        },
+        "input": [
+          "text"
+        ],
+        "cost": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheWrite": 0
+        },
+        "contextWindow": 16384,
+        "maxTokens": 16384,
+        "compat": {
+          "supportsStore": false,
+          "supportsDeveloperRole": false,
+          "supportsReasoningEffort": false,
+          "supportsUsageInStreaming": true,
+          "supportsStrictMode": false,
+          "maxTokensField": "max_tokens",
+          "thinkingFormat": "qwen-chat-template"
+        }
+      }
+    ],
+    "checkedAt": 1790534663333
+  }
+}

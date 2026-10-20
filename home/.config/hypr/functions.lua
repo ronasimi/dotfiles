@@ -41,20 +41,6 @@ local function monitor_logical_size(mon)
     return math.floor(mon.width / scale), math.floor(mon.height / scale)
 end
 
-local function has_tag(window, tag)
-    if not window or not window.tags then
-        return false
-    end
-
-    for _, value in ipairs(window.tags) do
-        if value == tag or value == (tag .. "*") then
-            return true
-        end
-    end
-
-    return false
-end
-
 ---------------------------------
 ---- WAYBAR EDGE AUTO-HIDE   ----
 ---------------------------------
@@ -375,70 +361,6 @@ function M.focus_urgent_or_last()
 end
 
 -------------------------------------------
----- MINIMIZE / RESTORE                ----
--------------------------------------------
-
-local minimize_stack = {}
-
-function M.minimize_active()
-    local window = hl.get_active_window()
-    if not window then
-        return
-    end
-
-    if window.pinned then
-        notify("Pinned windows cannot be minimized", "warn")
-        return
-    end
-
-    if has_tag(window, "minimized") then
-        return
-    end
-
-    table.insert(minimize_stack, window)
-    hl.dispatch(hl.dsp.window.tag({ window = window, tag = "+minimized" }))
-    hl.dispatch(hl.dsp.window.move({
-        window = window,
-        workspace = "special:minimized",
-        follow = false,
-    }))
-end
-
-function M.restore_minimized()
-    local window = nil
-
-    while #minimize_stack > 0 and not window do
-        local candidate = table.remove(minimize_stack)
-        if candidate and candidate.mapped and has_tag(candidate, "minimized") then
-            window = candidate
-        end
-    end
-
-    if not window then
-        local minimized = hl.get_windows({ tag = "minimized" })
-        window = minimized[1]
-    end
-
-    if not window then
-        notify("No minimized windows", "info")
-        return
-    end
-
-    local workspace = hl.get_active_workspace()
-    if not workspace then
-        return
-    end
-
-    hl.dispatch(hl.dsp.window.move({
-        window = window,
-        workspace = workspace,
-        follow = false,
-    }))
-    hl.dispatch(hl.dsp.window.tag({ window = window, tag = "-minimized" }))
-    hl.dispatch(hl.dsp.focus({ window = window }))
-end
-
--------------------------------------------
 ---- CURSOR ZOOM                       ----
 -------------------------------------------
 
@@ -498,11 +420,25 @@ function M.toggle_performance_mode()
 end
 
 -------------------------------------------
+---- TILDE WORKSPACE NAME NORMALIZATION ----
+-------------------------------------------
+
+local function special_workspace_name(workspace)
+    if not workspace then return nil end
+    local name = workspace.addressable_name or workspace.name
+    if type(name) ~= "string" then return nil end
+    if workspace.special and name:sub(1, 8) ~= "special:" then
+        return "special:" .. name
+    end
+    return name
+end
+
+-------------------------------------------
 ---- TILDE SCRATCHPAD                  ----
 -------------------------------------------
 
 local TILDE_CLASS = "scratchpad"
-local TILDE_WORKSPACE = "special:scratchpad"
+local TILDE_WORKSPACE = "special:system-monitoring"
 local TILDE_COMMAND = "/home/ron/.bin/starttilde && uwsm app -- kitty -1 --class 'scratchpad' -e '/home/ron/.bin/chktilde'"
 
 function M.toggle_tilde()
@@ -513,15 +449,15 @@ function M.toggle_tilde()
         -- when the process creates its window. Avoid toggling it closed in the
         -- unusual case that the empty scratchpad workspace is already visible.
         local active_special = hl.get_active_special_workspace()
-        if not active_special or active_special.addressable_name ~= TILDE_WORKSPACE then
-            hl.dispatch(hl.dsp.workspace.toggle_special("scratchpad"))
+        if special_workspace_name(active_special) ~= TILDE_WORKSPACE then
+            hl.dispatch(hl.dsp.workspace.toggle_special("system-monitoring"))
         end
         hl.dispatch(hl.dsp.exec_cmd(TILDE_COMMAND))
         return
     end
 
     local window = windows[1]
-    if window.workspace and window.workspace.addressable_name ~= TILDE_WORKSPACE then
+    if special_workspace_name(window.workspace) ~= TILDE_WORKSPACE then
         hl.dispatch(hl.dsp.window.move({
             window = window,
             workspace = TILDE_WORKSPACE,
@@ -529,7 +465,7 @@ function M.toggle_tilde()
         }))
     end
 
-    hl.dispatch(hl.dsp.workspace.toggle_special("scratchpad"))
+    hl.dispatch(hl.dsp.workspace.toggle_special("system-monitoring"))
 end
 
 return M

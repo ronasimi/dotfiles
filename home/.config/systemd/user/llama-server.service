@@ -1,12 +1,18 @@
 [Unit]
-Description=llama.cpp Huihui Gemma 4 E2B Q6_K
+Description=llama.cpp Vulkan Multi-Model Server
+After=default.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/llama-server --models-dir %h/Models/llama.cpp --models-preset %h/Models/llama.cpp/models.ini --models-max 1 --models-autoload --jinja --device Vulkan0 --n-gpu-layers 99 --ctx-size 40960 --parallel 1 --batch-size 2048 --ubatch-size 512 --threads 6 --threads-batch 6 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 --reasoning auto --host 0.0.0.0 --port 8080 --cache-prompt --cache-ram 2048 --cache-idle-slots
+ExecStart=/usr/bin/llama-server \
+  --host 127.0.0.1 \
+  --port 8080 \
+  --models-preset %h/.config/llama.cpp/models.ini \
+  --models-max 1 \
+  --models-autoload
+
 Restart=on-failure
 RestartSec=3
-Nice=-5
 
 [Install]
 WantedBy=default.target

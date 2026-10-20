@@ -1,0 +1,72 @@
+{
+  "packages": [
+    "npm:pi-web-ui",
+    "npm:pi-loop-mode",
+    "npm:pi-llama-cpp",
+    "npm:pi-web-access",
+    "npm:@narumitw/pi-chrome-devtools",
+    "npm:pi-mcp-adapter"
+  ],
+  "lastChangelogVersion": "0.87.1",
+  "theme": "dark",
+  "llamaSettings": {
+    "servers": [
+      {
+        "url": "http://127.0.0.1:8080",
+        "id": "local-llama",
+        "name": "Local llama.cpp",
+        "overrides": {
+          "gemma-4-E4B-it-QAT-Q4_0": {
+            "contextSize": 40960,
+            "maxTokens": 4096,
+            "reasoning": true
+          },
+          "gemma-4-E2B-it-QAT-Q4_0": {
+            "contextSize": 40960,
+            "maxTokens": 4096,
+            "reasoning": true
+          },
+          "Huihui-Gemma4-E2B-Abliterated-Q6_K": {
+            "contextSize": 40960,
+            "maxTokens": 4096,
+            "reasoning": true,
+            "capabilities": [
+              "text",
+              "image"
+            ]
+          }
+        }
+      }
+    ],
+    "reactToModelSelect": true,
+    "autoloadOnMessage": true
+  },
+  "thinkingBudgets": {
+    "minimal": 256,
+    "low": 1024,
+    "medium": 2048,
+    "high": 4096,
+    "xhigh": 8192
+  },
+  "defaultThinkingLevel": "off",
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 4096,
+    "keepRecentTokens": 4096
+  },
+  "defaultTools": [
+    "read",
+    "bash",
+    "edit",
+    "write"
+  ],
+  "modelThinkingLevels": {
+    "local-llama/gemma-4-E4B-it-QAT-Q4_0": "minimal",
+    "local-llama/gemma-4-E2B-it-QAT-Q4_0": "medium",
+    "local-llama/Huihui-Gemma4-E2B-Abliterated-Q6_K": "off"
+  },
+  "hideThinkingBlock": false,
+  "defaultProvider": "local-llama",
+  "defaultModel": "gemma-4-E2B-it-QAT-Q4_0",
+  "showCacheMissNotices": true
+}

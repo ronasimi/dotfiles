@@ -4,3 +4,6 @@ if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then
     exec uwsm start hyprland.desktop &> /dev/null
   fi
 fi
+
+# Hermes Agent command
+case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac

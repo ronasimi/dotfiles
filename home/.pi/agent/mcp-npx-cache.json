@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "entries": {
+    "[\"npx\",\"@modelcontextprotocol/server-memory\",\"\"]": {
+      "resolvedBin": "/home/ron/.npm/_npx/15b07286cbcc3329/node_modules/@modelcontextprotocol/server-memory/dist/index.js",
+      "resolvedAt": 1790716575113,
+      "packageVersion": "2026.8.31",
+      "isJs": true
+    },
+    "[\"npx\",\"@modelcontextprotocol/server-filesystem\",\"\"]": {
+      "resolvedBin": "/home/ron/.npm/_npx/a3241bba59c344f5/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
+      "resolvedAt": 1790716575579,
+      "packageVersion": "2026.8.31",
+      "isJs": true
+    },
+    "[\"npx\",\"@modelcontextprotocol/server-sequential-thinking\",\"\"]": {
+      "resolvedBin": "/home/ron/.npm/_npx/de2bd410102f5eda/node_modules/@modelcontextprotocol/server-sequential-thinking/dist/index.js",
+      "resolvedAt": 1790716575693,
+      "packageVersion": "2026.8.31",
+      "isJs": true
+    },
+    "[\"npx\",\"@playwright/mcp@latest\",\"\"]": {
+      "resolvedBin": "/home/ron/.npm/_npx/9833c18b2d85bc59/node_modules/@playwright/mcp/cli.js",
+      "resolvedAt": 1790722018091,
+      "packageVersion": "0.0.83",
+      "isJs": true
+    }
+  }
+}

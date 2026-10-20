@@ -34,3 +34,4 @@ text/x-lua=code.desktop;
 text/x-python=org.x.editor.desktop;code.desktop;
 application/x-vmdk-disk=org.x.editor.desktop;
 application/vnd.efi.iso=gnome-disk-image-mounter.desktop;
+text/x-shellscript=org.x.editor.desktop;

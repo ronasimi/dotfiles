@@ -1,0 +1,17 @@
+{
+  "browser": {
+    "endpoint": "http://127.0.0.1:9222",
+    "autoLaunch": false
+  },
+  "tools": [
+    "chrome_devtools_list_pages",
+    "chrome_devtools_select_page",
+    "chrome_devtools_navigate",
+    "chrome_devtools_evaluate",
+    "chrome_devtools_screenshot"
+  ],
+  "webmcp": {
+    "enabled": false
+  },
+  "updatedAt": 1790645781485
+}

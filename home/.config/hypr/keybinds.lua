@@ -7,11 +7,20 @@ local fileManager = "uwsm app -- thunar"
 local menu        = "uwsm app -- walker"
 local fx          = __require("functions")
 
+-- Declared here so gesture handlers can reference the implementation below.
+local toggle_recent_special_workspace
+
 -----------------------------
 ---- CUSTOM ACTIONS/GESTURES ----
 -----------------------------
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
-hl.gesture({ fingers = 3, direction = "down", action = "special", workspace_name = "scratchpad" })
+hl.gesture({
+    fingers = 3,
+    direction = "down",
+    action = function()
+        toggle_recent_special_workspace()
+    end,
+})
 hl.gesture({
     fingers = 3,
     direction = "up",
@@ -38,7 +47,7 @@ if hl.plugin.hyprgrass ~= nil then
     hl.plugin.hyprgrass.gesture({
         pattern = { kind = "swipe", fingers = 3, direction = "down" },
         action = function()
-            hl.dispatch(hl.dsp.workspace.toggle_special("scratchpad"))
+            toggle_recent_special_workspace()
         end,
     })
 
@@ -61,11 +70,11 @@ if hl.plugin.hyprgrass ~= nil then
         end,
     })
 
-    -- Swipe up from bottom edge: Toggle Scratchpad
+    -- Swipe up from bottom edge: Toggle System Monitoring
     hl.plugin.hyprgrass.gesture({
         pattern = { kind = "edge", origin = "d", direction = "u" },
         action = function()
-            hl.dispatch(hl.dsp.workspace.toggle_special("scratchpad"))
+            hl.dispatch(hl.dsp.workspace.toggle_special("system-monitoring"))
         end,
     })
 end
@@ -108,10 +117,6 @@ hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized", action
 
 -- Focus the opposite window mode (i3-style focus mode_toggle)
 hl.bind(mainMod .. " + CTRL + SPACE", fx.focus_other_mode)
-
--- Minimize/restore using a tagged hidden special workspace.
-hl.bind(mainMod .. " + N", fx.minimize_active)
-hl.bind(mainMod .. " + SHIFT + N", fx.restore_minimized)
 
 -- Urgent window if one exists, otherwise the last-focused window.
 hl.bind(mainMod .. " + U", fx.focus_urgent_or_last)
@@ -158,9 +163,184 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
--- Tilde scratchpad: launch it once, then use the same key to show/hide it.
+-- Tilde/tmux: launch if absent, otherwise show/hide; keep swipe behavior.
 hl.bind(mainMod .. " + GRAVE", fx.toggle_tilde)
-hl.bind(mainMod .. " + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special:scratchpad" }))
+hl.bind(mainMod .. " + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special:system-monitoring" }))
+
+-- Native, self-contained special-workspace handlers. No external module methods,
+-- subprocesses, sleeping, or polling. Only occupied park-N workspaces are cycled.
+local SYSTEM_MONITORING = "special:system-monitoring"
+local MAX_PARKED_WORKSPACES = 90
+
+-- Bounded, in-memory MRU of occupied managed special workspaces.
+-- No external processes, delayed jobs, or polling are used.
+local recent_special_workspaces = {}
+
+local function is_managed_special(name)
+    if name == SYSTEM_MONITORING then return true end
+    if type(name) ~= "string" then return false end
+    local n = tonumber(name:match("^special:park%-(%d+)$"))
+    return n ~= nil and n >= 1 and n <= MAX_PARKED_WORKSPACES
+end
+
+local function remember_special(name)
+    if not is_managed_special(name) then return end
+    for index = #recent_special_workspaces, 1, -1 do
+        if recent_special_workspaces[index] == name then
+            table.remove(recent_special_workspaces, index)
+        end
+    end
+    table.insert(recent_special_workspaces, 1, name)
+    if #recent_special_workspaces > MAX_PARKED_WORKSPACES + 1 then
+        table.remove(recent_special_workspaces)
+    end
+end
+
+local function special_workspace_name(workspace)
+    if not workspace then return nil end
+    local name = workspace.addressable_name or workspace.name
+    if type(name) ~= "string" then return nil end
+    if workspace.special and name:sub(1, 8) ~= "special:" then
+        return "special:" .. name
+    end
+    return name
+end
+
+local function occupied_special_workspaces()
+    local parked = {}
+    local monitoring = false
+    for _, window in ipairs(hl.get_windows()) do
+        local name = special_workspace_name(window.workspace)
+        if name == SYSTEM_MONITORING then
+            monitoring = true
+        elseif name then
+            local number = tonumber(name:match("^special:park%-(%d+)$"))
+            if number and number >= 1 and number <= MAX_PARKED_WORKSPACES then
+                parked[number] = true
+            end
+        end
+    end
+    return parked, monitoring
+end
+
+-- Hyprland reports special workspace opening here. A nil workspace denotes
+-- hiding it; deliberately retain the last seen name for the next swipe.
+hl.on("workspace.special_active", function(workspace)
+    if workspace then
+        remember_special(special_workspace_name(workspace))
+    end
+end)
+
+-- A parked window should be retrievable before its workspace has ever opened.
+hl.on("window.move_to_workspace", function(_, workspace)
+    if workspace then
+        remember_special(special_workspace_name(workspace))
+    end
+end)
+
+-- On reload, capture a currently visible special workspace when possible.
+remember_special(special_workspace_name(hl.get_active_special_workspace()))
+
+-- Swipe down to toggle the last used/parked workspace. When stale (its last
+-- window closed), use the next known occupied workspace; fall back to the
+-- highest parked slot, and finally the original system-monitoring workspace.
+toggle_recent_special_workspace = function()
+    local parked, monitoring = occupied_special_workspaces()
+    local active = special_workspace_name(hl.get_active_special_workspace())
+
+    local function occupied(name)
+        if name == SYSTEM_MONITORING then return monitoring end
+        if type(name) ~= "string" then return false end
+        local n = tonumber(name:match("^special:park%-(%d+)$"))
+        return n ~= nil and parked[n] == true
+    end
+
+    local target
+    for _, name in ipairs(recent_special_workspaces) do
+        if occupied(name) then
+            target = name
+            break
+        end
+    end
+    if not target and occupied(active) then target = active end
+    if not target then
+        for n = MAX_PARKED_WORKSPACES, 1, -1 do
+            if parked[n] then
+                target = "special:park-" .. n
+                break
+            end
+        end
+    end
+    if not target then target = SYSTEM_MONITORING end
+
+    -- A second swipe hides the currently displayed target.
+    if active == target then
+        hl.dispatch(hl.dsp.workspace.toggle_special(target:sub(9)))
+        return
+    end
+
+    -- Switch specials explicitly so the gesture works even if another special
+    -- workspace is already open on this monitor.
+    if active and active:sub(1, 8) == "special:" then
+        hl.dispatch(hl.dsp.workspace.toggle_special(active:sub(9)))
+    end
+    remember_special(target)
+    hl.dispatch(hl.dsp.workspace.toggle_special(target:sub(9)))
+end
+
+local function park_active_window()
+    local window = hl.get_active_window()
+    if not window then return end
+    if window.pinned then return end
+
+    local parked = occupied_special_workspaces()
+    for number = 1, MAX_PARKED_WORKSPACES do
+        if not parked[number] then
+            hl.dispatch(hl.dsp.window.move({
+                window = window,
+                workspace = "special:park-" .. number,
+                follow = false,
+            }))
+            remember_special("special:park-" .. number)
+            return
+        end
+    end
+end
+
+local function cycle_special_workspaces()
+    local parked, monitoring = occupied_special_workspaces()
+    local names = {}
+    if monitoring then
+        names[#names + 1] = SYSTEM_MONITORING
+    end
+    for number = 1, MAX_PARKED_WORKSPACES do
+        if parked[number] then
+            names[#names + 1] = "special:park-" .. number
+        end
+    end
+    if #names == 0 then return end
+
+    local active = special_workspace_name(hl.get_active_special_workspace())
+    local next_index = 1
+    for index, name in ipairs(names) do
+        if name == active then
+            hl.dispatch(hl.dsp.workspace.toggle_special(active:sub(9)))
+            if index == #names then return end
+            next_index = index + 1
+            active = nil
+            break
+        end
+    end
+
+    if active and active:sub(1, 8) == "special:" then
+        hl.dispatch(hl.dsp.workspace.toggle_special(active:sub(9)))
+    end
+    hl.dispatch(hl.dsp.workspace.toggle_special(names[next_index]:sub(9)))
+end
+
+-- Direct local function references: always valid Lua callbacks at bind time.
+hl.bind(mainMod .. " + SHIFT + DELETE", park_active_window)
+hl.bind(mainMod .. " + DELETE", cycle_special_workspaces)
 
 -- Rebound Tab Actions
 hl.bind("ALT + TAB", hl.dsp.focus({ workspace = "previous" }))
@@ -220,4 +400,5 @@ hl.bind(mainMod .. " + F5", run_in_ws(5, "gimp"))
 hl.bind(mainMod .. " + F6", run_in_ws(6, "vmware"))
 hl.bind(mainMod .. " + F7", run_in_ws(7, "libreoffice --writer"))
 hl.bind(mainMod .. " + F8", run_in_ws(8, "env GTK_THEME=Adwaita:dark prusa-slicer"))
+hl.bind(mainMod .. " + F10", run_in_ws(10, "/home/ron/.hermes/hermes-agent/hermes desktop"))
 

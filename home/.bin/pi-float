@@ -1,0 +1,18 @@
+#!/bin/sh
+# Toggle pi in a floating kitty overlay window (tmux-backed)
+# - If the overlay exists: close it and kill the tmux session.
+# - Otherwise: start a detached tmux session running pi, open it in a floating kitty overlay.
+
+SESSION="pi-float"
+TITLE="pi-float"
+
+if kitty @ ls --match "title:$TITLE" 2>/dev/null | grep -q "$TITLE"; then
+    kitty @ close-window --match "title:$TITLE"
+    tmux kill-session -t "$SESSION" 2>/dev/null
+    echo "pi-float: closed"
+else
+    tmux new-session -d -s "$SESSION" "pi"
+    kitty @ launch --type overlay --title "$TITLE" --size 120x35 \
+        tmux attach-session -t "$SESSION"
+    echo "pi-float: started"
+fi

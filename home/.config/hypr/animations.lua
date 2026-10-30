@@ -27,6 +27,18 @@ hl.animation({ leaf = "windowsIn", enabled = true, speed = 3.5, spring = "human_
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 4.6, spring = "no_overshoot_spring" })
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 3.5, spring = "window_spring_out", style = "popin 80%" }) 
 
+-- Wobble on move/resize: spring matched to the windowsIn curve (human_optimal_in)
+hl.config({
+    decoration = {
+        wobble = {
+            enabled = true,
+            stiffness = 520.0,
+            damping = 27.0,
+            mass = 1,
+        },
+    },
+})
+
 -- UI Elements & Fades
 hl.animation({ leaf = "border", enabled = true, speed = 3.5, bezier = "smooth_ease" })
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 2, bezier = "smooth_ease" })

@@ -26,14 +26,6 @@ log.open_file = "rtorrent", /home/ron/.rtsession/rtorrent.log
 log.open_file = "tracker", /home/ron/.rtsession/tracker.log
 log.open_file = "storage", /home/ron/.rtsession/storage.log
 
-log.add_output = "info", "rtorrent"
-log.add_output = "critical", "rtorrent"
-log.add_output = "error", "rtorrent"
-log.add_output = "warn", "rtorrent"
-log.add_output = "notice", "rtorrent"
-log.add_output = "debug", "rtorrent"
-log.add_output = "storage_debug", "storage"
-
 # --- Scheduling ---
 schedule = watch_directory,5,5,load.start=/home/ron/Downloads/*.torrent
 schedule = untied_directory,5,5,stop_untied=

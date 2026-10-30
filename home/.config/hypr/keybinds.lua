@@ -400,5 +400,5 @@ hl.bind(mainMod .. " + F5", run_in_ws(5, "gimp"))
 hl.bind(mainMod .. " + F6", run_in_ws(6, "vmware"))
 hl.bind(mainMod .. " + F7", run_in_ws(7, "libreoffice --writer"))
 hl.bind(mainMod .. " + F8", run_in_ws(8, "env GTK_THEME=Adwaita:dark prusa-slicer"))
-hl.bind(mainMod .. " + F10", run_in_ws(10, "/home/ron/.hermes/hermes-agent/hermes desktop"))
+hl.bind(mainMod .. " + F10", run_in_ws(10, "kitty -1 sh -c /home/ron/.pi/agent/bin/pi"))
 

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# notify — desktop notification for the agent
+# Usage: notify [options] "summary" "body"
+#   -u <urgency>    low|normal|critical  (default: normal)
+#   -a <app>        app name             (default: pi-agent)
+#   -t <timeout>    seconds (0=sticky)   (default: 10)
+#   -i <icon>       icon name            (default: none)
+#   -h              help
+
+set -euo pipefail
+
+urgency="normal"
+app="pi-agent"
+timeout=10
+icon=""
+
+while getopts "u:a:t:i:h" opt; do
+  case $opt in
+    u) urgency="$OPTARG" ;;
+    a) app="$OPTARG" ;;
+    t) timeout="$OPTARG" ;;
+    i) icon="$OPTARG" ;;
+    h)
+      echo "Usage: notify [-u urgency] [-a app] [-t timeout] [-i icon] \"summary\" \"body\""
+      exit 0 ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+summary="${1:-}"
+body="${2:-}"
+
+if [[ -z "$summary" ]]; then
+  echo "Error: summary is required" >&2
+  exit 1
+fi
+
+if [[ -n "$icon" ]]; then
+  notify-send -a "$app" -u "$urgency" -t "$((timeout * 1000))" -i "$icon" "$summary" "$body"
+else
+  notify-send -a "$app" -u "$urgency" -t "$((timeout * 1000))" "$summary" "$body"
+fi

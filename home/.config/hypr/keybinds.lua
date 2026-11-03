@@ -107,6 +107,7 @@ hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty --cla
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("uwsm app -- hyprland-run"))
+hl.bind(mainMod .. " + K", hl.dsp.exec_cmd("/home/ron/Projects/Jeevus/build/jeevus-cli toggle"))
 
 -- Window Management
 hl.bind(mainMod .. " + X", hl.dsp.window.close())
@@ -151,9 +152,7 @@ hl.bind(mainMod .. " + ALT + down", function() fx.preselect_with_border("d", 270
 -- and reorders/reinserts them according to the pointer's drop position.
 -- Precise mouse placement is enabled only for the duration of the drag so the
 -- normal Dwindle configuration remains identical to the original config.
-hl.bind(mainMod .. " + mouse:272", fx.tiled_drag_begin, { mouse = true })
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
-hl.bind(mainMod .. " + mouse:272", fx.tiled_drag_end, { release = true })
+hl.bind(mainMod .. " + mouse:272", fx.tiled_drag, { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Workspaces

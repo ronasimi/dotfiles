@@ -66,7 +66,7 @@ box "Setting up \$PATH..."
 export PATH="/opt/android-build:$PATH"
 echo -n $(python -V)
 echo -n $(java -version)
-echo -n &(make -v)
+echo -n $(make -v)
 cd "$path"
 
 (( "$sync"==1 )) && box "Syncing..." && repo sync -f -c -j 4

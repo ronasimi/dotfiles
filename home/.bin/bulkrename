@@ -8,6 +8,6 @@ find "$1" -depth | while read line; do
   new="$(echo $old | tr ' ' '_' \
       | tr -d '()[]{},?!' | tr -d "'" \
       | tr '[[:upper:]]' '[[:lower:]]' \
-      | sed 's/__/_/g' | sed 's/_-_/-/g' )"
+      | sed 's/\(_\)\+/_/g' | sed 's/_-_/-/g' )"
   [[ "$old" != "$new" ]] && mv -iv "$dir/$old" "$dir/$new"
 done

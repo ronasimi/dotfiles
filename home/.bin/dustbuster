@@ -1,3 +1,4 @@
+#!/usr/bin/env dash
 # Define cache directories
 USER_CACHE="${HOME}/.cache"
 
@@ -16,4 +17,5 @@ sudo pacman -Sc
 sudo journalctl --vacuum-time=2weeks
 
 # Optional: Clear out the thumbnail cache for your user
-rm -rf "${USER_CACHE}/thumbnails/*"
+rm -rf "${USER_CACHE}/thumbnails"
+mkdir -p "${USER_CACHE}/thumbnails"

@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/usr/bin/env bash
 
 # Delete existing enrollment data
 fprintd-delete "$USER"

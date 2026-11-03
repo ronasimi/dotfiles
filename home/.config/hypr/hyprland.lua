@@ -75,7 +75,7 @@ hl.config({
             special = true
         },
     },
-    dwindle    = { preserve_split = true, force_split = 2 },
+    dwindle    = { preserve_split = true, force_split = 2, smart_split = false },
     master     = { new_status = "master" },
     scrolling  = { fullscreen_on_one_column = true },
     cursor     = { hide_on_key_press = true, sync_gsettings_theme = true },

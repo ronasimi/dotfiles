@@ -1,1 +1,2 @@
+#!/usr/bin/env dash
 pacman -Runs $(pacman -Qtdq)

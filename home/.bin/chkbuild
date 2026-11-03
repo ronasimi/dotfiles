@@ -1,1 +1,2 @@
+#!/usr/bin/env dash
 tmux attach -t cm

@@ -1,2 +1,3 @@
+#!/usr/bin/env dash
 INFO=$(ifconfig enp0s25)
 notify-send "$INFO"

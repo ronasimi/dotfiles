@@ -1,3 +1,4 @@
+#!/usr/bin/env dash
 echo switching display
 mons -o
 echo switching sound card

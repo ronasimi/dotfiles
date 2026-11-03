@@ -325,23 +325,47 @@ hl.on("workspace.active", M.reset_border_state)
 -- move, temporarily enable the two pointer-aware placement options so a tiled
 -- window is reinserted according to where it is released. No float/tile state
 -- transition is performed here; hl.dsp.window.drag() owns the actual move.
-function M.tiled_drag_begin()
-    hl.config({
-        dwindle = {
-            smart_split = true,
-            precise_mouse_move = true,
-        }
-    })
-end
+--
+-- The drag dispatcher captures the mouse and consumes the button-release
+-- event, so a release/click/drag bind on the same button never fires.
+-- Instead we reset the config on the next focus-change event (which always
+-- follows a completed drag) with a safety timeout as a backstop.
+local drag_config_active = false
+local drag_safety_timer = nil
 
-function M.tiled_drag_end()
+local function reset_drag_config()
+    if not drag_config_active then return end
+    drag_config_active = false
     hl.config({
         dwindle = {
             smart_split = false,
             precise_mouse_move = false,
         }
     })
+    if drag_safety_timer then
+        drag_safety_timer = nil
+    end
 end
+
+function M.tiled_drag()
+    drag_config_active = true
+    hl.config({
+        dwindle = {
+            smart_split = true,
+            precise_mouse_move = true,
+        }
+    })
+    hl.dispatch(hl.dsp.window.drag())
+
+    -- Safety net: reset after 10 s if no focus change occurs.
+    drag_safety_timer = hl.timer(function()
+        reset_drag_config()
+        drag_safety_timer = nil
+    end, { timeout = 10000, type = "oneshot" })
+end
+
+hl.on("window.active", reset_drag_config)
+hl.on("workspace.active", reset_drag_config)
 
 -------------------------------------------
 ---- FOCUS HELPERS                     ----

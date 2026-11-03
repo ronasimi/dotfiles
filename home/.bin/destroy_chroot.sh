@@ -1,3 +1,4 @@
+#!/usr/bin/env dash
 # Define the target environment
 CHROOT_DIR="/var/tmp/chroot"
 

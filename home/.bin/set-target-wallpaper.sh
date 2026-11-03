@@ -21,4 +21,4 @@ else
 fi
 
 # Instantly trigger your live wallpaper script to apply it right away
-~/.local/bin/set-hyprpaper.sh "$NEW_PATH"
+~/.bin/set-hyprpaper.sh "$NEW_PATH"

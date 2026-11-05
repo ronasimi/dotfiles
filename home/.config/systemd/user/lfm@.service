@@ -1,0 +1,13 @@
+[Unit]
+Description=Local LFM %i Vulkan server (llama.cpp)
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=%h/.bin/lfm serve %i
+Restart=on-failure
+RestartSec=2
+TimeoutStopSec=10
+
+[Install]
+WantedBy=default.target

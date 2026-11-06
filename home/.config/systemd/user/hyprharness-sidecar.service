@@ -1,0 +1,21 @@
+[Unit]
+Description=HyprHarness read-only Recall sidecar
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/Projects/Hyprharness
+Environment=PYTHONPATH=%h/Projects/Hyprharness/src
+Environment=PYTHONDONTWRITEBYTECODE=1
+# Read-only startup: no ingestion, browser watcher, capture or model calls.
+ExecStart=/usr/bin/python3 -m hyprharness.sidecar serve
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+RestrictAddressFamilies=AF_UNIX
+
+[Install]
+WantedBy=graphical-session.target

@@ -34,11 +34,18 @@
       "class<chromium>": "󰊯",
       "class<[Cc]ode.*>": "󰨞",
       "class<gimp.*>": "󰏘",
-      "class<firefox>": "",
-      "class<kitty|super-enter>": "󰆍",
+      "class<firefox>": "󰈹",
+      "class<kitty|super-enter|super-shift-enter>": "󰆍",
+      "class<pi-terminal>": "󰧑",
+      "class<scratchpad>": "󰨇",
+      "class<[Vv]mware.*>": "󰖳",
+      "class<libreoffice.*|Soffice>": "󰷈",
+      "class<PrusaSlicer>": "󰆦",
+      "class<localsend>": "󰒍",
+      "class<nwg-displays>": "󰍹",
       "class<thunar>": "󰉋",
-      "class<discord>": "",
-      "title<.*youtube.*>": ""
+      "class<discord>": "󰙯",
+      "title<.*youtube.*>": "󰗃"
     },
     "format-icons": {
       "1": "󰊯",
@@ -62,7 +69,7 @@
     },
     "tooltip": true,
     "tooltips": {
-      "default": "{windows}",
+      "default": "<span font_family=\"Material Design Icons\">{windows}</span>",
       "empty": ""
     },
     "on-scroll-up": "hyprctl dispatch workspace e+1",

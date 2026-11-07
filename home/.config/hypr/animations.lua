@@ -19,7 +19,8 @@ hl.animation({ leaf = "global", enabled = true, speed = 3.5, spring = "fast_wind
 -- Workspaces
 hl.animation({ leaf = "workspaces", enabled = true, speed = 3.5, spring = "workspace_slide", style = "slide fade" })
 hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 3.5, spring = "workspace_slide", style = "slide top fade" })
-hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3.5, spring = "workspace_slide", style = "slide top fade" })
+-- Exit direction is reversed: "bottom" sends the closing workspace upward.
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3.5, spring = "workspace_slide", style = "slide bottom fade" })
 
 -- Windows
 hl.animation({ leaf = "windowsIn", enabled = true, speed = 3.5, spring = "human_optimal_in", style = "popin 85%" })

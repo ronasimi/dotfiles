@@ -4,14 +4,20 @@ set -euo pipefail
 MODELS=(text omni decision)
 RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 SOCK_DIR="$RUNTIME_DIR/lfm"
-MODEL_DIR="$HOME/.models"
+MODEL_DIR="${LFM_MODEL_DIR:-$HOME/.models}"
+SERVER="${LFM_SERVER:-/usr/local/bin/llama-server}"
+# Optional per-model overrides: LFM_TEXT_*, LFM_OMNI_*, LFM_DECISION_*.
+# Suffixes: CTX, BATCH, UBATCH, CTK, CTV, NGL, THREADS, THREADS_BATCH, FA.
+# This is a trusted, user-owned shell configuration file.
+CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/lfm/settings.sh"
+[[ ! -f "$CONFIG" ]] || source "$CONFIG"
 SYSTEMD_UNIT="$HOME/.config/systemd/user/lfm@.service"
 SELF="$HOME/.bin/lfm"
 usage() {
   cat <<'USAGE'
 Usage: lfm setup | start [text|omni|decision|all] | stop [model|all]
            | restart [model|all] | switch [model|all] | status [model|all]
-           | logs [model] | enable [model|all] | disable [model|all]
+           | command [model] | logs [model] | enable [model|all] | disable [model|all]
 
 Defaults: all for start/stop/restart/status; text for switch/logs.
 Local HTTP: text=8081, omni=8082, decision=8083.
@@ -43,40 +49,66 @@ UNIT
   printf 'Installed %s\n' "$SYSTEMD_UNIT"
 }
 serve() {
-  local target="$1" port model projector="" ngl=all
+  local target="$1" port model projector="" ngl=all ctx batch ubatch
+  local ctk=q8_0 ctv=q4_0 threads=6 threads_batch=6 fa=on key envkey
   local -a args
   case "$target" in
     text)
       port=8081
       model="$MODEL_DIR/text/LFM3-1.7B-QAD-Q4_0.gguf"
-      args=(--jinja -c 65536 -b 2048 -ub 512 --temp 0.1 --top-k 50 --repeat-penalty 1.1)
+      ctx=131072; batch=2048; ubatch=1024
+      args=(--jinja --temp 0.1 --top-k 50 --repeat-penalty 1.1)
       ;;
     omni)
       port=8082
       model="$MODEL_DIR/omni/LFM3-Omni-2B-Q4_K_M.gguf"
       projector="$MODEL_DIR/omni/mmproj-LFM3-Omni-2B-Q4_K_M.gguf"
-      args=(-c 8192 -b 2048 -ub 512 --temp 0 --reasoning off)
+      ctx=32768; batch=2048; ubatch=1024
+      args=(--jinja --temp 0 --reasoning off)
       ;;
     decision)
       port=8083
       model="$MODEL_DIR/decision/d1-omni-600M-Q8_0.gguf"
       projector="$MODEL_DIR/decision/mmproj-d1-omni-600M-Q8_0.gguf"
-      args=(-c 4096 -b 4096 -ub 4096)
+      ctx=4096; batch=1024; ubatch=512
+      args=()
       ;;
     *) usage; exit 2 ;;
   esac
+  # Attention cache: Q8_0 keys, Q4_0 values; recurrent state/projector buffers are separate.
+  for key in ctx batch ubatch ctk ctv ngl threads threads_batch fa; do
+    envkey="LFM_${target^^}_${key^^}"
+    [[ ! -v "$envkey" ]] || printf -v "$key" '%s' "${!envkey}"
+  done
+  for key in ctx batch ubatch threads threads_batch; do
+    if [[ ! "${!key}" =~ ^[1-9][0-9]*$ ]]; then
+      printf 'Invalid %s: %s\n' "$key" "${!key}" >&2; exit 2
+    fi
+  done
+  if (( ubatch > batch )); then
+    printf 'UBATCH must be <= BATCH\n' >&2; exit 2
+  fi
+  if [[ "$target" == omni ]] && (( ctx > 32768 )); then
+    printf 'Omni supports 32768 tokens; refusing unvalidated context extension.\n' >&2; exit 2
+  fi
+  local -a mmproj=() cmd
+  [[ -z "$projector" ]] || mmproj=(-mm "$projector")
+  [[ "$ngl" != 0 || -z "$projector" ]] || mmproj+=(--no-mmproj-offload)
+  cmd=("$SERVER" -m "$model" "${mmproj[@]}"
+    --host "127.0.0.1,$SOCK_DIR/$target.sock" --port "$port"
+    --alias "lfm-$target" -ngl "$ngl" --fit off -fa "$fa"
+    -ctk "$ctk" -ctv "$ctv" -c "$ctx" -b "$batch" -ub "$ubatch"
+    -t "$threads" -tb "$threads_batch" -np 1 "${args[@]}")
+  if [[ "${2:-}" == preview ]]; then
+    printf '%q ' "${cmd[@]}"; printf '\n'; return
+  fi
+  if [[ ! -x "$SERVER" ]]; then printf 'Missing server: %s\n' "$SERVER" >&2; exit 1; fi
   if [[ ! -s "$model" ]]; then printf 'Missing model: %s\n' "$model" >&2; exit 1; fi
   if [[ -n "$projector" && ! -s "$projector" ]]; then printf 'Missing projector: %s\n' "$projector" >&2; exit 1; fi
   mkdir -p "$SOCK_DIR"
   chmod 0700 "$SOCK_DIR"
   rm -f "$SOCK_DIR/$target.sock"
-  local -a mmproj=()
-  [[ -z "$projector" ]] || mmproj=(-mm "$projector")
-  exec /usr/local/bin/llama-server \
-    -m "$model" "${mmproj[@]}" \
-    --host "127.0.0.1,$SOCK_DIR/$target.sock" --port "$port" \
-    --alias "lfm-$target" -ngl "$ngl" --fit off -fa auto \
-    -t 6 -tb 6 -np 1 "${args[@]}"
+  exec "${cmd[@]}"
 }
 valid_target() {
   case "$1" in text|omni|decision|all) ;; *) usage; exit 2 ;; esac
@@ -99,6 +131,7 @@ run_for() {
 command="${1:-}"; target="${2:-all}"
 case "$command" in
   setup) setup ;;
+  command) serve "${2:-text}" preview ;;
   serve) serve "${2:?model required}" ;;
   start|stop|restart|status|enable|disable)
     [[ -f "$SYSTEMD_UNIT" || "$command" == status ]] || setup

@@ -9,6 +9,20 @@ local fx          = __require("functions")
 
 -- Declared here so gesture handlers can reference the implementation below.
 local toggle_recent_special_workspace
+local cycle_special_workspaces
+local last_visible_special
+
+local function hide_special_or_toggle_overview()
+    local workspace = hl.get_active_special_workspace()
+    if workspace then
+        local name = workspace.addressable_name or workspace.name
+        local target = name:gsub("^special:", "")
+        last_visible_special = "special:" .. target
+        hl.dispatch(hl.dsp.workspace.toggle_special(target))
+    elseif hl.plugin.hymission ~= nil then
+        hl.plugin.hymission.toggle()
+    end
+end
 
 -----------------------------
 ---- CUSTOM ACTIONS/GESTURES ----
@@ -18,17 +32,13 @@ hl.gesture({
     fingers = 3,
     direction = "down",
     action = function()
-        toggle_recent_special_workspace()
+        cycle_special_workspaces()
     end,
 })
 hl.gesture({
     fingers = 3,
     direction = "up",
-    action = function()
-        if hl.plugin.hymission ~= nil then
-            hl.plugin.hymission.toggle()
-        end
-    end,
+    action = hide_special_or_toggle_overview,
 })
 
 -- Native 2-finger pinch zoom follows the cursor. Keyboard zoom binds below
@@ -47,17 +57,13 @@ if hl.plugin.hyprgrass ~= nil then
     hl.plugin.hyprgrass.gesture({
         pattern = { kind = "swipe", fingers = 3, direction = "down" },
         action = function()
-            toggle_recent_special_workspace()
+            cycle_special_workspaces()
         end,
     })
 
     hl.plugin.hyprgrass.gesture({
         pattern = { kind = "swipe", fingers = 3, direction = "up" },
-        action = function()
-            if hl.plugin.hymission ~= nil then
-                hl.plugin.hymission.toggle()
-            end
-        end,
+        action = hide_special_or_toggle_overview,
     })
 
     -- Swipe down from top edge: Toggle Overview (Hymission)
@@ -226,7 +232,8 @@ end
 -- hiding it; deliberately retain the last seen name for the next swipe.
 hl.on("workspace.special_active", function(workspace)
     if workspace then
-        remember_special(special_workspace_name(workspace))
+        last_visible_special = special_workspace_name(workspace)
+        remember_special(last_visible_special)
     end
 end)
 
@@ -238,7 +245,8 @@ hl.on("window.move_to_workspace", function(_, workspace)
 end)
 
 -- On reload, capture a currently visible special workspace when possible.
-remember_special(special_workspace_name(hl.get_active_special_workspace()))
+last_visible_special = special_workspace_name(hl.get_active_special_workspace())
+remember_special(last_visible_special)
 
 -- Swipe down to toggle the last used/parked workspace. When stale (its last
 -- window closed), use the next known occupied workspace; fall back to the
@@ -306,7 +314,12 @@ local function park_active_window()
     end
 end
 
-local function cycle_special_workspaces()
+cycle_special_workspaces = function()
+    if not hl.get_active_special_workspace() and last_visible_special then
+        hl.dispatch(hl.dsp.workspace.toggle_special(last_visible_special:sub(9)))
+        return
+    end
+
     local parked, monitoring = occupied_special_workspaces()
     local names = {}
     if monitoring then
@@ -324,8 +337,7 @@ local function cycle_special_workspaces()
     for index, name in ipairs(names) do
         if name == active then
             hl.dispatch(hl.dsp.workspace.toggle_special(active:sub(9)))
-            if index == #names then return end
-            next_index = index + 1
+            next_index = index % #names + 1
             active = nil
             break
         end

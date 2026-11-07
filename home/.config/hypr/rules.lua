@@ -40,6 +40,7 @@ local workspace_rules = {
     { ws = "7",                  class = "^(libreoffice|libreoffice-startcenter|libreoffice-writer|libreoffice-calc|Soffice)$" },
     { ws = "8",                  class = "^(PrusaSlicer)$" },
     { ws = "special:system-monitoring", class = "^(scratchpad)$" },
+    { ws = "special:pi", class = "^(pi-terminal)$" },
 }
 
 for _, rule in ipairs(workspace_rules) do

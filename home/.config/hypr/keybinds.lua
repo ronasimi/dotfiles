@@ -173,7 +173,7 @@ hl.bind(mainMod .. " + GRAVE", fx.toggle_tilde)
 hl.bind(mainMod .. " + SHIFT + GRAVE", hl.dsp.window.move({ workspace = "special:system-monitoring" }))
 
 -- Native, self-contained special-workspace handlers. No external module methods,
--- subprocesses, sleeping, or polling. Only occupied park-N workspaces are cycled.
+-- subprocesses, sleeping, or polling. Cycle occupied monitoring, Pi, and park-N workspaces.
 local SYSTEM_MONITORING = "special:system-monitoring"
 local MAX_PARKED_WORKSPACES = 90
 
@@ -182,7 +182,7 @@ local MAX_PARKED_WORKSPACES = 90
 local recent_special_workspaces = {}
 
 local function is_managed_special(name)
-    if name == SYSTEM_MONITORING then return true end
+    if name == SYSTEM_MONITORING or name == "special:pi" then return true end
     if type(name) ~= "string" then return false end
     local n = tonumber(name:match("^special:park%-(%d+)$"))
     return n ~= nil and n >= 1 and n <= MAX_PARKED_WORKSPACES
@@ -196,7 +196,7 @@ local function remember_special(name)
         end
     end
     table.insert(recent_special_workspaces, 1, name)
-    if #recent_special_workspaces > MAX_PARKED_WORKSPACES + 1 then
+    if #recent_special_workspaces > MAX_PARKED_WORKSPACES + 2 then
         table.remove(recent_special_workspaces)
     end
 end
@@ -213,11 +213,13 @@ end
 
 local function occupied_special_workspaces()
     local parked = {}
-    local monitoring = false
+    local monitoring, pi = false, false
     for _, window in ipairs(hl.get_windows()) do
         local name = special_workspace_name(window.workspace)
         if name == SYSTEM_MONITORING then
             monitoring = true
+        elseif name == "special:pi" then
+            pi = true
         elseif name then
             local number = tonumber(name:match("^special:park%-(%d+)$"))
             if number and number >= 1 and number <= MAX_PARKED_WORKSPACES then
@@ -225,7 +227,7 @@ local function occupied_special_workspaces()
             end
         end
     end
-    return parked, monitoring
+    return parked, monitoring, pi
 end
 
 -- Hyprland reports special workspace opening here. A nil workspace denotes
@@ -252,11 +254,12 @@ remember_special(last_visible_special)
 -- window closed), use the next known occupied workspace; fall back to the
 -- highest parked slot, and finally the original system-monitoring workspace.
 toggle_recent_special_workspace = function()
-    local parked, monitoring = occupied_special_workspaces()
+    local parked, monitoring, pi = occupied_special_workspaces()
     local active = special_workspace_name(hl.get_active_special_workspace())
 
     local function occupied(name)
         if name == SYSTEM_MONITORING then return monitoring end
+        if name == "special:pi" then return pi end
         if type(name) ~= "string" then return false end
         local n = tonumber(name:match("^special:park%-(%d+)$"))
         return n ~= nil and parked[n] == true
@@ -320,10 +323,13 @@ cycle_special_workspaces = function()
         return
     end
 
-    local parked, monitoring = occupied_special_workspaces()
+    local parked, monitoring, pi = occupied_special_workspaces()
     local names = {}
     if monitoring then
         names[#names + 1] = SYSTEM_MONITORING
+    end
+    if pi then
+        names[#names + 1] = "special:pi"
     end
     for number = 1, MAX_PARKED_WORKSPACES do
         if parked[number] then
@@ -411,5 +417,13 @@ hl.bind(mainMod .. " + F5", run_in_ws(5, "gimp"))
 hl.bind(mainMod .. " + F6", run_in_ws(6, "vmware"))
 hl.bind(mainMod .. " + F7", run_in_ws(7, "libreoffice --writer"))
 hl.bind(mainMod .. " + F8", run_in_ws(8, "env GTK_THEME=Adwaita:dark prusa-slicer"))
-hl.bind(mainMod .. " + F10", run_in_ws(10, "kitty -1 sh -c /home/ron/.pi/agent/bin/pi"))
+hl.bind(mainMod .. " + F12", function()
+    local active = special_workspace_name(hl.get_active_special_workspace())
+    if active ~= "special:pi" then
+        hl.dispatch(hl.dsp.workspace.toggle_special("pi"))
+    end
+    if #hl.get_windows({ class = "pi-terminal" }) == 0 then
+        hl.dispatch(hl.dsp.exec_cmd("uwsm app -- kitty -1 --class pi-terminal -e tmux new-session -A -s pi -c /home/ron /home/ron/.pi/agent/bin/pi"))
+    end
+end)
 

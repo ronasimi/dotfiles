@@ -1,10 +1,12 @@
 [Unit]
-Description=Local LFM %i Vulkan server (llama.cpp)
+Description=Local LFM %i model server (llama.cpp)
 After=default.target
 
 [Service]
 Type=simple
 ExecStart=%h/.bin/lfm serve %i
+ExecStartPost=-%h/.bin/lfm warmup %i
+TimeoutStartSec=1200
 Restart=on-failure
 RestartSec=2
 TimeoutStopSec=10

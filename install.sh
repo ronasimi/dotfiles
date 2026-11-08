@@ -192,6 +192,25 @@ done < <(manifest_paths "$HOME_MANIFEST")
 
 if ((INSTALL_SYSTEM)); then
   log "installing system configuration"
+  if [[ -f "$REPO_DIR/etc/environment" ]]; then
+    log "merging /etc/environment"
+    local env_file="$REPO_DIR/etc/environment" line key val
+    while IFS= read -r line; do
+      [[ "$line" =~ ^[[:space:]]*(#|$) ]] && continue
+      key="${line%%=*}"
+      val="${line#*=}"
+      if [[ -f /etc/environment ]] && grep -q "^${key}=" /etc/environment 2>/dev/null; then
+        log "  ${key} already set, skipping"
+      else
+        if ((DRY_RUN)); then
+          printf '[install] + echo %q >> /etc/environment\n' "$line"
+        else
+          echo "$line" | sudo tee -a /etc/environment >/dev/null
+        fi
+        log "  added ${key}"
+      fi
+    done < "$env_file"
+  fi
   if [[ -f "$REPO_DIR/etc/tlp.conf" ]]; then
     if [[ -e /etc/tlp.conf ]]; then
       run sudo cp -a -- /etc/tlp.conf "/etc/tlp.conf.dotfiles-$STAMP.bak"

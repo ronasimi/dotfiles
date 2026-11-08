@@ -1,0 +1,3 @@
+# /etc/environment — parsed by pam_env
+FREETYPE_PROPERTIES="cff:no-stem-darkening=0 autofitter:no-stem-darkening=0"
+RADV_EXPERIMENTAL=transfer_queue

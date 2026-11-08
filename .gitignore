@@ -1,6 +1,15 @@
-# Python cache files and directories
-__pycache__/
-*.py[cod]
+# Backups
+*.bak
+*.bak.*
+*.bak-*
+*.before-*
+
+# Sensitive / credentials
+home/.pi/agent/auth.json
+home/.pi/agent/provider-keys.json
+home/.pi/agent/mcp-cache.json
+home/.pi/agent/mcp-npx-cache.json
+home/.pi/agent/models-store.json
 
 # Pi runtime state
 home/.pi/agent/npm/
@@ -8,7 +17,14 @@ home/.pi/agent/sessions/
 home/.pi/agent/history/
 home/.pi/agent/cache/
 home/.pi/agent/logs/
-home/.pi/agent/*.jsonl
-home/.pi/agent/**/*token*
-home/.pi/agent/**/*credential*
-home/.pi/agent/**/*secret*
+home/.pi/agent/bin/
+home/.pi/agent/backups/
+home/.pi/agent/**/*.jsonl
+
+# Python
+__pycache__/
+*.py[cod]
+
+# OS cruft
+.DS_Store
+Thumbs.db

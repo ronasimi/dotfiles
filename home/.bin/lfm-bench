@@ -1,884 +1,745 @@
 #!/usr/bin/env python3
-"""Local, stdlib-only paired LFM pipeline experiment. No real tools or remote HTTP.
-Raw local output can contain private media recognition. Reports never reproduce it.
+"""Three-model llama.cpp pipeline and desktop-headroom benchmark for Arch/AMD APU.
+
+Runs isolated localhost llama-server instances, restoring any pre-existing lfm@
+user services after completion. No model files or Pi settings are modified.
+
+Outputs summary.md, trials.csv, stages.csv, samples.csv, raw.jsonl,
+configurations.json, and per-model server logs under an output directory.
 """
 from __future__ import annotations
+
 import argparse
 import base64
-import concurrent.futures
 import csv
-import fcntl
+import datetime as dt
 import hashlib
-import http.client
 import json
 import math
-import mimetypes
 import os
 from pathlib import Path
-import random
 import re
 import shutil
-import signal
 import socket
+import signal
 import statistics
+import struct
 import subprocess
 import sys
 import threading
 import time
-import unicodedata
-from datetime import datetime, timezone
+import urllib.error
+import urllib.request
+import zlib
 
-ROOT = Path.home()/'.local/state/lfm-bench'
-PORTS = {'text':8081, 'omni':8082, 'decision':8083}
-FORMATS = {'image': {'png','jpg','jpeg','webp','gif','bmp','tif','tiff','avif'},
-           'audio': {'wav','mp3','flac','ogg','m4a','opus','aac'},
-           'video': {'mp4','mkv','webm','mov','avi'}}
-SCHEMA = 3
-STOP = threading.Event()
-TOOLS = [dict(type='function', function=dict(name=n, description=d, parameters=p)) for n,d,p in [
- ('get_system_info','Read SIMULATED kernel, load, uptime and recommended network host.',
-  {'type':'object','properties':{},'additionalProperties':False}),
- ('get_network_info','Read SIMULATED interface and IP.',
-  {'type':'object','properties':{},'additionalProperties':False}),
- ('probe_tcp_port','Read SIMULATED network reachability; no real network operation.',
-  {'type':'object','properties':{'host':{'type':'string'},'port':{'type':'integer'}},
-   'required':['host','port'],'additionalProperties':False})]]
-SYSTEM = ('You are a concise Linux assistant in a benchmark. Tools are safe SIMULATED fixtures, '
-          'not actual host data. Use tools only when current fixture data is requested. '
-          'Never invent tool results. Follow dependent call order. Report failed operations honestly. '
-          'Give a short final answer after tool results; do not just call tools.')
+GIB = 1024 ** 3
+MIB = 1024 ** 2
+PORTS = {"text": 18181, "omni": 18182, "decision": 18183}
+CONTEXTS = {"text": 131072, "omni": 32768, "decision": 1024}
+ALIASES = {"text": "lfm-text-bench", "omni": "lfm-omni-bench", "decision": "lfm-d1-bench"}
+LOGICAL_CORES = os.cpu_count() or 12
+MAX_SAMPLE = 250_000
+SHUTDOWN = False
+CURRENT_PROCESSES = []
 
-def now(): return datetime.now(timezone.utc).isoformat()
-def dump(p, obj):
-    p = Path(p); tmp=p.with_suffix(p.suffix+'.tmp')
-    with tmp.open('w') as f:
-        json.dump(obj,f,indent=2,ensure_ascii=False); f.write('\n'); f.flush(); os.fsync(f.fileno())
-    tmp.replace(p)
-def digest(p):
-    h=hashlib.sha256()
-    with Path(p).open('rb') as f:
-        for b in iter(lambda:f.read(1024*1024),b''): h.update(b)
-    return h.hexdigest()
-def fingerprint(x): return hashlib.sha256(json.dumps(x,sort_keys=True).encode()).hexdigest()
-def read_rows(p):
-    rows=[]
-    if Path(p).exists():
-        data=Path(p).read_bytes(); lines=data.splitlines(keepends=True)
-        for i,line in enumerate(lines):
-            try: rows.append(json.loads(line))
-            except (ValueError,UnicodeError):
-                if i!=len(lines)-1 or line.endswith(b'\n'): raise ValueError(f'Corrupt JSONL: {p}, line {i+1}')
-                # A crash can leave one incomplete final append. Truncate only that tail.
-                with Path(p).open('r+b') as f: f.truncate(sum(map(len,lines[:i])))
-    return rows
 
-class APIError(Exception): pass
-class UnixConnection(http.client.HTTPConnection):
-    def __init__(self,path,timeout): super().__init__('localhost',timeout=timeout); self.path=str(path)
-    def connect(self):
-        self.sock=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM)
-        self.sock.settimeout(self.timeout); self.sock.connect(self.path)
+def variant(tag, placement=("v", "v", "c"), tb=2048, tu=512, ob=2048, ou=512,
+            gt=4, gb=6, dt=4, poll=0, dn=None, tn=None, on=None):
+    return dict(name=tag, backend=dict(zip(("text", "omni", "decision"), placement)),
+                batch={"text": tb, "omni": ob, "decision": 1024},
+                ubatch={"text": tu, "omni": ou, "decision": 1024},
+                threads={"text": gt if placement[0] == "v" else 6,
+                         "omni": gt if placement[1] == "v" else 6,
+                         "decision": dt},
+                threads_batch={"text": gb if placement[0] == "v" else 6,
+                               "omni": gb if placement[1] == "v" else 6,
+                               "decision": dt},
+                ngl={"text": tn if tn is not None else (99 if placement[0] == "v" else 0),
+                     "omni": on if on is not None else (99 if placement[1] == "v" else 0),
+                     "decision": dn if dn is not None else (99 if placement[2] == "v" else 0)},
+                poll=poll)
 
-class API:
-    def __init__(self,opts,emit=None): self.o=opts; self.emit=emit
-    def connection(self,role,transport=None):
-        if (transport or self.o.transport)=='unix':
-            return UnixConnection(Path(os.environ.get('XDG_RUNTIME_DIR',f'/run/user/{os.getuid()}'))/'lfm'/f'{role}.sock',self.o.timeout)
-        return http.client.HTTPConnection('127.0.0.1',PORTS[role],timeout=self.o.timeout)
-    def call(self,role,endpoint,payload=None,transport=None,stream=False,context=None):
-        c=self.connection(role,transport); start=time.perf_counter(); first=None; visible=None
-        try:
-            c.request('GET' if payload is None else 'POST',endpoint,
-                      None if payload is None else json.dumps(payload).encode(),{'Content-Type':'application/json'})
-            r=c.getresponse()
-            if r.status>=400: raise APIError(f'{role} HTTP {r.status}: {r.read(2048).decode(errors="replace")}')
-            if not stream: response=json.loads(r.read())
-            else:
-                text=''; reasoning=''; calls={}; finish=None; usage={}; timings={}; last={}
-                for line in iter(r.readline,b''):
-                    if not line.startswith(b'data:'): continue
-                    data=line[5:].strip()
-                    if data==b'[DONE]': break
-                    e=json.loads(data); last=e
-                    if 'error' in e: raise APIError(str(e['error']))
-                    usage=e.get('usage') or usage; timings=e.get('timings') or timings
-                    for choice in e.get('choices',[]):
-                        d=choice.get('delta',{}); t=time.perf_counter()-start
-                        if first is None and any(d.get(k) for k in ('content','reasoning_content','tool_calls')): first=t
-                        if visible is None and d.get('content'): visible=t
-                        text+=d.get('content') or ''; reasoning+=d.get('reasoning_content') or ''
-                        finish=choice.get('finish_reason') or finish
-                        for call in d.get('tool_calls') or []:
-                            idx=call.get('index',0); dest=calls.setdefault(idx,{'id':'','type':'function','function':{'name':'','arguments':''}})
-                            if call.get('id'): dest['id']=call['id']
-                            for key in ('name','arguments'):
-                                v=call.get('function',{}).get(key)
-                                if v is not None: dest['function'][key]+=v if isinstance(v,str) else json.dumps(v)
-                        if self.emit and (d.get('content') or d.get('reasoning_content')):
-                            self.emit('delta',dict(context or {},role=role,content=d.get('content'),reasoning=d.get('reasoning_content')))
-                msg={'role':'assistant','content':text,'reasoning_content':reasoning}
-                if calls: msg['tool_calls']=[calls[k] for k in sorted(calls)]
-                response={'choices':[{'message':msg,'finish_reason':finish}],'usage':usage,'timings':timings,
-                          'model':last.get('model'),'system_fingerprint':last.get('system_fingerprint')}
-            if 'error' in response: raise APIError(str(response['error']))
-            return response,{'latency_s':time.perf_counter()-start,'first_generated_token_s':first,
-                             'first_visible_token_s':visible,'streamed':stream}
-        except (OSError,ValueError,http.client.HTTPException) as e: raise APIError(f'{role}: {e}') from e
-        finally: c.close()
-    def chat(self,role,messages,thinking,tools=None,context=None,max_tokens=None):
-        p={'model':'lfm-'+role,'messages':messages,'temperature':0,'seed':self.o.seed,
-           'max_tokens':max_tokens or self.o.max_tokens,'stream':True,'stream_options':{'include_usage':True},
-           'cache_prompt':True}
-        if role=='text': p['chat_template_kwargs']={'enable_thinking':bool(thinking)}
-        if tools: p.update(tools=TOOLS,tool_choice='auto')
-        r,m=self.call(role,'/v1/chat/completions',p,stream=True,context=context)
-        return r,m,p
-    def decision(self,prompt,attachment=None):
-        # Attachment type is metadata, not an oracle route; no second classifier call.
-        state=prompt
-        if len(state)>self.o.decision_max_chars:
-            half=self.o.decision_max_chars//2
-            state=state[:half]+'\n[Middle omitted to fit 1K classifier context; chat receives the full original request.]\n'+state[-half:]
-        state+=(f'\nAn actual {attachment} attachment is provided.' if attachment else '')
-        p={'state':state,'questions':{
-            'route':{'type':'choice','instructions':'Choose the handler for the user request.',
-                     'criteria':{'direct':'Answer using text knowledge, no external tools needed',
-                                 'tool':'Must retrieve current system, network or fixture data using tools',
-                                 'media':'Must inspect an attached image, screenshot, audio or video'}},
-            'needs_tool':{'type':'noul','instructions':'Does the request require calling a system or network tool to fetch facts, rather than just explaining something?'},
-            'reasoning':{'type':'noul','instructions':'Does this require extended reasoning: complex troubleshooting, debugging code, dependent multi-step orchestration, or a difficult logical problem? Simple facts and a straightforward single tool lookup do not.'}}}
-        r,m=self.call('decision','/v1/systemone',p); return r,m,p
 
-def visible_message(r):
-    try: msg=r['choices'][0]['message']; content=msg.get('content') or ''
-    except (KeyError,IndexError,TypeError) as e: raise APIError('Malformed chat response') from e
-    leaked='</think>' in content or '<think>' in content
-    if '</think>' in content: content=content.rsplit('</think>',1)[1]
-    elif '<think>' in content: content=''
-    return msg,content.strip(),leaked
+def build_matrix():
+    return [
+        variant('baseline-vv-c-512x128', tb=512, tu=128, ob=512, ou=128, gt=4, gb=4),
+        variant('balanced-vv-c-2048x256', tb=2048, tu=256, ob=2048, ou=256),
+        variant('balanced-vv-c-2048x512', tb=2048, tu=512, ob=2048, ou=512),
+        variant('lowthreads-vv-c-2048x512', tb=2048, tu=512, ob=2048, ou=512, gt=2, gb=4, dt=2),
+        variant('aggressive-vv-c-4096x512', tb=4096, tu=512, ob=4096, ou=512),
+        variant('aggressive-vv-c-4096x1024', tb=4096, tu=1024, ob=4096, ou=1024, gt=6, gb=6),
+        variant('poll50-vv-c-2048x512', tb=2048, tu=512, ob=2048, ou=512, poll=50),
+        variant('d1-vulkan-vv-v-2048x512', placement=('v','v','v'), tb=2048, tu=512, ob=2048, ou=512),
+        variant('omni-cpu-vc-c-2048x256', placement=('v','c','c'), tb=2048, tu=256, ob=1024, ou=256),
+        variant('text-cpu-cv-c-2048x256', placement=('c','v','c'), tb=1024, tu=256, ob=2048, ou=256),
+        variant('all-cpu-cc-c-1024x256', placement=('c','c','c'), tb=1024, tu=256, ob=1024, ou=256),
+        variant('all-cpu-cc-c-2048x512', placement=('c','c','c'), tb=2048, tu=512, ob=2048, ou=512),
+        variant('text-partial16-omni-v-d1-c', placement=('v','v','c'), tn=16),
+        variant('omni-partial16-text-v-d1-c', placement=('v','v','c'), on=16),
+        variant('d1-v-omni-cpu-vc-v', placement=('v','c','v'), tb=2048, tu=256, ob=1024, ou=256),
+        variant('d1-v-text-cpu-cv-v', placement=('c','v','v'), tb=1024, tu=256, ob=2048, ou=256),
+        variant('vulkan-vv-c-8192x1024', tb=8192, tu=1024, ob=4096, ou=1024, gt=4, gb=8),
+    ]
 
-def choose(r,o):
-    a=r.get('answers',{}); route=a.get('route',{}).get('choice'); conf=a.get('route',{}).get('confidence',0)
-    tool=a.get('needs_tool',{}).get('noul'); score=a.get('reasoning',{}).get('noul')
-    if route not in ('direct','tool','media') or not isinstance(tool,(int,float)) or not isinstance(score,(int,float)):
-        raise APIError('Invalid unified classifier response')
-    ambiguous=abs(score-o.thinking_threshold)<o.ambiguity_margin
-    thinking=(o.fallback=='on') if ambiguous else score>=o.thinking_threshold
-    return {'route':route,'needs_tool':route=='tool' or tool>=o.tool_threshold,
-            'raw_tool_prediction':tool>=o.tool_threshold,'route_tool_disagreement':(route=='tool')!=(tool>=o.tool_threshold),
-            'thinking':thinking,'thinking_score':score,
-            'tool_score':tool,'route_confidence':conf,'ambiguous_reasoning':ambiguous,
-            'probabilities':a.get('route',{}).get('probabilities')}
 
-def tool_execute(task,name,args):
-    f=task['fixture']
-    if name=='get_system_info' and args=={}: return {'kernel':f['kernel'],'load':f['load'],'host':f['host'],'simulated':True}
-    if name=='get_network_info' and args=={}: return {'interface':f['interface'],'ipv4':f['ip'],'simulated':True}
-    if name=='probe_tcp_port' and args=={'host':f['host'],'port':f['port']}:
-        return {'error':'connection refused','simulated':True} if f['failed'] else {'reachable':True,'rtt_ms':f['rtt'],'simulated':True}
-    return {'error':'invalid fixture tool or arguments','simulated':True}
+def read_text(path, default=''):
+    try: return Path(path).read_text().strip()
+    except (OSError, ValueError): return default
 
-def generate(o,media):
-    rng=random.Random(o.seed); tasks=[]
-    categories=['linux','explanation','summary','extraction','coding','troubleshooting','reasoning',
-                'single_system','single_network','dependent_tools','parallel_tools','tool_failure','gating','long_context','mixed']
-    if getattr(o,'quick',False): categories=['summary','extraction','coding','reasoning','single_network']
-    if o.tools: categories=['single_system','single_network','dependent_tools','parallel_tools','tool_failure','gating']
-    if o.mixed: categories=['mixed']
-    if o.media: categories=[]
-    if o.prompt: categories=['custom']
-    used=set()
-    for i in range(o.samples):
-        for category in categories:
-            a=rng.randint(10,899); b=rng.randint(10,899); tag=f'{i:03d}-{rng.randrange(10**8):08d}'
-            fixture={'kernel':f'6.{rng.randrange(1,20)}.{rng.randrange(1,99)}-fixture-{tag}',
-                     'load':round(rng.random()*3,2),'host':f'node-{tag}.example.invalid','port':rng.choice([443,8443,8080]),
-                     'interface':f'eth{rng.randrange(1,9)}','ip':f'192.0.2.{rng.randrange(1,254)}',
-                     'failed':category=='tool_failure','rtt':rng.randrange(1,20)}
-            expected=[]; checks=[]; thinking=False; route='direct'; kind='contains'; cat=category
-            if category=='mixed': cat=['reasoning','single_system','dependent_tools','summary'][i%4]
-            if cat=='linux':
-                topic,answer=rng.choice([('command that prints the kernel release','uname -r'),('absolute directory containing process information','/proc'),('command that prints the current directory','pwd'),('command to resolve a symbolic link','readlink')])
-                prompt=f'Ticket {tag}: Give the {topic}. No tools; general knowledge only.'; checks=[answer]
-            elif cat=='explanation':
-                x,y=rng.choice([('VRAM versus GTT','shared'),('symbolic versus hard links','inode'),('TCP versus UDP','connection'),('swap versus RAM','disk')])
-                prompt=f'Teaching note {tag}: Explain {x} in two short sentences. Include the term {y}.'; checks=[y]
-            elif cat=='summary':
-                prompt=f'Summarize this incident in one sentence retaining the ticket and outcome: ticket {tag}; retries {a}; service restored after {b} seconds; no data lost.'; checks=[tag,'restored',str(b)]
-            elif cat=='extraction':
-                prompt=f'Extract this as a JSON object, no prose: ticket={tag}, retries={a}, elapsed={b}. Keys: ticket, retries, elapsed.'
-                kind='json'; checks={'ticket':tag,'retries':a,'elapsed':b}
-            elif cat=='coding':
-                prompt=f'Debug Python: def f(x): return x + {a}\nExpected f({b}) to multiply x by {a}, not add. Give only the corrected return statement.'
-                checks=['return',str(a),'*']; thinking=True
-            elif cat=='troubleshooting':
-                prompt=f'Incident {tag}: DNS resolves node to 192.0.2.5; ping succeeds; TCP port {a+1000} returns connection refused immediately. Is DNS failure or no listening service the better explanation? Explain briefly without tools.'
-                checks=['listen']; thinking=True
-            elif cat=='reasoning':
-                prompt=f'A fixture starts with {a} jobs, completes {b} jobs and receives {b+7} more. What is the final job count? Output only the integer.'
-                checks=[str(a+7)]; kind='integer'; thinking=True
-            elif cat=='long_context':
-                target=f'KEY-{tag}'; entries=[f'item {j}: value {rng.randrange(100000)}' for j in range(o.context_lines)]
-                entries.insert(rng.randrange(len(entries)+1),f'TARGET = {target}')
-                prompt='Read the ledger and return only the TARGET value.\n'+'\n'.join(entries); checks=[target]
-            elif cat in ('single_system','single_network','dependent_tools','parallel_tools','tool_failure'):
-                route='tool'
-                if cat=='single_system':
-                    prompt=f'Ticket {tag}: Fetch the current simulated kernel and load using get_system_info, and report both.'
-                    expected=[['get_system_info',{}]]; checks=[fixture['kernel'],str(fixture['load'])]
-                elif cat in ('single_network','tool_failure'):
-                    prompt=f'Ticket {tag}: Use probe_tcp_port to check {fixture["host"]}:{fixture["port"]}. Report whether the simulated connection succeeds or fails.'
-                    expected=[['probe_tcp_port',{'host':fixture['host'],'port':fixture['port']}]]
-                    checks=['refused'] if fixture['failed'] else ['reachable']
-                elif cat=='dependent_tools':
-                    prompt=f'Ticket {tag}: First get_system_info to discover the recommended host. Then probe_tcp_port on that returned host at port {fixture["port"]}. Report the kernel and reachability. Do not guess the host.'
-                    expected=[['get_system_info',{}],['probe_tcp_port',{'host':fixture['host'],'port':fixture['port']}]]
-                    checks=[fixture['kernel'],'reachable']; thinking=True
-                else:
-                    prompt=f'Ticket {tag}: Fetch get_system_info and get_network_info, preferably in parallel, and report the kernel and IP.'
-                    expected=[['get_system_info',{}],['get_network_info',{}]]; checks=[fixture['kernel'],fixture['ip']]; thinking=True
-            elif cat=='gating':
-                prompt=f'Ticket {tag}: Explain how one could check TCP port {fixture["port"]} in principle. Do NOT check any host or use any tools.'; checks=[str(fixture['port'])]
-            else: prompt=o.prompt; kind='review'
-            task={'category':category,'variant':cat,'prompt':prompt,'fixture':fixture,'expected_calls':expected,
-                  'expected_route':route,'expected_thinking':thinking,'checks':checks,'scorer':kind,'media':None,
-                  'concurrent':category=='mixed','replicate':i}
-            # Same underlying question with a ticket only is NOT an independent knowledge sample.
-            task['independence_note']='Generated fixture/argument instance; template-level correlations remain.'
-            task['independent_unit']=(category+':'+fingerprint(prompt.replace(tag,'<ticket>'))) if category in ('linux','explanation') else category+':'+tag
-            h=fingerprint(task)
-            if h in used: continue
-            used.add(h); task['id']=f'{category}-{i:03d}-{h[:10]}'; task['input_hash']=h; tasks.append(task)
-    if not o.tools and not o.prompt and not getattr(o,'quick',False):
-        for m in media:
-            if not m.get('usable'): continue
-            task={'category':'media','variant':m['kind'],'prompt':('Transcribe or describe the attached media briefly. Do not invent details. '
-                  'The description will be summarized into one sentence.'),'media':m,'fixture':{},'expected_calls':[],
-                  'expected_route':'media','expected_thinking':False,'checks':[],'scorer':'review','concurrent':False,
-                  'independence_note':'One independent source file; repetitions are not independent media samples.'}
-            task['independent_unit']='media:'+m['sha256']
-            task['input_hash']=fingerprint(task); task['id']='media-'+task['input_hash'][:12]; tasks.append(task)
-    if o.smoke:
-        keep=('reasoning','single_system','dependent_tools','mixed','media')
-        tasks=[t for t in tasks if t['category'] in keep][:8]
-    rng.shuffle(tasks)
-    modes=['on','off','adaptive'] if o.reasoning=='compare' else [o.reasoning]
-    # Random permutation per independent task, persisted exactly for resume.
-    for task in tasks: task['mode_order']=rng.sample(modes,len(modes))
-    return tasks
 
-def media_discover(o):
-    rng=random.Random(o.seed ^ 0x4d45444941); selected={}; counts={}; errors=[]
-    extkind={e:k for k,es in FORMATS.items() for e in es}
-    paths=[Path(o.image_file).expanduser()] if o.image_file else None
-    def files():
-        if paths: yield from paths; return
-        for root,dirs,names in os.walk(Path(o.media_root).expanduser(),followlinks=False,onerror=lambda e:errors.append(str(e))):
-            # Scan hidden directories too, but avoid benchmark-generated copies and symlinks.
-            dirs[:]=sorted(d for d in dirs if d!='.git' and not (Path(root)/d).is_symlink() and Path(root)/d!=ROOT)
-            for name in sorted(names): yield Path(root)/name
-    for p in files():
-        ext=p.suffix.lower().lstrip('.')
-        if ext not in extkind or p.is_symlink(): continue
-        try:
-            size=p.stat().st_size
-            if not p.is_file() or not 0<size<=o.max_media_mb*1024*1024: continue
-        except OSError: continue
-        counts[ext]=counts.get(ext,0)+1
-        if rng.randrange(counts[ext])==0: selected[ext]=p
-    result=[]
-    for ext in sorted(extkind):
-        p=selected.get(ext); row={'format':ext,'kind':extkind[ext],'eligible_count':counts.get(ext,0),'usable':False}
-        if p:
-            row.update(path=str(p),bytes=p.stat().st_size,sha256=digest(p),input_path=str(p),conversion=None)
-            if extkind[ext]!='image':
-                try:
-                    q=subprocess.run(['ffprobe','-v','error','-show_entries','format=duration','-of','json',str(p)],capture_output=True,text=True,timeout=20,check=True)
-                    row['duration_s']=float(json.loads(q.stdout)['format']['duration'])
-                    if row['duration_s']>o.max_media_seconds: row['skip_reason']='Selected original exceeds duration limit; no silent substitute.'
-                except (OSError,ValueError,KeyError,subprocess.SubprocessError): row['skip_reason']='Duration cannot be verified (ffprobe missing or invalid media).'
-            if 'skip_reason' not in row: row['usable']=True
-        else: row['skip_reason']='No eligible file found within size limit.'
-        result.append(row)
-    return result,errors
+def read_int(path):
+    try: return int(read_text(path))
+    except ValueError: return None
 
-def media_part(m):
-    p=Path(m['input_path'])
-    if digest(p)!=m.get('input_sha256',m['sha256']): raise APIError('Media content changed since manifest; refusing substitution')
-    mime=mimetypes.guess_type(str(p))[0] or {'image':'image/png','audio':'audio/wav','video':'video/mp4'}[m['kind']]
-    uri='data:'+mime+';base64,'+base64.b64encode(p.read_bytes()).decode()
-    if m['kind']=='image': return {'type':'image_url','image_url':{'url':uri}}
-    key='input_'+m['kind']; return {'type':key,key:{'data':uri}}
 
-class Sampler:
-    def __init__(self,engine): self.e=engine; self.stop=threading.Event(); self.thread=threading.Thread(target=self.run,daemon=True)
-    def run(self):
-        while not self.stop.is_set():
-            t=time.perf_counter(); row={'utc':now(),'time':time.time(),'gpu':{},'processes':{}}
-            for dev in Path('/sys/class/drm').glob('card[0-9]*/device'):
-                g={}
-                for name in ('mem_info_vram_used','mem_info_gtt_used','mem_info_vram_total','mem_info_gtt_total','gpu_busy_percent','pp_dpm_sclk','pp_dpm_mclk'):
-                    try:
-                        val=(dev/name).read_text().strip(); g[name]=int(val) if val.isdigit() else val
-                    except OSError: pass
-                for hw in (dev/'hwmon').glob('hwmon*'):
-                    for p in hw.glob('*_input'):
-                        if p.name.startswith(('temp','power','fan')):
-                            try:g[p.name]=int(p.read_text())
-                            except (OSError,ValueError): pass
-                if g: row['gpu'][str(dev)]=g
-            try:
-                row['meminfo_kib']={k:int(v.split()[0]) for k,v in (line.split(':',1) for line in Path('/proc/meminfo').read_text().splitlines()) if k in ('MemTotal','MemAvailable','SwapTotal','SwapFree','Cached')}
-                row['cpu_stat']=Path('/proc/stat').read_text().splitlines()[0];row['loadavg']=Path('/proc/loadavg').read_text().strip()
-            except OSError: pass
-            for pid in self.e.pids:
-                try:
-                    stat=Path(f'/proc/{pid}/stat').read_text().rsplit(')',1)[1].split()
-                    row['processes'][str(pid)]={'minor_faults':int(stat[7]),'major_faults':int(stat[9]),'utime_ticks':int(stat[11]),'stime_ticks':int(stat[12]),'rss_pages':int(stat[21])}
-                except (OSError,ValueError,IndexError): pass
-            row['sampling_seconds']=time.perf_counter()-t; self.e.append('system.jsonl',row)
-            self.stop.wait(self.e.o.sample_interval)
+def gpu_device():
+    for card in sorted(Path('/sys/class/drm').glob('card[0-9]*')):
+        dev = card / 'device'
+        if read_text(dev/'vendor') == '0x1002' and (dev/'gpu_busy_percent').exists():
+            return dev
+    return None
+
+
+def psi_avg10(resource):
+    text = read_text('/proc/pressure/' + resource)
+    try: return float(re.search(r'^some\s+avg10=([0-9.]+)', text, re.M).group(1))
+    except (ValueError, AttributeError): return None
+
+
+def meminfo():
+    result = {}
+    for line in read_text('/proc/meminfo').splitlines():
+        m = re.match(r'^(\w+):\s+(\d+) kB$', line)
+        if m: result[m.group(1)] = int(m.group(2)) * 1024
+    return result
+
+
+def cpu_counters():
+    line = read_text('/proc/stat').splitlines()[0].split()
+    values = [int(v) for v in line[1:]]
+    total, idle = sum(values), values[3] + values[4]
+    return total, idle
+
+
+def process_rss(pid):
+    status = read_text(f'/proc/{pid}/status')
+    m = re.search(r'^VmRSS:\s+(\d+) kB$', status, re.M)
+    return int(m.group(1)) / 1024 if m else 0.0
+
+
+def percentile(seq, q):
+    seq = sorted(x for x in seq if x is not None)
+    if not seq: return None
+    index = (len(seq)-1)*q/100
+    low, high = math.floor(index), math.ceil(index)
+    return seq[low] * (high-index) + seq[high]*(index-low) if low != high else seq[low]
+
+
+def stats(values):
+    seq = [x for x in values if isinstance(x, (float,int)) and math.isfinite(x)]
+    return {'mean': statistics.mean(seq) if seq else None,
+            'median': statistics.median(seq) if seq else None,
+            'p95': percentile(seq, 95), 'max': max(seq) if seq else None}
+
+
+def nicefmt(x, digits=1):
+    return '-' if x is None else f'{x:.{digits}f}'
+
+
+class Monitor:
+    def __init__(self, path, interval=.20):
+        self.path = path
+        self.interval = interval
+        self.gpu = gpu_device()
+        self.records = []
+        self.current_config = 'baseline'
+        self.current_trial = 'idle'
+        self.stop = threading.Event()
+        self.lock = threading.Lock()
+        self.thread = threading.Thread(target=self.loop, daemon=True)
+        self.previous_cpu = None
+
     def start(self): self.thread.start()
-    def close(self): self.stop.set(); self.thread.join(timeout=5)
+    def close(self):
+        self.stop.set()
+        self.thread.join(timeout=3)
 
-def metadata(api):
-    out={'utc':now(),'python':sys.version,'platform':os.uname()._asdict() if hasattr(os.uname(),'_asdict') else list(os.uname()),
-         'tool_schemas':TOOLS,'servers':{},'processes':{},'monitoring_notes':
-         ['DRM VRAM and GTT are distinct global counters, including desktop and other GPU clients.',
-          'On an iGPU VRAM is firmware-reserved system memory, not separate physical GPU RAM.',
-          'No cold-cache flush, service restart, or loading-time measurement is performed.',
-          'Reasoning/visible token counts are null unless server exposes separate counts.',
-          'Power, clocks and temperature only when exposed by readable sysfs. No inferred throttling claims.']}
-    for role in PORTS:
-        try: out['servers'][role]=api.call(role,'/props')[0]
-        except APIError as e: out['servers'][role]={'error':str(e)}
-    for proc in Path('/proc').glob('[0-9]*'):
-        try:
-            args=(proc/'cmdline').read_bytes().split(b'\0'); argv=[a.decode(errors='replace') for a in args if a]
-            if not argv or Path(argv[0]).name!='llama-server':continue
-            models=[]
-            for flag in ('-m','-mm','--model','--mmproj'):
-                if flag in argv:
-                    p=Path(argv[argv.index(flag)+1]); st=p.stat()
-                    models.append({'path':str(p),'bytes':st.st_size,'mtime_ns':st.st_mtime_ns,
-                                   'identifier':p.name+';size='+str(st.st_size)+';mtime_ns='+str(st.st_mtime_ns)})
-            out['processes'][proc.name]={'argv':argv,'models':models}
-        except (OSError,ValueError,IndexError):pass
-    for name,argv in [('llama_version',['/usr/local/bin/llama-server','--version']),
-                      ('gpu_devices',['/usr/local/bin/llama-server','--list-devices']),('ffmpeg_version',['ffmpeg','-version']),
-                      ('llama_git',['git','-C',str(Path.home()/'src/llama.cpp'),'rev-parse','HEAD'])]:
-        try:
-            q=subprocess.run(argv,capture_output=True,text=True,timeout=10);out[name]=(q.stdout+q.stderr)[:4000]
-        except (OSError,subprocess.SubprocessError) as e:out[name]=str(e)
-    return out
+    def loop(self):
+        planned = time.monotonic()
+        with self.path.open('w') as fd:
+            while not self.stop.is_set():
+                now = time.monotonic()
+                drift = max(0, (now - planned)*1000)
+                planned = now+self.interval
+                mem = meminfo()
+                total, idle = cpu_counters()
+                util = None
+                if self.previous_cpu:
+                    dtot = total - self.previous_cpu[0]
+                    didle = idle - self.previous_cpu[1]
+                    if dtot > 0: util = 100*(1-didle/dtot)
+                self.previous_cpu = (total,idle)
+                dev = self.gpu
+                get = (lambda p: read_int(dev/p)) if dev else (lambda p: None)
+                with self.lock:
+                    key = self.current_config
+                    trial = self.current_trial
+                pids = [p.pid for p in CURRENT_PROCESSES if p.poll() is None]
+                rec = {
+                    'at': dt.datetime.now().isoformat(timespec='milliseconds'),
+                    't': now, 'config': key, 'trial': trial, 'scheduler_lag_ms': round(drift, 3),
+                    'cpu_percent': util, 'cpu_psi_avg10': psi_avg10('cpu'),
+                    'mem_psi_avg10': psi_avg10('memory'),
+                    'ram_available_mib': mem.get('MemAvailable',0)/MIB,
+                    'ram_used_mib': (mem.get('MemTotal',0)-mem.get('MemAvailable',0))/MIB,
+                    'swap_used_mib': (mem.get('SwapTotal',0)-mem.get('SwapFree',0))/MIB,
+                    'gpu_busy_pct': get('gpu_busy_percent'),
+                    'gpu_mem_busy_pct': get('mem_busy_percent'),
+                    'vram_used_mib': (get('mem_info_vram_used') or 0)/MIB if dev and get('mem_info_vram_used') is not None else None,
+                    'vram_total_mib': (get('mem_info_vram_total') or 0)/MIB if dev and get('mem_info_vram_total') is not None else None,
+                    'gtt_used_mib': (get('mem_info_gtt_used') or 0)/MIB if dev and get('mem_info_gtt_used') is not None else None,
+                    'servers_rss_mib': sum(process_rss(p) for p in pids),
+                    'loadavg_1m': os.getloadavg()[0],
+                    'server_pids': pids,
+                }
+                self.records.append(rec)
+                fd.write(json.dumps(rec, separators=(',',':'))+'\n')
+                fd.flush()
+                self.stop.wait(self.interval)
 
-class Engine:
-    def __init__(self,o,run):
-        self.o=o; self.run=run; self.lock=threading.Lock(); self.api=API(o,self.event);self.pids=[]
-        self.key=None
-    def append(self,name,obj):
+    def mark(self, config=None, trial=None):
         with self.lock:
-            with (self.run/name).open('a') as f:
-                f.write(json.dumps(obj,ensure_ascii=False)+'\n');f.flush()
-                if name not in ('events.jsonl','system.jsonl'):os.fsync(f.fileno())
-    def event(self,kind,data):
-        self.append('events.jsonl',{'utc':now(),'event':kind,**data})
-        if not self.o.live:return
-        if kind=='delta':
-            value=data.get('content') or (data.get('reasoning') if self.o.show_reasoning else None)
-            if value: print(value,end='',flush=True)
-        else: print('\n['+kind+'] '+json.dumps(data,ensure_ascii=False),flush=True)
-    def request_record(self,context,role,stage,p,r,m):
-        # Do not duplicate large base64 inputs; hashes in media manifest identify exact bytes.
-        safe=json.loads(json.dumps(p))
-        for msg in safe.get('messages',[]):
-            if isinstance(msg.get('content'),list):
-                msg['content']=[x if x.get('type')=='text' else {'type':x['type'],'media':'See hashed media manifest'} for x in msg['content']]
-        row={'utc':now(),**context,'role':role,'stage':stage,'request':safe,'response':r,**m}
-        if role!='decision':
-            msg,text,leaked=visible_message(r);u=r.get('usage',{}); details=u.get('completion_tokens_details') or {}
-            row.update(finish_reason=r['choices'][0].get('finish_reason'),visible_characters=len(text),
-                       reasoning_characters=len(msg.get('reasoning_content') or ''),thinking_leakage=leaked,
-                       reasoning_tokens=details.get('reasoning_tokens'),visible_tokens=details.get('visible_tokens'),
-                       cache_tokens=(u.get('prompt_tokens_details') or {}).get('cached_tokens'),
-                       context_utilization=(u.get('prompt_tokens',0)+u.get('completion_tokens',0))/(65536 if role=='text' else 8192),
-                       first_visible_timing_valid=not leaked)
-        self.append('requests.jsonl',row)
-    def chat(self,role,msgs,think,tools,ctx,stage,max_tokens=None):
-        r,m,p=self.api.chat(role,msgs,think,tools,ctx,max_tokens)
-        self.request_record(ctx,role,stage,p,r,m);return r
-    def probe_media(self,media):
-        for row in media:
-            if not row.get('usable'):continue
-            original=dict(row)
-            for attempt in ('native','converted'):
-                try:
-                    t=time.perf_counter();part=media_part(row); row[attempt+'_decode_prepare_s']=time.perf_counter()-t
-                    msgs=[{'role':'system','content':'Respond in text only.'},{'role':'user','content':[{'type':'text','text':'Describe or transcribe this media briefly.'},part]}]
-                    r=self.chat('omni',msgs,False,False,{'task_id':'probe-'+row['format'],'mode':'preflight'},attempt+'-format-probe',128)
-                    _,text,_=visible_message(r)
-                    # Decode/API acceptance is independent of recognition completeness or accuracy.
-                    row[attempt+'_accepted']=True
-                    row[attempt+'_recognition_complete']=bool(text) and r['choices'][0].get('finish_reason')!='length'
-                    row[attempt+'_finish_reason']=r['choices'][0].get('finish_reason')
-                    row['usable']=bool(text)
-                    if not text:row['skip_reason']='Native decoder accepted input, but probe produced no visible recognition; not evidence of unsupported format.'
-                    row['recognition_accuracy']='unscored; human review required'
-                    break
-                except (APIError,OSError) as e:
-                    row[attempt+'_accepted']=False;row[attempt+'_error']=str(e);row['usable']=False
-                    if attempt=='converted' or not shutil.which('ffmpeg'):break
-                    dest=self.run/'converted';dest.mkdir(exist_ok=True)
-                    suffix={'image':'.png','audio':'.wav','video':'.mp4'}[row['kind']];target=dest/(row['sha256'][:16]+suffix)
-                    cmd=['ffmpeg','-nostdin','-v','error','-n','-i',original['path']]
-                    if row['kind']=='image':cmd+=['-frames:v','1','-vf','scale=1024:1024:force_original_aspect_ratio=decrease']
-                    elif row['kind']=='audio':cmd+=['-t',str(self.o.max_media_seconds),'-ac','1','-ar','16000']
-                    else:cmd+=['-t',str(self.o.max_media_seconds),'-an','-vf','scale=640:640:force_original_aspect_ratio=decrease','-r','1']
-                    cmd+=[str(target)]
-                    try:
-                        subprocess.run(cmd,capture_output=True,timeout=90,check=True)
-                        row.update(input_path=str(target),input_sha256=digest(target),conversion={'argv':cmd,'source_sha256':original['sha256']})
-                    except (OSError,subprocess.SubprocessError) as err:row['conversion_error']=str(err);break
-            dump(self.run/'media-manifest.json',media)
-    def one(self,task,mode):
-        ctx={'task_id':task['id'],'mode':mode};start=time.perf_counter()
-        row={'utc':now(),**ctx,'category':task['category'],'input_hash':task['input_hash'],'success':False,
-             'infrastructure_error':False,'error':None,'scored':task['scorer']!='review','calls':[],
-             'independent_unit':task.get('independent_unit',task['id']),
-             'expected_route':task['expected_route'],'expected_thinking':task['expected_thinking'],
-             'expected_tool_needed':bool(task['expected_calls']),'completion_tokens':0,'length_terminations':0}
+            if config is not None: self.current_config = config
+            if trial is not None: self.current_trial = trial
+
+    def range(self, start, stop):
+        return [r for r in self.records if start <= r['t'] <= stop]
+
+    def health(self):
+        if not self.records: return (True, None)
+        last = self.records[-1]
+        if last['ram_available_mib'] < 1400: return (False, 'MemAvailable below 1.4 GiB')
+        if last['mem_psi_avg10'] is not None and last['mem_psi_avg10'] > 50:
+            return (False, 'memory PSI avg10 above 50%')
+        return (True,None)
+
+    def aggregate(self, start, stop):
+        subset = self.range(start,stop)
+        if not subset: return {}
+        maximum = lambda key: max((x[key] for x in subset if x.get(key) is not None), default=None)
+        minimum = lambda key: min((x[key] for x in subset if x.get(key) is not None), default=None)
+        mean = lambda key: stats([x.get(key) for x in subset])['mean']
+        return {
+            'peak_cpu_percent': maximum('cpu_percent'),
+            'mean_cpu_percent': mean('cpu_percent'),
+            'peak_gpu_busy_pct': maximum('gpu_busy_pct'),
+            'mean_gpu_busy_pct': mean('gpu_busy_pct'),
+            'peak_gpu_mem_busy_pct': maximum('gpu_mem_busy_pct'),
+            'peak_vram_mib': maximum('vram_used_mib'),
+            'peak_gtt_mib': maximum('gtt_used_mib'),
+            'peak_ram_used_mib': maximum('ram_used_mib'),
+            'min_ram_available_mib': minimum('ram_available_mib'),
+            'peak_swap_used_mib': maximum('swap_used_mib'),
+            'peak_servers_rss_mib': maximum('servers_rss_mib'),
+            'peak_cpu_psi_avg10': maximum('cpu_psi_avg10'),
+            'peak_mem_psi_avg10': maximum('mem_psi_avg10'),
+            'scheduler_lag_p95_ms': percentile([x['scheduler_lag_ms'] for x in subset],95),
+            'scheduler_lag_max_ms': maximum('scheduler_lag_ms'),
+            'peak_loadavg_1m': maximum('loadavg_1m'),
+        }
+
+
+CLIENT = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+
+
+def http(port, path, data=None, timeout=80):
+    payload = json.dumps(data).encode() if data is not None else None
+    req = urllib.request.Request(f'http://127.0.0.1:{port}{path}', data=payload,
+                                 headers={'Content-Type':'application/json', 'Authorization':'Bearer local'})
+    try:
+        with CLIENT.open(req, timeout=timeout) as r:
+            return json.load(r)
+    except urllib.error.HTTPError as e:
+        body = e.read(700).decode(errors='replace')
+        raise RuntimeError(f'HTTP {e.code}: {body}') from e
+
+
+def png_test_image():
+    # Fixed synthetic image; no personal media is read or uploaded.
+    width,height = 640,480
+    # Three horizontal high-contrast bands test actual image/projector processing.
+    cols = [(15,92,211), (237,201,34), (25,175,83)]
+    img = bytearray()
+    for y in range(height):
+        rgb = cols[min(2, y * 3 // height)]
+        img.extend(b'\x00' + bytes(rgb)*width)
+    def chunk(tag, data):
+        return struct.pack('>I',len(data))+tag+data+struct.pack('>I',zlib.crc32(tag+data)&0xffffffff)
+    ihdr = struct.pack('>2I5B',width,height,8,2,0,0,0)
+    image = b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', ihdr)+chunk(b'IDAT',zlib.compress(img,7))+chunk(b'IEND',b'')
+    return 'data:image/png;base64,' + base64.b64encode(image).decode()
+
+
+def prompt_payload(kind, previous=None, image_url=None, long=False, repeats=None):
+    # The same synthetic prompt is used for every configuration.
+    incident = ('Arch Linux workstation with AMD 4650U, 16 GB shared memory, Wayland, '
+                'llama.cpp Vulkan inference. A three-model assistant routes requests with D1, '
+                'uses LFM3 text for tool reasoning, and Omni for image interpretation. '
+                'Diagnose latency, minimize bandwidth contention, protect desktop input, '
+                'and do not invent measurements. ')
+    prefix = (incident * (repeats if repeats is not None else (45 if long else 6))).strip()
+    if kind == 'text':
+        user = prefix + '\nGive four actionable ways to reduce first-token latency and memory contention.'
+    elif kind == 'omni':
+        user = 'Inspect the attached synthetic RGB image. Which color occupies the middle band? '
+        user += 'Then explain what makes image-prefill distinct from text-only prefill.'
+        if previous: user += '\nHandoff note: '+previous[:800]
+    else:
+        user = prefix + '\nCombine both specialists into a concise recommendation. '
+        if previous: user += '\nPrior handoff: '+previous[:1000]
+    if image_url and kind == 'omni':
+        content = [{'type':'text','text':user},{'type':'image_url','image_url':{'url':image_url}}]
+    else:
+        content = user
+    return {'model':ALIASES['omni' if kind=='omni' else 'text'], 'messages':[
+            {'role':'system','content':'You are a concise Linux specialist. Answer accurately and briefly.'},
+            {'role':'user','content':content}],
+            'max_tokens':64 if kind=='omni' else 80,
+            'temperature':0, 'stream':False, 'cache_prompt':False, 'seed':42}
+
+
+def decision_payload(expected):
+    state = ('Request: diagnose Linux llama.cpp scheduling, KV-cache performance, and shell tools.'
+             if expected == 'text' else
+             'Request includes a screenshot/image requiring actual visual interpretation.')
+    return {'state':state,'questions':{'route':{
+                'type':'choice','instructions':'Choose the model that can handle this request most appropriately.',
+                'criteria':{'text':'Text, reasoning, code, shell and tool tasks.',
+                            'omni':'Visual screenshot, image, speech, audio or video tasks.'}}}}
+
+
+def measure_request(model, payload, case, trial, stage_name, timeout=100):
+    path='/v1/systemone' if model == 'decision' else '/v1/chat/completions'
+    t0=time.monotonic()
+    reply=http(PORTS[model],path,payload,timeout=timeout)
+    elapsed=(time.monotonic()-t0)*1000
+    timings=reply.get('timings') or {}
+    usage=reply.get('usage') or {}
+    prompt_ms = timings.get('prompt_ms')
+    gen_ms = timings.get('predicted_ms') if model!='decision' else None
+    result = {'config':case,'trial':trial, 'stage':stage_name, 'model':model,
+              'wall_ms':elapsed, 'prefill_ms':prompt_ms,'generation_ms':gen_ms,
+              'prefill_tps':timings.get('prompt_per_second'),
+              'generation_tps':timings.get('predicted_per_second'),
+              'prefill_tokens':timings.get('prompt_n',usage.get('input_tokens')),
+              'cached_tokens':timings.get('cache_n'),
+              'generation_tokens':timings.get('predicted_n',usage.get('output_tokens')),
+              'route_choice':'', 'route_correct':'',
+              'error':''}
+    if model == 'decision':
+        result['route_choice'] = (((reply.get('answers') or {}).get('route') or {}).get('choice')) or ''
+        result['route_correct'] = result['route_choice'] == trial.split('_')[1] if trial.startswith('direct_') else None
+    output = ((reply.get('choices') or [{}])[0].get('message') or {}).get('content') or ''
+    if isinstance(output, list): output = json.dumps(output)
+    return result, output
+
+
+def wait_health(proc, port, deadline):
+    while time.monotonic()<deadline and not SHUTDOWN:
+        if proc.poll() is not None:
+            raise RuntimeError(f'llama-server exited code {proc.returncode} before health check')
         try:
-            # All arms use the same d1 router so only reasoning treatment differs.
-            r,m,p=self.api.decision(task['prompt'],task['media']['kind'] if task['media'] else None)
-            self.request_record(ctx,'decision','decision',p,r,m); d=choose(r,self.o)
-            row.update(decision=d,classifier_s=m['latency_s'],decision_input_truncated=len(task['prompt'])>self.o.decision_max_chars,
-                       route_correct=d['route']==task['expected_route'],
-                       reasoning_selection_correct=d['thinking']==task['expected_thinking'],predicted_tool_needed=d['needs_tool'])
-            think=mode=='on' or (mode=='adaptive' and d['thinking']);row['thinking']=think
-            self.event('decision',{**ctx,**d,'effective_thinking':think})
-            msgs=[{'role':'system','content':SYSTEM},{'role':'user','content':task['prompt']}]
-            final=''; all_r=[]; tool_s=0; args_ok=True; dependent_ok=True; media_complete=None
-            # Intentional background contention: one extra Omni and d1 request only in mixed tasks.
-            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-                bg=[]
-                if task['concurrent']:
-                    bg=[pool.submit(self.api.call,'decision','/v1/systemone',{'state':'Explain Linux.','questions':{'tool':{'type':'noul','instructions':'Is a tool needed?'}}}),
-                        pool.submit(self.api.chat,'omni',[{'role':'user','content':'Say ready.'}],False,None,ctx,32)]
-                if d['route']=='media':
-                    if not task['media']: raise ValueError('Router selected media without attachment')
-                    t=time.perf_counter();part=media_part(task['media']);row['media_prepare_s']=time.perf_counter()-t
-                    mr=self.chat('omni',[{'role':'system','content':'Respond briefly in text, only describe visible or audible evidence.'},
-                          {'role':'user','content':[{'type':'text','text':task['prompt']},part]}],False,False,ctx,'media')
-                    all_r.append(mr);_,recognition,_=visible_message(mr);media_complete=bool(recognition)
-                    if not recognition:raise ValueError('Empty Omni recognition')
-                    self.event('media-output',{**ctx,'recognition':recognition})
-                    msgs=[{'role':'system','content':SYSTEM},{'role':'user','content':'Summarize the following media analysis in one sentence without adding facts:\n'+recognition}]
-                tool_enabled=d['needs_tool'] and d['route']!='media'
-                for hop in range(self.o.max_hops):
-                    if STOP.is_set():raise InterruptedError('Interrupted between inference requests')
-                    rr=self.chat('text',msgs,think,tool_enabled,ctx,f'text-hop-{hop}')
-                    all_r.append(rr);msg,final,leaked=visible_message(rr)
-                    calls=msg.get('tool_calls') or []
-                    if not calls:break
-                    assistant={'role':'assistant','content':msg.get('content') or '', 'tool_calls':json.loads(json.dumps(calls))}
-                    if msg.get('reasoning_content'):assistant['reasoning_content']=msg['reasoning_content']
-                    # Installed LFM template expects parsed object arguments in history.
-                    for c in assistant['tool_calls']:
-                        raw=c['function'].get('arguments') or '{}'
-                        c['function']['arguments']=json.loads(raw) if isinstance(raw,str) else raw
-                    msgs.append(assistant)
-                    seen_before=[c['name'] for c in row['calls']]
-                    for c in assistant['tool_calls']:
-                        name=c['function']['name'];args=c['function']['arguments']
-                        if not isinstance(args,dict):raise ValueError('Tool arguments are not an object')
-                        if task['variant']=='dependent_tools' and name=='probe_tcp_port' and 'get_system_info' not in seen_before:dependent_ok=False
-                        tt=time.perf_counter();result=tool_execute(task,name,args);elapsed=time.perf_counter()-tt;tool_s+=elapsed
-                        if result.get('error')=='invalid fixture tool or arguments':args_ok=False
-                        row['calls'].append({'name':name,'arguments':args,'result':result,'execution_s':elapsed,'hop':hop})
-                        self.event('tool',{**ctx,**row['calls'][-1]})
-                        msgs.append({'role':'tool','tool_call_id':c['id'],'content':json.dumps(result)})
-                else:raise ValueError('Tool hop limit reached')
-                for idx,f in enumerate(bg):
-                    result=f.result()
-                    if idx==0:br,bm=result;bp={'state':'Explain Linux.','questions':{'tool':{'type':'noul','instructions':'Is a tool needed?'}}};role='decision'
-                    else:br,bm,bp=result;role='omni'
-                    self.request_record(ctx,role,'contention-background',bp,br,bm)
-                    row.setdefault('contention_background_s',[]).append(bm['latency_s'])
-            got=[[c['name'],c['arguments']] for c in row['calls']];expected=task['expected_calls']
-            if task['variant']=='parallel_tools': calls_correct=sorted(map(json.dumps,got))==sorted(map(json.dumps,expected))
-            else:calls_correct=got==expected
-            score=score_answer(task,final)
-            row.update(final_answer=final,answer_correct=score,calls_correct=calls_correct,arguments_correct=args_ok,
-                       dependent_order_correct=dependent_ok,tool_execution_s=tool_s,media_handoff_complete=media_complete,
-                       unnecessary_calls=max(0,len(got)-len(expected)),missed_calls=max(0,len(expected)-len(got)),
-                       format_correct=(final.strip()==task['checks'][0]) if task['scorer']=='integer' else None,
-                       success=bool(final) and score is not False and calls_correct and args_ok and dependent_ok and row['route_correct'])
-            for rr in all_r:
-                row['completion_tokens']+=(rr.get('usage') or {}).get('completion_tokens',0)
-                row['length_terminations']+=rr['choices'][0].get('finish_reason')=='length'
-            if row['length_terminations']:row['success']=False
-            self.event('answer',{**ctx,'answer':final,'success':row['success'],'scored':row['scored']})
-        except InterruptedError:raise
-        except (APIError,OSError,ValueError,KeyError,TypeError) as e:
-            row['error']=f'{type(e).__name__}: {e}';row['infrastructure_error']=isinstance(e,(APIError,OSError))
-            self.event('error',{**ctx,'error':row['error']})
-        row['latency_s']=time.perf_counter()-start
-        self.append('results.jsonl',row)
-        if row['error']:self.append('errors.jsonl',row)
-        print(f"{task['id']} {mode:8} {'PASS' if row['success'] else 'FAIL'} {row['latency_s']:.2f}s tokens={row['completion_tokens']}",flush=True)
-        return row
+            resp=http(port,'/health',timeout=2)
+            if resp.get('status') not in ('loading model','loading', 'not ready'):
+                return
+        except Exception:
+            pass
+        time.sleep(.75)
+    raise TimeoutError(f'health timeout port {port}')
 
-def canonical_prose(text):
-    # Typography is not a factual error: normalize compatibility forms, spaces
-    # and Unicode dash punctuation on BOTH sides of prose containment checks.
-    # Exact JSON and integer scorers intentionally do not use this function.
-    return ''.join('-' if unicodedata.category(c)=='Pd' else c
-                   for c in unicodedata.normalize('NFKC',str(text))).casefold()
 
-def score_answer(task,text):
-    if task['scorer']=='review':return None
-    if task['scorer']=='integer':
-        # Arithmetic correctness is separate from the requested terse output format.
-        last=text.strip().splitlines()[-1] if text.strip() else ''
-        return bool(re.fullmatch(r'\s*'+re.escape(task['checks'][0])+r'[.!]?\s*',last))
-    if task['scorer']=='json':
-        try:return json.loads(re.sub(r'^```(?:json)?\s*|\s*```$','',text.strip()))==task['checks']
-        except ValueError:return False
-    folded=canonical_prose(text)
-    def matches(c):
-        if c=='reachable':
-            return bool(re.search(r'\breachable\b|reachability[^\n]*\btrue\b|connection[^\n]*\bsuccess',folded)) and not re.search(r'\bnot reachable\b|\bunreachable\b',folded)
-        return canonical_prose(c) in folded
-    return all(matches(c) for c in task['checks'])
+def launch_one(model, config, binary, pathmap, logs, monitor, deadline):
+    backend=config['backend'][model]
+    ngl=config['ngl'][model]
+    args=[str(binary), '-m', str(pathmap[model]),
+          '--host','127.0.0.1', '--port',str(PORTS[model]),
+          '--alias',ALIASES[model], '-ngl',str(ngl),'--fit','off',
+          '-b',str(config['batch'][model]), '-ub',str(config['ubatch'][model]),
+          '-c',str(CONTEXTS[model]),'-t',str(config['threads'][model]),
+          '-tb',str(config['threads_batch'][model]),
+          '-np','1','-fa','on','--poll',str(config['poll']),
+          '--poll-batch',str(config['poll']), '--metrics']
+    if model != 'decision':
+        args.extend(['-ctk','q4_0','-ctv','q4_0','--jinja'])
+    if backend == 'c':
+        args.extend(['--device','none','--no-kv-offload','--no-op-offload'])
+    if model in ('omni','decision'):
+        args.extend(['-mm',str(pathmap[model+'_mm'])])
+        if backend == 'c': args.append('--no-mmproj-offload')
+    if model == 'text': args.extend(['--temp','0.1'])
+    if model == 'omni': args.extend(['--temp','0','--reasoning','off'])
+    logname = logs / f'{model}.log'
+    f = logname.open('w')
+    f.write('CMD: '+subprocess.list2cmdline(args)+'\n\n')
+    f.flush()
+    def deprioritize():
+        try: os.nice(8)
+        except OSError: pass
+    try:
+        proc=subprocess.Popen(args, stdout=f, stderr=subprocess.STDOUT,
+                              stdin=subprocess.DEVNULL, start_new_session=True,
+                              preexec_fn=deprioritize)
+    except Exception:
+        f.close(); raise
+    CURRENT_PROCESSES.append(proc)
+    try:
+        wait_health(proc,PORTS[model],min(deadline,time.monotonic()+115))
+        props=http(PORTS[model],'/props',timeout=5)
+        advertised = props.get('default_generation_settings',{}).get('n_ctx',props.get('n_ctx'))
+        if advertised is not None and int(advertised)!=CONTEXTS[model]:
+            raise RuntimeError(f'{model} context mismatch: expected {CONTEXTS[model]}, got {advertised}')
+    finally:
+        f.close()
+    return proc, args
 
-def distribution(values):
-    if not values:return {'n':0}
-    v=sorted(values)
-    def q(p):
-        x=(len(v)-1)*p;i=int(x);return v[i]+(v[min(i+1,len(v)-1)]-v[i])*(x-i)
-    return {'n':len(v),'mean':statistics.mean(v),'median':statistics.median(v),'sd':statistics.stdev(v) if len(v)>1 else None,
-            'min':v[0],'max':v[-1],'p90':q(.9),'p95':q(.95),'p99':q(.99)}
-def bootstrap(values,rng,count=2000):
-    if len(values)<2:return None
-    means=sorted(statistics.mean(rng.choices(values,k=len(values))) for _ in range(count))
-    return [means[int(count*.025)],means[min(count-1,int(count*.975))]]
-def cluster_bootstrap(pairs,fn,rng,count):
-    clusters={}
-    for a,b in pairs:clusters.setdefault(a.get('independent_unit',a['task_id']),[]).append(fn(a,b))
-    units=list(clusters.values())
-    if len(units)<2:return None
-    means=sorted(statistics.mean(x for c in rng.choices(units,k=len(units)) for x in c) for _ in range(count))
-    return [means[int(count*.025)],means[min(count-1,int(count*.975))]]
 
-def wilson(k,n):
-    if not n:return None
-    z=1.95996398454; den=1+z*z/n; center=(k/n+z*z/(2*n))/den
-    margin=z*math.sqrt((k/n)*(1-k/n)/n+z*z/(4*n*n))/den
-    return [center-margin,center+margin]
+def kill_models(processes):
+    for p in processes:
+        if p.poll() is None:
+            try: os.killpg(p.pid,signal.SIGTERM)
+            except ProcessLookupError: pass
+    for p in processes:
+        if p.poll() is None:
+            try: p.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                try: os.killpg(p.pid,signal.SIGKILL)
+                except ProcessLookupError: pass
+    for p in processes:
+        try: CURRENT_PROCESSES.remove(p)
+        except ValueError: pass
 
-def report(run,o):
-    rows=read_rows(run/'results.jsonl'); groups={};pairs={}; rng=random.Random(o.seed)
-    for category in ['overall']+sorted({r['category'] for r in rows}):
-        subset=[r for r in rows if category=='overall' or r['category']==category]
-        for mode in ('on','off','adaptive'):
-            rr=[r for r in subset if r['mode']==mode]
-            if not rr:continue
-            scored=[r for r in rr if r['scored']];tp=sum(r.get('predicted_tool_needed',False) and r['expected_tool_needed'] for r in rr)
-            pp=sum(r.get('predicted_tool_needed',False) for r in rr);pos=sum(r['expected_tool_needed'] for r in rr)
-            groups[category+'/'+mode]={'category':category,'mode':mode,'n':len(rr),'scored_n':len(scored),
-                'distinct_independent_units':len({r.get('independent_unit',r['task_id']) for r in rr}),
-                'success':sum(r['success'] for r in rr),'objective_success':sum(r['success'] for r in scored),
-                'objective_success_95ci':wilson(sum(r['success'] for r in scored),len(scored)),
-                'classifier_s':distribution([r['classifier_s'] for r in rr if 'classifier_s' in r]),
-                'tool_calls_correct_rate':sum(r.get('calls_correct',False) for r in rr)/len(rr),
-                'argument_accuracy':sum(r.get('arguments_correct',False) for r in rr)/len(rr),
-                'route_tool_disagreements':sum(r.get('decision',{}).get('route_tool_disagreement',False) for r in rr),
-                'tool_calls_total':sum(len(r['calls']) for r in rr),
-                'unnecessary_calls':sum(r.get('unnecessary_calls',0) for r in rr),
-                'missed_calls':sum(r.get('missed_calls',0) for r in rr),
-                'infrastructure_errors':sum(r['infrastructure_error'] for r in rr),'latency_s':distribution([r['latency_s'] for r in rr]),
-                'completion_tokens':distribution([r['completion_tokens'] for r in rr]),
-                'routing_accuracy':sum(r.get('route_correct',False) for r in rr)/len(rr),
-                'reasoning_selection_accuracy':sum(r.get('reasoning_selection_correct',False) for r in rr)/len(rr),
-                'tool_precision':tp/pp if pp else None,'tool_recall':tp/pos if pos else None,
-                'length_terminations':sum(r['length_terminations'] for r in rr)}
-        by={}
-        for r in subset:by.setdefault(r['task_id'],{})[r['mode']]=r
-        for treatment in ('off','adaptive'):
-            p=[(d['on'],d[treatment]) for d in by.values() if 'on' in d and treatment in d]
-            if not p:continue
-            delta=[a['latency_s']-b['latency_s'] for a,b in p]
-            speed=[a['latency_s']/b['latency_s'] for a,b in p if b['latency_s']>0]
-            sp=[(a,b) for a,b in p if a['scored'] and b['scored']]
-            accuracy=[int(b['success'])-int(a['success']) for a,b in sp]
-            savings=[1-b['completion_tokens']/a['completion_tokens'] for a,b in p if a['completion_tokens']]
-            pairs[category+'/'+treatment]={'paired_n':len(p),'objective_paired_n':len(sp),'latency_saved_s':distribution(delta),
-                'independent_paired_units':len({a.get('independent_unit',a['task_id']) for a,b in p}),
-                'latency_saved_mean_95ci':cluster_bootstrap(p,lambda a,b:a['latency_s']-b['latency_s'],rng,o.bootstrap),'speedup_on_over_treatment':distribution(speed),
-                'relative_completion_token_savings':distribution(savings),'success_delta':statistics.mean(accuracy) if accuracy else None,
-                'success_delta_95ci':cluster_bootstrap(sp,lambda a,b:int(b['success'])-int(a['success']),rng,o.bootstrap),'both_correct':sum(a['success'] and b['success'] for a,b in sp),
-                'on_only_correct':sum(a['success'] and not b['success'] for a,b in sp),
-                'treatment_only_correct':sum(not a['success'] and b['success'] for a,b in sp),
-                'both_wrong':sum(not a['success'] and not b['success'] for a,b in sp)}
-    summary={'schema':SCHEMA,'utc':now(),'groups':groups,'paired':pairs,'records':len(rows),
-             'uncertainty_notes':['Bootstrap resamples paired independent-unit clusters, not requests; Linux/explanation ticket-only repeats share a cluster. Other generated fixture instances remain template-correlated.',
-               'Reported paired N is not an independence-adjusted effective sample size; effective N is unknown.',
-               'Media/custom success measures pipeline completion, never factual correctness. Human review required.',
-               'Contains scorers are coarse acceptance checks, not comprehensive semantic judges.',
-               'All arms include the same d1 routing policy. This isolates reasoning, not router versus oracle dispatch.',
-               'No non-inferiority margin or accuracy-preservation claim is established by nonsignificant differences.',
-               'No true cold-cache experiment is performed. Raw server cache counters allow cache-stratified reanalysis.']}
-    samples=read_rows(run/'system.jsonl');gpu={}
-    for s in samples:
-        for dev,values in s.get('gpu',{}).items():
-            for key,value in values.items():
-                if isinstance(value,(int,float)):gpu.setdefault(dev+'/'+key,[]).append(value)
-    summary['system']={'samples':len(samples),'gpu':{k:distribution(v) for k,v in gpu.items()},
-        'sampling_overhead_s':distribution([s['sampling_seconds'] for s in samples]),
-        'minimum_host_available_kib':min((s['meminfo_kib']['MemAvailable'] for s in samples if 'meminfo_kib' in s),default=None)}
-    requests=read_rows(run/'requests.jsonl');stage_groups={}
-    for req in requests:
-        if req.get('mode') not in ('on','off','adaptive'):continue
-        key=req['mode']+'/'+req['stage'];stage_groups.setdefault(key,[]).append(req)
-    summary['stages']={k:{'latency_s':distribution([x['latency_s'] for x in v]),
-        'first_generated_token_s':distribution([x['first_generated_token_s'] for x in v if x.get('first_generated_token_s') is not None]),
-        'first_visible_token_s':distribution([x['first_visible_token_s'] for x in v if x.get('first_visible_token_s') is not None and x.get('first_visible_timing_valid',True)]),
-        'cache_tokens':distribution([x['cache_tokens'] for x in v if x.get('cache_tokens') is not None]),
-        'thinking_leakage_requests':sum(x.get('thinking_leakage',False) for x in v)} for k,v in stage_groups.items()}
-    summary['over_time']=[{'task_id':r['task_id'],'utc':r['utc'],'mode':r['mode'],'latency_s':r['latency_s'],'success':r['success']} for r in rows]
-    dump(run/'summary.json',summary)
-    with (run/'summary.csv').open('w',newline='') as f:
-        fields=['category','mode','n','scored_n','success','objective_success','mean_s','median_s','p95_s','routing_accuracy','tool_precision','tool_recall']
-        w=csv.DictWriter(f,fields);w.writeheader()
-        for g in groups.values():w.writerow({k:g.get(k) for k in fields if not k.endswith('_s')}|{k:g['latency_s'].get(v) for k,v in [('mean_s','mean'),('median_s','median'),('p95_s','p95')]})
-    lines=['# LFM three-model paired benchmark',f'Updated: {now()}',f'Completed task-mode records: {len(rows)}',
-           '## Results','|Category / mode|N|Objective success / N|Pipeline success|Median s|p95 s|',
-           '|---|---:|---:|---:|---:|---:|']
-    for k,g in groups.items():lines.append(f"|{k}|{g['n']}|{g['objective_success']}/{g['scored_n']}|{g['success']}|{g['latency_s']['median']:.3f}|{g['latency_s']['p95']:.3f}|")
-    lines+=['## Paired comparisons','Positive latency savings favor OFF/adaptive. Failures remain included in latency summaries.',
-            '|Category / treatment vs ON|Paired N|Mean seconds saved [95% CI]|Objective success delta [95% CI]|',
-            '|---|---:|---|---|']
-    for k,p in pairs.items():lines.append(f"|{k}|{p['paired_n']}|{p['latency_saved_s']['mean']:.3f} {p['latency_saved_mean_95ci']}|{p['success_delta']} {p['success_delta_95ci']}|")
-    lines+=['## Resources and stages',f'System samples: {len(samples)}; sampling cost seconds: {summary["system"]["sampling_overhead_s"]}',
-            f'Minimum host MemAvailable: {summary["system"]["minimum_host_available_kib"]} KiB.']
-    for key,dist in summary['system']['gpu'].items():
-        if key.endswith(('/mem_info_vram_used','/mem_info_gtt_used')):lines.append(f'- {key}: peak {dist["max"]/1024**3:.3f} GiB (global DRM allocation).')
-    for key,stage in summary['stages'].items():lines.append(f'- {key}: median {stage["latency_s"].get("median",0):.3f}s, n={stage["latency_s"]["n"]}; reasoning leakage={stage["thinking_leakage_requests"]}.')
-    lines+=['## Interpretation and limits']+['- '+x for x in summary['uncertainty_notes']]
-    lines+=['- Practical target: at least 10% latency reduction with no meaningful accuracy regression; inspect CI and discordant pairs rather than p-values alone.',
-            '- Production routing policy: retain configurable thresholds; do not promote adaptive routing based on smoke tests. Review category-level false/missed tool calls and routing failures.',
-            '- Bottlenecks: per-stage latency, TTFT, token throughput and raw timings are in requests.jsonl; classifier overhead is included in results.jsonl.',
-            '- Vulkan capacity: system.jsonl distinguishes global DRM VRAM and GTT. Values include other clients; they are not per-model dedicated physical memory.',
-            '- Recognition and final answers stay in local JSONL/events, not this report. Media correctness requires local review.',
-            '- No service loading time, hard cache reset, or reliable throttling flags are measured. Unsupported counters remain absent/null.',
-            '## Files','config.json, metadata.json, media-manifest.json, workload-manifest.json, requests.jsonl, results.jsonl, events.jsonl, errors.jsonl, system.jsonl, checkpoint.json, summary.json, summary.csv.']
-    (run/'report.md').write_text('\n'.join(lines)+'\n')
-    errors=[r for r in rows if not r['success']]
-    dump(run/'error-report.json',errors)
-    return summary
 
-def health(api):
-    good=True
-    for role in PORTS:
-        for transport in ('http','unix'):
-            try:r,m=api.call(role,'/health',transport=transport);ok=r.get('status')=='ok';print(f'{role:8} {transport:4} {r} {m["latency_s"]:.3f}s');good &= ok
-            except APIError as e:print(e);good=False
-    return good
+def services_active():
+    if not shutil.which('systemctl'): return []
+    active=[]
+    for name in ('text','omni','decision'):
+        p=subprocess.run(['systemctl','--user','is-active','--quiet',f'lfm@{name}.service'],
+                         capture_output=True)
+        if p.returncode==0: active.append(name)
+    return active
 
-def self_test(o):
-    import tempfile
-    with tempfile.TemporaryDirectory() as td:
-        opts=argparse.Namespace(**vars(o));opts.samples=3
-        tasks=generate(opts,[]); assert tasks==generate(opts,[])
-        assert len({t['id'] for t in tasks})==len(tasks)
-        for t in tasks:
-            for name,args in t['expected_calls']:
-                r=tool_execute(t,name,args);assert r.get('error')!='invalid fixture tool or arguments'
-            assert fingerprint({k:v for k,v in t.items() if k not in ('id','input_hash','mode_order')})==t['input_hash']
-        assert visible_message({'choices':[{'message':{'content':'hidden</think>42'}}]})[1:] == ('42',True)
-        assert score_answer({'scorer':'integer','checks':['42']},'42')
-        assert not score_answer({'scorer':'integer','checks':['42']},'142')
-        assert score_answer({'scorer':'integer','checks':['42']},'Calculation: 17+25=42\n42')
-        assert score_answer({'scorer':'contains','checks':['reachable']},'Port reachability: `true`')
-        assert not score_answer({'scorer':'contains','checks':['reachable']},'not reachable')
-        prose={'scorer':'contains','checks':['018-34114766','restored','77']}
-        assert score_answer(prose,'Ticket\u202f018\u201134114766 restored after 77 seconds')
-        assert score_answer(prose,'Ticket 018\u201334114766 restored after \uff17\uff17 seconds')
-        assert not score_answer(prose,'Ticket 018\u201134114767 restored after 77 seconds')
-        assert not score_answer({'scorer':'json','checks':{'ticket':'018-34114766'}},'{"ticket":"018\u201134114766"}')
-        quick=argparse.Namespace(**vars(opts));quick.quick=True;quick.tools=quick.media=quick.mixed=False;quick.prompt=None;quick.smoke=False
-        focused=generate(quick,[])
-        assert len(focused)==15 and {t['category'] for t in focused}=={'summary','extraction','coding','reasoning','single_network'}
-        assert all(len(t['mode_order'])==3 for t in focused)
-        assert distribution([1,2,3])['median']==2
-        assert bootstrap([1,1,1],random.Random(1),100)==[1,1]
-        d={'answers':{'route':{'choice':'tool','confidence':.9},'needs_tool':{'noul':.9},'reasoning':{'noul':.8}}}
-        assert choose(d,opts)['thinking']
-        p=Path(td)/'rows.jsonl';p.write_bytes(b'{"a":1}\n{"b":');assert read_rows(p)==[{'a':1}];assert p.read_bytes().endswith(b'\n')
-        import io
-        events=[{'choices':[{'delta':{'reasoning_content':'compute'},'finish_reason':None}]},
-                {'choices':[{'delta':{'tool_calls':[{'index':0,'id':'call_a','function':{'name':'get_system_info','arguments':'{'}}]},'finish_reason':None}]},
-                {'choices':[{'delta':{'tool_calls':[{'index':0,'function':{'arguments':'}'}}]},'finish_reason':'tool_calls'}]},
-                {'choices':[],'usage':{'completion_tokens':4},'timings':{'predicted_n':4}}]
-        class Fake:
-            status=200
-            def __init__(self):self.f=io.BytesIO(b''.join(b'data: '+json.dumps(x).encode()+b'\n\n' for x in events)+b'data: [DONE]\n\n')
-            def request(self,*a,**kw):pass
-            def getresponse(self):return self
-            def readline(self):return self.f.readline()
-            def close(self):pass
-        api=API(opts);api.connection=lambda *a,**kw:Fake()
-        response,metrics=api.call('text','/v1/chat/completions',{},stream=True)
-        assert response['choices'][0]['message']['tool_calls'][0]['function']=={'name':'get_system_info','arguments':'{}'}
-        assert response['choices'][0]['finish_reason']=='tool_calls'
-        assert response['usage']['completion_tokens']==4 and metrics['first_generated_token_s'] is not None
-        assert response['choices'][0]['message']['reasoning_content']=='compute'
-        assert len(wilson(2,3))==2
-        print(f'PASS offline: deterministic generation ({len(tasks)} tasks), hashes, fixtures, scoring, leakage, thresholds, bootstrap, crash-tail recovery, SSE fragmented tools/reasoning/usage, Wilson intervals')
-    return 0
 
-def parser():
-    p=argparse.ArgumentParser(description=__doc__)
-    for name,helptext in [('all','Full suite including mixed contention'),('smoke','Short real-model validation (use --samples 1)'),('tools','Tool and gating suite'),('media','Media suite only'),('mixed','Mixed/concurrent suite only'),('health','Check all six endpoints'),('self-test','Offline deterministic fixture tests'),('live','Print classifier decisions, tools and streamed model answers'),('show-reasoning','Also print reasoning deltas (implies --live)')]:
-        p.add_argument('--'+name,action='store_true',help=helptext)
-    p.add_argument('--quick',action='store_true',help='Focused paired suite: summary, extraction, coding, reasoning, single_network; no media discovery or long-context stress')
-    p.add_argument('--reasoning',choices=['compare','on','off','adaptive'],default='compare')
-    p.add_argument('--hours',type=float,default=8,help='Active wall-clock budget; completes current paired block; resume uses remaining budget')
-    p.add_argument('--samples','--runs',type=int,default=30,help='Distinct generated instances per category, not repetitions of one prompt')
-    p.add_argument('--seed',type=int,default=20261105)
-    p.add_argument('--transport',choices=['http','unix'],default='http');p.add_argument('--timeout',type=float,default=240)
-    p.add_argument('--max-tokens',type=int,default=1024);p.add_argument('--max-hops',type=int,default=5)
-    p.add_argument('--thinking-threshold',type=float,default=.5);p.add_argument('--tool-threshold',type=float,default=.5)
-    p.add_argument('--ambiguity-margin',type=float,default=.1);p.add_argument('--fallback',choices=['on','off'],default='on')
-    p.add_argument('--failure-threshold',type=float,default=.5);p.add_argument('--failure-window',type=int,default=12)
-    p.add_argument('--bootstrap',type=int,default=2000);p.add_argument('--sample-interval',type=float,default=2)
-    p.add_argument('--context-lines',type=int,default=400)
-    p.add_argument('--decision-max-chars',type=int,default=1600,help='Head/tail character budget for the 1K classifier; full chat input unchanged')
-    p.add_argument('--media-root',default=str(Path.home()));p.add_argument('--image-file')
-    p.add_argument('--max-media-mb',type=float,default=8);p.add_argument('--max-media-seconds',type=float,default=15)
-    p.add_argument('--resume',nargs='?',const='latest',help='Resume run directory, or latest run if no path')
-    p.add_argument('--report',metavar='RUN',help='Regenerate reports without inference')
-    p.add_argument('--watch',nargs='?',const='latest',help='Follow saved decisions and outputs; no model requests')
-    p.add_argument('--prompt',help='Custom prompt; factual correctness marked human-review only')
-    p.add_argument('--legacy',action='store_true',help='Launch original benchmark backup')
-    return p
+def service_cmd(action, model):
+    p=subprocess.run(['systemctl','--user',action,f'lfm@{model}.service'],
+                     capture_output=True,text=True,timeout=30)
+    if p.returncode: raise RuntimeError(f'{action} lfm@{model} failed: {p.stderr[:400]}')
 
-def resolve_run(value):
-    if value=='latest':return Path((ROOT/'latest').read_text().strip())
-    p=Path(value).expanduser().resolve()
-    if not p.is_relative_to(ROOT.resolve()) or not p.is_dir():raise ValueError('Run must be beneath '+str(ROOT))
-    return p
 
-def watch(run,reasoning=False):
-    print(f'Watching {run}/events.jsonl (Ctrl-C to stop)',flush=True)
-    with (run/'events.jsonl').open() as f:
-        while not STOP.is_set():
-            line=f.readline()
-            if not line:time.sleep(.2);continue
-            try:r=json.loads(line)
-            except ValueError:continue
-            if r['event']=='delta':
-                v=r.get('content') or (r.get('reasoning') if reasoning else '')
-                if v:print(v,end='',flush=True)
-            else:print('\n'+json.dumps(r,ensure_ascii=False),flush=True)
+def append_csv(filename, rows):
+    if not rows: return
+    fields = list(dict.fromkeys(k for row in rows for k in row))
+    with Path(filename).open('w',newline='') as f:
+        w=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore')
+        w.writeheader();w.writerows(rows)
+
+
+def result_report(results, phases, stages, monitor, output, args):
+    report=[]
+    report.append('# LFM3 three-model pipeline benchmark')
+    report.append(f'\nGenerated: {dt.datetime.now().isoformat(timespec="seconds")} · Max budget: {args.max_minutes} min · Completed configs: {len(results)}')
+    report.append('\n**Scope:** 128K Text, 32K Omni, 1K D1, Q4_0 K/V for causal models; all three servers resident concurrently per configuration. Separate local ports; synthetic text and image payloads.')
+    report.append('\n### Ranking (smaller wall time and jitter, larger available RAM are better)\n')
+    report.append('| Configuration | Status | Pipeline mean (s) | Mean pref./gen. (s) | Cold prefill t/s | Decode t/s | Peak CPU/GPU % | Peak RAM / VRAM (GiB) | Min available RAM (GiB) | Lag p95 (ms) |')
+    report.append('|---|---|---:|---:|---:|---:|---|---|---:|---:|')
+    passed=[r for r in results if r['status']=='ok']
+    for r in sorted(results, key=lambda r:(r['status']!='ok',r.get('score',1e8))):
+        pf=r.get('prefill_ms'); gen=r.get('generation_ms'); ram=r.get('peak_ram_used_mib'); vr=r.get('peak_vram_mib')
+        report.append('| {name} | {status} | {total} | {times} | {pps} | {dps} | {cpu}/{gpu} | {ram}/{vram} | {avail} | {lag} |'.format(
+            name=r['name'], status=r['status'].replace('|','/'),
+            total=nicefmt((r.get('mean_pipeline_wall_ms') or 0)/1000,2) if r.get('mean_pipeline_wall_ms') is not None else '-',
+            times=f'{nicefmt((pf or 0)/1000,2)}/{nicefmt((gen or 0)/1000,2)}' if pf is not None or gen is not None else '-',
+            pps=nicefmt(r.get('prefill_tps')), dps=nicefmt(r.get('generation_tps')),
+            cpu=nicefmt(r.get('peak_cpu_percent'),0),gpu=nicefmt(r.get('peak_gpu_busy_pct'),0),
+            ram=nicefmt(ram/1024,2) if ram is not None else '-',
+            vram=nicefmt(vr/1024,2) if vr is not None else '-',
+            avail=nicefmt(r.get('min_ram_available_mib',0)/1024,2) if r.get('min_ram_available_mib') is not None else '-',
+            lag=nicefmt(r.get('scheduler_lag_p95_ms'),1)))
+    report.append('\n*Mean prefill and generation times are the summed stage times per complete pipeline; d1 is a classifier, so its wall time is separately reported and it has no generation stage.*')
+    report.append('\n### Per-model throughput and route latency (successful configurations)\n')
+    report.append('| Configuration | Text prefill t/s | Text gen t/s | Omni prefill t/s | Omni gen t/s | D1 decision ms | Direct Text s | Direct Omni s | Three-model s | Route accuracy |')
+    report.append('|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|')
+    for r in sorted(passed,key=lambda v:v.get('score',1e8)):
+        name=r['name']
+        getavg=lambda model,key: stats([s.get(key) for s in stages if s['config']==name and s['model']==model and not s['stage'].startswith('cache_') and not s['stage'].startswith('text_stress')])['mean']
+        chainavg=lambda typ: stats([p['wall_ms']/1000 for p in phases if p['config']==name and p['pipeline']==typ])['mean']
+        report.append('| '+name+' | '+ ' | '.join([
+            nicefmt(getavg('text','prefill_tps')),nicefmt(getavg('text','generation_tps')),
+            nicefmt(getavg('omni','prefill_tps')),nicefmt(getavg('omni','generation_tps')),
+            nicefmt(getavg('decision','wall_ms'),0),nicefmt(chainavg('direct_text'),2),
+            nicefmt(chainavg('direct_omni'),2),nicefmt(chainavg('triple'),2),
+            nicefmt(100*r['route_accuracy'],0)+'%' if r.get('route_accuracy') is not None else '-'])+' |')
+    report.append('\n### Configuration guidance\n')
+    if passed:
+        acceptable=[r for r in passed if (r.get('min_ram_available_mib') or 0)>=2300 and
+                    (r.get('scheduler_lag_p95_ms') or 0)<=80 and
+                    (r.get('peak_mem_psi_avg10') or 0)<=8 and
+                    (r.get('peak_vram_mib') is None or r['peak_vram_mib']<=5120)]
+        fastest=min(passed,key=lambda r:r.get('mean_pipeline_wall_ms',1e8))
+        report.append(f'- Fastest completed case: **{fastest["name"]}** (mean pipeline {nicefmt(fastest.get("mean_pipeline_wall_ms",0)/1000,2)} s).')
+        if acceptable:
+            good=min(acceptable,key=lambda r:r.get('mean_pipeline_wall_ms',1e8))
+            report.append(f'- Best performance passing conservative desktop-headroom filters: **{good["name"]}** (≥2.3 GiB available RAM, lag p95 ≤80 ms, memory PSI avg10 ≤8%, and sampled VRAM use ≤5 GiB where observable).')
+            report.append('- Consider this a **candidate**, not proven interactive responsiveness; foreground keystroke/compositor latency was not measured directly.')
+        else:
+            report.append('- No successful configuration met the desktop-headroom thresholds. Prefer lighter CPU thread counts, smaller microbatch, or sequential loading.')
+    else: report.append('- No complete configuration; check per-server logs and memory budget.')
+    report.append('\n### What was measured\n')
+    report.append('- Each case includes `direct_text` (D1 → Text), `direct_omni` (D1 → Omni with a synthetic PNG), and `triple` (D1 → Text → Omni → Text, with genuine model output handoffs).')
+    report.append('- D1 route accuracy is logged, but the fixed target for each direct test is used for **comparable throughput** when D1 misroutes. This is a controlled benchmark, not a live user-facing autonomous agent.')
+    report.append('- `stages.csv` includes per-request `prefill_ms`, `generation_ms`, `prefill_tps`, `generation_tps`, wall time, and prompt-cache tokens; `trials.csv` includes whole-chain latency.')
+    report.append('- The `cache_text` stage compares first-pass and repeated-prefix prefill (cold vs cached), excluded from pipeline ranking.')
+    report.append('- `samples.jsonl` measures system CPU, GPU busy, RAM available/used, amdgpu VRAM and GTT usage, memory/CPU PSI and scheduler wakeup lag every 200 ms. These are whole-system metrics including compositor, not model-only memory allocations.')
+    report.append('- Startup/model loading is excluded from steady-state pipeline latency but included in resource peaks. `server_logs/` retains complete startup/failure diagnostics.')
+    report.append('- AMD APUs use shared memory: VRAM/GTT accounting and RAM usage are not independent additive totals. VRAM readings may be unavailable on a given kernel.')
+    report.append('- Requests use identical synthetic data and 64–80 output-token caps (32 for stress). The test does not measure full 128K-context prefill, audio/video throughput, or real application input latency under Hyprneuro automation.')
+    report.append('- Dangerous low-memory configurations are stopped, failures are recorded, and active `lfm@` services are restored on exit when possible.')
+    report.append('\n### Logs\n')
+    report.append('`summary.md`, `results.json`, `stages.csv`, `trials.csv`, `samples.jsonl`, `configurations.json`, `server_logs/<case>/*.log`.')
+    (output/'summary.md').write_text('\n'.join(report)+'\n')
+    (output/'results.json').write_text(json.dumps(results,indent=2)+'\n')
+    append_csv(output/'stages.csv',stages)
+    append_csv(output/'trials.csv',phases)
+    return fastest['name'] if passed else None
+
+
+def on_signal(signum, frame):
+    global SHUTDOWN
+    SHUTDOWN=True
+    print(f'\nSignal {signum}: ending after current request and restoring services.',flush=True)
+    # Throw immediately so a hanging urllib request cannot delay cleanup.
+    raise KeyboardInterrupt
+
 
 def main():
-    p=parser();o=p.parse_args()
-    if o.legacy:
-        os.execv(sys.executable,[sys.executable,str(ROOT/'development/lfm-bench.original.py')])
-    if o.show_reasoning:o.live=True
-    if o.samples<1 or o.hours<=0 or o.max_tokens<32 or o.timeout<1 or o.max_hops<1 or o.bootstrap<100 or o.sample_interval<.5 or o.failure_window<3 or o.context_lines<1 or o.decision_max_chars<100:
-        p.error('Invalid positive limits (tokens >=32, bootstrap >=100, interval >=0.5, failure window >=3)')
-    if not all(0<=x<=1 for x in [o.thinking_threshold,o.tool_threshold,o.ambiguity_margin,o.failure_threshold]):p.error('Thresholds must be in [0,1]')
-    if o.self_test:return self_test(o)
-    if o.health:return 0 if health(API(o)) else 1
-    if o.watch:watch(resolve_run(o.watch),o.show_reasoning);return 0
-    if o.report:
-        run=resolve_run(o.report);saved=json.loads((run/'config.json').read_text());report(run,argparse.Namespace(**saved));print(run/'report.md');return 0
-    if len([v for v in (o.tools,o.media,o.mixed,o.prompt,o.quick) if v])>1:p.error('Choose one subset, or --all for the full suite')
-    if not any((o.all,o.smoke,o.tools,o.media,o.mixed,o.prompt,o.resume,o.quick)) and sys.stdin.isatty():
-        print('1 Full paired benchmark  2 Adaptive only  3 Tools  4 Media  5 Mixed  6 Health  7 Custom prompt  q Quit')
-        answer=input('Benchmark> ').strip()
-        if answer=='q':return 0
-        if answer=='6':return 0 if health(API(o)) else 1
-        if answer=='2':o.reasoning='adaptive'
-        elif answer=='3':o.tools=True
-        elif answer=='4':o.media=True
-        elif answer=='5':o.mixed=True
-        elif answer=='7':o.prompt=input('Prompt> ')
-        elif answer!='1':p.error('Invalid menu selection')
-        o.live=input('Observe decisions and answers? [Y/n] ').strip().lower()!='n'
-    ROOT.mkdir(parents=True,exist_ok=True)
-    if o.resume:
-        run=resolve_run(o.resume); saved=json.loads((run/'config.json').read_text())
-        live=o.live;show=o.show_reasoning
-        o=argparse.Namespace(**saved);o.live=live;o.show_reasoning=show
-        if saved.get('schema')!=SCHEMA:raise ValueError('Incompatible checkpoint schema')
-        if saved.get('executable_sha256')!=digest(__file__):raise ValueError('Benchmark code changed; do not mix experimental versions. Start a new run.')
-    else:
-        run=ROOT/('run-'+datetime.now().strftime('%Y%m%d-%H%M%S')+'-'+str(os.getpid()));run.mkdir(mode=0o700)
-        os.chmod(run,0o700);o.schema=SCHEMA;o.executable_sha256=digest(__file__);dump(run/'config.json',vars(o));(ROOT/'latest').write_text(str(run)+'\n')
-    # Advisory locks prevent two benchmark instances contending unintentionally, and duplicate resume.
-    with (ROOT/'runner.lock').open('a') as lock:
-        try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-        except BlockingIOError:raise ValueError('Another benchmark runner holds the lock')
-        e=Engine(o,run);sampler=Sampler(e); checkpoint={'elapsed_s':0,'completed':[],'status':'preflight'}
-        if (run/'checkpoint.json').exists():checkpoint=json.loads((run/'checkpoint.json').read_text())
-        base_elapsed=checkpoint.get('elapsed_s',0);session=time.monotonic();records=read_rows(run/'results.jsonl')
-        done={(r['task_id'],r['mode']) for r in records}
-        print(f'Run: {run}\nPID: {os.getpid()}\nWatch: lfm-bench --watch {run}\nLive log: tail -f {run}/events.jsonl',flush=True)
-        try:
-            if not health(e.api):raise APIError('Health preflight failed')
-            meta=metadata(e.api);dump(run/('metadata-resume-'+str(os.getpid())+'.json' if o.resume else 'metadata.json'),meta)
-            e.pids=list(meta['processes']);sampler.start()
-            if o.resume:
-                original=json.loads((run/'metadata.json').read_text())
-                for role in PORTS:
-                    for key in ('model_path','model_ftype','build_info','chat_template'):
-                        if original['servers'][role].get(key)!=meta['servers'][role].get(key):raise ValueError(f'Runtime changed: {role} {key}; start a new run')
-                old=sorted((v['argv'],v['models']) for v in original['processes'].values())
-                new=sorted((v['argv'],v['models']) for v in meta['processes'].values())
-                if old!=new:raise ValueError('Runtime flags or model identifiers changed; start a new run')
-            if (run/'workload-manifest.json').exists():tasks=json.loads((run/'workload-manifest.json').read_text())
-            else:
-                media,errors=media_discover(o) if not o.tools and not o.prompt and not getattr(o,'quick',False) else ([],[])
-                dump(run/'media-manifest.json',media);dump(run/'media-discovery-errors.json',errors)
-                # Warmups are deliberately excluded from experiment results.
-                for role in ('text','omni'):
-                    r,m,payload=e.api.chat(role,[{'role':'user','content':'Reply ready.'}],False,None,{'mode':'warmup'},128)
-                    e.request_record({'task_id':'warmup','mode':'warmup'},role,'warmup',payload,r,m)
-                r,m,payload=e.api.decision('What is a Linux symlink?');e.request_record({'task_id':'warmup','mode':'warmup'},'decision','warmup',payload,r,m)
-                e.probe_media(media);tasks=generate(o,media);dump(run/'workload-manifest.json',tasks)
-            if not tasks:raise ValueError('No eligible workloads; inspect media manifest')
-            checkpoint['status']='running';dump(run/'checkpoint.json',checkpoint)
-            dump(run/'preflight.json',{'utc':now(),'tasks':len(tasks),'arms':sum(len(t['mode_order']) for t in tasks),
-                'categories':{c:sum(t['category']==c for t in tasks) for c in sorted({t['category'] for t in tasks})},
-                'independent_units':len({t.get('independent_unit',t['id']) for t in tasks}),
-                'budget_hours':o.hours,'generation_limit':o.max_tokens})
-            for task in tasks:
-                if STOP.is_set() or base_elapsed+time.monotonic()-session>=o.hours*3600:break
-                for mode in task['mode_order']:
-                    if (task['id'],mode) in done:continue
-                    if STOP.is_set():break
-                    row=e.one(task,mode);records.append(row);done.add((task['id'],mode))
-                    checkpoint.update(completed=[list(x) for x in sorted(done)],elapsed_s=base_elapsed+time.monotonic()-session,status='running',last_task=task['id'])
-                    dump(run/'checkpoint.json',checkpoint)
-                    window=records[-o.failure_window:]
-                    if len(window)>=o.failure_window and sum(r['infrastructure_error'] for r in window)/len(window)>=o.failure_threshold:
-                        raise APIError('Infrastructure failure-rate abort threshold reached')
-                if len(done)%30==0: report(run,o)
-            checkpoint['status']='interrupted' if STOP.is_set() else ('complete' if len(done)==sum(len(t['mode_order']) for t in tasks) else 'budget_exhausted')
-        except (APIError,ValueError,OSError,InterruptedError) as err:
-            checkpoint.update(status='interrupted' if isinstance(err,InterruptedError) else 'aborted',error=str(err))
-            print(str(err),file=sys.stderr,flush=True);e.append('errors.jsonl',{'utc':now(),'preflight_or_runner_error':str(err)})
-        finally:
-            if sampler.thread.is_alive():sampler.close()
-            checkpoint['elapsed_s']=base_elapsed+time.monotonic()-session;dump(run/'checkpoint.json',checkpoint)
-            report(run,o);print(f"Status: {checkpoint['status']}\nReport: {run}/report.md",flush=True)
-        return 1 if checkpoint['status']=='aborted' else 0
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--server', default=os.environ.get('LFM_SERVER','/usr/local/bin/llama-server'))
+    p.add_argument('--model-dir', default=os.environ.get('LFM_MODEL_DIR',str(Path.home()/'.models')))
+    p.add_argument('--output',default=str(Path.home()/f'lfm-bench-{dt.datetime.now():%Y%m%d-%H%M%S}'))
+    p.add_argument('--max-minutes',type=int,default=105)
+    p.add_argument('--repeats',type=int,default=2)
+    p.add_argument('--no-stress-prefill',action='store_true',help='Skip large text prefill per case')
+    p.add_argument('--start-config',type=int,default=1,help='1-based starting matrix index')
+    p.add_argument('--limit-configs',type=int,default=None)
+    p.add_argument('--no-service-management',action='store_true',help='Require lfm@ services already stopped; never alter them')
+    p.add_argument('--list-configs',action='store_true')
+    p.add_argument('--dry-run',action='store_true',help='Print matrix and preflight paths without changing services')
+    args=p.parse_args()
+    if not 5<=args.max_minutes<=110: p.error('--max-minutes must be 5..110')
+    if not 1<=args.repeats<=10: p.error('--repeats must be 1..10')
+    matrix=build_matrix()
+    matrix=matrix[args.start_config-1:]
+    if args.limit_configs is not None: matrix=matrix[:args.limit_configs]
+    if args.list_configs or args.dry_run:
+        for i,cfg in enumerate(matrix,args.start_config):
+            print(f'{i:02d} {cfg["name"]:<36} backend={cfg["backend"]} '
+                  f'batch={cfg["batch"]["text"]}/{cfg["ubatch"]["text"]} '
+                  f'omni={cfg["batch"]["omni"]}/{cfg["ubatch"]["omni"]} poll={cfg["poll"]}')
+        if args.list_configs: return 0
+    if args.dry_run:
+        print('binary',args.server, 'model-dir',args.model_dir)
+        return 0
+    binary=Path(args.server).expanduser()
+    root=Path(args.model_dir).expanduser()
+    pathmap={
+       'text':root/'text/LFM3-1.7B-QAD-Q4_0.gguf',
+       'omni':root/'omni/LFM3-Omni-2B-Q4_K_M.gguf',
+       'omni_mm':root/'omni/mmproj-LFM3-Omni-2B-Q4_K_M.gguf',
+       'decision':root/'decision/d1-omni-600M-Q8_0.gguf',
+       'decision_mm':root/'decision/mmproj-d1-omni-600M-Q8_0.gguf'
+    }
+    missing=[str(path) for path in [binary,*pathmap.values()] if not path.is_file()]
+    if missing: p.error('Missing llama.cpp binary or model files: '+', '.join(missing))
+    active=services_active()
+    if active and args.no_service_management:
+        p.error('Active lfm@ services exist: '+', '.join(active)+'; stop them first or omit --no-service-management')
+    for port in PORTS.values():
+        with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as sock:
+            if sock.connect_ex(('127.0.0.1',port)) == 0:
+                p.error(f'Benchmark port {port} already in use; refusing to interfere with existing server')
+    available=meminfo().get('MemAvailable',0)/MIB
+    if available<2500:
+        p.error(f'Not enough available RAM ({available:.0f} MiB). Need at least 2.5 GiB before starting.')
+    output=Path(args.output).expanduser().absolute()
+    output.mkdir(parents=True,exist_ok=True)
+    logs_root=output/'server_logs';logs_root.mkdir(exist_ok=True)
+    (output/'configurations.json').write_text(json.dumps(matrix,indent=2)+'\n')
+    start=time.monotonic()
+    deadline=start+args.max_minutes*60
+    monitor=Monitor(output/'samples.jsonl')
+    results=[];phases=[];stages=[]
+    services_stopped=[]
+    for sig in (signal.SIGTERM,signal.SIGINT): signal.signal(sig,on_signal)
+    # Hard watchdog: allow 5 minutes above the scheduling budget for final requests.
+    if hasattr(signal,'SIGALRM'):
+        signal.signal(signal.SIGALRM,on_signal)
+        signal.setitimer(signal.ITIMER_REAL, (args.max_minutes+5)*60)
+    print(f'Benchmark directory: {output}\nTime cap: {args.max_minutes} minutes; '
+          f'{len(matrix)} configurations; {args.repeats} repetitions each.',flush=True)
+    print(f'Initial MemAvailable: {available:.0f} MiB. Lower process priority; monitor at 200 ms.',flush=True)
+    image_url=png_test_image()
+    try:
+        for m in active:
+            print('Temporarily stopping lfm@'+m+'; will restore at end.',flush=True)
+            service_cmd('stop',m); services_stopped.append(m)
+        monitor.start()
+        # Reference measurements before launching any local models.
+        time.sleep(1)
+        for i,cfg in enumerate(matrix,args.start_config):
+            if SHUTDOWN or time.monotonic() > deadline-180:
+                print('Time budget exhausted; stopping matrix.',flush=True);break
+            name=cfg['name']
+            monitor.mark(config=name,trial='load')
+            case_start=time.monotonic()
+            proc=[];cfg_stages=[];cfg_trials=[]
+            reason=''; status='ok'
+            case_dir=logs_root/name;case_dir.mkdir(exist_ok=True)
+            print(f'[{i}/{args.start_config+len(matrix)-1}] {name}',flush=True)
+            try:
+                for model in ('decision','text','omni'):
+                    good,why=monitor.health()
+                    if not good: raise MemoryError(why)
+                    if time.monotonic() > deadline-100:
+                        raise TimeoutError('global time budget nearly reached')
+                    p_obj, cmd=launch_one(model,cfg,binary,pathmap,case_dir,monitor,deadline)
+                    proc.append(p_obj)
+                    print(f'  Loaded {model} ({"GPU" if cfg["ngl"][model] else "CPU"}), pid {p_obj.pid}',flush=True)
+                # Warmup one tiny request for each server; not timed/recorded as trial.
+                monitor.mark(trial='warmup')
+                for model in ('decision','text','omni'):
+                    pl=decision_payload('text') if model=='decision' else prompt_payload('omni' if model=='omni' else 'text',image_url=image_url)
+                    if model!='decision': pl['max_tokens']=1;pl['cache_prompt']=False
+                    http(PORTS[model],'/v1/systemone' if model=='decision' else '/v1/chat/completions',pl,timeout=90)
+                # Benchmark each pipeline with actual network API handoffs and identical inputs.
+                for repeat in range(args.repeats):
+                    for typ in ('direct_text','direct_omni','triple'):
+                        if time.monotonic()>deadline-100:
+                            raise TimeoutError('global time budget nearly reached')
+                        good,why=monitor.health()
+                        if not good: raise MemoryError(why)
+                        trial=f'{typ}_{repeat+1}'
+                        monitor.mark(trial=trial)
+                        trial_start=time.monotonic()
+                        trial_stages=[]
+                        expected='omni' if typ=='direct_omni' else 'text'
+                        decision_result,_=measure_request('decision',decision_payload(expected),name,typ,
+                                                          'd1_route',timeout=80)
+                        decision_result['route_correct']=decision_result['route_choice']==expected
+                        trial_stages.append(decision_result)
+                        previous=''
+                        if typ=='direct_text':
+                            row,previous=measure_request('text',prompt_payload('text',long=True),name,trial,'text',timeout=110)
+                            trial_stages.append(row)
+                        elif typ=='direct_omni':
+                            row,previous=measure_request('omni',prompt_payload('omni',image_url=image_url),name,trial,'omni_image',timeout=110)
+                            trial_stages.append(row)
+                        else:
+                            row,previous=measure_request('text',prompt_payload('text',long=True),name,trial,'text_plan',timeout=110)
+                            trial_stages.append(row)
+                            row,previous=measure_request('omni',prompt_payload('omni',previous=previous,image_url=image_url),name,trial,'omni_review',timeout=110)
+                            trial_stages.append(row)
+                            row,previous=measure_request('text',prompt_payload('final',previous=previous,long=False),name,trial,'text_finish',timeout=110)
+                            trial_stages.append(row)
+                        elapsed=(time.monotonic()-trial_start)*1000
+                        prefill=sum(s.get('prefill_ms') or 0 for s in trial_stages)
+                        generation=sum(s.get('generation_ms') or 0 for s in trial_stages)
+                        trial_rec={'config':name,'trial':trial,'pipeline':typ, 'repetition':repeat+1,
+                                   'wall_ms':round(elapsed,2),'prefill_ms':round(prefill,2),
+                                   'generation_ms':round(generation,2),
+                                   'd1_wall_ms':round(decision_result['wall_ms'],2),
+                                   'route_choice':decision_result['route_choice'],
+                                   'route_correct':decision_result['route_correct']}
+                        cfg_trials.append(trial_rec); cfg_stages.extend(trial_stages)
+                        print('  ',typ,f'run {repeat+1}: {elapsed/1000:.2f}s, '
+                              f'prefill {prefill/1000:.2f}s, gen {generation/1000:.2f}s, '
+                              f'd1 {decision_result["wall_ms"]:.0f}ms, route {decision_result["route_choice"]}',flush=True)
+                if not args.no_stress_prefill:
+                    # Large uncached text prompt probes prefill and memory pressure.
+                    monitor.mark(trial='stress_prefill')
+                    good,why=monitor.health()
+                    if not good: raise MemoryError(why)
+                    stress_payload=prompt_payload('text',repeats=180)
+                    stress_payload['max_tokens']=32
+                    stage,_=measure_request('text',stress_payload,name,'stress_prefill','text_stress_approx8k',timeout=150)
+                    cfg_stages.append(stage)
+                    print(f'  stress: prefill={nicefmt(stage["prefill_ms"])}ms '
+                          f'prefill_tokens={stage["prefill_tokens"]} '
+                          f'prefill_tps={nicefmt(stage["prefill_tps"])}',flush=True)
+                # Cache reuse test on consistent text prefix; not part of pipeline timing.
+                monitor.mark(trial='cache_text')
+                base=prompt_payload('text',long=True)
+                base['cache_prompt']=True
+                for c in ('first','cached'):
+                    data=dict(base)
+                    # Keep both messages byte-identical to demonstrate prefix reuse.
+                    row,_=measure_request('text',data,name,'cache_text',f'cache_{c}',timeout=110)
+                    cfg_stages.append(row)
+                    print(f'  cache {c}: prefill={nicefmt(row["prefill_ms"])}ms '
+                          f'cached_tokens={row["cached_tokens"]}',flush=True)
+            except Exception as exc:
+                status='failed';reason=f'{type(exc).__name__}: {exc}'
+                print('  FAILED:',reason,flush=True)
+            finally:
+                monitor.mark(trial='unload')
+                kill_models(list(CURRENT_PROCESSES))
+                time.sleep(.6)
+                resources=monitor.aggregate(case_start,time.monotonic())
+                measured=[s for s in cfg_stages if not s['stage'].startswith('cache_') and not s['stage'].startswith('text_stress')]
+                prefill_items=[s for s in measured if s.get('prefill_tps') and s.get('prefill_tokens') and s.get('prefill_tokens')>10]
+                generation_items=[s for s in measured if s.get('generation_tps') and s.get('generation_tokens') and s.get('generation_tokens')>1]
+                rec={'name':name,'status':status,'error':reason,'configuration':cfg,
+                     'start_offset_s':round(case_start-start,2),'duration_s':round(time.monotonic()-case_start,2),
+                     'trials_completed':len(cfg_trials),
+                     'mean_pipeline_wall_ms': stats([r['wall_ms'] for r in cfg_trials])['mean'],
+                     'pipeline_wall_p95_ms':percentile([r['wall_ms'] for r in cfg_trials],95),
+                     'prefill_ms':stats([r['prefill_ms'] for r in cfg_trials])['mean'],
+                     'generation_ms':stats([r['generation_ms'] for r in cfg_trials])['mean'],
+                     'prefill_tps':stats([r['prefill_tps'] for r in prefill_items])['mean'],
+                     'generation_tps':stats([r['generation_tps'] for r in generation_items])['mean'],
+                     'd1_wall_ms':stats([r['d1_wall_ms'] for r in cfg_trials])['mean'],
+                     'route_accuracy':(sum(r['route_correct'] for r in cfg_trials)/len(cfg_trials)) if cfg_trials else None,
+                     **resources}
+                # Score is heuristic: latency + penalty for RAM pressure, UI scheduling latency, memory PSI.
+                rec['score']=((rec.get('mean_pipeline_wall_ms') or 1e8) +
+                    max(0,2300-(rec.get('min_ram_available_mib') or 0))*3 +
+                    max(0,(rec.get('scheduler_lag_p95_ms') or 0)-40)*80 +
+                    max(0,(rec.get('peak_mem_psi_avg10') or 0)-8)*200)
+                results.append(rec);phases.extend(cfg_trials);stages.extend(cfg_stages)
+                # Save intermediate report even if stopped by SIGINT afterwards.
+                result_report(results,phases,stages,monitor,output,args)
+                print(f'  Outcome: {status}; min available RAM {nicefmt(rec.get("min_ram_available_mib"),0)} MiB; '
+                      f'scheduler lag p95 {nicefmt(rec.get("scheduler_lag_p95_ms"))} ms.\n',flush=True)
+                # Vulkan device loss can disrupt the desktop on an APU; do not retry.
+                if status == 'failed':
+                    server_logs = '\n'.join(read_text(p, '')[-6000:] for p in case_dir.glob('*.log'))
+                    if any(x in (reason+'\n'+server_logs).lower() for x in ('errordevicelost', 'vk_error_device_lost', 'device lost')):
+                        print('Vulkan device loss detected. Stopping matrix to protect compositor stability.',flush=True)
+                        break
+    except KeyboardInterrupt:
+        print('Interrupted; writing partial results and restoring services.',flush=True)
+    finally:
+        if hasattr(signal,'SIGALRM'): signal.setitimer(signal.ITIMER_REAL,0)
+        kill_models(list(CURRENT_PROCESSES))
+        monitor.close()
+        result_report(results,phases,stages,monitor,output,args)
+        for model in services_stopped:
+            try:
+                print('Restoring lfm@'+model,flush=True)
+                service_cmd('start',model)
+            except Exception as e:
+                print('WARNING: failed to restore '+model+': '+str(e),file=sys.stderr,flush=True)
+        print('\nFinal report: '+str(output/'summary.md')+'\nCSV: '+str(output/'stages.csv')+'\nTelemetry: '+str(output/'samples.jsonl'),flush=True)
+    return 0
+
 
 if __name__=='__main__':
-    os.umask(0o077)
-    signal.signal(signal.SIGINT,lambda *_:STOP.set());signal.signal(signal.SIGTERM,lambda *_:STOP.set())
-    try:sys.exit(main())
-    except (ValueError,OSError) as exc:print(f'Error: {exc}',file=sys.stderr);sys.exit(1)
+    sys.exit(main())

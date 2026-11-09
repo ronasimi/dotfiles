@@ -15,7 +15,7 @@ fi
 [[ $- != *i* ]] && return
 
 # ENVIRONMENT VARIABLES
-export PATH="$HOME/.bin:/usr/local/bin:$PATH"
+# PATH is managed centrally in ~/.zshenv.
 export EDITOR="nano"
 export VISUAL=$EDITOR
 export USE_CCACHE=1
@@ -24,7 +24,6 @@ export CCACHE_SLOPPINESS=include_file_mtime
 export AIRCRACK_LIBEXEC_PATH=/usr/lib/aircrack-ng
 
 # PERL ENV
-export PATH="$HOME/.perl5/bin:$PATH"
 export PERL5LIB="$HOME/.perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
 export PERL_LOCAL_LIB_ROOT="$HOME/.perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
 export PERL_MB_OPT="--install_base \"$HOME/.perl5\""
@@ -77,7 +76,6 @@ HISTSIZE=12000
 SAVEHIST=10000
 setopt appendhistory
 setopt extended_history
-setopt inc_append_history
 setopt share_history
 setopt hist_expire_dups_first
 setopt hist_ignore_all_dups
@@ -115,7 +113,6 @@ zmodload -i zsh/complist
 
 setopt hash_list_all
 setopt completealiases
-setopt COMPLETE_ALIASES
 setopt always_to_end
 setopt complete_in_word
 setopt correct_all
@@ -126,7 +123,6 @@ CORRECT_IGNORE_FILE='.*'
 # COMPLETION STYLING
 zstyle ':completion::complete:*' use-cache on
 zstyle ':completion:*' rehash true
-zstyle ":completion:*:commands" rehash true
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} =
@@ -268,6 +264,9 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+# Local llama.cpp for Pi
+export LLAMA_SERVER_URL=http://127.0.0.1:8080
+
 # AUTOSUGGESTIONS & SYNTAX HIGHLIGHTING (MUST BE LAST)
 if [[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
   export ZSH_AUTOSUGGEST_USE_ASYNC=1
@@ -277,15 +276,7 @@ fi
 if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
   source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
-# ZSH-AI CONFIGURATION
-if [[ -f /usr/share/zsh/plugins/zsh-ai/zsh-ai.plugin.zsh ]]; then
-  export ZSH_AI_PROVIDER="ollama"
-  export ZSH_AI_OLLAMA_MODEL="huihui_ai/qwen3.5-abliterated:4b"
-  export ZSH_AI_OLLAMA_URL="http://localhost:11434"
-  export ZSH_AI_TRIGGER=",,"
-  source /usr/share/zsh/plugins/zsh-ai/zsh-ai.plugin.zsh
-fi
 
-# Local llama.cpp for Pi
-export LLAMA_BASE_URL=http://127.0.0.1:8080
-export LLAMA_API_KEY=no-key
+
+# Hermes Agent command
+case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac

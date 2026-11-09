@@ -18,15 +18,18 @@ elephant-unicode-bin
 elephant-websearch-bin
 elephant-windows-bin
 elephant-wireplumber-bin
+enum4linux-ng
 google-chrome
 grimblast-git
+hopper4
 httpdirfs
+ida-free
+kaggle-api
 localsend-bin
 overskride
 paccache-hook
 papirus-folders
 pikaur
-python-ollama
 syshud
 thinkfan
 tnywfi-git
@@ -45,6 +48,6 @@ vmware-workstation
 walker-bin
 waybar-git
 waybar-module-pacman-updates-git
+wdotool-bin
 xcursor-openzone
-zsh-ai-git
 zsh-theme-powerlevel10k

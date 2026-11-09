@@ -337,6 +337,9 @@ cycle_special_workspaces = function()
         end
     end
     if #names == 0 then return end
+    if #names == 1 and special_workspace_name(hl.get_active_special_workspace()) == names[1] then
+        return
+    end
 
     local active = special_workspace_name(hl.get_active_special_workspace())
     local next_index = 1
